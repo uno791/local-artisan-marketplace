@@ -15,7 +15,9 @@ function App() {
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    fetch("http://localhost:3000/users")
+    fetch(
+      "https://artisan-api-server-ascfbqfkgccrf0ap.southafricanorth-01.azurewebsites.net/users"
+    )
       .then((res) => res.json())
       .then((data) => {
         setUsers(data);
