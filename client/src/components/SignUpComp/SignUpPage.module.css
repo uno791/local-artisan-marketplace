@@ -1,11 +1,13 @@
 .pageContainer {
   background-color: #f6ebd9;
-  flex-direction: column;
-  align-items: center;
-  max-width: none;
-  min-height: 100vh;
-  padding: 20px;
   display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  min-height: 100dvh;
+  width: 100vw;
+  padding: 16px;
+  box-sizing: border-box;
 }
 
 .welcomeHeading {

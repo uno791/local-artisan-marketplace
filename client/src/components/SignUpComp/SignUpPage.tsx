@@ -1,11 +1,11 @@
 "use client";
 import * as React from "react";
-import styles from "./AuthPage.module.css";
+import styles from "./SignUpPage.module.css";
 import { Logo } from "./Logo";
 import { GoogleSignUpButton } from "./GoogleSignUpButton";
 import { LoginPrompt } from "./LoginPrompt";
 
-export default function AuthPage() {
+export default function SignUpPage() {
   return (
     <main className={styles.pageContainer}>
       <Logo />
