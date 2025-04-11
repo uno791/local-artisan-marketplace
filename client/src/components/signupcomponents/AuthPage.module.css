@@ -1,0 +1,37 @@
+.pageContainer {
+  background-color: #f6ebd9;
+  flex-direction: column;
+  align-items: center;
+  max-width: none;
+  min-height: 100vh;
+  padding: 20px;
+  display: flex;
+}
+
+.welcomeHeading {
+  color: #3e2c14;
+  margin-top: 40px;
+  font-family: Kadwa, serif;
+  font-size: 128px;
+  font-weight: 700;
+}
+
+@media (width<=991px) {
+  .pageContainer {
+    max-width: 991px;
+  }
+
+  .welcomeHeading {
+    font-size: 96px;
+  }
+}
+
+@media (width<=640px) {
+  .pageContainer {
+    max-width: 640px;
+  }
+
+  .welcomeHeading {
+    font-size: 64px;
+  }
+}

@@ -1,0 +1,29 @@
+.loginText {
+  letter-spacing: 3.2px;
+  margin-top: 40px;
+  font-family: Inter, sans-serif;
+  font-size: 32px;
+}
+
+.loginLink {
+  color: #3595ef;
+  cursor: pointer;
+  background: none;
+  border: none;
+  padding: 0;
+  margin-left: 4px;
+  font: inherit;
+}
+
+@media (width<=991px) {
+  .loginText {
+    font-size: 24px;
+  }
+}
+
+@media (width<=640px) {
+  .loginText {
+    letter-spacing: 2px;
+    font-size: 18px;
+  }
+}

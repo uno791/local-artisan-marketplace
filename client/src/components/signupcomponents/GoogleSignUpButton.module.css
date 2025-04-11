@@ -1,0 +1,57 @@
+.signUpButton {
+  cursor: pointer;
+  background-color: #3e2c14;
+  border-radius: 30px;
+  justify-content: center;
+  align-items: center;
+  min-width: 802px;
+  margin-top: 40px;
+  padding: 20px 40px;
+  display: flex;
+  border: none;
+}
+
+.googleIcon {
+  width: 85px;
+  height: 81px;
+  margin-right: 20px;
+}
+
+.buttonText {
+  color: #fff;
+  font-family: Kadwa, serif;
+  font-size: 48px;
+  font-weight: 700;
+}
+
+@media (width<=991px) {
+  .signUpButton {
+    min-width: unset;
+    width: 90%;
+    padding: 15px 30px;
+  }
+
+  .googleIcon {
+    width: 65px;
+    height: 62px;
+  }
+
+  .buttonText {
+    font-size: 36px;
+  }
+}
+
+@media (width<=640px) {
+  .signUpButton {
+    padding: 10px 20px;
+  }
+
+  .googleIcon {
+    width: 45px;
+    height: 43px;
+  }
+
+  .buttonText {
+    font-size: 24px;
+  }
+}
