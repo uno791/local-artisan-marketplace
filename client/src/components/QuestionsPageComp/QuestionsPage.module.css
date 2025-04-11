@@ -1,85 +1,70 @@
 .container {
   background-color: #f6ebd9;
+  display: flex;
   flex-direction: column;
   align-items: center;
-  min-height: 100vh;
-  padding: 40px 70px;
-  display: flex;
-  overflow: hidden;
+  justify-content: flex-start;
+  min-width: 100vw;
+  height: 100vh;
+  padding: 2vh 2vw;
+  box-sizing: border-box;
+  overflow-y: auto; /* allow scroll only when needed */
+  gap: 2vh; /* evenly space items */
 }
 
-@media (width<=991px) {
-  .container {
-    padding-left: 20px;
-    padding-right: 20px;
-  }
-}
 
 .headerContainer {
-  flex-wrap: wrap;
-  justify-content: space-between;
-  align-items: center;
-  gap: 24px;
-  width: 100%;
-  max-width: 1000px;
   display: flex;
+  align-items: center; /* 👈 aligns the input + text vertically */
+  justify-content: flex-start;
+  gap: 1rem;
+  margin-bottom: 2vh;
 }
 
-@media (width<=991px) {
-  .headerContainer {
-    max-width: 100%;
-  }
-}
+
+
 
 .usernameTitle {
   color: #3e2c14;
   letter-spacing: 4px;
-  text-align: center;
-  flex-grow: 1;
-  margin-bottom: 8px;
-  font-family:
-    Kadwa,
-    -apple-system,
-    Roboto,
-    Helvetica,
-    sans-serif;
-  font-size: 36px;
+  font-family: Kadwa, serif;
+  font-size: clamp(1.25rem, 2.5vw, 2rem);
   font-weight: 400;
   line-height: 1.2;
+  margin: 0; /* 👈 ensures it's centered */
 }
 
-@media (width<=991px) {
-  .usernameTitle {
-    max-width: 100%;
-  }
-}
 
 .iconContainer {
   background-color: #f8f3ec;
   border: 1px solid #000;
   border-radius: 30px;
-  flex-direction: column;
-  flex: 1 0 0;
-  justify-content: center;
-  align-self: start;
-  align-items: end;
-  width: fit-content;
-  padding: 3px 80px;
   display: flex;
+  align-items: center;
+  padding: 0.5rem 1rem;
+  width: 300px;
+  height: 40px; /* 👈 same as font line height */
+  box-sizing: border-box;
 }
 
-@media (width<=991px) {
-  .iconContainer {
-    max-width: 100%;
-    padding-left: 20px;
-  }
+
+.usernameInput {
+  border: none;
+  background: transparent;
+  font-family: Inter, sans-serif;
+  font-size: 1rem;
+  color: #3e2c14;
+  width: 100%;
+  outline: none;
 }
+
+
+
 
 .profileIcon {
   aspect-ratio: 1;
   object-fit: contain;
-  object-position: center;
-  width: 50px;
+  width: clamp(30px, 6vw, 50px);
   overflow: hidden;
 }
 
@@ -87,122 +72,70 @@
   color: #3e2c14;
   letter-spacing: 6px;
   text-align: center;
-  margin-top: 48px;
-  margin-bottom: 32px;
-  font-family:
-    Kadwa,
-    -apple-system,
-    Roboto,
-    Helvetica,
-    sans-serif;
-  font-size: 64px;
+  font-family: Kadwa, serif;
+  font-size: clamp(1.5rem, 6vw, 4rem);
   font-weight: 700;
   line-height: 1;
-}
-
-@media (width<=991px) {
-  .mainQuestion {
-    max-width: 100%;
-    margin-top: 40px;
-    font-size: 40px;
-  }
+  margin: 2vh 0;
 }
 
 .sectionTitle {
   color: #000;
-  letter-spacing: 4px;
-  margin-top: 14px;
-  margin-left: 16px;
-  font-family:
-    Inter,
-    -apple-system,
-    Roboto,
-    Helvetica,
-    sans-serif;
-  font-size: 36px;
+  letter-spacing: 2px;
+  margin-left: 1vw;
+  font-family: Inter, sans-serif;
+  font-size: clamp(1.25rem, 3vw, 2rem);
   font-weight: 600;
-}
-
-@media (width<=991px) {
-  .sectionTitle {
-    margin-left: 10px;
-  }
 }
 
 .artFormsContainer {
   display: flex;
   flex-direction: column;
-  gap: 20px;
-  margin-top: 40px;
+  gap: 1.5vh;
 }
 
 .buttonRow {
-  color: #000;
-  letter-spacing: 2px;
+  display: flex;
   flex-wrap: wrap;
   align-items: stretch;
-  gap: 19px;
-  margin-left: 16px;
-  font-family:
-    Inter,
-    -apple-system,
-    Roboto,
-    Helvetica,
-    sans-serif;
-  font-size: 16px;
+  gap: 1.5vh;
+  margin-left: 1vw;
+  font-family: Inter, sans-serif;
+  font-size: 1rem;
   font-weight: 500;
-  display: flex;
+  letter-spacing: 2px;
 }
 
 .artFormButton {
+  color: #3e2c14;
   background-color: #d3b88d;
   border: 2px solid #9a8c5e;
   border-radius: 30px;
-  padding: 16px 30px;
-  color: inherit;
+  padding: 0.8rem 1.5rem;
+  cursor: pointer;
+  transition: background-color 0.2s;
+ 
   font-family: inherit;
   font-size: inherit;
   font-weight: inherit;
   letter-spacing: inherit;
-  cursor: pointer;
-  transition: background-color 0.2s;
-}
-
-@media (width<=991px) {
-  .artFormButton {
-    padding-left: 20px;
-    padding-right: 20px;
-  }
 }
 
 .applyButton {
-  color: #fff;
-  text-align: center;
   background-color: #3e2c14;
+  color: white;
   border: none;
   border-radius: 30px;
-  width: 200px;
-  max-width: 100%;
-  margin-top: 40px;
-  padding: 16px 40px;
-  font-family:
-    Kadwa,
-    -apple-system,
-    Roboto,
-    Helvetica,
-    sans-serif;
-  font-size: 36px;
+  width: clamp(150px, 30vw, 200px);
+  padding: 1rem 2rem;
+  font-family: Kadwa, serif;
+  font-size: clamp(1.25rem, 4vw, 2.25rem);
   font-weight: 700;
   cursor: pointer;
   transition: background-color 0.2s;
+  margin-top: 1vh; /* smaller margin */
 }
 
-@media (width<=991px) {
-  .applyButton {
-    padding-left: 20px;
-    padding-right: 20px;
-  }
-}
 
 .artInterestSection {
   width: 100%;

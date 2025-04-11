@@ -10,6 +10,6 @@ import LoginPage from "./components/LogInPageComp/LoginPage.tsx";
 
 createRoot(document.getElementById("root")!).render(
   <StrictMode>
-    <LoginPage />
+    <QuestionsPage />
   </StrictMode>
 );
