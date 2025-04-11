@@ -1,0 +1,142 @@
+.pageWrapper {
+  display: flex;
+  min-height: 100vh;
+}
+
+.loginContainer {
+  background-color: #f6ebd9;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  max-width: none;
+  min-height: 100vh;
+  padding: 60px 27px;
+  display: flex;
+  width: 100%;
+}
+
+@media (width<=991px) {
+  .loginContainer {
+    max-width: 991px;
+  }
+}
+
+@media (width<=640px) {
+  .loginContainer {
+    max-width: 640px;
+  }
+}
+
+.logo {
+  object-fit: contain;
+  width: 248px;
+  height: 248px;
+  margin-bottom: 40px;
+}
+
+@media (width<=640px) {
+  .logo {
+    width: 180px;
+    height: 180px;
+  }
+}
+
+.welcomeTitle {
+  color: #3e2c14;
+  text-align: center;
+  margin-bottom: 40px;
+  font-family: Kadwa, serif;
+  font-size: 128px;
+  font-weight: 700;
+}
+
+@media (width<=991px) {
+  .welcomeTitle {
+    font-size: 96px;
+  }
+}
+
+@media (width<=640px) {
+  .welcomeTitle {
+    font-size: 64px;
+  }
+}
+
+.googleButton {
+  cursor: pointer;
+  background-color: #3e2c14;
+  border-radius: 30px;
+  justify-content: center;
+  align-items: center;
+  width: 802px;
+  height: 118px;
+  margin-top: 40px;
+  display: flex;
+  border: none;
+}
+
+@media (width<=991px) {
+  .googleButton {
+    width: 90%;
+    max-width: 802px;
+  }
+}
+
+@media (width<=640px) {
+  .googleButton {
+    height: 90px;
+  }
+}
+
+.googleIcon {
+  width: 85px;
+  height: 81px;
+  margin-right: 20px;
+}
+
+@media (width<=640px) {
+  .googleIcon {
+    width: 60px;
+    height: 56px;
+  }
+}
+
+.buttonText {
+  color: #fff;
+  font-family: Kadwa, serif;
+  font-size: 48px;
+  font-weight: 700;
+}
+
+@media (width<=640px) {
+  .buttonText {
+    font-size: 36px;
+  }
+}
+
+.signUpText {
+  letter-spacing: 3.2px;
+  margin-top: auto;
+  padding-top: 60px;
+  font-family: Inter, sans-serif;
+  font-size: 32px;
+}
+
+@media (width<=991px) {
+  .signUpText {
+    margin-top: 150px;
+    font-size: 28px;
+  }
+}
+
+@media (width<=640px) {
+  .signUpText {
+    letter-spacing: 2px;
+    margin-top: 100px;
+    font-size: 20px;
+  }
+}
+
+.exclamation {
+  color: #3595ef;
+}
