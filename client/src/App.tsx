@@ -1,5 +1,6 @@
 import UserTable from "./components/UserTable";
 
+
 function App() {
   return (
     <div style={{ padding: "2rem", fontFamily: "sans-serif" }}>
@@ -8,6 +9,7 @@ function App() {
       <UserTable />
     </div>
   );
+ 
 }
 
 export default App;
