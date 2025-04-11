@@ -1,9 +1,10 @@
 .loginText {
   color: #3e2c14;
-  letter-spacing: 3.2px;
-  margin-top: 40px;
+  letter-spacing: 2px;
+  margin-top: 2vh;
   font-family: Inter, sans-serif;
-  font-size: 32px;
+  font-size: clamp(1rem, 2.5vw, 2rem);
+  text-align: center;
 }
 
 .loginLink {
@@ -16,15 +17,15 @@
   font: inherit;
 }
 
-@media (width<=991px) {
+@media (width <= 991px) {
   .loginText {
-    font-size: 24px;
+    font-size: clamp(1rem, 2vw, 1.5rem);
   }
 }
 
-@media (width<=640px) {
+@media (width <= 640px) {
   .loginText {
-    letter-spacing: 2px;
-    font-size: 18px;
+    letter-spacing: 1px;
+    font-size: clamp(0.9rem, 2vw, 1.2rem);
   }
 }

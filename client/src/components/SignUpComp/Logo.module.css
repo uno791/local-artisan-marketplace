@@ -1,7 +1,7 @@
 .logoWrapper {
-  width: 248px;
-  height: 248px;
-  margin-top: 21px;
+  width: clamp(100px, 20vw, 248px);
+  height: clamp(100px, 20vw, 248px);
+  margin-top: 2vh;
 }
 
 .logoImage {
@@ -10,9 +10,9 @@
   height: 100%;
 }
 
-@media (width<=640px) {
+@media (width <= 640px) {
   .logoWrapper {
-    width: 180px;
-    height: 180px;
+    width: clamp(80px, 15vw, 180px);
+    height: clamp(80px, 15vw, 180px);
   }
 }

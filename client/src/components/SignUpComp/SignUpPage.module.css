@@ -4,36 +4,38 @@
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  min-height: 100dvh;
+  height: 100vh;
   width: 100vw;
   padding: 16px;
   box-sizing: border-box;
+  overflow: hidden;
 }
 
 .welcomeHeading {
   color: #3e2c14;
-  margin-top: 40px;
+  margin-top: 2vh;
   font-family: Kadwa, serif;
-  font-size: 128px;
+  font-size: clamp(2rem, 10vw, 6rem);
   font-weight: 700;
+  text-align: center;
 }
 
-@media (width<=991px) {
+@media (width <= 991px) {
   .pageContainer {
     max-width: 991px;
   }
 
   .welcomeHeading {
-    font-size: 96px;
+    font-size: clamp(2rem, 8vw, 5rem);
   }
 }
 
-@media (width<=640px) {
+@media (width <= 640px) {
   .pageContainer {
     max-width: 640px;
   }
 
   .welcomeHeading {
-    font-size: 64px;
+    font-size: clamp(1.5rem, 6vw, 4rem);
   }
 }

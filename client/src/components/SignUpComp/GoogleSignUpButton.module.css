@@ -4,54 +4,54 @@
   border-radius: 30px;
   justify-content: center;
   align-items: center;
-  min-width: 802px;
-  margin-top: 40px;
-  padding: 20px 40px;
+  width: clamp(250px, 70%, 802px);
+  margin-top: 2vh;
+  padding: 1.2rem 2rem;
   display: flex;
   border: none;
+  flex-wrap: nowrap;
 }
 
 .googleIcon {
-  width: 85px;
-  height: 81px;
+  width: clamp(30px, 8vw, 85px);
+  height: clamp(30px, 8vw, 81px);
   margin-right: 20px;
 }
 
 .buttonText {
   color: #fff;
   font-family: Kadwa, serif;
-  font-size: 48px;
+  font-size: clamp(1.5rem, 4vw, 3rem);
   font-weight: 700;
 }
 
-@media (width<=991px) {
+@media (width <= 991px) {
   .signUpButton {
-    min-width: unset;
     width: 90%;
     padding: 15px 30px;
   }
 
   .googleIcon {
-    width: 65px;
-    height: 62px;
+    width: clamp(30px, 6vw, 65px);
+    height: clamp(30px, 6vw, 62px);
   }
 
   .buttonText {
-    font-size: 36px;
+    font-size: clamp(1.5rem, 4vw, 2.25rem);
   }
 }
 
-@media (width<=640px) {
+@media (width <= 640px) {
   .signUpButton {
     padding: 10px 20px;
   }
 
   .googleIcon {
-    width: 45px;
-    height: 43px;
+    width: clamp(24px, 5vw, 45px);
+    height: clamp(24px, 5vw, 43px);
   }
 
   .buttonText {
-    font-size: 24px;
+    font-size: clamp(1rem, 3vw, 1.5rem);
   }
 }
