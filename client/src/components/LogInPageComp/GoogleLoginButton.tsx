@@ -1,10 +1,17 @@
-"use client";
 import React from "react";
 import styles from "./LoginPage.module.css";
 import { useGoogleLogin } from "@react-oauth/google";
 import axios from "axios";
 
-export function GoogleLogInButton() {
+interface GoogleLogInButtonProps {
+  onError: (message: string) => void;
+  onSuccessMessage: (message: string) => void;
+}
+
+export function GoogleLogInButton({
+  onError,
+  onSuccessMessage,
+}: GoogleLogInButtonProps) {
   const login = useGoogleLogin({
     onSuccess: async (tokenResponse) => {
       try {
@@ -19,11 +26,16 @@ export function GoogleLogInButton() {
 
         const userData = res.data;
         console.log("User info:", userData);
+        onSuccessMessage("Successfully logged in!");
       } catch (err) {
         console.error("Failed to fetch user info", err);
+        onError("Something went wrong fetching your info.");
       }
     },
-    onError: (error) => console.log("Login Failed:", error),
+    onError: (error) => {
+      console.error("Login Failed:", error);
+      onError("Google login failed. Please try again.");
+    },
   });
 
   return (

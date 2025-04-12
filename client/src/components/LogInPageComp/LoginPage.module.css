@@ -29,6 +29,61 @@
   }
 }
 
+.popupSuccess,
+.popupError {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  z-index: 1000;
+  background-color: white;
+  padding: 2rem;
+  border-radius: 12px;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+  text-align: center;
+  max-width: 90vw;
+  min-width: 300px;
+  font-weight: bold;
+}
+
+.popupSuccess {
+  background-color: #ddffdd;
+  border: 2px solid green;
+  color: #060;
+}
+
+.popupError {
+  background-color: #ffdddd;
+  border: 2px solid red;
+  color: #a00;
+}
+
+.popupSuccess button,
+.popupError button {
+  margin-top: 1rem;
+  background: none;
+  border: none;
+  font-weight: bold;
+  text-decoration: underline;
+  cursor: pointer;
+}
+
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translate(-50%, -60%);
+  }
+  to {
+    opacity: 1;
+    transform: translate(-50%, -50%);
+  }
+}
+
+
+
+
+
 .logo {
   object-fit: contain;
   width: clamp(120px, 20vw, 248px);
