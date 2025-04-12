@@ -1,4 +1,3 @@
-"use client";
 import React from "react";
 import styles from "./GoogleSignUpButton.module.css";
 import { useGoogleLogin } from "@react-oauth/google";
