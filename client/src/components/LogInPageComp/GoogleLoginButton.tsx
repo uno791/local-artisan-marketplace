@@ -1,20 +1,33 @@
 "use client";
-
 import React from "react";
 import styles from "./LoginPage.module.css";
+import { useGoogleLogin } from "@react-oauth/google";
+import axios from "axios";
 
-export function GoogleLoginButton() {
-  const handleGoogleLogin = () => {
-    // Handle Google login logic
-    console.log("Initiating Google login...");
-  };
+export function GoogleLogInButton() {
+  const login = useGoogleLogin({
+    onSuccess: async (tokenResponse) => {
+      try {
+        const res = await axios.get(
+          "https://www.googleapis.com/oauth2/v3/userinfo",
+          {
+            headers: {
+              Authorization: `Bearer ${tokenResponse.access_token}`,
+            },
+          }
+        );
+
+        const userData = res.data;
+        console.log("User info:", userData);
+      } catch (err) {
+        console.error("Failed to fetch user info", err);
+      }
+    },
+    onError: (error) => console.log("Login Failed:", error),
+  });
 
   return (
-    <button
-      onClick={handleGoogleLogin}
-      className={styles.googleButton}
-      aria-label="Log in with Google"
-    >
+    <button onClick={() => login()} className={styles.googleButton}>
       <img
         src="https://cdn.builder.io/api/v1/image/assets/TEMP/6c2c435e2bfdac1c7aa377094a31133bc82338d0"
         alt="Google icon"
