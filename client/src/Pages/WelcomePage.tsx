@@ -1,7 +1,7 @@
 import * as React from "react";
-import styles from "./WelcomePage.module.css";
-import { Logo } from "./Logo";
-import { ActionButtons } from "./ActionButtons";
+import styles from "../components/WelcomePageComp/WelcomePage.module.css";
+import { Logo } from "../components/WelcomePageComp/Logo";
+import { ActionButtons } from "../components/WelcomePageComp/ActionButtons";
 
 function WelcomePage() {
   return (

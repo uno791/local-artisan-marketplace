@@ -1,9 +1,9 @@
 "use client";
 import * as React from "react";
-import styles from "./QuestionsPage.module.css";
-import UserNameHeader from "./UserNameHeader";
-import ArtFormSection from "./ArtFormSection";
-import ApplyButton from "./ApplyButton";
+import styles from "../components/QuestionsPageComp/QuestionsPage.module.css";
+import UserNameHeader from "../components/QuestionsPageComp/UserNameHeader";
+import ArtFormSection from "../components/QuestionsPageComp/ArtFormSection";
+import ApplyButton from "../components/QuestionsPageComp/ApplyButton";
 
 function QuestionsPage() {
   return (

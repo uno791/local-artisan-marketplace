@@ -72,11 +72,12 @@
   border-radius: 30px;
   justify-content: center;
   align-items: center;
-  width: clamp(250px, 80%, 802px);
-  height: clamp(60px, 12vh, 118px);
+  width: clamp(250px, 70%, 802px);
+  margin-top: 2vh;
+  padding: 1.2rem 2rem;
   display: flex;
   border: none;
-  margin-top: 2vh;
+  flex-wrap: nowrap;
 }
 
 @media (width<=991px) {
