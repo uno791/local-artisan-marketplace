@@ -3,8 +3,10 @@ import React from "react";
 import styles from "./GoogleSignUpButton.module.css";
 import { useGoogleLogin } from "@react-oauth/google";
 import axios from "axios";
+import { useNavigate } from "react-router-dom";
 
 export function GoogleSignUpButton() {
+  const navigate = useNavigate();
   const login = useGoogleLogin({
     onSuccess: async (tokenResponse) => {
       try {
@@ -19,8 +21,7 @@ export function GoogleSignUpButton() {
 
         const userData = res.data;
         console.log("User info:", userData);
-
-        // Now, send `userData` to your backend for sign-up logic
+        navigate("/QuestionsPage");
       } catch (err) {
         console.error("Failed to fetch user info", err);
       }
