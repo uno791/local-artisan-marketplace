@@ -3,6 +3,16 @@ import styles from "./QuestionsPage.module.css";
 import { useUser } from "../../Users/UserContext";
 import axios from "axios";
 
+interface ApplyButtonProps {
+  onApply: () => void;
+}
+
+const ApplyButton: React.FC<ApplyButtonProps> = ({ onApply }) => {
+  return (
+    <button className={styles.applyButton} onClick={onApply}>
+      Apply
+    </button>
+  );
 const ApplyButton = () => {
   const { user, username } = useUser();
   const [error, setError] = useState<string | null>(null);

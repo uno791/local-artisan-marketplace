@@ -2,10 +2,18 @@ import React from "react";
 import ArtFormButton from "./ArtFormButton";
 import styles from "./QuestionsPage.module.css";
 
-const ArtFormSection = () => {
+interface ArtFormSectionProps {
+  selectedArtForms: string[];
+  setSelectedArtForms: (forms: string[]) => void;
+}
+
+const ArtFormSection: React.FC<ArtFormSectionProps> = ({
+  selectedArtForms,
+  setSelectedArtForms,
+
+}) => {
   const artForms = [
-    [
-      "Painting",
+    ["Painting",
       "Sculpture",
       "Pottery",
       "Photography",
@@ -37,7 +45,19 @@ const ArtFormSection = () => {
       {artForms.map((row, rowIndex) => (
         <div key={rowIndex} className={styles.buttonRow}>
           {row.map((artForm, index) => (
-            <ArtFormButton key={`${rowIndex}-${index}`} label={artForm} />
+            <ArtFormButton
+            key={`${rowIndex}-${index}`}
+            label={artForm}
+            isSelected={selectedArtForms.includes(artForm)} // ✅ add this
+            onClick={() => {
+              let isAlreadySelected = selectedArtForms.includes(artForm);
+              let updated = isAlreadySelected
+                ? selectedArtForms.filter((form) => form !== artForm)
+                : [...selectedArtForms, artForm];
+              setSelectedArtForms(updated);
+            }}
+          />
+          
           ))}
         </div>
       ))}
