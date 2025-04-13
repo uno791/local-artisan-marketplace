@@ -15,9 +15,7 @@ const UserTable = () => {
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    fetch(
-      "https://artisan-api-server-ascfbqfkgccrf0ap.southafricanorth-01.azurewebsites.net/users"
-    )
+    fetch("/users")
       .then((res) => res.json())
       .then((data) => {
         setUsers(data);
