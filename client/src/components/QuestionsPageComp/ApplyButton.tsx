@@ -1,8 +1,16 @@
 import React from "react";
 import styles from "./QuestionsPage.module.css";
 
-const ApplyButton = () => {
-  return <button className={styles.applyButton}>Apply</button>;
+interface ApplyButtonProps {
+  onApply: () => void;
+}
+
+const ApplyButton: React.FC<ApplyButtonProps> = ({ onApply }) => {
+  return (
+    <button className={styles.applyButton} onClick={onApply}>
+      Apply
+    </button>
+  );
 };
 
 export default ApplyButton;

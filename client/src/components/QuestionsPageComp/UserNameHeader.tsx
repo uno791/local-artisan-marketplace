@@ -1,7 +1,15 @@
 import React from "react";
 import styles from "./QuestionsPage.module.css";
 
-const UserNameHeader = () => {
+interface UserNameHeaderProps {
+  userName: string | null;
+  setUserName: (name: string) => void;
+}
+
+const UserNameHeader: React.FC<UserNameHeaderProps> = ({
+  userName,
+  setUserName,
+}) => {
   return (
     <header className={styles.headerContainer}>
       <h2 className={styles.usernameTitle}>Create a username:</h2>
@@ -10,6 +18,8 @@ const UserNameHeader = () => {
           type="text"
           className={styles.usernameInput}
           placeholder="Enter username"
+          value={userName ?? ""}
+          onChange={(e) => setUserName(e.target.value)}
         />
       </div>
     </header>
