@@ -1,0 +1,18 @@
+.product-details {
+    margin-bottom: 32px;
+  }
+  
+  .details-heading {
+    font-size: 18px;
+    font-weight: bold;
+    margin-bottom: 8px;
+  }
+  
+  .details-list {
+    list-style-type: disc;
+    padding-left: 20px;
+    color: #666;
+    font-size: 16px;
+    line-height: 1.6;
+  }
+  
