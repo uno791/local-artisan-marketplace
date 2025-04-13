@@ -1,9 +1,8 @@
-import React, { useState, useEffect } from "react";
+import React from "react";
 import styles from "./QuestionsPage.module.css";
-import { useUser } from "../../Users/UserContext";
 
 interface UserNameHeaderProps {
-  userName: string | null;
+  userName: string;
   setUserName: (name: string) => void;
 }
 
@@ -11,15 +10,6 @@ const UserNameHeader: React.FC<UserNameHeaderProps> = ({
   userName,
   setUserName,
 }) => {
-const UserNameHeader = () => {
-  const { user, username, setUsername } = useUser();
-
-  useEffect(() => {
-    if (user && !username) {
-      setUsername(user.firstName); // prefill
-    }
-  }, [user, username, setUsername]);
-
   return (
     <header className={styles.headerContainer}>
       <h2 className={styles.usernameTitle}>Create a username:</h2>
@@ -28,10 +18,8 @@ const UserNameHeader = () => {
           type="text"
           className={styles.usernameInput}
           placeholder="Enter username"
-          value={userName ?? ""}
+          value={userName}
           onChange={(e) => setUserName(e.target.value)}
-          value={username}
-          onChange={(e) => setUsername(e.target.value)}
         />
       </div>
     </header>

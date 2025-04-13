@@ -84,10 +84,11 @@ app.post("/api/users/create", async (req, res) => {
     postal_code,
     phone_no,
   } = req.body;
-
+  
   if (!username || !user_ID) {
     return res.status(400).json({ error: "username and userID are required" });
   }
+  
 
   try {
     const pool = await connectDB();
