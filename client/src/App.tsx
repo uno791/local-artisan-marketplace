@@ -4,6 +4,7 @@ import Home from './pages/Home';
 import Search from './pages/Search';
 import Cart from './pages/Cart';
 import Profile from './pages/Profile';
+import Footer from './components/Footer';
 // import UserTable from "./components/UserTable"; // 🟡 Temporarily disabled
 
 function App() {
@@ -30,6 +31,7 @@ function App() {
         />
         */}
       </Routes>
+      <Footer />
     </BrowserRouter>
   );
 }

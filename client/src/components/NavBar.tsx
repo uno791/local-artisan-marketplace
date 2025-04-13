@@ -11,7 +11,7 @@ const NavBar: React.FC = () => {
         left: 0,
         right: 0,
         zIndex: 1000,
-        backgroundColor: '#F6EBD9',
+        backgroundColor: '#EFE2CC',
         padding: '1.2rem 2rem',
         borderBottom: '1px solid #ddd',
       }}

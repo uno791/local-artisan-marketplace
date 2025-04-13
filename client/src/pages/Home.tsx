@@ -80,6 +80,7 @@ const Home: React.FC = () => {
         <section
           style={{
             overflow: 'hidden',
+            
             width: `${visibleCount * cardWidth}px`,
           }}
         >
@@ -99,11 +100,11 @@ const Home: React.FC = () => {
               <li key={index} style={{ width: `${cardWidth}px`, flexShrink: 0 }}>
                 <article
                   style={{
-                    backgroundColor: '#fff',
+                    backgroundColor: '#F6EBD9',
                     borderRadius: '10px',
                     height: '320px',
                     padding: '1rem',
-                    boxShadow: '0 2px 8px rgba(0,0,0,0.06)',
+                    boxShadow: '0 8px 24px rgba(0, 0, 0, 0.15)',
                     textAlign: 'left',
                   }}
                 >
@@ -157,6 +158,101 @@ const Home: React.FC = () => {
           </ul>
         </section>
       </section>
+      {/* All Products Grid */}
+<section style={{ marginTop: '4rem' }}>
+  <h2
+    style={{
+      fontFamily: 'Montserrat, sans-serif',
+      fontSize: '40px',
+      color: '#3E2C14',
+      marginBottom: '1.5rem',
+    }}
+  >
+    All Products
+  </h2>
+
+  <ul
+    style={{
+      display: 'flex',
+      flexWrap: 'wrap',
+      gap: '2rem',
+      listStyle: 'none',
+      padding: 0,
+      margin: 0,
+    }}
+  >
+    {new Array(25).fill(null).map((_, index) => (
+      <li
+        key={index}
+        className="product-card"
+        style={{
+          flex: '1 1 calc(20% - 2rem)', // 5 per row with gap
+          maxWidth: '211px',
+        }}
+      >
+        <article
+          style={{
+            backgroundColor: '#F6EBD9',
+            borderRadius: '10px',
+            height: '320px',
+            padding: '1rem',
+            boxShadow: '0 8px 24px rgba(0, 0, 0, 0.15)',
+            textAlign: 'left',
+            transition: 'transform 0.2s ease-in-out',
+            cursor: 'pointer',
+            
+          }}
+        >
+          <figure style={{ margin: 0 }}>
+            <img
+              src={productImg}
+              alt="Product"
+              style={{
+                width: '100%',
+                height: '200px',
+                objectFit: 'cover',
+                borderRadius: '4px',
+                marginBottom: '0.5rem',
+              }}
+            />
+            <figcaption>
+              <p
+                style={{
+                  fontWeight: '600',
+                  fontSize: '0.9rem',
+                  margin: '0 0 0.25rem',
+                  color: '#666',
+                }}
+              >
+                Artwork Title
+              </p>
+              <p
+                style={{
+                  fontSize: '0.75rem',
+                  color: '#666',
+                  margin: '0 0 0.5rem',
+                }}
+              >
+                Artist Name
+              </p>
+              <p
+                style={{
+                  fontWeight: '500',
+                  fontSize: '0.8rem',
+                  margin: 0,
+                  color: '#666',
+                }}
+              >
+                R70000
+              </p>
+            </figcaption>
+          </figure>
+        </article>
+      </li>
+    ))}
+  </ul>
+</section>
+
     </main>
   );
 };
