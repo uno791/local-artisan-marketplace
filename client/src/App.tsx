@@ -18,6 +18,7 @@ function App() {
   return (
     //DO NOT TOUCH
     <GoogleOAuthProvider clientId="719123023157-2l972akc1n9ktkksvlhajau4s9aclcng.apps.googleusercontent.com">
+      {/* can touch */}
       <Router>
         <Routes>
           <Route path="/" element={<WelcomePage />} />
@@ -27,6 +28,7 @@ function App() {
           <Route path="/search" element={<Search />} />
           <Route path="/cart" element={<Cart />} />
           <Route path="/profile" element={<Profile />} />
+          <Route path="/home" element={<Home />} />
         </Routes>
       </Router>
     </GoogleOAuthProvider>

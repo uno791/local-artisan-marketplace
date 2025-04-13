@@ -49,7 +49,7 @@
 .popupSuccess {
   background-color: #ddffdd;
   border: 2px solid green;
-  color: #060;
+  color: rgb(0, 0, 0);
 }
 
 .popupError {
@@ -60,6 +60,7 @@
 
 .popupSuccess button,
 .popupError button {
+  color: rgb(33, 36, 185);
   margin-top: 1rem;
   background: none;
   border: none;
