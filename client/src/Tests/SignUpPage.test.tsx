@@ -64,9 +64,9 @@ test("log in link clicked takes you to log in page", () => {
   ).toBeInTheDocument();
 });
 
-test.todo("if sucessful sign up user gets taken to QuestionsPage");
 
-test("log in link clicked takes you to log in page", () => {
+
+test("if sucessful sign up user gets taken to QuestionsPage", () => {
   render(
     <GoogleOAuthProvider clientId="test-client-id">
       <UserProvider>
