@@ -5,14 +5,14 @@ import LoginPage from "./Pages/LoginPage";
 import QuestionsPage from "./Pages/QuestionsPage";
 import SignUpPage from "./Pages/SignUpPage";
 import WelcomePage from "./Pages/WelcomePage";
-import { BrowserRouter } from "react-router-dom";
-import NavBar from "./components/NavBar";
+//import { BrowserRouter } from "react-router-dom";
+//import NavBar from "./components/NavBar";
 import Home from "./Pages/Home";
 import Search from "./Pages/Search";
 import Cart from "./Pages/Cart";
 import Profile from "./Pages/Profile";
 import ProductPage from "./Page/ProductPage";
-import Footer from "./components/Footer";
+//import Footer from "./components/Footer";
 // import UserTable from "./components/UserTable"; // 🟡 Temporarily disabled
 
 function App() {
