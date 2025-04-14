@@ -1,20 +1,23 @@
-import * as React from "react";
+//import * as React from "react";
+import React, { useState } from "react";
 import styles from "../components/QuestionsPageComp/QuestionsPage.module.css";
 import UserNameHeader from "../components/QuestionsPageComp/UserNameHeader";
 import ApplyButton from "../components/QuestionsPageComp/ApplyButton";
 import ArtFormSection from "../components/QuestionsPageComp/ArtFormSection";
 import { useUser } from "../Users/UserContext";
 import axios from "axios";
-import { useNavigate } from "react-router-dom";
+//import { useNavigate } from "react-router-dom";
 
 function QuestionsPage() {
   const [userName, setUserName] = React.useState<string>("");
   const [selectedArtForms, setSelectedArtForms] = React.useState<string[]>([]);
   const [submitted, setSubmitted] = React.useState(false);
   const [error, setError] = React.useState<string | null>(null);
-
+  const [message, setMessage] = useState("");
+  const baseURL = import.meta.env.VITE_API_BASE_URL;
   const { user } = useUser();
-  const navigate = useNavigate();
+  //const [userData, setUserData] = useState<UserData | null>(null);
+  //const navigate = useNavigate();
 
   const handleApplyClick = async () => {
     setError(null);
@@ -30,38 +33,34 @@ function QuestionsPage() {
     }
 
     try {
-      const existsRes = await axios.get(
-        "http://localhost:3000/api/users/exists",
-        {
-          params: { username: userName },
-          withCredentials: true,
-        }
-      );
+      const checkRes = await axios.post(`${baseURL}/check-user`, {
+        username: userName,
+      });
 
-      if (existsRes.data.exists) {
+      if (checkRes.data.exists) {
         setError("Username already taken. Please choose another one.");
         return;
       }
-
-      const payload = {
+      //obv you gonna need to change this to add actual user info
+      const res = await axios.post(`${baseURL}/adduser`, {
         username: userName,
-        user_ID: user.id ?? "",
-        first_name: user.firstName ?? null,
-        last_name: user.lastName ?? null,
-        role: "user",
-        postal_code: null,
-        phone_no: null,
-      };
-
-      await axios.post("http://localhost:3000/api/users/create", payload, {
-        withCredentials: true,
+        user_ID: user.id,
+        first_name: user?.firstName,
+        last_name: user?.lastName,
+        role: "Buyer",
+        postal_code: 1234,
+        phone_no: "0123456789",
       });
 
       setSubmitted(true);
+      setMessage(res.data.message);
+      setError("");
+      console.log(message, res.data);
       // navigate("/Dashboard");
     } catch (err) {
       console.error("User creation failed:", err);
       setError("Something went wrong. Please try again.");
+      setMessage("");
     }
   };
 
