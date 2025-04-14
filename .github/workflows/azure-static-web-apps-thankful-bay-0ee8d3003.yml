@@ -40,7 +40,7 @@ jobs:
           action: "upload"
           app_location: "./client"
           api_location: ""
-          app_artifact_location: "client/dist"
+          app_artifact_location: "dist"
           github_id_token: ${{ steps.idtoken.outputs.result }}
 
   close_pull_request_job:
