@@ -45,6 +45,27 @@ app.get("/allproducts", async (req, res) => {
   }
 });
 
+//Get /specific product - fetch specific product by ID
+app.get("/product/:id", async (req, res) => {
+  const productId = req.params.id;
+  try {
+    const pool = await connectDB();
+    const result = await pool
+      .request()
+      .query(`SELECT * FROM dbo.products WHERE product_id = ${productId}`);
+    await pool.close();
+
+    if (result.recordset.length === 0) {
+      return res.status(404).json({ message: "Product not found" });
+    }
+
+    res.json(result.recordset[0]);
+  } catch (err) {
+    console.error("❌ Failed to fetch product:", err);
+    res.status(500).json({ error: "DB query failed", details: err.message });
+  }
+});
+
 app.post("/check-user", async (req, res) => {
   const { username } = req.body;
 

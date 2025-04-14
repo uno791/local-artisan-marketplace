@@ -1,3 +1,4 @@
+import { Link } from "react-router-dom";
 import React, { useState, useEffect } from "react";
 import productImg from "../assets/localish-product.jpg";
 import axios from "axios";
@@ -218,63 +219,68 @@ const Home: React.FC = () => {
                 maxWidth: "211px",
               }}
             >
-              <article
-                style={{
-                  backgroundColor: "#F6EBD9",
-                  borderRadius: "10px",
-                  height: "320px",
-                  padding: "1rem",
-                  boxShadow: "0 8px 24px rgba(0, 0, 0, 0.15)",
-                  textAlign: "left",
-                  transition: "transform 0.2s ease-in-out",
-                  cursor: "pointer",
-                }}
+              <Link
+                to={`/product/${product.product_id}`}
+                style={{ textDecoration: "none", color: "inherit" }}
               >
-                <figure style={{ margin: 0 }}>
-                  <img
-                    src={product.image_url || productImg}
-                    alt="Product"
-                    style={{
-                      width: "100%",
-                      height: "200px",
-                      objectFit: "cover",
-                      borderRadius: "4px",
-                      marginBottom: "0.5rem",
-                    }}
-                  />
-                  <figcaption>
-                    <p
+                <article
+                  style={{
+                    backgroundColor: "#F6EBD9",
+                    borderRadius: "10px",
+                    height: "320px",
+                    padding: "1rem",
+                    boxShadow: "0 8px 24px rgba(0, 0, 0, 0.15)",
+                    textAlign: "left",
+                    transition: "transform 0.2s ease-in-out",
+                    cursor: "pointer",
+                  }}
+                >
+                  <figure style={{ margin: 0 }}>
+                    <img
+                      src={product.image_url || productImg}
+                      alt="Product"
                       style={{
-                        fontWeight: "600",
-                        fontSize: "0.9rem",
-                        margin: "0 0 0.25rem",
-                        color: "#666",
+                        width: "100%",
+                        height: "200px",
+                        objectFit: "cover",
+                        borderRadius: "4px",
+                        marginBottom: "0.5rem",
                       }}
-                    >
-                      {product.product_name}
-                    </p>
-                    <p
-                      style={{
-                        fontSize: "0.75rem",
-                        color: "#666",
-                        margin: "0 0 0.5rem",
-                      }}
-                    >
-                      {product.username}
-                    </p>
-                    <p
-                      style={{
-                        fontWeight: "500",
-                        fontSize: "0.8rem",
-                        margin: 0,
-                        color: "#666",
-                      }}
-                    >
-                      {`R${product.price}`}
-                    </p>
-                  </figcaption>
-                </figure>
-              </article>
+                    />
+                    <figcaption>
+                      <p
+                        style={{
+                          fontWeight: "600",
+                          fontSize: "0.9rem",
+                          margin: "0 0 0.25rem",
+                          color: "#666",
+                        }}
+                      >
+                        {product.product_name}
+                      </p>
+                      <p
+                        style={{
+                          fontSize: "0.75rem",
+                          color: "#666",
+                          margin: "0 0 0.5rem",
+                        }}
+                      >
+                        {product.username}
+                      </p>
+                      <p
+                        style={{
+                          fontWeight: "500",
+                          fontSize: "0.8rem",
+                          margin: 0,
+                          color: "#666",
+                        }}
+                      >
+                        {`R${product.price}`}
+                      </p>
+                    </figcaption>
+                  </figure>
+                </article>
+              </Link>
             </li>
           ))}
         </ul>
