@@ -32,7 +32,6 @@ export function GoogleSignUpButton() {
         );
 
         const userData = res.data;
-
         const user = new User({
           id: userData.sub,
           name: userData.name,
