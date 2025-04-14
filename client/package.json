@@ -51,5 +51,8 @@
     "*.js": "eslint --cache --fix",
     "*.{js,ts,tsx}": "eslint --fix",
     "*.{json,css,md}": "prettier --write"
+  },
+  "engines": {
+    "node": ">=20.0.0"
   }
 }
