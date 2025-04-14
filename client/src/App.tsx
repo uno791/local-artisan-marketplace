@@ -7,12 +7,7 @@ import SignUpPage from "./Pages/SignUpPage";
 import WelcomePage from "./Pages/WelcomePage";
 //import { BrowserRouter } from "react-router-dom";
 //import NavBar from "./components/NavBar";
-import Home from "./Pages/Home";
-import Search from "./Pages/Search";
-import Cart from "./Pages/Cart";
-import Profile from "./Pages/Profile";
-import ProductPage from "./Page/ProductPage";
-//import Footer from "./components/Footer";
+
 // import UserTable from "./components/UserTable"; // 🟡 Temporarily disabled
 
 function App() {
@@ -26,11 +21,6 @@ function App() {
           <Route path="/SignUpPage" element={<SignUpPage />} />
           <Route path="/LogInPage" element={<LoginPage />} />
           <Route path="/QuestionsPage" element={<QuestionsPage />} />
-          <Route path="/Search" element={<Search />} />
-          <Route path="/Cart" element={<Cart />} />
-          <Route path="/Profile" element={<Profile />} />
-          <Route path="/Home" element={<Home />} />
-          <Route path="/product/:id" element={<ProductPage />} />
         </Routes>
       </Router>
     </GoogleOAuthProvider>
