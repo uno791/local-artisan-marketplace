@@ -22,7 +22,7 @@ export default function LoginPage() {
           onError={(msg: string) => setErrorMessage(msg)}
           onSuccessMessage={(msg: string) => {
             setSuccessMessage(msg);
-            navigate("/home"); // ✅ Go to home page on success
+            //navigate("/home"); // ✅ Go to home page on success
           }}
         />
         <SignUpPrompt />
@@ -37,7 +37,7 @@ export default function LoginPage() {
         {successMessage && (
           <div className={styles.popupSuccess} style={{ zIndex: 1000 }}>
             <p>{successMessage}</p>
-            <Link to="/home">
+            <Link to="/Home">
               <button onClick={() => setSuccessMessage(null)}>Close</button>
             </Link>
           </div>
