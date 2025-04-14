@@ -1,0 +1,202 @@
+.pageWrapper {
+  display: flex;
+  height: 100vh;
+  overflow: hidden;
+}
+
+.loginContainer {
+  background-color: #f6ebd9;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-around;
+  align-items: center;
+  min-width: 100vw;
+  min-height: 100dvh;
+  padding: 16px;
+  box-sizing: border-box;
+}
+
+
+@media (width<=991px) {
+  .loginContainer {
+    max-width: 991px;
+  }
+}
+
+@media (width<=640px) {
+  .loginContainer {
+    max-width: 640px;
+  }
+}
+
+.popupSuccess,
+.popupError {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  z-index: 1000;
+  background-color: white;
+  padding: 2rem;
+  border-radius: 12px;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+  text-align: center;
+  max-width: 90vw;
+  min-width: 300px;
+  font-weight: bold;
+}
+
+.popupSuccess {
+  background-color: #ddffdd;
+  border: 2px solid green;
+  color: rgb(0, 0, 0);
+}
+
+.popupError {
+  background-color: #ffdddd;
+  border: 2px solid red;
+  color: #a00;
+}
+
+.popupSuccess button,
+.popupError button {
+  color: rgb(33, 36, 185);
+  margin-top: 1rem;
+  background: none;
+  border: none;
+  font-weight: bold;
+  text-decoration: underline;
+  cursor: pointer;
+}
+
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translate(-50%, -60%);
+  }
+  to {
+    opacity: 1;
+    transform: translate(-50%, -50%);
+  }
+}
+
+
+
+
+
+.logo {
+  object-fit: contain;
+  width: clamp(120px, 20vw, 248px);
+  height: clamp(120px, 20vw, 248px);
+  margin-bottom: 2vh;
+}
+
+
+@media (width<=640px) {
+  .logo {
+    width: 180px;
+    height: 180px;
+  }
+}
+
+.welcomeTitle {
+  color: #3e2c14;
+  text-align: center;
+  font-family: Kadwa, serif;
+  font-size: clamp(2.5rem, 8vw, 6rem);
+  font-weight: 700;
+  margin-bottom: 2vh;
+}
+
+
+@media (width<=991px) {
+  .welcomeTitle {
+    font-size: 96px;
+  }
+}
+
+@media (width<=640px) {
+  .welcomeTitle {
+    font-size: 64px;
+  }
+}
+
+.googleButton {
+  cursor: pointer;
+  background-color: #3e2c14;
+  border-radius: 30px;
+  justify-content: center;
+  align-items: center;
+  width: clamp(250px, 70%, 802px);
+  margin-top: 2vh;
+  padding: 1.2rem 2rem;
+  display: flex;
+  border: none;
+  flex-wrap: nowrap;
+}
+
+@media (width<=991px) {
+  .googleButton {
+    width: 90%;
+    max-width: 802px;
+  }
+}
+
+@media (width<=640px) {
+  .googleButton {
+    height: 90px;
+  }
+}
+
+.googleIcon {
+  width: clamp(30px, 6vw, 85px);
+  height: clamp(30px, 6vw, 81px);
+  margin-right: 20px;
+}
+
+@media (width<=640px) {
+  .googleIcon {
+    width: 60px;
+    height: 56px;
+  }
+}
+
+.buttonText {
+  color: #fff;
+  font-family: Kadwa, serif;
+  font-size: clamp(1.5rem, 4vw, 3rem);
+  font-weight: 700;
+}
+
+@media (width<=640px) {
+  .buttonText {
+    font-size: 36px;
+  }
+}
+
+.signUpText {
+  letter-spacing: 2px;
+  font-family: Inter, sans-serif;
+  font-size: clamp(1rem, 2.5vw, 2rem);
+  text-align: center;
+  margin-top: 2vh;
+}
+@media (width<=991px) {
+  .signUpText {
+    margin-top: 150px;
+    font-size: 28px;
+  }
+}
+
+@media (width<=640px) {
+  .signUpText {
+    letter-spacing: 2px;
+    margin-top: 100px;
+    font-size: 20px;
+  }
+}
+
+.exclamation {
+  color: #3595ef;
+}
