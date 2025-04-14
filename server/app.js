@@ -108,6 +108,24 @@ app.post("/adduser", async (req, res) => {
   }
 });
 
+app.post("/check-userid", async (req, res) => {
+  const { user_ID } = req.body;
+
+  try {
+    const pool = await connectDB();
+    const result = await pool
+      .request()
+      .input("user_ID", user_ID)
+      .query("SELECT 1 FROM dbo.users WHERE user_ID = @user_ID");
+
+    const exists = result.recordset.length > 0;
+    res.json({ exists });
+  } catch (err) {
+    console.error("Error checking user_ID:", err);
+    res.status(500).json({ error: "Database error", details: err.message });
+  }
+});
+
 // --- Server Listen ---
 app.listen(PORT, () => {
   console.log("🚀 Server Listening on PORT:", PORT);

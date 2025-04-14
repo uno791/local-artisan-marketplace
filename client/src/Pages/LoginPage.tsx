@@ -4,13 +4,14 @@ import { Logo } from "../components/LogInPageComp/Logo";
 import { WelcomeMessage } from "../components/LogInPageComp/WelcomeMessage";
 import { GoogleLogInButton } from "../components/LogInPageComp/GoogleLoginButton";
 import { SignUpPrompt } from "../components/LogInPageComp/SignUpPrompt";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 
 export default function LoginPage() {
   const [errorMessage, setErrorMessage] = React.useState<string | null>(null);
   const [successMessage, setSuccessMessage] = React.useState<string | null>(
     null
   );
+  const navigate = useNavigate();
 
   return (
     <main className={styles.pageWrapper}>
@@ -19,7 +20,10 @@ export default function LoginPage() {
         <WelcomeMessage />
         <GoogleLogInButton
           onError={(msg: string) => setErrorMessage(msg)}
-          onSuccessMessage={(msg: string) => setSuccessMessage(msg)}
+          onSuccessMessage={(msg: string) => {
+            setSuccessMessage(msg);
+            navigate("/home"); // ✅ Go to home page on success
+          }}
         />
         <SignUpPrompt />
 

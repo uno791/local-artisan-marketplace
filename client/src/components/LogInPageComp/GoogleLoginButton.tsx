@@ -25,8 +25,17 @@ export function GoogleLogInButton({
         );
 
         const userData = res.data;
-        console.log("User info:", userData);
-        onSuccessMessage("Successfully logged in!");
+        const user_ID = userData.sub;
+        const baseURL = import.meta.env.VITE_API_BASE_URL;
+        const checkRes = await axios.post(`${baseURL}/check-userid`, {
+          user_ID,
+        });
+        if (checkRes.data.exists) {
+          onSuccessMessage("Successfully logged in!");
+          // navigate to home pls
+        } else {
+          onError("You are not registered in our system.");
+        }
       } catch (err) {
         console.error("Failed to fetch user info", err);
         onError("Something went wrong fetching your info.");
