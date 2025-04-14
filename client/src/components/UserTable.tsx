@@ -9,13 +9,15 @@ interface User {
   postal_code: number;
   phone_no: string;
 }
-
+ 
 const UserTable = () => {
   const [users, setUsers] = useState<User[]>([]);
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    fetch("/users")
+    fetch(
+      "https://artisan-api-server-ascfbqfkgccrf0ap.southafricanorth-01.azurewebsites.net/users"
+    )
       .then((res) => res.json())
       .then((data) => {
         setUsers(data);
