@@ -12,14 +12,12 @@ function QuestionsPage() {
   const [selectedArtForms, setSelectedArtForms] = React.useState<string[]>([]);
   const [submitted, setSubmitted] = React.useState(false);
   const [error, setError] = React.useState<string | null>(null);
-
   const { user } = useUser();
   const navigate = useNavigate();
 
   const handleApplyClick = async () => {
     setError(null);
-
-    if (!userName.trim()) {
+    if (!userName.trim() || "") {
       setError("Please enter a username.");
       return;
     }
