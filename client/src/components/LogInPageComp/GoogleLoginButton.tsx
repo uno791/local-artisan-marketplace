@@ -2,6 +2,7 @@ import React from "react";
 import styles from "./LoginPage.module.css";
 import { useGoogleLogin } from "@react-oauth/google";
 import axios from "axios";
+import { useNavigate } from "react-router-dom";
 
 interface GoogleLogInButtonProps {
   onError: (message: string) => void;
@@ -12,6 +13,7 @@ export function GoogleLogInButton({
   onError,
   onSuccessMessage,
 }: GoogleLogInButtonProps) {
+  const navigate = useNavigate();
   const login = useGoogleLogin({
     onSuccess: async (tokenResponse) => {
       try {
@@ -33,6 +35,7 @@ export function GoogleLogInButton({
         if (checkRes.data.exists) {
           onSuccessMessage("Successfully logged in!");
           // navigate to home pls
+          navigate("home");
         } else {
           onError("You are not registered in our system.");
         }
