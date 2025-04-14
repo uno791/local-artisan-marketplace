@@ -21,8 +21,7 @@ function QuestionsPage() {
 
   const handleApplyClick = async () => {
     setError(null);
-
-    if (!userName.trim()) {
+    if (!userName.trim() || "") {
       setError("Please enter a username.");
       return;
     }
