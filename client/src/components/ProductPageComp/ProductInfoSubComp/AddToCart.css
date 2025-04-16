@@ -1,0 +1,21 @@
+.add-to-cart-container {
+    margin-top: 24px;
+  }
+  
+  .add-to-cart-button {
+    background-color: #3b2e2a; /* rich dark brown from Figma */
+    color: white;
+    font-size: 16px;
+    font-weight: 600;
+    padding: 14px 20px;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    width: 100%;
+    transition: background-color 0.2s ease;
+  }
+  
+  .add-to-cart-button:hover {
+    background-color: #2f241f;
+  }
+  

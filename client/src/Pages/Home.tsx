@@ -1,6 +1,7 @@
 import "../components/HomePageComp/Home.css";
 import { useState, useEffect } from "react";
 import productImg from "../assets/localish-product.jpg";
+import { Link } from "react-router-dom";
 import axios from "axios";
 
 interface Product {
@@ -107,16 +108,21 @@ function Home() {
         <ul className="all-products-grid">
           {gridProducts.map((product, index) => (
             <li key={index} className="product-card">
-              <article>
-                <figure>
-                  <img src={product.image_url || productImg} alt="Product" />
-                  <figcaption>
-                    <p className="title">{product.product_name}</p>
-                    <p className="artist">{product.username}</p>
-                    <p className="price">{`R${product.price}`}</p>
-                  </figcaption>
-                </figure>
-              </article>
+              <Link
+                to={`/Product/${product.product_id}`}
+                style={{ textDecoration: "none", color: "inherit" }}
+              >
+                <article>
+                  <figure>
+                    <img src={product.image_url || productImg} alt="Product" />
+                    <figcaption>
+                      <p className="title">{product.product_name}</p>
+                      <p className="artist">{product.username}</p>
+                      <p className="price">{`R${product.price}`}</p>
+                    </figcaption>
+                  </figure>
+                </article>
+              </Link>
             </li>
           ))}
         </ul>
