@@ -1,0 +1,47 @@
+.footer {
+    background-color: #efe2cc;
+    padding: 2rem 3rem;
+    margin-top: 4rem;
+    border-top: 1px solid #ddd;
+    font-family: 'Montserrat', sans-serif;
+    color: #3e2c14;
+  }
+  
+  .footer-content {
+    display: flex;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    gap: 2rem;
+    max-width: 1200px;
+    margin: 0 auto;
+  }
+  
+  .footer-branding {
+    flex: 1 1 250px;
+  }
+  
+  .footer-logo {
+    height: 150px;
+    margin-bottom: 1rem;
+  }
+  
+  .footer-description {
+    font-size: 0.9rem;
+    color: #5c4a2f;
+  }
+  
+  .footer-section {
+    flex: 1 1 200px;
+  }
+  
+  .footer-heading {
+    margin-bottom: 0.75rem;
+  }
+  
+  .footer-bottom {
+    text-align: center;
+    font-size: 0.8rem;
+    margin-top: 2rem;
+    color: #7a6a4f;
+  }
+  
