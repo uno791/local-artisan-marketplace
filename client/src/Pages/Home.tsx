@@ -21,7 +21,7 @@ function Home() {
   const cardWidth = 240;
   const maxIndex = Math.ceil(carouselProducts.length / visibleCount) - 1;
 
-  function scrollTo(direction) {
+  function scrollTo(direction: "left" | "right") {
     setCurrentIndex(function (current) {
       let newIndex = current;
 
