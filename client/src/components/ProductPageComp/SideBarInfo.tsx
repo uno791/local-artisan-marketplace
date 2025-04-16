@@ -1,6 +1,6 @@
 import ArtistInfo from "./SideBarSubComp/ArtistInfo";
 import ReviewList from "./SideBarSubComp/ReviewList";
-import "./SidebarInfo.css";
+import "./SideBarInfo.css";
 
 interface Artisan {
   username: string;
