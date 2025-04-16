@@ -5,6 +5,7 @@ import LoginPage from "./Pages/LoginPage";
 import QuestionsPage from "./Pages/QuestionsPage";
 import SignUpPage from "./Pages/SignUpPage";
 import WelcomePage from "./Pages/WelcomePage";
+import ProductPage from "./Pages/ProductPage";
 //import { BrowserRouter } from "react-router-dom";
 //import NavBar from "./components/NavBar";
 
@@ -21,6 +22,7 @@ function App() {
           <Route path="/SignUpPage" element={<SignUpPage />} />
           <Route path="/LogInPage" element={<LoginPage />} />
           <Route path="/QuestionsPage" element={<QuestionsPage />} />
+          <Route path="/product/:id" element={<ProductPage />} />
         </Routes>
       </Router>
     </GoogleOAuthProvider>
