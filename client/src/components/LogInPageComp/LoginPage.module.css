@@ -134,6 +134,11 @@
   display: flex;
   border: none;
   flex-wrap: nowrap;
+  transition: background-color 0.3s ease;
+}
+
+.googleButton:hover {
+  background-color: #000;
 }
 
 @media (width<=991px) {

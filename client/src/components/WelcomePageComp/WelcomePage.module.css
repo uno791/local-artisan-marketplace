@@ -100,24 +100,41 @@
 
 .signUpButton,
 .loginButton {
-  color: #fff;
-  cursor: pointer;
-  border: none;
+  --secondary-color: #fff;
+  --hover-color: #111;
+  --arrow-width: 10px;
+  --arrow-stroke: 2px;
+  box-sizing: border-box;
+  border: 0;
   border-radius: 30px;
-  width: 220px;
-  height: 70px;
-  font-family: Kadwa, serif;
-  font-size: 28px;
+  color: var(--secondary-color);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.6em;
   font-weight: 700;
+  font-family: Kadwa, serif;
+  cursor: pointer;
+  transition: 0.2s background;
 }
 
+
 .signUpButton {
-  background-color: #3e2c14;
+  --primary-color: #3e2c14;
+  background: var(--primary-color);
+  width: 220px;
+  height: 70px;
+  font-size: 28px;
 }
 
 .loginButton {
-  background-color: #ba8847;
+  --primary-color: #ba8847;
+  background: var(--primary-color);
+  width: 220px;
+  height: 70px;
+  font-size: 28px;
 }
+
 
 @media (width<=991px) {
   .signUpButton,
@@ -135,4 +152,52 @@
     height: 50px;
     font-size: 20px;
   }
+}
+
+
+.signUpButton .arrow-wrapper,
+.loginButton .arrow-wrapper {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.signUpButton .arrow,
+.loginButton .arrow {
+  margin-top: 1px;
+  width: var(--arrow-width);
+  background: var(--primary-color);
+  height: var(--arrow-stroke);
+  position: relative;
+  transition: 0.2s;
+}
+
+.signUpButton .arrow::before,
+.loginButton .arrow::before {
+  content: "";
+  box-sizing: border-box;
+  position: absolute;
+  border: solid var(--secondary-color);
+  border-width: 0 var(--arrow-stroke) var(--arrow-stroke) 0;
+  display: inline-block;
+  top: -3px;
+  right: 3px;
+  transition: 0.2s;
+  padding: 3px;
+  transform: rotate(-45deg);
+}
+
+.signUpButton:hover,
+.loginButton:hover {
+  background-color: var(--hover-color);
+}
+
+.signUpButton:hover .arrow,
+.loginButton:hover .arrow {
+  background: var(--secondary-color);
+}
+
+.signUpButton:hover .arrow::before,
+.loginButton:hover .arrow::before {
+  right: 0;
 }

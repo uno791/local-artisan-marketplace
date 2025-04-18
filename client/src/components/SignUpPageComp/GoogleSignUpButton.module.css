@@ -10,6 +10,11 @@
   display: flex;
   border: none;
   flex-wrap: nowrap;
+  transition: background-color 0.3s ease;
+}
+
+.signUpButton:hover {
+  background-color: #000;
 }
 
 .googleIcon {

@@ -10,6 +10,9 @@ const ApplyButton: React.FC<ApplyButtonProps> = ({ onApply }) => {
     <div className={styles.applyContainer}>
       <button className={styles.applyButton} onClick={onApply}>
         Apply
+        <span className={styles.arrowWrapper}>
+          <span className={styles.arrow}></span>
+        </span>
       </button>
     </div>
   );

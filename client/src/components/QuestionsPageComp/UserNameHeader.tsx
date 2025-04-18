@@ -13,14 +13,15 @@ const UserNameHeader: React.FC<UserNameHeaderProps> = ({
   return (
     <header className={styles.headerContainer}>
       <h2 className={styles.usernameTitle}>Create a username:</h2>
-      <div className={styles.iconContainer}>
+      <div className={styles.inputContainer}>
         <input
           type="text"
-          className={styles.usernameInput}
-          placeholder="Enter username"
           value={userName}
           onChange={(e) => setUserName(e.target.value)}
+          required
         />
+        <label className={styles.label}>Enter username</label>
+        <span className={styles.underline}></span>
       </div>
     </header>
   );

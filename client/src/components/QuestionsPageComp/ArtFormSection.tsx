@@ -10,10 +10,10 @@ interface ArtFormSectionProps {
 const ArtFormSection: React.FC<ArtFormSectionProps> = ({
   selectedArtForms,
   setSelectedArtForms,
-
 }) => {
   const artForms = [
-    ["Painting",
+    [
+      "Painting",
       "Sculpture",
       "Pottery",
       "Photography",
@@ -46,18 +46,17 @@ const ArtFormSection: React.FC<ArtFormSectionProps> = ({
         <div key={rowIndex} className={styles.buttonRow}>
           {row.map((artForm, index) => (
             <ArtFormButton
-            key={`${rowIndex}-${index}`}
-            label={artForm}
-            isSelected={selectedArtForms.includes(artForm)} // ✅ add this
-            onClick={() => {
-              let isAlreadySelected = selectedArtForms.includes(artForm);
-              let updated = isAlreadySelected
-                ? selectedArtForms.filter((form) => form !== artForm)
-                : [...selectedArtForms, artForm];
-              setSelectedArtForms(updated);
-            }}
-          />
-          
+              key={`${rowIndex}-${index}`}
+              label={artForm}
+              isSelected={selectedArtForms.includes(artForm)} // ✅ add this
+              onClick={() => {
+                let isAlreadySelected = selectedArtForms.includes(artForm);
+                let updated = isAlreadySelected
+                  ? selectedArtForms.filter((form) => form !== artForm)
+                  : [...selectedArtForms, artForm];
+                setSelectedArtForms(updated);
+              }}
+            />
           ))}
         </div>
       ))}

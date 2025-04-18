@@ -7,11 +7,21 @@ export function ActionButtons() {
   return (
     <div className={styles.buttonContainer}>
       <Link to="/SignUpPage">
-        <button className={styles.signUpButton}>Sign Up</button>
+        <button className={styles.signUpButton}>
+          Sign Up
+          <span className={styles["arrow-wrapper"]}>
+            <span className={styles.arrow}></span>
+          </span>
+        </button>
       </Link>
 
       <Link to="/LogInPage">
-        <button className={styles.loginButton}>Log In</button>
+        <button className={styles.loginButton}>
+          Log In
+          <span className={styles["arrow-wrapper"]}>
+            <span className={styles.arrow}></span>
+          </span>
+        </button>
       </Link>
     </div>
   );

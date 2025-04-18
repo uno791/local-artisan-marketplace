@@ -15,7 +15,7 @@
 
 .headerContainer {
   display: flex;
-  align-items: center; /* 👈 aligns the input + text vertically */
+  align-items: center; 
   justify-content: flex-start;
   gap: 1rem;
   margin-bottom: 2vh;
@@ -35,7 +35,7 @@
   font-size: clamp(1.25rem, 2.5vw, 2rem);
   font-weight: 400;
   line-height: 1.2;
-  margin: 0; /* 👈 ensures it's centered */
+  margin: 0; 
 }
 
 
@@ -47,7 +47,7 @@
   align-items: center;
   padding: 0.5rem 1rem;
   width: 300px;
-  height: 40px; /* 👈 same as font line height */
+  height: 40px; 
   box-sizing: border-box;
 }
 
@@ -77,18 +77,18 @@
   letter-spacing: 6px;
   text-align: center;
   font-family: Kadwa, serif;
-  font-size: clamp(1.5rem, 6vw, 4rem);
+  font-size: clamp(0.5rem, 5vw, 3rem);
   font-weight: 700;
   line-height: 1;
   margin: 2vh 0;
 }
 
 .sectionTitle {
-  color: #000;
+  color: #3e2c14;
   letter-spacing: 2px;
   margin-left: 1vw;
   font-family: Inter, sans-serif;
-  font-size: clamp(1.25rem, 3vw, 2rem);
+  font-size: clamp(1rem, 3vw, 1rem);
   font-weight: 600;
 }
 
@@ -111,21 +111,29 @@
 }
 
 .artFormButton {
-  color: #3e2c14;
-  background-color: #d3b88d;
-  border: 2px solid #9a8c5e;
-  border-radius: 30px;
-  padding: 0.8rem 1.5rem;
-  cursor: pointer;
+  color: #3e2c14; 
+  border-radius: 30px; 
   transition: background-color 0.2s;
- 
+    padding: 10px 20px;
+    border: 1px solid #aaa;
+    background-color: #fff;
+    transition: background-color 0.2s ease;
+    cursor: pointer;
   font-family: inherit;
   font-size: inherit;
   font-weight: inherit;
   letter-spacing: inherit;
 }
 
-.applyButton {
+.artFormButton:hover {
+  background-color: #3e2c14;
+  border-color: #3e2c14;
+  color: #fff;
+}
+
+
+
+/* .applyButton {
   background-color: #3e2c14;
   color: white;
   border: none;
@@ -138,32 +146,28 @@
   cursor: pointer;
   transition: background-color 0.2s;
   margin-top: 1vh; /* smaller margin */
-}
+  /* }  */
+
 
 
 .artInterestSection {
   width: 100%;
   max-width: 1000px;
 }
-.artFormButton {
-  padding: 10px 20px;
-  border: 1px solid #aaa;
-  background-color: #fff;
-  transition: background-color 0.2s ease;
-  cursor: pointer;
-}
+
 
 .artFormButton.selected {
-  background-color: #d0eaff; /* light blue tint */
-  border-color: #3399ff;
+  background-color: #3e2c14;
+  border-color: #3e2c14;
+  color: #fff;
 }
 .popup {
   position: fixed;
   top: 30%;
   left: 50%;
   transform: translateX(-50%);
-  background-color: white;         /* ✅ white background */
-  color: black;                    /* ✅ black text */
+  background-color: white;         
+  color: black;                   
   padding: 30px;
   border-radius: 10px;
   border: 2px solid #3399ff;
@@ -180,7 +184,7 @@
 
 .popup p {
   font-size: 1rem;
-  color: black; /* Ensure this line is here */
+  color: black; 
 }
 
 
@@ -193,3 +197,117 @@
   border-radius: 5px;
   cursor: pointer;
 }
+
+.inputContainer {
+  position: relative;
+  margin: 50px auto;
+  width: 200px;
+}
+
+.inputContainer input[type="text"] {
+  font-size: 20px;
+  width: 100%;
+  border: none;
+  border-bottom: 2px solid #ccc;
+  padding: 5px 0;
+  background-color: transparent;
+  outline: none;
+  color: #3e2c14;
+  font-family: Inter, sans-serif;
+}
+
+.inputContainer .label {
+  position: absolute;
+  top: 0;
+  left: 0;
+  color: #ccc;
+  transition: all 0.3s ease;
+  pointer-events: none;
+}
+
+.inputContainer input[type="text"]:focus ~ .label,
+.inputContainer input[type="text"]:valid ~ .label {
+  top: -20px;
+  font-size: 16px;
+  color: #333;
+}
+
+.inputContainer .underline {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  height: 2px;
+  width: 100%;
+  background-color: #b9b0b0;
+  transform: scaleX(0);
+  transition: all 0.3s ease;
+}
+
+.inputContainer input[type="text"]:focus ~ .underline,
+.inputContainer input[type="text"]:valid ~ .underline {
+  transform: scaleX(1);
+}
+
+.applyButton {
+  
+  --primary-color: #3e2c14;
+  --secondary-color: #fff;
+  --hover-color: #111;
+  --arrow-width: 10px;
+  --arrow-stroke: 2px;
+
+  box-sizing: border-box;
+  border: 0;
+  border-radius: 20px;
+  color: var(--secondary-color);
+  padding: 1em 1.8em;
+  background: var(--primary-color);
+  display: flex;
+  transition: 0.2s background;
+  align-items: center;
+  gap: 0.6em;
+  font-weight: bold;
+  cursor: pointer;
+}
+
+.arrowWrapper {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.arrow {
+  margin-top: 1px;
+  width: var(--arrow-width);
+  background: var(--primary-color);
+  height: var(--arrow-stroke);
+  position: relative;
+  transition: 0.2s;
+}
+
+.arrow::before {
+  content: "";
+  box-sizing: border-box;
+  position: absolute;
+  border: solid var(--secondary-color);
+  border-width: 0 var(--arrow-stroke) var(--arrow-stroke) 0;
+  display: inline-block;
+  top: -3px;
+  right: 3px;
+  transition: 0.2s;
+  padding: 3px;
+  transform: rotate(-45deg);
+}
+
+.applyButton:hover {
+  background-color: var(--hover-color);
+}
+
+.applyButton:hover .arrow {
+  background: var(--secondary-color);
+}
+
+.applyButton:hover .arrow::before {
+  right: 0;
+}
+
