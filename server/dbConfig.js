@@ -4,7 +4,7 @@ const sql = require("mssql");
 const config = {
   user: process.env.SQL_USER,
   password: process.env.SQL_PASSWORD,
-  server: "local-artisan-marketplace-server.database.windows.net",
+  server: "local-artisan-marketplace-server1.database.windows.net",
   database: "local-artisan-marketplace",
   options: {
     encrypt: true,
