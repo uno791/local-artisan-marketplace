@@ -93,8 +93,6 @@ app.post("/adduser", async (req, res) => {
   const {
     username,
     user_ID,
-    first_name,
-    last_name,
     role,
     postal_code,
     phone_no,
@@ -108,15 +106,11 @@ app.post("/adduser", async (req, res) => {
       .request()
       .input("username", username)
       .input("user_ID", user_ID)
-      .input("first_name", first_name || null)
-      .input("last_name", last_name || null)
-      .input("role", role || null)
-      .input("postal_code", postal_code || null)
-      .input("phone_no", phone_no || null).query(`
+      .query(`
         INSERT INTO dbo.users 
-        (username, user_ID, first_name, last_name, role, postal_code, phone_no)
+        (username, user_ID)
         VALUES 
-        (@username, @user_ID, @first_name, @last_name, @role, @postal_code, @phone_no)
+        (@username, @user_ID)
       `);
 
     await pool.close();

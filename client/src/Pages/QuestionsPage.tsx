@@ -44,11 +44,6 @@ function QuestionsPage() {
       const res = await axios.post(`${baseURL}/adduser`, {
         username: userName,
         user_ID: user.id,
-        first_name: user?.firstName,
-        last_name: user?.lastName,
-        role: "Buyer",
-        postal_code: 1234,
-        phone_no: "0123456789",
       });
 
       setSubmitted(true);
