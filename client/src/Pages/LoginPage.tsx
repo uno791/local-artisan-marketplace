@@ -34,10 +34,19 @@ export default function LoginPage() {
           </div>
         )}
 
-        {successMessage && (
+        {successMessage === "Successfully logged in!" && (
           <div className={styles.popupSuccess} style={{ zIndex: 1000 }}>
             <p>{successMessage}</p>
             <Link to="/Home">
+              <button onClick={() => setSuccessMessage(null)}>Close</button>
+            </Link>
+          </div>
+        )}
+
+        {successMessage === "Welcome back, Admin!" && (
+          <div className={styles.popupSuccess} style={{ zIndex: 1000 }}>
+            <p>{successMessage}</p>
+            <Link to="/SellerVerification">
               <button onClick={() => setSuccessMessage(null)}>Close</button>
             </Link>
           </div>
