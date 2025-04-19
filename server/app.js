@@ -90,22 +90,13 @@ app.post("/check-user", async (req, res) => {
 });
 
 app.post("/adduser", async (req, res) => {
-  const {
-    username,
-    user_ID,
-    role,
-    postal_code,
-    phone_no,
-  } = req.body;
+  const { username, user_ID, role, postal_code, phone_no } = req.body;
 
   try {
     const pool = await connectDB();
     // Check if the user already exists
 
-    await pool
-      .request()
-      .input("username", username)
-      .input("user_ID", user_ID)
+    await pool.request().input("username", username).input("user_ID", user_ID)
       .query(`
         INSERT INTO dbo.users 
         (username, user_ID)
@@ -131,10 +122,14 @@ app.post("/check-userid", async (req, res) => {
     const result = await pool
       .request()
       .input("user_ID", user_ID)
-      .query("SELECT 1 FROM dbo.users WHERE user_ID = @user_ID");
+      .query("SELECT role FROM dbo.users WHERE user_ID = @user_ID");
 
-    const exists = result.recordset.length > 0;
-    res.json({ exists });
+    if (result.recordset.length === 0) {
+      res.json({ exists: false });
+    } else {
+      const role = result.recordset[0].role;
+      res.json({ exists: true, role });
+    }
   } catch (err) {
     console.error("Error checking user_ID:", err);
     res.status(500).json({ error: "Database error", details: err.message });
