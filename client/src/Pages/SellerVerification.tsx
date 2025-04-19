@@ -1,78 +1,53 @@
 import React, { useState } from "react";
 import styles from "../components/SellerVerificationPageComp/SellerVerification.module.css";
 import SellerCard from "../components/SellerVerificationPageComp/SellerCard";
-import { Seller } from "../Users/index";
+import { Seller } from "../Users";
 
 const initialSellers: Seller[] = [
   {
-    id: "1",
-    name: "Artisan Crafts Co",
-    businessType: "Home Decor - LLC",
-    description: "Handcrafted rustic decor items.",
-    contactEmail: "contact@artisancrafts.com",
-    contactPhone: "+27 152 567 4457",
-    owner: "Maria Rodriguez",
-    status: "Pending",
-    submissionDate: "2025-02-25",
-    documentsSubmitted: true,
+    username: "maria_r",
+    shop_name: "Artisan Crafts Co",
+    bio: "Handcrafted rustic decor items.",
+    shop_pfp: "https://via.placeholder.com/64",
+    shop_banner: "https://via.placeholder.com/300x100",
+    shop_address: "123 Market Street, Cape Town",
+    verified: 0,
+    create_date: "2025-02-25",
   },
   {
-    id: "2",
-    name: "Vintage Treasures",
-    businessType: "Online Store",
-    description: "A boutique of retro vintage items.",
-    contactEmail: "info@vintagetreasures.com",
-    contactPhone: "+27 105 893 2356",
-    owner: "James Thompson",
-    status: "Reviewing",
-    submissionDate: "2025-04-14",
-    documentsSubmitted: true,
+    username: "james_t",
+    shop_name: "Vintage Treasures",
+    bio: "A boutique of retro vintage items.",
+    shop_pfp: "https://via.placeholder.com/64",
+    shop_banner: "https://via.placeholder.com/300x100",
+    shop_address: "456 Retro Blvd, Johannesburg",
+    verified: 1,
+    create_date: "2025-04-14",
   },
 ];
 
 const SellerVerification: React.FC = () => {
   const [sellers, setSellers] = useState<Seller[]>(initialSellers);
 
-  const updateSellerStatus = (id: string, status: Seller["status"]) => {
-    if (status === "Approved" || status === "Rejected") {
-      // Remove from list
-      setSellers((prev) => prev.filter((s) => s.id !== id));
-    } else {
-      // Just update status
-      setSellers((prev) =>
-        prev.map((s) => (s.id === id ? { ...s, status } : s))
-      );
-    }
+  const updateSellerStatus = (username: string, status: number) => {
+    setSellers((prev) =>
+      prev.map((s) =>
+        s.username === username ? { ...s, verified: status } : s
+      )
+    );
   };
-
-  const activeTab = "Seller Verification";
 
   return (
     <div className={styles.wrapper}>
       <div className={styles.sidebar}>
         <h2>Admin Dashboard</h2>
-        {/* <a
-          href="#"
-          className={`${styles.navItem} ${
-            activeTab === "Admin Dashboard" ? styles.navItemActive : ""
-          }`}
-        >
+        <a href="#" className={styles.navItem}>
           Sales Analytics
         </a>
-        <a
-          href="#"
-          className={`${styles.navItem} ${
-            activeTab === "User Reports" ? styles.navItemActive : ""
-          }`}
-        >
+        <a href="#" className={styles.navItem}>
           User Reports
-        </a> */}
-        <a
-          href="#"
-          className={`${styles.navItem} ${
-            activeTab === "Seller Verification" ? styles.navItemActive : ""
-          }`}
-        >
+        </a>
+        <a href="#" className={`${styles.navItem} ${styles.navItemActive}`}>
           Seller Verification
         </a>
       </div>
@@ -80,15 +55,17 @@ const SellerVerification: React.FC = () => {
       <div className={styles.container}>
         <h1>Seller Verification</h1>
         <div className={styles.cards}>
-          {sellers.map((seller) => (
-            <SellerCard
-              key={seller.id}
-              seller={seller}
-              onStartReview={() => updateSellerStatus(seller.id, "Reviewing")}
-              onApprove={() => updateSellerStatus(seller.id, "Approved")}
-              onReject={() => updateSellerStatus(seller.id, "Rejected")}
-            />
-          ))}
+          {sellers
+            .filter((s) => s.verified === 0 || s.verified === 1)
+            .map((seller) => (
+              <SellerCard
+                key={seller.username}
+                seller={seller}
+                onStartReview={() => updateSellerStatus(seller.username, 1)}
+                onApprove={() => updateSellerStatus(seller.username, 2)}
+                onReject={() => updateSellerStatus(seller.username, 3)}
+              />
+            ))}
         </div>
       </div>
     </div>

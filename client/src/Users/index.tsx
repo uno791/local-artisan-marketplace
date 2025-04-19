@@ -1,12 +1,10 @@
 export interface Seller {
-  id: string;
-  name: string;
-  businessType: string;
-  description: string;
-  contactEmail: string;
-  contactPhone: string;
-  owner: string;
-  status: "Pending" | "Reviewing" | "Approved" | "Rejected";
-  submissionDate: string;
-  documentsSubmitted: boolean;
+  username: string;
+  shop_name: string;
+  bio: string;
+  shop_pfp: string;
+  shop_banner: string;
+  shop_address: string;
+  verified: number;
+  create_date: string;
 }

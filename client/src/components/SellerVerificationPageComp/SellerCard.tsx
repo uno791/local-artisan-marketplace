@@ -1,61 +1,66 @@
 import React from "react";
-import styles from "./SellerCard.module.css";
 import { Seller } from "../../Users";
+import styles from "./SellerCard.module.css";
 
-interface Props {
+interface SellerCardProps {
   seller: Seller;
-  onApprove?: () => void;
-  onReject?: () => void;
-  onStartReview?: () => void;
+  onStartReview: () => void;
+  onApprove: () => void;
+  onReject: () => void;
 }
 
-const SellerCard: React.FC<Props> = ({
+const statusText = ["Pending", "Reviewing", "Approved", "Rejected"];
+
+const SellerCard: React.FC<SellerCardProps> = ({
   seller,
+  onStartReview,
   onApprove,
   onReject,
-  onStartReview,
 }) => {
+  const {
+    shop_name,
+    username,
+    bio,
+    shop_address,
+    shop_pfp,
+    verified,
+    create_date,
+  } = seller;
+
   return (
     <div className={styles.card}>
-      <div className={styles.header}>
-        <span
-          className={`${styles.statusDot} ${
-            styles[seller.status.toLowerCase()]
-          }`}
-        />
-        <h3>{seller.name}</h3>
-        <span className={styles.date}>{seller.submissionDate}</span>
-      </div>
-      <p>
-        <strong>{seller.businessType}</strong> - {seller.description}
-      </p>
-      <p>
-        <strong>Owner:</strong> {seller.owner}
-      </p>
-      <p>
-        {seller.contactEmail}
-        <br />
-        {seller.contactPhone}
-      </p>
-      <div className={styles.actions}>
-        {seller.status === "Pending" && (
-          <>
-            <button onClick={onStartReview} className={styles.review}>
-              Start Review
-            </button>
-            <button className={styles.details}>View Details</button>
-          </>
+      <div className={styles.content}>
+        <img src={shop_pfp} alt="Shop Profile" className={styles.avatar} />
+        <h3>{shop_name}</h3>
+        <p>
+          <strong>Owner:</strong> {username}
+        </p>
+        <p>{bio}</p>
+        <p>
+          <strong>Address:</strong> {shop_address}
+        </p>
+        <p>
+          <strong>Date:</strong> {create_date}
+        </p>
+        <p>
+          <strong>Status:</strong> {statusText[verified]}
+        </p>
+
+        {verified === 0 && (
+          <button className={styles.reviewBtn} onClick={onStartReview}>
+            Start Review
+          </button>
         )}
-        {seller.status === "Reviewing" && (
-          <>
-            <button onClick={onApprove} className={styles.approve}>
+
+        {verified === 1 && (
+          <div className={styles.actionGroup}>
+            <button className={styles.approveBtn} onClick={onApprove}>
               Approve
             </button>
-            <button onClick={onReject} className={styles.reject}>
+            <button className={styles.rejectBtn} onClick={onReject}>
               Reject
             </button>
-            <button className={styles.details}>View Details</button>
-          </>
+          </div>
         )}
       </div>
     </div>
