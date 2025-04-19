@@ -1,0 +1,58 @@
+.card {
+    background: white;
+    border-radius: 10px;
+    padding: 16px;
+    margin: 8px;
+    box-shadow: 0 0 5px rgba(0,0,0,0.1);
+    width: 300px;
+    color: black;
+  }
+  
+  .header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+  
+  .statusDot {
+    height: 10px;
+    width: 10px;
+    border-radius: 50%;
+  }
+  
+  .pending { background: orange; }
+  .reviewing { background: blue; }
+  .approved { background: green; }
+  .rejected { background: red; }
+  
+  .date {
+    font-size: 12px;
+    color: #999;
+  }
+  
+  .actions {
+    margin-top: 12px;
+    display: flex;
+    gap: 8px;
+    flex-wrap: wrap;
+  }
+  
+  .review {
+    background: #5c4033;
+    color: white;
+  }
+  
+  .details {
+    background: lightgray;
+  }
+  
+  .approve {
+    background: green;
+    color: white;
+  }
+  
+  .reject {
+    background: red;
+    color: white;
+  }
+  

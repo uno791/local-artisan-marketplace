@@ -1,0 +1,50 @@
+.wrapper {
+    display: flex;
+    min-height: 100vh;
+    background-color: #f6eede;
+  }
+  
+  .sidebar {
+    width: 220px;
+    background-color: #f4e3cd;
+    padding: 20px;
+    border-right: 1px solid #ddd;
+  }
+  
+  .sidebar h2 {
+    font-size: 18px;
+    margin-bottom: 20px;
+    font-weight: bold;
+  }
+  
+  .navItem {
+    display: block;
+    margin-bottom: 12px;
+    padding: 10px;
+    text-decoration: none;
+    color: #333;
+    border-radius: 8px;
+    transition: background-color 0.2s;
+  }
+  
+  .navItem:hover {
+    background-color: #e4d5bd;
+  }
+  
+  .navItemActive {
+    background-color: #d1bfa3;
+    font-weight: bold;
+  }
+  
+  .container {
+    flex: 1;
+    padding: 24px;
+    color: #333;
+  }
+  
+  .cards {
+    display: flex;
+    gap: 16px;
+    flex-wrap: wrap;
+  }
+  
