@@ -1,6 +1,6 @@
 import React from "react";
 import styles from "./SellerCard.module.css";
-import { Seller } from "../../Types";
+import { Seller } from "../../Users";
 
 interface Props {
   seller: Seller;

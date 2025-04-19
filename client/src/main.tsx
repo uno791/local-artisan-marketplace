@@ -8,7 +8,7 @@ import SellerVerification from "./Pages/SellerVerification.tsx";
 createRoot(document.getElementById("root")!).render(
   <StrictMode>
     <UserProvider>
-      <SellerVerification />
+      <App />
     </UserProvider>
   </StrictMode>
 );

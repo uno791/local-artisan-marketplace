@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import styles from "../components/SellerVerificationPageComp/SellerVerification.module.css";
 import SellerCard from "../components/SellerVerificationPageComp/SellerCard";
-import { Seller } from "../Types";
+import { Seller } from "../Users/index";
 
 const initialSellers: Seller[] = [
   {
