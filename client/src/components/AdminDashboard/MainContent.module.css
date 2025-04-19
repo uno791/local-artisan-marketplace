@@ -1,0 +1,30 @@
+.mainContent {
+  background-color: #f6ebd9;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  flex: 1;
+  padding: 24px;
+  gap: 24px;
+  box-sizing: border-box;
+}
+
+.statisticsGrid {
+  display: flex;
+  gap: 16px;
+  flex-wrap: wrap;
+  width: 100%;
+  max-width: 1200px;
+  justify-content: space-between;
+}
+
+@media (max-width: 991px) {
+  .mainContent {
+    padding: 16px;
+  }
+
+  .statisticsGrid {
+    flex-direction: column;
+    gap: 16px;
+  }
+}
