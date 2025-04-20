@@ -8,7 +8,7 @@
   width: 100vw;
   padding: 16px;
   box-sizing: border-box;
-  overflow: hidden;
+  overflow-y: auto;
 }
 
 .welcomeHeading {
@@ -39,3 +39,13 @@
     font-size: clamp(1.5rem, 6vw, 4rem);
   }
 }
+@media (width <= 480px) {
+  .pageContainer {
+    padding: 24px 12px;
+  }
+
+  .welcomeHeading {
+    padding: 0 10px;
+  }
+}
+
