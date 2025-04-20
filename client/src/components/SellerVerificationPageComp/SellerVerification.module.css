@@ -1,38 +1,53 @@
 .wrapper {
-    display: flex;
-    min-height: 100vh;
-    background-color: #f6eede;
-  }
-  
-  .sidebar {
-    width: 220px;
-    background-color: #f4e3cd;
-    padding: 20px;
-    border-right: 1px solid #ddd;
-  }
+  display: flex;
+  min-height: 100vh;
+  width: 100vw; /* ✅ Ensure full width */
+  background-color: #f6eede;
+  overflow: hidden; /* optional: prevents scrollbars from overflowing elements */
+}
+
+/* Sidebar stays fixed width */
+.sidebar {
+  width: 220px;
+  background-color: #f4e3cd;
+  padding: 20px;
+  border-right: 1px solid #ddd;
+  box-sizing: border-box;
+}
   
   .sidebar h2 {
-    font-size: 18px;
-    margin-bottom: 20px;
-    font-weight: bold;
+  font-size: 24px;           /* larger */
+  color: #000;               /* black */
+  font-weight: 700;          /* bold */
+  margin-bottom: 24px;
   }
   
   .navItem {
     display: block;
-    margin-bottom: 12px;
-    padding: 10px;
-    text-decoration: none;
-    color: #333;
-    border-radius: 8px;
-    transition: background-color 0.2s;
+  margin-bottom: 12px;
+  padding: 10px;
+  text-decoration: none;
+  color: #888;               /* grey for inactive */
+  border-radius: 8px;
+  font-weight: 400;
+  transition: background-color 0.2s, font-weight 0.2s, color 0.2s;
   }
   
   .navItem:hover {
     background-color: #e4d5bd;
+    color: #000;
+  }
+  .navItem:focus {
+    outline: none;
+    background-color: #d1bfa3;
+    color: #000;
   }
   
+  
+  
   .navItemActive {
-    background-color: #d1bfa3;
+    /* background-color: #d1bfa3; */
+    color: #000;     
     font-weight: bold;
   }
   
@@ -40,6 +55,9 @@
     flex: 1;
     padding: 24px;
     color: #302c2c;
+    box-sizing: border-box;
+    display: flex;
+    flex-direction: column;
   }
   
   .cards {
