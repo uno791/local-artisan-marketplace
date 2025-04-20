@@ -1,8 +1,11 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import styles from "../components/SellerVerificationPageComp/SellerVerification.module.css";
 import SellerCard from "../components/SellerVerificationPageComp/SellerCard";
 import { Seller } from "../Users";
 import { Link } from "react-router-dom";
+import axios from "axios";
+
+const baseURL = import.meta.env.VITE_API_BASE_URL;
 
 const initialSellers: Seller[] = [
   {
@@ -28,9 +31,42 @@ const initialSellers: Seller[] = [
 ];
 
 const SellerVerification: React.FC = () => {
-  const [sellers, setSellers] = useState<Seller[]>(initialSellers);
+  const [sellers, setSellers] = useState<Seller[]>([]);
+
+  const fetchPendingSellers = async () => {
+    try {
+      const res = await axios.get(`${baseURL}/penartisans`);
+      setSellers(res.data);
+    } catch (err) {
+      console.error("❌ Error fetching artisans:", err);
+    }
+  };
+
+  const deleteArtisan = async (username: string) => {
+    try {
+      const res = await axios.delete(`${baseURL}/deleteartisan/${username}`);
+      console.log("✅", res.data.message);
+    } catch (err) {
+      console.error("❌ Error deleting artisan:", err);
+    }
+  };
+
+  const verifyArtisan = async (username: string) => {
+    try {
+      const res = await axios.put(`${baseURL}/verifyartisan/${username}`);
+      console.log("✅", res.data.message);
+    } catch (err) {
+      console.error("❌ Error verifying artisan:", err);
+    }
+  };
+
+  useEffect(() => {
+    fetchPendingSellers();
+  }, []);
 
   const updateSellerStatus = (username: string, status: number) => {
+    if (status - 1 === 1) verifyArtisan(username);
+    if (status - 1 === 2) deleteArtisan(username);
     setSellers((prev) =>
       prev.map((s) =>
         s.username === username ? { ...s, verified: status } : s
@@ -62,7 +98,7 @@ const SellerVerification: React.FC = () => {
         <h1>Seller Verification</h1>
         <div className={styles.cards}>
           {sellers
-            .filter((s) => s.verified === 0 || s.verified === 1)
+            .filter((s) => s.verified <= 3)
             .map((seller) => (
               <SellerCard
                 key={seller.username}
