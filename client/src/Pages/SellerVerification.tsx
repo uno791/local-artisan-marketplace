@@ -7,29 +7,6 @@ import axios from "axios";
 
 const baseURL = import.meta.env.VITE_API_BASE_URL;
 
-const initialSellers: Seller[] = [
-  {
-    username: "maria_r",
-    shop_name: "Artisan Crafts Co",
-    bio: "Handcrafted rustic decor items.",
-    shop_pfp: "https://via.placeholder.com/64",
-    shop_banner: "https://via.placeholder.com/300x100",
-    shop_address: "123 Market Street, Cape Town",
-    verified: 0,
-    create_date: "2025-02-25",
-  },
-  {
-    username: "james_t",
-    shop_name: "Vintage Treasures",
-    bio: "A boutique of retro vintage items.",
-    shop_pfp: "https://via.placeholder.com/64",
-    shop_banner: "https://via.placeholder.com/300x100",
-    shop_address: "456 Retro Blvd, Johannesburg",
-    verified: 0,
-    create_date: "2025-04-14",
-  },
-];
-
 const SellerVerification: React.FC = () => {
   const [sellers, setSellers] = useState<Seller[]>([]);
 
