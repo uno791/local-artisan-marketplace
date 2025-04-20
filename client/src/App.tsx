@@ -11,6 +11,8 @@ import Search from "./Pages/Search";
 import Cart from "./Pages/Cart";
 import ProductPage from "./Pages/ProductPage";
 import MainLayout from "./layouts/MainLayout";
+import SellerSignup from "./Pages/SellerSignup";
+
 
 // import UserTable from "./components/UserTable"; // 🟡 Temporarily disabled
 
@@ -26,6 +28,8 @@ function App() {
           <Route path="/SignUpPage" element={<SignUpPage />} />
           <Route path="/QuestionsPage" element={<QuestionsPage />} />
           <Route path="/Product/:id" element={<ProductPage />} />
+          <Route path="/seller-signup" element={<SellerSignup />} />
+
 
           {/* For Pages with NavBar and Footer */}
           <Route element={<MainLayout />}>
@@ -33,6 +37,8 @@ function App() {
             <Route path="/Search" element={<Search />} />
             <Route path="/Cart" element={<Cart />} />
             <Route path="/Profile" element={<Profile />} />
+            <Route path="/seller-signup" element={<SellerSignup />} />
+
           </Route>
         </Routes>
       </BrowserRouter>
