@@ -23,3 +23,4 @@ export default {
   collectCoverageFrom: ['src/**/*.{js,jsx,ts,tsx}', '!src/**/*.d.ts'],
   coverageReporters: ['json', 'lcov', 'text', 'clover'],
 };
+
