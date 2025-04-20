@@ -66,6 +66,21 @@ app.get("/product/:id", async (req, res) => {
   }
 });
 
+app.get("/penartisans", async (req, res) => {
+  try {
+    const pool = await connectDB();
+    const result = await pool
+      .request()
+      .query("SELECT * FROM dbo.artisans WHERE verified = 0");
+    await pool.close();
+
+    res.json(result.recordset);
+  } catch (err) {
+    console.error("❌ Failed to fetch users:", err);
+    res.status(500).json({ error: "DB query failed", details: err.message });
+  }
+});
+
 app.post("/check-user", async (req, res) => {
   const { username } = req.body;
 
@@ -133,6 +148,45 @@ app.post("/check-userid", async (req, res) => {
   } catch (err) {
     console.error("Error checking user_ID:", err);
     res.status(500).json({ error: "Database error", details: err.message });
+  }
+});
+
+app.delete("/deleteartisan/:username", async (req, res) => {
+  const { username } = req.params;
+
+  try {
+    const pool = await connectDB();
+    await pool
+      .request()
+      .input("username", username)
+      .query("DELETE FROM dbo.artisans WHERE username = @username");
+    await pool.close();
+
+    res.json({ message: `Deleted artisan with username: ${username}` });
+  } catch (err) {
+    console.error("❌ Failed to delete artisan:", err);
+    res.status(500).json({ error: "DB deletion failed", details: err.message });
+  }
+});
+
+app.put("/verifyartisan/:username", async (req, res) => {
+  const { username } = req.params;
+
+  try {
+    const pool = await connectDB();
+    await pool
+      .request()
+      .input("username", username)
+      .input("verified", 1)
+      .query(
+        "UPDATE dbo.artisans SET verified = @verified WHERE username = @username"
+      );
+    await pool.close();
+
+    res.json({ message: `Verified artisan with username: ${username}` });
+  } catch (err) {
+    console.error("❌ Failed to verify artisan:", err);
+    res.status(500).json({ error: "DB update failed", details: err.message });
   }
 });
 
