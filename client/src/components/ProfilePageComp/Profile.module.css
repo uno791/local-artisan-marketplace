@@ -227,3 +227,36 @@
   flex: 1;
   cursor: pointer;
 }
+
+/* Fix invisible flag + calling code in PhoneInput */
+.modal .PhoneInput {
+  display: flex;
+  align-items: center;
+  width: 100%;
+}
+
+.modal .PhoneInputCountry {
+  display: flex !important;
+  align-items: center;
+  padding-left: 0.5rem;
+  background-color: white;
+  border: 1px solid #ccc;
+  border-right: none;
+  border-radius: 8px 0 0 8px;
+  height: 100%;
+  opacity: 1 !important;
+  visibility: visible !important;
+  width: auto !important;
+}
+
+.modal .PhoneInputInput {
+  flex: 1;
+  padding: 0.75rem;
+  font-size: 1rem;
+  border: 1px solid #ccc;
+  border-left: none;
+  border-radius: 0 8px 8px 0;
+  background-color: white;
+  color: black;
+  box-sizing: border-box;
+}

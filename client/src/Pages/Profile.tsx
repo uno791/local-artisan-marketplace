@@ -19,7 +19,7 @@ function Profile() {
   const [image, setImage] = useState(profileImg);
   const [username, setUsername] = useState("Mario");
   const [postalCode, setPostalCode] = useState("-");
-  const [phone, setPhone] = useState("-");
+  const [phone, setPhone] = useState("");
   const [showModal, setShowModal] = useState(false);
 
   function openFilePicker() {

@@ -1,5 +1,3 @@
-import "react-phone-number-input/style.css";
-import PhoneInput from "react-phone-number-input";
 import styles from "./SellerSignup.module.css";
 
 type Props = {
@@ -24,23 +22,13 @@ function SellerForm(props: Props) {
       <label>Email Address</label>
       <input type="email" placeholder="Enter your email" />
 
-      <label>Phone Number</label>
-      <PhoneInput
-        placeholder="Enter phone number"
-        defaultCountry="ZA"
-        value={props.phone}
-        international={true}
-        countryCallingCodeEditable={false}
-        onChange={function (value) {
-          props.setPhone(value);
-        }}
-      />
-
-      <label>Seller Name</label>
-      <input type="text" placeholder="Enter your full name" />
-
       <label>Shop Location</label>
       <input type="text" placeholder="Enter your shop location" />
+
+      {/* Instruction text */}
+      <p className={styles["instruction-text"]}>
+        Please email us a scanned version of your South African ID or passport. Place your username and shop name in the subject of the email for it to be reviewed.
+      </p>
 
       <button type="submit">Create Seller Account</button>
     </form>
