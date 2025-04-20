@@ -22,7 +22,7 @@ const initialSellers: Seller[] = [
     shop_pfp: "https://via.placeholder.com/64",
     shop_banner: "https://via.placeholder.com/300x100",
     shop_address: "456 Retro Blvd, Johannesburg",
-    verified: 1,
+    verified: 0,
     create_date: "2025-04-14",
   },
 ];
