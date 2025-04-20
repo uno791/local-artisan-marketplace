@@ -19,3 +19,15 @@
     background-color: #2f241f;
   }
   
+  .cart-error {
+    color: red;
+    font-size: 0.85rem;
+    margin-top: 8px;
+  }
+
+  .cart-success {
+    color: green;
+    font-size: 0.85rem;
+    margin-top: 8px;
+  }
+  

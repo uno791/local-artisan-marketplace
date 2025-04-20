@@ -13,6 +13,7 @@ interface Product {
   product_name: string;
   description: string;
   price: number;
+  stock_quantity: number;
   image_url: string;
   username: string;
   details: string;
@@ -53,6 +54,7 @@ function ProductPage() {
             description={product.description}
             price={product.price}
             details={product.details}
+            product={product}
           />
         </section>
 
