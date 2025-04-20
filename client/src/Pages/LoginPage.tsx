@@ -5,7 +5,6 @@ import { WelcomeMessage } from "../components/LogInPageComp/WelcomeMessage";
 import { GoogleLogInButton } from "../components/LogInPageComp/GoogleLoginButton";
 import { SignUpPrompt } from "../components/LogInPageComp/SignUpPrompt";
 import { Link } from "react-router-dom";
-
 export default function LoginPage() {
   const [errorMessage, setErrorMessage] = React.useState<string | null>(null);
   const [successMessage, setSuccessMessage] = React.useState<string | null>(
@@ -46,7 +45,7 @@ export default function LoginPage() {
         {successMessage === "Welcome back, Admin!" && (
           <div className={styles.popupSuccess} style={{ zIndex: 1000 }}>
             <p>{successMessage}</p>
-            <Link to="/SellerVerification">
+            <Link to="/AdminDashboard">
               <button onClick={() => setSuccessMessage(null)}>Close</button>
             </Link>
           </div>

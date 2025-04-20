@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import styles from "../components/SellerVerificationPageComp/SellerVerification.module.css";
 import SellerCard from "../components/SellerVerificationPageComp/SellerCard";
 import { Seller } from "../Users";
+import { Link } from "react-router-dom";
 
 const initialSellers: Seller[] = [
   {
@@ -41,15 +42,20 @@ const SellerVerification: React.FC = () => {
     <div className={styles.wrapper}>
       <div className={styles.sidebar}>
         <h2>Admin Dashboard</h2>
-        <a href="#" className={styles.navItem}>
+        <Link to="/AdminDashboard" className={styles.navItem}>
           Sales Analytics
-        </a>
-        <a href="#" className={styles.navItem}>
+        </Link>
+
+        <Link to="#" className={styles.navItem}>
           User Reports
-        </a>
-        <a href="#" className={`${styles.navItem} ${styles.navItemActive}`}>
+        </Link>
+
+        <Link
+          to="/SellerVerification"
+          className={`${styles.navItem} ${styles.navItemActive}`}
+        >
           Seller Verification
-        </a>
+        </Link>
       </div>
 
       <div className={styles.container}>
