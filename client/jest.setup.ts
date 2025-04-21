@@ -1,3 +1,9 @@
+// @ts-expect-error: Jest globals are injected at runtime
+jest.mock("@/config", () => ({
+  baseURL: "http://localhost:3000"
+}));
+
+
 import '@testing-library/jest-dom';
 
 // Polyfill TextEncoder for Node test environment
@@ -7,3 +13,5 @@ Object.assign(global, {
   TextEncoder,
   TextDecoder,
 });
+
+

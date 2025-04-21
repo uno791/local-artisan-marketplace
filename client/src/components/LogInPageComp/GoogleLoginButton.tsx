@@ -2,6 +2,7 @@ import React from "react";
 import styles from "./LoginPage.module.css";
 import { useGoogleLogin } from "@react-oauth/google";
 import axios from "axios";
+import { baseURL } from "../../config";
 //import { useNavigate } from "react-router-dom";
 
 interface GoogleLogInButtonProps {
@@ -28,7 +29,7 @@ export function GoogleLogInButton({
 
         const userData = res.data;
         const user_ID = userData.sub;
-        const baseURL = import.meta.env.VITE_API_BASE_URL;
+        //const baseURL = import.meta.env.VITE_API_BASE_URL;
         const checkRes = await axios.post(`${baseURL}/check-userid`, {
           user_ID,
         });

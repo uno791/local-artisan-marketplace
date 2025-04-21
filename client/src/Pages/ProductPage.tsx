@@ -7,7 +7,7 @@ import BackButton from "../components/ProductPageComp/BackButton";
 import ProductImage from "../components/ProductPageComp/ProductImage";
 import ProductInfo from "../components/ProductPageComp/ProductInfo";
 import SidebarInfo from "../components/ProductPageComp/SideBarInfo";
-
+import { baseURL } from "../config";
 interface Product {
   product_id: number;
   product_name: string;
@@ -22,7 +22,6 @@ interface Product {
 function ProductPage() {
   const { id } = useParams();
   const [product, setProduct] = useState<Product | null>(null);
-  const baseURL = import.meta.env.VITE_API_BASE_URL;
 
   useEffect(() => {
     axios
