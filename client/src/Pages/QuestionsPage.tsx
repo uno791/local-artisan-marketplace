@@ -7,7 +7,7 @@ import ArtFormSection from "../components/QuestionsPageComp/ArtFormSection";
 import { useUser } from "../Users/UserContext";
 import axios from "axios";
 import { baseURL } from "../config";
-//import { useNavigate } from "react-router-dom";
+import { Link } from "react-router-dom";
 
 function QuestionsPage() {
   const [userName, setUserName] = React.useState<string>("");
@@ -18,7 +18,6 @@ function QuestionsPage() {
   //const baseURL = import.meta.env.VITE_API_BASE_URL;
   const { user } = useUser();
   //const [userData, setUserData] = useState<UserData | null>(null);
-  //const navigate = useNavigate();
 
   const handleApplyClick = async () => {
     setError(null);
@@ -51,7 +50,6 @@ function QuestionsPage() {
       setMessage(res.data.message);
       setError("");
       console.log(message, res.data);
-      // navigate("/Dashboard");
     } catch (err) {
       console.error("User creation failed:", err);
       setError("Something went wrong. Please try again.");
@@ -81,7 +79,9 @@ function QuestionsPage() {
           <p>
             <strong>Selected Art Forms:</strong> {selectedArtForms.join(", ")}
           </p>
-          <button onClick={() => setSubmitted(false)}>Close</button>
+          <Link to="/Home">
+            <button onClick={() => setSubmitted(false)}>Close</button>
+          </Link>
         </div>
       )}
     </main>
