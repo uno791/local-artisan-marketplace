@@ -30,3 +30,4 @@ jobs:
         with:
           token: ${{ secrets.CODECOV_TOKEN }}
           slug: uno791/local-artisan-marketplace
+          directory: ./client/coverage
