@@ -1,6 +1,6 @@
 // jest.config.js
 export default {
-  preset: 'ts-jest/presets/default-esm', // <== ESM preset
+  preset: 'ts-jest/presets/default-esm',
   testEnvironment: 'jsdom',
   transform: {
     '^.+\\.tsx?$': ['ts-jest', {
@@ -8,6 +8,7 @@ export default {
       tsconfig: 'tsconfig.jest.json',
     }],
   },
+  extensionsToTreatAsEsm: ['.ts', '.tsx'],
   moduleNameMapper: {
     '^react$': '<rootDir>/node_modules/react',
     '^react-dom$': '<rootDir>/node_modules/react-dom',
@@ -16,5 +17,10 @@ export default {
     '^@/(.*)$': '<rootDir>/src/$1',
   },
   setupFilesAfterEnv: ['<rootDir>/jest.setup.ts'],
-  extensionsToTreatAsEsm: ['.ts', '.tsx'],
+
+  // Code coverage settings
+  collectCoverage: true,
+  collectCoverageFrom: ['src/**/*.{js,jsx,ts,tsx}', '!src/**/*.d.ts'],
+  coverageReporters: ['json', 'lcov', 'text', 'clover'],
 };
+

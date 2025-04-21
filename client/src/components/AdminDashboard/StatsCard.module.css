@@ -1,0 +1,30 @@
+.card {
+  /* width: 80s%; */
+  background: white;
+  padding: 16px;
+  height: 100px;
+  border-radius: 12px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+  font-family: Kadwa, serif;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  text-align: center;
+  height: 40%;
+}
+
+
+
+
+  .label {
+    color: #666;
+    font-size: 14px;
+    margin-bottom: 4px;
+  }
+  
+  .value {
+    color: #3e2c14;
+    font-size: 24px;
+    font-weight: bold;
+  }
+  

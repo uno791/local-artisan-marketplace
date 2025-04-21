@@ -11,6 +11,8 @@ import Search from "./Pages/Search";
 import Cart from "./Pages/Cart";
 import ProductPage from "./Pages/ProductPage";
 import MainLayout from "./layouts/MainLayout";
+import SellerVerification from "./Pages/SellerVerification";
+import AdminDashboard from "./Pages/AdminDashboard";
 
 // import UserTable from "./components/UserTable"; // 🟡 Temporarily disabled
 
@@ -26,6 +28,9 @@ function App() {
           <Route path="/SignUpPage" element={<SignUpPage />} />
           <Route path="/QuestionsPage" element={<QuestionsPage />} />
           <Route path="/Product/:id" element={<ProductPage />} />
+          <Route path="/SellerVerification" element={<SellerVerification />} />
+          <Route path="/AdminDashboard" element={<AdminDashboard />} />
+        
 
           {/* For Pages with NavBar and Footer */}
           <Route element={<MainLayout />}>

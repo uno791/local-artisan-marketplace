@@ -33,10 +33,12 @@ export function GoogleLogInButton({
         const checkRes = await axios.post(`${baseURL}/check-userid`, {
           user_ID,
         });
-        if (checkRes.data.exists) {
+        if (checkRes.data.exists && checkRes.data.role === 0) {
           onSuccessMessage("Successfully logged in!");
           // navigate to home pls
           //navigate("home");
+        } else if (checkRes.data.exists && checkRes.data.role === 1) {
+          onSuccessMessage("Welcome back, Admin!");
         } else {
           onError("You are not registered in our system.");
         }

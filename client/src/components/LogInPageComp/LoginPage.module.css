@@ -1,7 +1,7 @@
 .pageWrapper {
   display: flex;
   height: 100vh;
-  overflow: hidden;
+  overflow-y: auto;
 }
 
 .loginContainer {
@@ -133,7 +133,8 @@
   padding: 1.2rem 2rem;
   display: flex;
   border: none;
-  flex-wrap: nowrap;
+  flex-wrap: wrap;
+  text-wrap: wrap;
   transition: background-color 0.3s ease;
 }
 
@@ -192,6 +193,14 @@
     margin-top: 150px;
     font-size: 28px;
   }
+  .googleIcon {
+    width: clamp(30px, 6vw, 65px);
+    height: clamp(30px, 6vw, 62px);
+  }
+
+  .buttonText {
+    font-size: clamp(1.5rem, 4vw, 2.25rem);
+  }
 }
 
 @media (width<=640px) {
@@ -205,3 +214,50 @@
 .exclamation {
   color: #3595ef;
 }
+@media (width <= 480px) {
+  .pageContainer {
+    padding: 24px 12px;
+  }
+
+  .welcomeHeading {
+    padding: 0 10px;
+  }
+}
+@media (width <= 480px) {
+  .pageWrapper {
+    flex-direction: column;
+    align-items: center;
+    padding: 12px;
+  }
+
+  .loginContainer {
+    padding: 24px 12px;
+    justify-content: center;
+    gap: 2rem;
+  }
+
+  .googleButton {
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    gap: 12px;
+    padding: 12px 20px;
+  }
+
+  .googleIcon {
+    margin-right: 0;
+  }
+
+  .signUpText {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    align-items: center;
+    gap: 6px;
+  }
+
+  .welcomeTitle {
+    padding: 0 10px;
+  }
+}
+

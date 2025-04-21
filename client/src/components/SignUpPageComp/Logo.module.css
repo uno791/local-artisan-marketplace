@@ -1,4 +1,11 @@
 .logoWrapper {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+
+.logoWrapper {
   width: clamp(100px, 20vw, 248px);
   height: clamp(100px, 20vw, 248px);
   margin-top: 2vh;

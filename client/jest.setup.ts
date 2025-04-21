@@ -1,4 +1,3 @@
-// @ts-expect-error: Jest globals are injected at runtime
 jest.mock("@/config", () => ({
   baseURL: "http://localhost:3000"
 }));
@@ -13,5 +12,4 @@ Object.assign(global, {
   TextEncoder,
   TextDecoder,
 });
-
 
