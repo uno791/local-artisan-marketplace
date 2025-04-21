@@ -1,9 +1,9 @@
 import styles from "../components/HomePageComp/Home.module.css";
 import { useState, useEffect } from "react";
-import productImg from "../assets/localish-product.jpg";
 import { Link } from "react-router-dom";
 import axios from "axios";
 import { baseURL } from "../config";
+import { Logo } from "../components/HomePageComp/Localish-ProductImage";
 
 interface Product {
   username: string;
@@ -89,7 +89,8 @@ function Home() {
               <li key={index} className={styles.productCard}>
                 <article>
                   <figure>
-                    <img src={productImg} alt="Product" />
+                    {/* <img src={productImg} alt="Product" /> */}
+                    <Logo />
                     <figcaption>
                       <p className={styles.title}>Artwork Title</p>
                       <p className={styles.artist}>Artist Name</p>
@@ -114,7 +115,8 @@ function Home() {
               >
                 <article>
                   <figure>
-                    <img src={product.image_url || productImg} alt="Product" />
+                    <img src={product.image_url} alt="Product" />
+
                     <figcaption>
                       <p className={styles.title}>{product.product_name}</p>
                       <p className={styles.artist}>{product.username}</p>
