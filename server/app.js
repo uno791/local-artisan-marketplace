@@ -85,8 +85,6 @@ app.get("/penartisans", async (req, res) => {
 app.post("/get-username-by-id", async (req, res) => {
   const { user_ID } = req.body;
 
-  if (!user_ID) return res.status(400).json({ error: "Missing user_ID" });
-
   try {
     const pool = await connectDB();
     const result = await pool
@@ -183,6 +181,52 @@ app.post("/add-to-cart", async (req, res) => {
     //res.status(500).json({ error: "Server error", details: err.message });
   }
 });
+
+app.get("/cart/:username", async (req, res) => {
+  const { username } = req.params;
+
+  try {
+    const pool = await connectDB();
+    const result = await pool.request().input("username", username).query(`
+        SELECT ci.product_id, ci.quantity, ci.added_at,
+               p.product_name, p.price, p.image_url, p.stock_quantity, p.username AS seller_username
+        FROM dbo.cart_items ci
+        JOIN dbo.products p ON ci.product_id = p.product_id
+        WHERE ci.username = @username
+      `);
+    await pool.close();
+
+    res.json(result.recordset);
+  } catch (err) {
+    console.error("❌ Failed to fetch cart items:", err);
+    res.status(500).json({ error: "DB query failed", details: err.message });
+  }
+});
+
+app.put("/upd-cart-item", async (req, res) => {
+  const { username, product_id, quantity } = req.body;
+
+  try {
+    const pool = await connectDB();
+    await pool
+      .request()
+      .input("username", username)
+      .input("product_id", product_id)
+      .input("quantity", quantity).query(`
+        UPDATE dbo.cart_items
+        SET quantity = @quantity
+        WHERE username = @username AND product_id = @product_id
+      `);
+    await pool.close();
+
+    res.json({ message: "Quantity updated successfully." });
+  } catch (err) {
+    console.error("❌ Failed to update cart quantity:", err);
+    res
+      .status(500)
+      .json({ error: "Failed to update quantity", details: err.message });
+  }
+});
 app.post("/check-user", async (req, res) => {
   const { username } = req.body;
 
@@ -239,13 +283,13 @@ app.post("/check-userid", async (req, res) => {
     const result = await pool
       .request()
       .input("user_ID", user_ID)
-      .query("SELECT role FROM dbo.users WHERE user_ID = @user_ID");
+      .query("SELECT role, username FROM dbo.users WHERE user_ID = @user_ID");
 
     if (result.recordset.length === 0) {
       res.json({ exists: false });
     } else {
-      const role = result.recordset[0].role;
-      res.json({ exists: true, role });
+      const { role, username } = result.recordset[0];
+      res.json({ exists: true, role, username });
     }
   } catch (err) {
     console.error("Error checking user_ID:", err);
@@ -268,6 +312,29 @@ app.delete("/deleteartisan/:username", async (req, res) => {
   } catch (err) {
     console.error("❌ Failed to delete artisan:", err);
     res.status(500).json({ error: "DB deletion failed", details: err.message });
+  }
+});
+
+app.delete("/rem-cart-item", async (req, res) => {
+  const { username, product_id } = req.body;
+
+  try {
+    const pool = await connectDB();
+    await pool
+      .request()
+      .input("username", username)
+      .input("product_id", product_id)
+      .query(
+        "DELETE FROM dbo.cart_items WHERE username = @username AND product_id = @product_id"
+      );
+    await pool.close();
+
+    res.json({ message: "Item removed from cart." });
+  } catch (err) {
+    console.error("❌ Failed to delete cart item:", err);
+    res
+      .status(500)
+      .json({ error: "Failed to delete cart item", details: err.message });
   }
 });
 

@@ -1,8 +1,10 @@
 import styles from "../components/CartPageComp/Cart.module.css";
 import CartItemsList from "../components/CartPageComp/CartItemsList";
 import YouMayAlsoLike from "../components/CartPageComp/YouMayAlsoLike";
+import { useState } from "react";
 
 function Cart() {
+  const [total, setTotal] = useState<number>(0);
   return (
     <main className={styles.cartPage}>
       <section className={styles.cartPageContentRow}>
@@ -13,11 +15,11 @@ function Cart() {
             </h1>
           </header>
 
-          <CartItemsList />
+          <CartItemsList onTotalChange={setTotal} />
 
           <section className={styles.cartSummary}>
             <p className={styles.totalText}>
-              Total: <strong>R270</strong>
+              Total: <strong>R{total.toFixed(2)}</strong>
             </p>
             <button className={styles.proceedButton}>Proceed to Payment</button>
           </section>

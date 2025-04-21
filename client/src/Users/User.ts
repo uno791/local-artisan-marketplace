@@ -5,6 +5,7 @@ export class User {
   lastName: string;
   email: string;
   picture: string;
+  username?: string; // Add this line
 
   constructor({
     id,
@@ -13,6 +14,7 @@ export class User {
     lastName,
     email,
     picture,
+    username,
   }: {
     id: string;
     name: string;
@@ -20,6 +22,7 @@ export class User {
     lastName: string;
     email: string;
     picture: string;
+    username?: string; // Optional in constructor too
   }) {
     this.id = id;
     this.name = name;
@@ -27,6 +30,7 @@ export class User {
     this.lastName = lastName;
     this.email = email;
     this.picture = picture;
+    this.username = username;
   }
 
   getFullName(): string {
