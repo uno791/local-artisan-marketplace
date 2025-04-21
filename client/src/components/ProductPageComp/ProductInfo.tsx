@@ -11,9 +11,24 @@ interface ProductInfoProps {
   price: number;
   description: string;
   details: string;
+  product: {
+    product_id: number;
+    product_name: string;
+    description: string;
+    price: number;
+    stock_quantity: number;
+    image_url: string;
+    username: string;
+  };
 }
 
-function ProductInfo({ name, price, description, details }: ProductInfoProps) {
+function ProductInfo({
+  name,
+  price,
+  description,
+  details,
+  product,
+}: ProductInfoProps) {
   return (
     <section className="product-info">
       <Heading name={name} />
@@ -21,7 +36,7 @@ function ProductInfo({ name, price, description, details }: ProductInfoProps) {
       <Bio description={description} />
       <DeliveryOption />
       <ProductDetails detail={details} />
-      <AddToCart />
+      <AddToCart product={product} />
     </section>
   );
 }

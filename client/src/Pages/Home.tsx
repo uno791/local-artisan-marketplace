@@ -3,7 +3,7 @@ import { useState, useEffect } from "react";
 import productImg from "../assets/localish-product.jpg";
 import { Link } from "react-router-dom";
 import axios from "axios";
-
+import { baseURL } from "../config";
 interface Product {
   username: string;
   product_id: number;
@@ -41,7 +41,7 @@ function Home() {
   }
 
   const [gridProducts, setProducts] = useState<Product[]>([]);
-  const baseURL = import.meta.env.VITE_API_BASE_URL;
+  //const baseURL = import.meta.env.VITE_API_BASE_URL;
   useEffect(() => {
     axios
       .get(`${baseURL}/allproducts`)

@@ -1,0 +1,13 @@
+.headingContainer {
+  margin-bottom: 16px;
+}
+
+.heading {
+  font-size: 1.3rem;
+  font-weight: bold;
+  font-style: italic;
+  color: #333;
+  margin: 0;
+  padding-bottom: 4px;
+  border-bottom: 1px solid #999;
+}
