@@ -79,8 +79,10 @@ function QuestionsPage() {
           <p>
             <strong>Selected Art Forms:</strong> {selectedArtForms.join(", ")}
           </p>
-          <Link to="/Home">
-            <button onClick={() => setSubmitted(false)}>Close</button>
+          <Link to="/LogInPage">
+            <button onClick={() => setSubmitted(false)}>
+              Proceed to LogIn
+            </button>
           </Link>
         </div>
       )}
