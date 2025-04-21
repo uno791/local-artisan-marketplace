@@ -173,7 +173,9 @@
 <a name='L108'></a><a href='#L108'>108</a>
 <a name='L109'></a><a href='#L109'>109</a>
 <a name='L110'></a><a href='#L110'>110</a>
-<a name='L111'></a><a href='#L111'>111</a></td><td class="line-coverage quiet"><span class="cline-any cline-neutral">&nbsp;</span>
+<a name='L111'></a><a href='#L111'>111</a>
+<a name='L112'></a><a href='#L112'>112</a>
+<a name='L113'></a><a href='#L113'>113</a></td><td class="line-coverage quiet"><span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
@@ -283,108 +285,112 @@
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span></td><td class="text"><pre class="prettyprint lang-js">import "./ReviewList.css";
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span></td><td class="text"><pre class="prettyprint lang-js">import styles from "./ReviewList.module.css";
 &nbsp;
 function <span class="fstat-no" title="function not covered" >ReviewList(</span>) {
 <span class="cstat-no" title="statement not covered" >  return (</span>
-    &lt;section className="review-box"&gt;
-      &lt;h2 className="review-heading"&gt;Collector Reviews&lt;/h2&gt;
+    &lt;section className={styles["review-box"]}&gt;
+      &lt;h2 className={styles["review-heading"]}&gt;Collector Reviews&lt;/h2&gt;
 &nbsp;
-      &lt;ul className="review-list"&gt;
-        &lt;li className="review-card"&gt;
-          &lt;p className="review-stars"&gt;★★★★★&lt;/p&gt;
-          &lt;strong className="review-title"&gt;Stunning Piece&lt;/strong&gt;
-          &lt;p className="review-text"&gt;
+      &lt;ul className={styles["review-list"]}&gt;
+        &lt;li className={styles["review-card"]}&gt;
+          &lt;p className={styles["review-stars"]}&gt;★★★★★&lt;/p&gt;
+          &lt;strong className={styles["review-title"]}&gt;Stunning Piece&lt;/strong&gt;
+          &lt;p className={styles["review-text"]}&gt;
             This piece has become the focal point of my art dungeon.
           &lt;/p&gt;
-          &lt;footer className="review-footer"&gt;
-            &lt;address className="reviewer-name"&gt;Sarah Johnson&lt;/address&gt;
-            &lt;time className="review-date"&gt;2024-01-15&lt;/time&gt;
+          &lt;footer className={styles["review-footer"]}&gt;
+            &lt;address className={styles["reviewer-name"]}&gt;Sarah Johnson&lt;/address&gt;
+            &lt;time className={styles["review-date"]}&gt;2024-01-15&lt;/time&gt;
           &lt;/footer&gt;
         &lt;/li&gt;
 &nbsp;
-        &lt;li className="review-card"&gt;
-          &lt;p className="review-stars"&gt;★★★★★&lt;/p&gt;
-          &lt;strong className="review-title"&gt;Exceptional Quality&lt;/strong&gt;
-          &lt;p className="review-text"&gt;
+        &lt;li className={styles["review-card"]}&gt;
+          &lt;p className={styles["review-stars"]}&gt;★★★★★&lt;/p&gt;
+          &lt;strong className={styles["review-title"]}&gt;
+            Exceptional Quality
+          &lt;/strong&gt;
+          &lt;p className={styles["review-text"]}&gt;
             The attention to detail and the quality of materials used are
             remarkable. I’m in love with this work of art.
           &lt;/p&gt;
-          &lt;footer className="review-footer"&gt;
-            &lt;address className="reviewer-name"&gt;Michael Chen&lt;/address&gt;
-            &lt;time className="review-date"&gt;2024-01-10&lt;/time&gt;
+          &lt;footer className={styles["review-footer"]}&gt;
+            &lt;address className={styles["reviewer-name"]}&gt;Michael Chen&lt;/address&gt;
+            &lt;time className={styles["review-date"]}&gt;2024-01-10&lt;/time&gt;
           &lt;/footer&gt;
         &lt;/li&gt;
 &nbsp;
-        &lt;li className="review-card"&gt;
-          &lt;p className="review-stars"&gt;★★★★★&lt;/p&gt;
-          &lt;strong className="review-title"&gt;Masterful Work&lt;/strong&gt;
-          &lt;p className="review-text"&gt;
+        &lt;li className={styles["review-card"]}&gt;
+          &lt;p className={styles["review-stars"]}&gt;★★★★★&lt;/p&gt;
+          &lt;strong className={styles["review-title"]}&gt;Masterful Work&lt;/strong&gt;
+          &lt;p className={styles["review-text"]}&gt;
             This piece speaks volumes. It's a true centerpiece in my collection.
           &lt;/p&gt;
-          &lt;footer className="review-footer"&gt;
-            &lt;address className="reviewer-name"&gt;Emma Davis&lt;/address&gt;
-            &lt;time className="review-date"&gt;2024-01-05&lt;/time&gt;
+          &lt;footer className={styles["review-footer"]}&gt;
+            &lt;address className={styles["reviewer-name"]}&gt;Emma Davis&lt;/address&gt;
+            &lt;time className={styles["review-date"]}&gt;2024-01-05&lt;/time&gt;
           &lt;/footer&gt;
         &lt;/li&gt;
 &nbsp;
-        &lt;li className="review-card"&gt;
-          &lt;p className="review-stars"&gt;★★★★★&lt;/p&gt;
-          &lt;strong className="review-title"&gt;Stunning Piece&lt;/strong&gt;
-          &lt;p className="review-text"&gt;
+        &lt;li className={styles["review-card"]}&gt;
+          &lt;p className={styles["review-stars"]}&gt;★★★★★&lt;/p&gt;
+          &lt;strong className={styles["review-title"]}&gt;Stunning Piece&lt;/strong&gt;
+          &lt;p className={styles["review-text"]}&gt;
             This piece has become the focal point of my art dungeon.
           &lt;/p&gt;
-          &lt;footer className="review-footer"&gt;
-            &lt;address className="reviewer-name"&gt;Sarah Johnson&lt;/address&gt;
-            &lt;time className="review-date"&gt;2024-01-15&lt;/time&gt;
+          &lt;footer className={styles["review-footer"]}&gt;
+            &lt;address className={styles["reviewer-name"]}&gt;Sarah Johnson&lt;/address&gt;
+            &lt;time className={styles["review-date"]}&gt;2024-01-15&lt;/time&gt;
           &lt;/footer&gt;
         &lt;/li&gt;
 &nbsp;
-        &lt;li className="review-card"&gt;
-          &lt;p className="review-stars"&gt;★★★★★&lt;/p&gt;
-          &lt;strong className="review-title"&gt;Stunning Piece&lt;/strong&gt;
-          &lt;p className="review-text"&gt;
+        &lt;li className={styles["review-card"]}&gt;
+          &lt;p className={styles["review-stars"]}&gt;★★★★★&lt;/p&gt;
+          &lt;strong className={styles["review-title"]}&gt;Stunning Piece&lt;/strong&gt;
+          &lt;p className={styles["review-text"]}&gt;
             This piece has become the focal point of my art dungeon.
           &lt;/p&gt;
-          &lt;footer className="review-footer"&gt;
-            &lt;address className="reviewer-name"&gt;Sarah Johnson&lt;/address&gt;
-            &lt;time className="review-date"&gt;2024-01-15&lt;/time&gt;
+          &lt;footer className={styles["review-footer"]}&gt;
+            &lt;address className={styles["reviewer-name"]}&gt;Sarah Johnson&lt;/address&gt;
+            &lt;time className={styles["review-date"]}&gt;2024-01-15&lt;/time&gt;
           &lt;/footer&gt;
         &lt;/li&gt;
 &nbsp;
-        &lt;li className="review-card"&gt;
-          &lt;p className="review-stars"&gt;★★★★★&lt;/p&gt;
-          &lt;strong className="review-title"&gt;Stunning Piece&lt;/strong&gt;
-          &lt;p className="review-text"&gt;
+        &lt;li className={styles["review-card"]}&gt;
+          &lt;p className={styles["review-stars"]}&gt;★★★★★&lt;/p&gt;
+          &lt;strong className={styles["review-title"]}&gt;Stunning Piece&lt;/strong&gt;
+          &lt;p className={styles["review-text"]}&gt;
             This piece has become the focal point of my art dungeon.
           &lt;/p&gt;
-          &lt;footer className="review-footer"&gt;
-            &lt;address className="reviewer-name"&gt;Sarah Johnson&lt;/address&gt;
-            &lt;time className="review-date"&gt;2024-01-15&lt;/time&gt;
+          &lt;footer className={styles["review-footer"]}&gt;
+            &lt;address className={styles["reviewer-name"]}&gt;Sarah Johnson&lt;/address&gt;
+            &lt;time className={styles["review-date"]}&gt;2024-01-15&lt;/time&gt;
           &lt;/footer&gt;
         &lt;/li&gt;
 &nbsp;
-        &lt;li className="review-card"&gt;
-          &lt;p className="review-stars"&gt;★★★★★&lt;/p&gt;
-          &lt;strong className="review-title"&gt;Stunning Piece&lt;/strong&gt;
-          &lt;p className="review-text"&gt;
+        &lt;li className={styles["review-card"]}&gt;
+          &lt;p className={styles["review-stars"]}&gt;★★★★★&lt;/p&gt;
+          &lt;strong className={styles["review-title"]}&gt;Stunning Piece&lt;/strong&gt;
+          &lt;p className={styles["review-text"]}&gt;
             This piece has become the focal point of my art dungeon.
           &lt;/p&gt;
-          &lt;footer className="review-footer"&gt;
-            &lt;address className="reviewer-name"&gt;Sarah Johnson&lt;/address&gt;
-            &lt;time className="review-date"&gt;2024-01-15&lt;/time&gt;
+          &lt;footer className={styles["review-footer"]}&gt;
+            &lt;address className={styles["reviewer-name"]}&gt;Sarah Johnson&lt;/address&gt;
+            &lt;time className={styles["review-date"]}&gt;2024-01-15&lt;/time&gt;
           &lt;/footer&gt;
         &lt;/li&gt;
 &nbsp;
-        &lt;li className="review-card"&gt;
-          &lt;p className="review-stars"&gt;★★★★★&lt;/p&gt;
-          &lt;strong className="review-title"&gt;Stunning Piece&lt;/strong&gt;
-          &lt;p className="review-text"&gt;
+        &lt;li className={styles["review-card"]}&gt;
+          &lt;p className={styles["review-stars"]}&gt;★★★★★&lt;/p&gt;
+          &lt;strong className={styles["review-title"]}&gt;Stunning Piece&lt;/strong&gt;
+          &lt;p className={styles["review-text"]}&gt;
             This piece has become the focal point of my art dungeon.
           &lt;/p&gt;
-          &lt;footer className="review-footer"&gt;
-            &lt;address className="reviewer-name"&gt;Sarah Johnson&lt;/address&gt;
-            &lt;time className="review-date"&gt;2024-01-15&lt;/time&gt;
+          &lt;footer className={styles["review-footer"]}&gt;
+            &lt;address className={styles["reviewer-name"]}&gt;Sarah Johnson&lt;/address&gt;
+            &lt;time className={styles["review-date"]}&gt;2024-01-15&lt;/time&gt;
           &lt;/footer&gt;
         &lt;/li&gt;
       &lt;/ul&gt;
@@ -400,7 +406,7 @@ export default ReviewList;
             <div class='footer quiet pad2 space-top1 center small'>
                 Code coverage generated by
                 <a href="https://istanbul.js.org/" target="_blank" rel="noopener noreferrer">istanbul</a>
-                at 2025-04-21T19:56:25.449Z
+                at 2025-04-21T21:12:37.668Z
             </div>
         <script src="../../../../prettify.js"></script>
         <script>
