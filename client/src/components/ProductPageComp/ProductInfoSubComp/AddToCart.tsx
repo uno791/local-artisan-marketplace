@@ -1,8 +1,9 @@
 import axios from "axios";
 import React, { useState } from "react";
-import "./AddToCart.css";
+import styles from "./AddToCart.module.css";
 import { useUser } from "../../../Users/UserContext";
 import { baseURL } from "../../../config";
+
 interface AddToCartProps {
   product: {
     product_id: number;
@@ -51,16 +52,16 @@ function AddToCart({ product }: AddToCartProps) {
   };
 
   return (
-    <section className="add-to-cart-container">
+    <section className={styles["add-to-cart-container"]}>
       <button
         type="button"
-        className="add-to-cart-button"
+        className={styles["add-to-cart-button"]}
         onClick={handleAddToCart}
       >
         Add To Cart
       </button>
-      {success && <p className="cart-success">{success}</p>}
-      {error && <p className="cart-error">{error}</p>}
+      {success && <p className={styles["cart-success"]}>{success}</p>}
+      {error && <p className={styles["cart-error"]}>{error}</p>}
     </section>
   );
 }

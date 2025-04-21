@@ -1,4 +1,4 @@
-import "./ProductInfo.css";
+import styles from "./ProductInfo.module.css";
 import Heading from "./ProductInfoSubComp/Heading";
 import Price from "./ProductInfoSubComp/Price";
 import Bio from "./ProductInfoSubComp/Bio";
@@ -30,7 +30,7 @@ function ProductInfo({
   product,
 }: ProductInfoProps) {
   return (
-    <section className="product-info">
+    <section className={styles["product-info"]}>
       <Heading name={name} />
       <Price price={price} />
       <Bio description={description} />

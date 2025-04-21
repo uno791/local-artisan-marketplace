@@ -1,0 +1,121 @@
+.home {
+  padding-top: 100px;
+  padding-left: 50px;
+  padding-right: 0;
+}
+
+.homeHeader {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 1rem;
+}
+
+.homeHeader h1 {
+  font-size: 40px;
+  font-family: "Montserrat", sans-serif;
+  color: #3e2c14;
+}
+
+.homeArrows {
+  display: flex;
+  gap: 0.5rem;
+}
+
+.homeArrows button {
+  background: #ddd;
+  border: none;
+  border-radius: 50%;
+  width: 36px;
+  height: 36px;
+  font-size: 1.2rem;
+  color: black;
+  cursor: pointer;
+}
+
+.homeArrows button:disabled {
+  cursor: not-allowed;
+}
+
+.carousel {
+  overflow: hidden;
+}
+
+.carouselTrack {
+  display: flex;
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  gap: 1.5rem;
+  transition: transform 0.3s ease-in-out;
+  width: max-content;
+}
+
+.productCard {
+  width: 240px;
+  flex-shrink: 0;
+}
+
+.productCard article {
+  background-color: #f6ebd9;
+  border-radius: 10px;
+  height: 320px;
+  padding: 1rem;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.15);
+  text-align: left;
+  transition: transform 0.2s ease-in-out;
+  cursor: pointer;
+}
+
+.productCard img {
+  width: 100%;
+  height: 200px;
+  object-fit: cover;
+  border-radius: 4px;
+  margin-bottom: 0.5rem;
+}
+
+.title {
+  font-weight: 600;
+  font-size: 0.9rem;
+  margin: 0 0 0.25rem;
+  color: #666;
+}
+
+.artist {
+  font-size: 0.75rem;
+  color: #666;
+  margin: 0 0 0.5rem;
+}
+
+.price {
+  font-weight: 500;
+  font-size: 0.8rem;
+  margin: 0;
+  color: #666;
+}
+
+.allProducts {
+  margin-top: 4rem;
+}
+
+.allProducts h2 {
+  font-family: "Montserrat", sans-serif;
+  font-size: 40px;
+  color: #3e2c14;
+  margin-bottom: 1.5rem;
+}
+
+.allProductsGrid {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 2rem;
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.allProductsGrid .productCard {
+  flex: 1 1 calc(20% - 2rem);
+  max-width: 211px;
+}

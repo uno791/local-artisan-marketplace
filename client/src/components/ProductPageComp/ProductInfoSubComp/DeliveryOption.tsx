@@ -1,9 +1,9 @@
-import "./DeliveryOption.css";
+import styles from "./DeliveryOption.module.css";
 
 function DeliveryOption() {
   return (
-    <section className="delivery-container">
-      <select className="delivery-select" defaultValue="">
+    <section className={styles["delivery-container"]}>
+      <select className={styles["delivery-select"]} defaultValue="">
         <option value="" disabled>
           Delivery or Pickup
         </option>

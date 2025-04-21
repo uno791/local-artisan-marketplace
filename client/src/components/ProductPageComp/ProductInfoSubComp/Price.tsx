@@ -1,12 +1,13 @@
-import "./Price.css";
+import styles from "./Price.module.css";
+
 interface PriceProps {
   price: number;
 }
 
 function Price({ price }: PriceProps) {
   return (
-    <section className="price-container">
-      <p className="product-price">R{price}</p>
+    <section className={styles["price-container"]}>
+      <p className={styles["product-price"]}>R{price}</p>
     </section>
   );
 }
