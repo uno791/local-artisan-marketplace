@@ -3,13 +3,26 @@
   border-radius: 12px;
   box-shadow: 0 2px 8px rgba(0,0,0,0.1);
   overflow: hidden;
-  width: 300px;
+  flex: 1 1 280px; /* allow the card to shrink and grow */
+  max-width: 100%;
   display: flex;
   flex-direction: column;
+  justify-content: space-between;
+  align-items: center;
+  box-sizing: border-box;
+  padding: 16px;
+  min-width: 100px; /* optional: don't shrink below this */
 }
 
+
 .content {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
   padding: 16px;
+  flex: 1;
+  width: 100%;
+  box-sizing: border-box;
 }
 
 .avatar {
@@ -36,16 +49,23 @@ button {
 
 .actionGroup {
   display: flex;
+  justify-content: space-between;
   gap: 10px;
   margin-top: 10px;
+  width: 100%;
+  flex-wrap: wrap; /* allows wrapping on small screens */
 }
 
 .approveBtn {
   background-color: green;
   color: white;
+  flex: 1;
+  min-width: 120px;
 }
 
 .rejectBtn {
   background-color: rgb(190, 10, 10);
   color: white;
+  flex: 1;
+  min-width: 120px;
 }
