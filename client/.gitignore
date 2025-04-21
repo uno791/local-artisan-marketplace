@@ -24,4 +24,4 @@ dist-ssr
 *.sw?
 
 #code coverge say bye bye
-# coverage/
+coverage/
