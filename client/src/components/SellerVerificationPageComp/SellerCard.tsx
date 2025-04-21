@@ -42,9 +42,10 @@ const SellerCard: React.FC<SellerCardProps> = ({
         <p>
           <strong>Date:</strong> {create_date}
         </p>
-        <p>
-          <strong>Status:</strong> {statusText[verified]}
-        </p>
+        <p data-testid="seller-status">
+  <strong>Status:</strong> {statusText[verified]}
+</p>
+
 
         {verified === 0 && (
           <button className={styles.reviewBtn} onClick={onStartReview}>

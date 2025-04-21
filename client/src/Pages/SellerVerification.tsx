@@ -71,7 +71,7 @@ const SellerVerification: React.FC = () => {
       </div>
 
       <div className={styles.container}>
-        <h1>Seller Verification</h1>
+      <h1 data-testid="seller-verification-title">Seller Verification</h1>
         <div className={styles.cards}>
           {sellers
             .filter((s) => s.verified <= 3)
