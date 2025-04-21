@@ -1,4 +1,4 @@
-import "./NavBar.css";
+import styles from "./NavBar.module.css";
 import { NavLink } from "react-router-dom";
 import logo from "../../assets/localish-logo.png";
 import { FaHome, FaSearch, FaShoppingCart, FaUser } from "react-icons/fa";
@@ -12,23 +12,25 @@ const navItems = [
 
 function NavBar() {
   return (
-    <header className="navbar">
-      <nav className="navbar-inner">
-        <a href="/" className="navbar-logo">
+    <header className={styles.navbar}>
+      <nav className={styles.navbarInner}>
+        <a href="/" className={styles.navbarLogo}>
           <img src={logo} alt="Localish logo" />
         </a>
 
-        <ul className="navbar-links">
+        <ul className={styles.navbarLinks}>
           {navItems.map((item) => (
             <li key={item.name}>
               <NavLink
                 to={item.path}
                 className={({ isActive }) =>
-                  isActive ? "nav-link active" : "nav-link"
+                  isActive
+                    ? `${styles.navLink} ${styles.active}`
+                    : styles.navLink
                 }
               >
-                <span className="link-icon">{item.icon}</span>
-                <span className="link-title">{item.name}</span>
+                <span className={styles.linkIcon}>{item.icon}</span>
+                <span className={styles.linkTitle}>{item.name}</span>
               </NavLink>
             </li>
           ))}
