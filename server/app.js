@@ -359,6 +359,74 @@ app.put("/verifyartisan/:username", async (req, res) => {
   }
 });
 
+// GET /api/users/:username
+app.get("/getuser/:username", async (req, res) => {
+  const { username } = req.params;
+
+  try {
+    const pool = await connectDB();
+    const result = await pool
+      .request()
+      .input("username", username)
+      .query("SELECT * FROM dbo.users WHERE username = @username");
+    await pool.close();
+
+    res.json(result.recordset[0]);
+  } catch (err) {
+    console.error("Error fetching user data:", err);
+    res.status(500).json({ error: "Internal server error" });
+  }
+});
+
+// PUT /api/users/:username
+app.put("/api/users/:username", async (req, res) => {
+  const { username } = req.params;
+  const { postal_code, phone_no } = req.body;
+
+  try {
+    const pool = await connectDB();
+    await pool
+      .request()
+      .input("postal_code", postal_code)
+      .input("phone_no", phone_no)
+      .input("username", username).query(`
+        UPDATE dbo.users
+        SET postal_code = @postal_code,
+            phone_no = @phone_no
+        WHERE username = @username
+      `);
+    await pool.close();
+    res.json({ message: "User info updated successfully" });
+  } catch (err) {
+    console.error("❌ Error updating user info:", err);
+    res.status(500).json({ error: "Failed to update user info" });
+  }
+});
+
+// POST /api/artisans
+app.post("/createartisan", async (req, res) => {
+  const { username, shop_name, bio, shop_address, shop_pfp } = req.body;
+
+  try {
+    const pool = await connectDB();
+    await pool
+      .request()
+      .input("username", username)
+      .input("shop_name", shop_name)
+      .input("bio", bio)
+      .input("shop_address", shop_address)
+      .input("shop_pfp", shop_pfp).query(`
+        INSERT INTO dbo.artisans (username, shop_name, bio, shop_address, shop_pfp, join_date)
+        VALUES (@username, @shop_name, @bio, @shop_address, @shop_pfp, GETDATE())
+      `);
+    await pool.close();
+    res.status(201).json({ message: "Artisan created successfully" });
+  } catch (err) {
+    console.error("❌ Error inserting artisan:", err);
+    res.status(500).json({ error: "Failed to create artisan" });
+  }
+});
+
 // --- Server Listen ---
 app.listen(PORT, () => {
   console.log("🚀 Server Listening on PORT:", PORT);
