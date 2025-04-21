@@ -4,8 +4,7 @@ import SellerCard from "../components/SellerVerificationPageComp/SellerCard";
 import { Seller } from "../Users";
 import { Link } from "react-router-dom";
 import axios from "axios";
-
-const baseURL = import.meta.env.VITE_API_BASE_URL;
+import { baseURL } from "../config";
 
 const SellerVerification: React.FC = () => {
   const [sellers, setSellers] = useState<Seller[]>([]);

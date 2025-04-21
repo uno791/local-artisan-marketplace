@@ -6,6 +6,7 @@ import ApplyButton from "../components/QuestionsPageComp/ApplyButton";
 import ArtFormSection from "../components/QuestionsPageComp/ArtFormSection";
 import { useUser } from "../Users/UserContext";
 import axios from "axios";
+import { baseURL } from "../config";
 //import { useNavigate } from "react-router-dom";
 
 function QuestionsPage() {
@@ -14,7 +15,7 @@ function QuestionsPage() {
   const [submitted, setSubmitted] = React.useState(false);
   const [error, setError] = React.useState<string | null>(null);
   const [message, setMessage] = useState("");
-  const baseURL = import.meta.env.VITE_API_BASE_URL;
+  //const baseURL = import.meta.env.VITE_API_BASE_URL;
   const { user } = useUser();
   //const [userData, setUserData] = useState<UserData | null>(null);
   //const navigate = useNavigate();

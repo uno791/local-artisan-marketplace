@@ -2,6 +2,9 @@ import React from "react";
 import styles from "./LoginPage.module.css";
 import { useGoogleLogin } from "@react-oauth/google";
 import axios from "axios";
+import { baseURL } from "../../config";
+import { useUser } from "../../Users/UserContext";
+import { User } from "../../Users/User";
 //import { useNavigate } from "react-router-dom";
 
 interface GoogleLogInButtonProps {
@@ -14,6 +17,7 @@ export function GoogleLogInButton({
   onSuccessMessage,
 }: GoogleLogInButtonProps) {
   //const navigate = useNavigate();
+  const { setUser } = useUser();
   const login = useGoogleLogin({
     onSuccess: async (tokenResponse) => {
       try {
@@ -28,12 +32,24 @@ export function GoogleLogInButton({
 
         const userData = res.data;
         const user_ID = userData.sub;
-        const baseURL = import.meta.env.VITE_API_BASE_URL;
+        //const baseURL = import.meta.env.VITE_API_BASE_URL;
         const checkRes = await axios.post(`${baseURL}/check-userid`, {
           user_ID,
         });
         if (checkRes.data.exists && checkRes.data.role === 0) {
           onSuccessMessage("Successfully logged in!");
+
+          const user = new User({
+            id: userData.sub,
+            name: userData.name,
+            firstName: userData.given_name,
+            lastName: userData.family_name,
+            email: userData.email,
+            picture: userData.picture,
+            username: checkRes.data.username,
+          });
+
+          setUser(user);
           // navigate to home pls
           //navigate("home");
         } else if (checkRes.data.exists && checkRes.data.role === 1) {
