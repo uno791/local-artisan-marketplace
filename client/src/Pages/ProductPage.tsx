@@ -2,12 +2,13 @@ import { useParams } from "react-router-dom";
 import { useEffect, useState } from "react";
 import axios from "axios";
 
-import "../components/ProductPageComp/ProductPage.css";
+import styles from "../components/ProductPageComp/ProductPage.module.css";
 import BackButton from "../components/ProductPageComp/BackButton";
 import ProductImage from "../components/ProductPageComp/ProductImage";
 import ProductInfo from "../components/ProductPageComp/ProductInfo";
 import SidebarInfo from "../components/ProductPageComp/SideBarInfo";
 import { baseURL } from "../config";
+
 interface Product {
   product_id: number;
   product_name: string;
@@ -35,19 +36,19 @@ function ProductPage() {
   }, [id]);
 
   if (!product) {
-    return <p>Loading product...</p>; // ⬅️ Wait until product is loaded
+    return <p>Loading product...</p>;
   }
 
   return (
-    <main className="product-page">
+    <main className={styles["product-page"]}>
       <BackButton />
 
-      <section className="product-main">
-        <section className="product-left">
+      <section className={styles["product-main"]}>
+        <section className={styles["product-left"]}>
           <ProductImage image_url={product.image_url} />
         </section>
 
-        <section className="product-middle">
+        <section className={styles["product-middle"]}>
           <ProductInfo
             name={product.product_name}
             description={product.description}
@@ -57,7 +58,7 @@ function ProductPage() {
           />
         </section>
 
-        <aside className="product-right">
+        <aside className={styles["product-right"]}>
           <SidebarInfo username={product.username} />
         </aside>
       </section>

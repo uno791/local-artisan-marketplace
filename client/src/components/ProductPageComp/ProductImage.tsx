@@ -1,12 +1,13 @@
-import "./ProductImage.css";
+import styles from "./ProductImage.module.css";
+
 interface ProductImageProps {
   image_url: string;
 }
 
 function ProductImage({ image_url }: ProductImageProps) {
   return (
-    <figure className="product-image-container">
-      <img src={image_url} alt="Product" className="product-image" />
+    <figure className={styles["product-image-container"]}>
+      <img src={image_url} alt="Product" className={styles["product-image"]} />
     </figure>
   );
 }

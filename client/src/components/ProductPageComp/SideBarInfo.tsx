@@ -1,6 +1,6 @@
 import ArtistInfo from "./SideBarSubComp/ArtistInfo";
 import ReviewList from "./SideBarSubComp/ReviewList";
-import "./SideBarInfo.css";
+import styles from "./SideBarInfo.module.css";
 
 interface Artisan {
   username: string;
@@ -8,7 +8,7 @@ interface Artisan {
 
 function SidebarInfo({ username }: Artisan) {
   return (
-    <aside className="sidebar-info">
+    <aside className={styles["sidebar-info"]}>
       <ArtistInfo Uname={username} />
       <ReviewList />
     </aside>
