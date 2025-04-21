@@ -1,3 +1,5 @@
+import { jest } from '@jest/globals';
+
 jest.mock("@/config", () => ({
   baseURL: "http://localhost:3000"
 }));
@@ -12,4 +14,3 @@ Object.assign(global, {
   TextEncoder,
   TextDecoder,
 });
-

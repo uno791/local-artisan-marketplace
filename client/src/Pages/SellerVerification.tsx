@@ -5,7 +5,6 @@ import { Seller } from "../Users";
 import { Link } from "react-router-dom";
 import axios from "axios";
 import { baseURL } from "../config";
-//const baseURL = import.meta.env.VITE_API_BASE_URL;
 
 const SellerVerification: React.FC = () => {
   const [sellers, setSellers] = useState<Seller[]>([]);
