@@ -1,9 +1,10 @@
-import "../components/HomePageComp/Home.css";
+import styles from "../components/HomePageComp/Home.module.css";
 import { useState, useEffect } from "react";
 import productImg from "../assets/localish-product.jpg";
 import { Link } from "react-router-dom";
 import axios from "axios";
 import { baseURL } from "../config";
+
 interface Product {
   username: string;
   product_id: number;
@@ -17,7 +18,6 @@ function Home() {
   const [currentIndex, setCurrentIndex] = useState(0);
 
   const carouselProducts = new Array(10).fill(null);
-  //const gridProducts = new Array(5).fill(null);
   const visibleCount = 5;
   const cardWidth = 240;
   const maxIndex = Math.ceil(carouselProducts.length / visibleCount) - 1;
@@ -41,7 +41,7 @@ function Home() {
   }
 
   const [gridProducts, setProducts] = useState<Product[]>([]);
-  //const baseURL = import.meta.env.VITE_API_BASE_URL;
+
   useEffect(() => {
     axios
       .get(`${baseURL}/allproducts`)
@@ -53,11 +53,11 @@ function Home() {
   }, []);
 
   return (
-    <main className="home">
+    <main className={styles.home}>
       <section>
-        <header className="home-header">
+        <header className={styles.homeHeader}>
           <h1>Top 10 Products</h1>
-          <nav className="home-arrows">
+          <nav className={styles.homeArrows}>
             <button
               onClick={() => scrollTo("left")}
               disabled={currentIndex === 0}
@@ -74,11 +74,11 @@ function Home() {
         </header>
 
         <section
-          className="carousel"
+          className={styles.carousel}
           style={{ width: `${visibleCount * cardWidth}px` }}
         >
           <ul
-            className="carousel-track"
+            className={styles.carouselTrack}
             style={{
               transform: `translateX(-${
                 currentIndex * (cardWidth + 24) * visibleCount
@@ -86,14 +86,14 @@ function Home() {
             }}
           >
             {carouselProducts.map((_, index) => (
-              <li key={index} className="product-card">
+              <li key={index} className={styles.productCard}>
                 <article>
                   <figure>
                     <img src={productImg} alt="Product" />
                     <figcaption>
-                      <p className="title">Artwork Title</p>
-                      <p className="artist">Artist Name</p>
-                      <p className="price">R69</p>
+                      <p className={styles.title}>Artwork Title</p>
+                      <p className={styles.artist}>Artist Name</p>
+                      <p className={styles.price}>R69</p>
                     </figcaption>
                   </figure>
                 </article>
@@ -103,11 +103,11 @@ function Home() {
         </section>
       </section>
 
-      <section className="all-products">
+      <section className={styles.allProducts}>
         <h2>All Products</h2>
-        <ul className="all-products-grid">
+        <ul className={styles.allProductsGrid}>
           {gridProducts.map((product, index) => (
-            <li key={index} className="product-card">
+            <li key={index} className={styles.productCard}>
               <Link
                 to={`/Product/${product.product_id}`}
                 style={{ textDecoration: "none", color: "inherit" }}
@@ -116,9 +116,9 @@ function Home() {
                   <figure>
                     <img src={product.image_url || productImg} alt="Product" />
                     <figcaption>
-                      <p className="title">{product.product_name}</p>
-                      <p className="artist">{product.username}</p>
-                      <p className="price">{`R${product.price}`}</p>
+                      <p className={styles.title}>{product.product_name}</p>
+                      <p className={styles.artist}>{product.username}</p>
+                      <p className={styles.price}>{`R${product.price}`}</p>
                     </figcaption>
                   </figure>
                 </article>
