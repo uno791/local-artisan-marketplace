@@ -261,58 +261,58 @@ test('If user login is unsuccessful, it should show a pop-up saying "You are not
   });
 });
 
-// test('If users log in is succesful it should take you to the home page', async () => {
-//   // Mock Google user info response
-//   mockedAxios.get.mockResolvedValueOnce({
-//     data: {
-//       sub: 'user-id',
-//       name: 'test User',
-//       email: 'test@example.com',
-//       picture: 'https://example.com/test.jpg',
-//     },
-//   });
+test('If users log in is succesful it should take you to the home page', async () => {
+  // Mock Google user info response
+  mockedAxios.get.mockResolvedValueOnce({
+    data: {
+      sub: 'user-id',
+      name: 'test User',
+      email: 'test@example.com',
+      picture: 'https://example.com/test.jpg',
+    },
+  });
 
-//   // Mock backend check — admin user
-//   mockedAxios.post.mockResolvedValueOnce({
-//     data: {
-//       exists: true,
-//       role: 0,
-//     },
-//   });
+  // Mock backend check — admin user
+  mockedAxios.post.mockResolvedValueOnce({
+    data: {
+      exists: true,
+      role: 0,
+    },
+  });
 
-//   render(
-//     <GoogleOAuthProvider clientId="test-client-id">
-//       <UserProvider>
-//         <MemoryRouter initialEntries={["/"]}>
-//           <Routes>
-//             <Route path="/" element={<LoginPage />} />
-//             <Route path="/Home" element={<Home/>} />
-//           </Routes>
-//         </MemoryRouter>
-//       </UserProvider>
-//     </GoogleOAuthProvider>
-//   );
+  render(
+    <GoogleOAuthProvider clientId="test-client-id">
+      <UserProvider>
+        <MemoryRouter initialEntries={["/"]}>
+          <Routes>
+            <Route path="/" element={<LoginPage />} />
+            <Route path="/Home" element={<Home/>} />
+          </Routes>
+        </MemoryRouter>
+      </UserProvider>
+    </GoogleOAuthProvider>
+  );
 
-//   // Simulate clicking the login button
-//   const loginButton = screen.getByRole('button', { name: /Log-in with Google/i });
-//   fireEvent.click(loginButton);
+  // Simulate clicking the login button
+  const loginButton = screen.getByRole('button', { name: /Log-in with Google/i });
+  fireEvent.click(loginButton);
 
-//   // Simulate Google callback
-//   act(() => {
-//     loginCallback({ credential: 'mock-token', access_token: 'admin-token' });
-//   });
+  // Simulate Google callback
+  act(() => {
+    loginCallback({ credential: 'mock-token', access_token: 'admin-token' });
+  });
 
-//   // Wait for the success popup to appear
-//   await waitFor(() => {
-//     expect(screen.getByText("Successfully logged in!")).toBeInTheDocument();
-//   });
+  // Wait for the success popup to appear
+  await waitFor(() => {
+    expect(screen.getByText("Successfully logged in!")).toBeInTheDocument();
+  });
 
-//   // Click the "Close" button in the popup (wrapped in <Link to="/AdminDashboard">)
-//   const closeButton = screen.getByRole('button', { name: /close/i });
-//   fireEvent.click(closeButton);
+  // Click the "Close" button in the popup (wrapped in <Link to="/AdminDashboard">)
+  const closeButton = screen.getByRole('button', { name: /close/i });
+  fireEvent.click(closeButton);
 
-//   // Now we should be redirected to the Admin Dashboard
-//   await waitFor(() => {
-//     expect(screen.getByText("Top 10 Products")).toBeInTheDocument();
-//   });
-// });
+  // Now we should be redirected to the Admin Dashboard
+  await waitFor(() => {
+    expect(screen.getByText("Top 10 Products")).toBeInTheDocument();
+  });
+});
