@@ -18,21 +18,27 @@ export const AdminDashboard: React.FC = () => {
 
         <Link
           to="/AdminDashboard"
-          className={`${styles.navItem} ${isActive("/AdminDashboard") ? styles.navItemActive : ""}`}
+          className={`${styles.navItem} ${
+            isActive("/AdminDashboard") ? styles.navItemActive : ""
+          }`}
         >
           Sales Analytics
         </Link>
 
         <Link
           to="#"
-          className={`${styles.navItem} ${isActive("/UserReports") ? styles.navItemActive : ""}`}
+          className={`${styles.navItem} ${
+            isActive("/UserReports") ? styles.navItemActive : ""
+          }`}
         >
           User Reports
         </Link>
 
         <Link
           to="/SellerVerification"
-          className={`${styles.navItem} ${isActive("/SellerVerification") ? styles.navItemActive : ""}`}
+          className={`${styles.navItem} ${
+            isActive("/SellerVerification") ? styles.navItemActive : ""
+          }`}
         >
           Seller Verification
         </Link>
@@ -43,11 +49,11 @@ export const AdminDashboard: React.FC = () => {
         {/* Stats Row */}
         <div
           style={{
-            display: "grid",
-            gridTemplateColumns: "repeat(3, 1fr)",
+            display: "flex",
+            flexWrap: "wrap",
             gap: "16px",
-            // marginBottom: "8px",
             width: "100%",
+            justifyContent: "flex-start",
           }}
         >
           <StatsCard label="Total Sales" value="R245,000" />

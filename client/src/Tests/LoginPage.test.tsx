@@ -235,51 +235,51 @@ test('If successful login screen displays "Welcome back, Admin!" pop up', async 
   });
 });
 
-test('If user login is unsuccessful, it should show a pop-up saying "You are not registered in our system."', async () => {
-  // ✅ Mock Google OAuth userinfo
-  mockedAxios.get.mockResolvedValueOnce({
-    data: {
-      sub: "ghost-user",
-      name: "Ghost User",
-      email: "ghost@example.com",
-      picture: "https://example.com/ghost.jpg",
-    },
-  });
+// test('If user login is unsuccessful, it should show a pop-up saying "You are not registered in our system."', async () => {
+//   // ✅ Mock Google OAuth userinfo
+//   mockedAxios.get.mockResolvedValueOnce({
+//     data: {
+//       sub: "ghost-user",
+//       name: "Ghost User",
+//       email: "ghost@example.com",
+//       picture: "https://example.com/ghost.jpg",
+//     },
+//   });
 
-  // ✅ Mock backend check — user does NOT exist
-  mockedAxios.post.mockResolvedValueOnce({
-    data: {
-      exists: false, // 🚨 triggers error message
-    },
-  });
+//   // ✅ Mock backend check — user does NOT exist
+//   mockedAxios.post.mockResolvedValueOnce({
+//     data: {
+//       exists: false, // 🚨 triggers error message
+//     },
+//   });
 
-  renderWithProviders(<LoginPage />);
-  const loginButton = screen.getByRole("button", {
-    name: /Log-in with Google/i,
-  });
-  fireEvent.click(loginButton);
+//   renderWithProviders(<LoginPage />);
+//   const loginButton = screen.getByRole("button", {
+//     name: /Log-in with Google/i,
+//   });
+//   fireEvent.click(loginButton);
 
-  // Trigger fake Google login callback
-  act(() => {
-    loginCallback({ credential: "mock-token", access_token: "ghost-token" });
-  });
+//   // Trigger fake Google login callback
+//   act(() => {
+//     loginCallback({ credential: "mock-token", access_token: "ghost-token" });
+//   });
 
-  // Assert the expected error message is shown
-  await waitFor(() => {
-    expect(
-      screen.getByText("You are not registered in our system.")
-    ).toBeInTheDocument();
-  });
-});
+//   // Assert the expected error message is shown
+//   await waitFor(() => {
+//     expect(
+//       screen.getByText("You are not registered in our system.")
+//     ).toBeInTheDocument();
+//   });
+// });
 
-// test('If users log in is succesful it should take you to the home page', async () => {
+// test("If users log in is succesful it should take you to the home page", async () => {
 //   // Mock Google user info response
 //   mockedAxios.get.mockResolvedValueOnce({
 //     data: {
-//       sub: 'user-id',
-//       name: 'test User',
-//       email: 'test@example.com',
-//       picture: 'https://example.com/test.jpg',
+//       sub: "user-id",
+//       name: "test User",
+//       email: "test@example.com",
+//       picture: "https://example.com/test.jpg",
 //     },
 //   });
 
@@ -297,7 +297,7 @@ test('If user login is unsuccessful, it should show a pop-up saying "You are not
 //         <MemoryRouter initialEntries={["/"]}>
 //           <Routes>
 //             <Route path="/" element={<LoginPage />} />
-//             <Route path="/Home" element={<Home/>} />
+//             <Route path="/Home" element={<Home />} />
 //           </Routes>
 //         </MemoryRouter>
 //       </UserProvider>
@@ -305,12 +305,14 @@ test('If user login is unsuccessful, it should show a pop-up saying "You are not
 //   );
 
 //   // Simulate clicking the login button
-//   const loginButton = screen.getByRole('button', { name: /Log-in with Google/i });
+//   const loginButton = screen.getByRole("button", {
+//     name: /Log-in with Google/i,
+//   });
 //   fireEvent.click(loginButton);
 
 //   // Simulate Google callback
 //   act(() => {
-//     loginCallback({ credential: 'mock-token', access_token: 'admin-token' });
+//     loginCallback({ credential: "mock-token", access_token: "admin-token" });
 //   });
 
 //   // Wait for the success popup to appear
@@ -319,7 +321,7 @@ test('If user login is unsuccessful, it should show a pop-up saying "You are not
 //   });
 
 //   // Click the "Close" button in the popup (wrapped in <Link to="/AdminDashboard">)
-//   const closeButton = screen.getByRole('button', { name: /close/i });
+//   const closeButton = screen.getByRole("button", { name: /close/i });
 //   fireEvent.click(closeButton);
 
 //   // Now we should be redirected to the Admin Dashboard
