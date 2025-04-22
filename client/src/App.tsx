@@ -15,8 +15,6 @@ import SellerVerification from "./Pages/SellerVerification";
 import AdminDashboard from "./Pages/AdminDashboard";
 import SellerSignup from "./Pages/SellerSignup";
 
-// import UserTable from "./components/UserTable"; // 🟡 Temporarily disabled
-
 function App() {
   return (
     // DO NOT TOUCH
