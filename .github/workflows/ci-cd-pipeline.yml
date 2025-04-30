@@ -9,7 +9,7 @@ on:
 
 jobs:
   test:
-    name: 🔬 Run client tests
+    name: Run client tests
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v3
@@ -35,8 +35,11 @@ jobs:
           directory: ./client/coverage
 
   deploy_static:
-    name: 🌐 Build & deploy static site
+    name: Build & deploy static site
     needs: test
+    # same guard your original SWA workflow had:
+    if: github.event_name == 'push' ||
+      (github.event_name == 'pull_request' && github.event.action != 'closed')
     runs-on: ubuntu-latest
     permissions:
       id-token: write
@@ -47,14 +50,6 @@ jobs:
         with:
           submodules: true
           lfs: false
-
-      - name: 🔍 Check SWA token presence
-        run: |
-          if [ -z "${{ secrets.AZURE_STATIC_WEB_APPS_API_TOKEN_CALM_MEADOW_0FBB07C03 }}" ]; then
-            echo "❌ SWA token is *empty* here!"; exit 1
-          else
-            echo "✅ SWA token is present"
-          fi
 
       - name: Install OIDC Client from Core Package
         run: npm install @actions/core@1.6.0 @actions/http-client
@@ -80,7 +75,7 @@ jobs:
           github_id_token: ${{ steps.idtoken.outputs.result }}
 
   deploy_server:
-    name: 🚀 Build & deploy API server
+    name: Build & deploy API server
     needs: deploy_static
     runs-on: ubuntu-latest
     permissions:
