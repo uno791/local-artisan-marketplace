@@ -8,17 +8,18 @@ on:
     branches: [main]
 
 jobs:
-  # 1) Run thee client tests
   test:
+    name: 🤪 Run client tests
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v3
 
       - name: Use Node.js 18
         uses: actions/setup-node@v3
-        with: { node-version: "18" }
+        with:
+          node-version: "18"
 
-      - name: Install client deps
+      - name: Install client dependencies
         working-directory: ./client
         run: npm install
 
@@ -33,14 +34,13 @@ jobs:
           slug: uno791/local-artisan-marketplace
           directory: ./client/coverage
 
-  # 2) Build and deploy static site, only if tests passed
   deploy_static:
+    name: 😫 Build & deploy static site
     needs: test
     runs-on: ubuntu-latest
     permissions:
       contents: read
       id-token: write
-
     steps:
       - uses: actions/checkout@v3
 
@@ -52,8 +52,7 @@ jobs:
         id: idtoken
         with:
           script: |
-            const core = require('@actions/core');
-            return await core.getIDToken();
+            return await core.getIDToken()
           result-encoding: string
 
       - name: Build & deploy to Azure Static Web Apps
@@ -66,20 +65,20 @@ jobs:
           app_artifact_location: dist
           github_id_token: ${{ steps.idtoken.outputs.result }}
 
-  # 3) Build and deploy server, only if static just deployed
   deploy_server:
+    name: 🥵 Build & deploy API server
     needs: deploy_static
     runs-on: ubuntu-latest
     permissions:
       contents: read
       id-token: write
-
     steps:
       - uses: actions/checkout@v4
 
       - name: Use Node.js 22.x
         uses: actions/setup-node@v3
-        with: { node-version: "22.x" }
+        with:
+          node-version: "22.x"
 
       - name: Install & build server
         working-directory: ./server
