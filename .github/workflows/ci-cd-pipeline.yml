@@ -9,7 +9,7 @@ on:
 
 jobs:
   test:
-    name: Run freaky tests 😏
+    name: 🔬 Run client tests
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v3
@@ -35,7 +35,7 @@ jobs:
           directory: ./client/coverage
 
   deploy_static:
-    name: Build & deploy freaky static site 😉
+    name: 🌐 Build & deploy static site
     needs: test
     runs-on: ubuntu-latest
     permissions:
@@ -43,11 +43,18 @@ jobs:
       contents: read
 
     steps:
-      # **exactly as your original static yml had it:**
       - uses: actions/checkout@v3
         with:
           submodules: true
           lfs: false
+
+      - name: 🔍 Check SWA token presence
+        run: |
+          if [ -z "${{ secrets.AZURE_STATIC_WEB_APPS_API_TOKEN_CALM_MEADOW_0FBB07C03 }}" ]; then
+            echo "❌ SWA token is *empty* here!"; exit 1
+          else
+            echo "✅ SWA token is present"
+          fi
 
       - name: Install OIDC Client from Core Package
         run: npm install @actions/core@1.6.0 @actions/http-client
@@ -73,7 +80,7 @@ jobs:
           github_id_token: ${{ steps.idtoken.outputs.result }}
 
   deploy_server:
-    name: Build & deploy freaky API server 😈
+    name: 🚀 Build & deploy API server
     needs: deploy_static
     runs-on: ubuntu-latest
     permissions:
