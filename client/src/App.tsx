@@ -17,6 +17,9 @@ import SellerSignup from "./Pages/SellerSignup";
 import EditProductPage from "./Pages/EditProductPage";
 import AddProductPage from "./Pages/AddProductPage";
 import UserReports from "./Pages/UserReports";  
+import SellerHome from "./Pages/SellerHome";
+import StatsPage from "./Pages/SellerStatsPage";
+import SellerOrdersPage from "./Pages/SellerOrdersPage";
 
 function App() {
   return (
@@ -36,6 +39,12 @@ function App() {
           {/* Protected routes with MainLayout */}
 
           {/* Pages with MainLayout (includes NavBar & Footer) */}
+          <Route path="/SellerHome" element={<SellerHome />} />
+          <Route path="/SellerStats" element={<StatsPage />} />
+          <Route path="/SellerOrders" element={<SellerOrdersPage />} />
+          <Route path="/SellerProfile" element={<SellerHome />} />
+
+          {/* For Pages with NavBar and Footer */}
           <Route element={<MainLayout />}>
             <Route path="/Home" element={<Home />} />
             <Route path="/Search" element={<Search />} />
