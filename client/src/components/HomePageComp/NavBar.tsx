@@ -1,7 +1,8 @@
+import { useState } from "react";
 import styles from "./NavBar.module.css";
 import { NavLink } from "react-router-dom";
 import logo from "../../assets/localish-logo.png";
-import { FaHome, FaSearch, FaShoppingCart, FaUser } from "react-icons/fa";
+import { FaHome, FaSearch, FaShoppingCart, FaUser, FaBars } from "react-icons/fa";
 
 const navItems = [
   { name: "Home", path: "/Home", icon: <FaHome /> },
@@ -11,6 +12,8 @@ const navItems = [
 ];
 
 function NavBar() {
+  const [menuOpen, setMenuOpen] = useState(false);
+
   return (
     <header className={styles.navbar}>
       <nav className={styles.navbarInner}>
@@ -18,7 +21,23 @@ function NavBar() {
           <img src={logo} alt="Localish logo" />
         </a>
 
-        <ul className={styles.navbarLinks}>
+        <button
+          className={`${styles.menuToggle} ${menuOpen ? styles.hideToggle : ""}`}
+          onClick={() => setMenuOpen(!menuOpen)}
+        >
+          <FaBars />
+        </button>
+
+        {menuOpen && (
+          <section
+            className={styles.backdrop}
+            onClick={() => setMenuOpen(false)}
+          ></section>
+        )}
+
+        <ul
+          className={`${styles.navbarLinks} ${menuOpen ? styles.showMenu : ""}`}
+        >
           {navItems.map((item) => (
             <li key={item.name}>
               <NavLink
@@ -28,9 +47,10 @@ function NavBar() {
                     ? `${styles.navLink} ${styles.active}`
                     : styles.navLink
                 }
+                onClick={() => setMenuOpen(false)}
               >
-                <span className={styles.linkIcon}>{item.icon}</span>
-                <span className={styles.linkTitle}>{item.name}</span>
+                <article className={styles.linkIcon}>{item.icon}</article>
+                <p className={styles.linkTitle}>{item.name}</p>
               </NavLink>
             </li>
           ))}

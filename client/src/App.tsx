@@ -14,6 +14,8 @@ import MainLayout from "./layouts/MainLayout";
 import SellerVerification from "./Pages/SellerVerification";
 import AdminDashboard from "./Pages/AdminDashboard";
 import SellerSignup from "./Pages/SellerSignup";
+import ShopFront from "./Pages/ShopFront";
+
 
 function App() {
   return (
@@ -37,6 +39,8 @@ function App() {
             <Route path="/Cart" element={<Cart />} />
             <Route path="/Profile" element={<Profile />} />
             <Route path="/seller-signup" element={<SellerSignup />} />
+            <Route path="/shop" element={<ShopFront />} />
+
           </Route>
         </Routes>
       </BrowserRouter>

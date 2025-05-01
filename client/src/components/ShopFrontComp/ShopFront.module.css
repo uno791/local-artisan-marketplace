@@ -1,0 +1,112 @@
+.shopfront-page {
+    font-family: 'Montserrat', sans-serif;
+    padding: 2rem;
+    padding-top: 140px;
+  
+    /* Center the container */
+    width: 100vw;
+    min-height: 100vh;
+    max-width: 1400px;
+    margin: 0 auto;
+    box-sizing: border-box;
+    text-align: center; /* Ensures header and others align */
+  }
+  
+  
+  /* Header */
+  .header {
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin-bottom: 2rem;
+  }
+  
+  .logo {
+    width: 200px;
+    height: auto;
+    margin-bottom: 1rem;
+  }
+  
+  
+  .location {
+    font-size: 1rem;
+    color: #3e2b18;
+  }
+  
+  /* Product Grid */
+  .grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 2rem;
+  }
+  
+  
+  /* Product Card */
+  .card {
+    background-color: #f5e8d8;
+    border-radius: 8px;
+    box-shadow: 0 0 4px rgba(0, 0, 0, 0.1);
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+    transition: transform 0.2s ease;
+  }
+  
+  .card:hover {
+    transform: scale(1.02);
+  }
+  
+  .cardImage {
+    width: 100%;
+    height: 220px;
+    object-fit: cover;
+    background-color: #e0e0e0;
+  }
+  
+  .cardInfo {
+    padding: 1rem;
+    display: flex;
+    flex-direction: column;
+    gap: 0.25rem;
+  }
+  
+  .cardTitle {
+    font-weight: 600;
+    font-size: 1rem;
+    color: #000;
+  }
+  
+  .cardArtist {
+    font-size: 0.95rem;
+    color: #444;
+  }
+  
+  .cardPrice {
+    font-size: 1rem;
+    font-weight: bold;
+    color: #3e2b18;
+  }
+  
+  .cardCategory {
+    font-size: 0.85rem;
+    color: #888;
+    margin-bottom: 0.5rem;
+  }
+  
+  .cardButton {
+    background-color: #3e2b18;
+    color: white;
+    font-weight: bold;
+    border: none;
+    padding: 0.5rem;
+    border-radius: 6px;
+    cursor: pointer;
+    font-size: 0.95rem;
+    margin-top: auto;
+  }
+  
+  .cardButton:hover {
+    transform: scale(1.03);
+  }
+  
