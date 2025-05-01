@@ -1,11 +1,12 @@
 import styles from "./Header.module.css";
 import NavBar from "./NavBar";
-import logo from "../../assets/localish-logo.png";
-
+import logo from "../../assets/profile.png";
+import { BrowserRouter } from "react-router-dom";
 function Header() {
   return (
     <header className={styles.header}>
       <NavBar />
+
       <div className={styles.logoContainer}>
         <img src={logo} alt="Shop logo" className={styles.logoImage} />
         <div className={styles.shopDetails}>

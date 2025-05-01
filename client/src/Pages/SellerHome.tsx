@@ -17,7 +17,13 @@ function SellerHome() {
     <>
       <Header />
       <div className={styles.pageContent}>
-        <FilterBar selectedCategory={category} onSelectCategory={setCategory} />
+        <div className={styles.topBar}>
+          <button className={styles.addProductBtn}>Add New Product</button>
+          <FilterBar
+            selectedCategory={category}
+            onSelectCategory={setCategory}
+          />
+        </div>
         <div className={styles.grid}>
           {filteredProducts.map((product) => (
             <ProductCard key={product.id} product={product} />

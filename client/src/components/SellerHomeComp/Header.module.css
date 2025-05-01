@@ -1,11 +1,11 @@
 .header {
   background-color: #efe2cc;
   border-bottom: 1px solid #ddd;
-  position: fixed;
   width: 100%;
-  top: 0;
-  z-index: 1000;
+  padding-top: 150px; /* push below fixed navbar */
+  z-index: 999; /* still sits above normal content */
 }
+
 
 .navWrapper {
   display: flex;

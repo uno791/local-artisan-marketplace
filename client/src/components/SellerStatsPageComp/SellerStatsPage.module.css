@@ -1,0 +1,50 @@
+.container {
+  padding-top: 150px;
+  width: 100vw; /* take full viewport width */
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center; /* center content horizontally */
+  box-sizing: border-box;
+  padding-left: 2rem;
+  padding-right: 2rem;
+  color:#3e2c14
+}
+
+.statsHeader {
+  display: flex;
+  justify-content: center;
+  align-items: flex-start;
+  gap: 2rem;
+  margin-bottom: 2rem;
+  flex-wrap: wrap;
+  width: 100%;
+}
+
+
+.card {
+  background-color: #efe2cc;
+  border: 1px solid #ccc;
+  padding: 1rem 2rem;
+  border-radius: 8px;
+  flex: 1;
+  min-width: 220px;
+}
+
+.card p {
+  font-weight: 500;
+  margin-bottom: 0.5rem;
+}
+
+.card h3 {
+  font-size: 1.6rem;
+  color: #3e2c14;
+  margin: 0;
+}
+
+.rating {
+  margin-top: 2rem;
+  font-size: 1.2rem;
+  color: #3e2c14;
+  text-align: center;
+}

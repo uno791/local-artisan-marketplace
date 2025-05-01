@@ -1,3 +1,4 @@
+import React from "react";
 import styles from "./FilterBar.module.css";
 
 const categories = [
@@ -19,9 +20,10 @@ function FilterBar({ selectedCategory, onSelectCategory }: Props) {
       {categories.map((cat) => (
         <button
           key={cat}
-          className={`${styles.filterButton} ${
-            selectedCategory === cat ? styles.active : ""
-          }`}
+          className={
+            `${styles.filterButton} ` +
+            (selectedCategory === cat ? styles.active : "")
+          }
           onClick={() => onSelectCategory(cat)}
         >
           {cat}
