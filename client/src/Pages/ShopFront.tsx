@@ -1,6 +1,8 @@
 import { useEffect, useState } from "react";
 import Header from "../components/ShopFrontComp/Header";
 import ProductGrid from "../components/ShopFrontComp/ProductGrid";
+import ReportShop from "../components/ShopFrontComp/ReportShop";
+
 import styles from "../components/ShopFrontComp/ShopFront.module.css";
 
 import shopLogo from "../assets/shop-logo.png";
@@ -17,6 +19,7 @@ type Product = {
 
 function ShopFront() {
   const [products, setProducts] = useState<Product[]>([]);
+  const [showReportModal, setShowReportModal] = useState(false);
 
   useEffect(() => {
     const dummyProduct: Product = {
@@ -25,13 +28,12 @@ function ShopFront() {
       artist: "Artist Name",
       price: "R200",
       category: "Painting",
-      image: monaLisa
+      image: monaLisa,
     };
 
-    // Create multiple copies
     const filled = Array.from({ length: 9 }, (_, i) => ({
       ...dummyProduct,
-      id: i + 1
+      id: i + 1,
     }));
 
     setProducts(filled);
@@ -39,8 +41,22 @@ function ShopFront() {
 
   return (
     <main className={styles["shopfront-page"]}>
+      <section className={styles["report-shop-container"]}>
+        <button
+          onClick={() => setShowReportModal(true)}
+          className={styles["report-btn"]}
+        >
+          Report Shop
+        </button>
+      </section>
+
       <Header logo={shopLogo} />
+
       <ProductGrid products={products} />
+
+      {showReportModal && (
+        <ReportShop onClose={() => setShowReportModal(false)} />
+      )}
     </main>
   );
 }

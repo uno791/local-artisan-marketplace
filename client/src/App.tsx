@@ -15,6 +15,8 @@ import SellerVerification from "./Pages/SellerVerification";
 import AdminDashboard from "./Pages/AdminDashboard";
 import SellerSignup from "./Pages/SellerSignup";
 import ShopFront from "./Pages/ShopFront";
+import BuyerOrders from "./Pages/BuyerOrders";
+
 
 
 function App() {
@@ -40,6 +42,8 @@ function App() {
             <Route path="/Profile" element={<Profile />} />
             <Route path="/seller-signup" element={<SellerSignup />} />
             <Route path="/shop" element={<ShopFront />} />
+            <Route path="/orders" element={<BuyerOrders />} />
+
 
           </Route>
         </Routes>
