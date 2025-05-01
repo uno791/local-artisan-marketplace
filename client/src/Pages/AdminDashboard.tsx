@@ -26,7 +26,7 @@ export const AdminDashboard: React.FC = () => {
         </Link>
 
         <Link
-          to="#"
+          to="/UserReports"
           className={`${styles.navItem} ${
             isActive("/UserReports") ? styles.navItemActive : ""
           }`}

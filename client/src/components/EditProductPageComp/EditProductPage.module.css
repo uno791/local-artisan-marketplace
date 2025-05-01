@@ -1,0 +1,64 @@
+.container {
+  width: 100%;
+  max-width: 100%;
+  display: flex;
+  flex-direction: column;
+  padding: 6rem 2rem 2rem 2rem;
+  min-height: 1dvh;
+  width: 99vw;
+  box-sizing: border-box;
+  color: black;
+}
+
+.formContainer {
+  width: 100%;
+  max-width: 100%;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 2rem;
+  background-color: #f6ebd9;
+  padding: 1.5rem;
+  border-radius: 8px;
+  box-sizing: border-box;
+  border-color: #f6ebd9;
+}
+
+
+.pageTitle {
+  color: #666;
+  font-size: 0.8rem;
+  margin-bottom: 1rem;
+  text-transform: lowercase;
+}
+
+
+.leftColumn, .rightColumn {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+  min-width: 280px;
+}
+
+.row {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 1rem;
+}
+
+.confirmButton {
+  background-color: #4c2f0c;
+  color: white;
+  border: none;
+  padding: 0.75rem 2rem;
+  font-size: 1rem;
+  border-radius: 6px;
+  cursor: pointer;
+  margin-top: 1rem;
+  align-self: flex-start;
+}
+
+.confirmButton:hover {
+  background-color: #3a230a;
+}

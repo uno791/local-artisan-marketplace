@@ -85,6 +85,7 @@
   text-indent: 28px;
   width: 100%;
   opacity: 0;
+  
 }
 
 .navLink:hover .linkTitle,
@@ -100,4 +101,5 @@
   flex-shrink: 0;
   position: absolute;
   left: 18px;
+  
 }
