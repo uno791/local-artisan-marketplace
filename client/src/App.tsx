@@ -16,6 +16,7 @@ import AdminDashboard from "./Pages/AdminDashboard";
 import SellerSignup from "./Pages/SellerSignup";
 import SellerHome from "./Pages/SellerHome";
 import StatsPage from "./Pages/SellerStatsPage";
+import SellerOrdersPage from "./Pages/SellerOrdersPage";
 
 function App() {
   return (
@@ -34,8 +35,8 @@ function App() {
 
           <Route path="/SellerHome" element={<SellerHome />} />
           <Route path="/SellerStats" element={<StatsPage />} />
-          {/* <Route path="/SellerOrders" element={<SellerHome />} />
-          <Route path="/SellerProfile" element={<SellerHome />} /> */}
+          <Route path="/SellerOrders" element={<SellerOrdersPage />} />
+          <Route path="/SellerProfile" element={<SellerHome />} />
 
           {/* For Pages with NavBar and Footer */}
           <Route element={<MainLayout />}>
