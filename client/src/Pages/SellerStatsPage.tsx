@@ -19,7 +19,7 @@ const StatsPage: React.FC = () => {
           <h3>R100,400</h3>
         </div>
         <div className={styles.card}>
-          <p>UVs this all-time</p>
+          <p> all-time</p>
           <h3>R900,400</h3>
         </div>
       </div>
