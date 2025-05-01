@@ -58,7 +58,7 @@ const SellerVerification: React.FC = () => {
           Sales Analytics
         </Link>
 
-        <Link to="#" className={styles.navItem}>
+        <Link to="/UserReports" className={styles.navItem}>
           User Reports
         </Link>
 
