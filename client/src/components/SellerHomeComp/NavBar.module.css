@@ -1,0 +1,44 @@
+.navbarInner {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 1.2rem 2rem;
+}
+
+.addProductBtn {
+  background-color: #3e2c14;
+  color: #efe2cc;
+  padding: 0.6rem 1rem;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  font-weight: bold;
+}
+
+.navLinks {
+  display: flex;
+  gap: 2rem;
+}
+
+.navLink {
+  text-decoration: none;
+  color: #3e2c14;
+  font-weight: 600;
+  font-size: 1rem;
+  position: relative;
+}
+
+.navLink::after {
+  content: "";
+  position: absolute;
+  bottom: -4px;
+  left: 0;
+  width: 0%;
+  height: 2px;
+  background-color: #3e2c14;
+  transition: width 0.3s;
+}
+
+.navLink:hover::after {
+  width: 100%;
+}

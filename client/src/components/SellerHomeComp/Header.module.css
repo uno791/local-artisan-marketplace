@@ -1,0 +1,42 @@
+.header {
+  background-color: #efe2cc;
+  border-bottom: 1px solid #ddd;
+  position: fixed;
+  width: 100%;
+  top: 0;
+  z-index: 1000;
+}
+
+.navWrapper {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 1.2rem 2rem;
+}
+
+.logoContainer {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding-bottom: 1rem;
+}
+
+.logoImage {
+  height: 80px;
+}
+
+.shopDetails {
+  text-align: center;
+  margin-top: 0.5rem;
+}
+
+.shopName {
+  font-size: 1.2rem;
+  font-weight: bold;
+  color: #3e2c14;
+}
+
+.sellerName {
+  font-size: 0.95rem;
+  color: #5f4a2d;
+}

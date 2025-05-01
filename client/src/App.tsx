@@ -14,6 +14,7 @@ import MainLayout from "./layouts/MainLayout";
 import SellerVerification from "./Pages/SellerVerification";
 import AdminDashboard from "./Pages/AdminDashboard";
 import SellerSignup from "./Pages/SellerSignup";
+import SellerHome from "./Pages/SellerHome";
 
 function App() {
   return (
@@ -29,6 +30,7 @@ function App() {
           <Route path="/Product/:id" element={<ProductPage />} />
           <Route path="/SellerVerification" element={<SellerVerification />} />
           <Route path="/AdminDashboard" element={<AdminDashboard />} />
+          <Route path="/SellerHome" element={<SellerHome />} />
 
           {/* For Pages with NavBar and Footer */}
           <Route element={<MainLayout />}>
