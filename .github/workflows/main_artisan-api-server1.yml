@@ -1,9 +1,6 @@
 name: Build and deploy Node.js app to Azure Web App - artisan-api-server1
+
 on:
-  workflow_run:
-    workflows: ["Run Tests and Upload Coverage"]
-    types:
-      - completed
   push:
     branches:
       - main
@@ -43,8 +40,6 @@ jobs:
           path: release.zip
 
   deploy:
-    if: ${{ github.event.workflow_run.conclusion == 'success' }}
-
     runs-on: ubuntu-latest
     needs: build
     environment:
