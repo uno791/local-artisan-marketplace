@@ -62,3 +62,60 @@
 .confirmButton:hover {
   background-color: #3a230a;
 }
+.popupOverlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background-color: rgba(0, 0, 0, 0.4);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 999;
+}
+
+.popup {
+  position: relative;
+  background-color: white;         
+  color: black;                   
+  padding: 30px;
+  border-radius: 10px;
+  border: 2px solid #3399ff;
+  box-shadow: 0px 4px 20px rgba(0, 0, 0, 0.2);
+  z-index: 1000;
+  text-align: left;
+  max-width: 90vw;
+  width: 600px; /* Wider than before */
+  max-height: 80vh;
+  overflow-y: auto;
+  overflow-wrap: break-word;
+  word-wrap: break-word;
+  white-space: normal;
+}
+
+
+.popup h2 {
+  font-size: 1.5rem;
+  margin-bottom: 15px;
+}
+
+.popup p {
+  font-size: 1rem;
+  color: black;
+  font-size: 1rem;
+  color: black;
+  word-wrap: break-word;
+  white-space: normal;
+  overflow-wrap: break-word;
+}
+
+.popup button {
+  margin-top: 15px;
+  padding: 8px 16px;
+  background-color: #3399ff;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+}
