@@ -9,10 +9,12 @@ import SizeAndDimensions from "../components/EditProductPageComp/SizeAndDimensio
 import StockInput from "../components/EditProductPageComp/StockInput";
 import TypeOfArtSelector from "../components/EditProductPageComp/TypeOfArtSelector";
 import DeliveryOptionSelector from "../components/EditProductPageComp/DeliveryOptionSelector";
+import NavBar from "../components/SellerHomeComp/NavBar";
 
 const EditProductPage: React.FC = () => {
   return (
     <div className={styles.container}>
+      <NavBar />
       <h1 className={styles.pageTitle}>edit product</h1>
       <div className={styles.formContainer}>
         <div className={styles.leftColumn}>

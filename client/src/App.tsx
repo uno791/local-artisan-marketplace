@@ -16,7 +16,7 @@ import AdminDashboard from "./Pages/AdminDashboard";
 import SellerSignup from "./Pages/SellerSignup";
 import EditProductPage from "./Pages/EditProductPage";
 import AddProductPage from "./Pages/AddProductPage";
-import UserReports from "./Pages/UserReports";  
+import UserReports from "./Pages/UserReports";
 import SellerHome from "./Pages/SellerHome";
 import StatsPage from "./Pages/SellerStatsPage";
 import SellerOrdersPage from "./Pages/SellerOrdersPage";
@@ -43,6 +43,8 @@ function App() {
           <Route path="/SellerStats" element={<StatsPage />} />
           <Route path="/SellerOrders" element={<SellerOrdersPage />} />
           <Route path="/SellerProfile" element={<SellerHome />} />
+          <Route path="/EditProductPage" element={<EditProductPage />} />
+          <Route path="/AddProductPage" element={<AddProductPage />} />
 
           {/* For Pages with NavBar and Footer */}
           <Route element={<MainLayout />}>
@@ -51,8 +53,6 @@ function App() {
             <Route path="/Cart" element={<Cart />} />
             <Route path="/Profile" element={<Profile />} />
             <Route path="/seller-signup" element={<SellerSignup />} />
-            <Route path="/EditProductPage" element={<EditProductPage />} />
-            <Route path="/AddProductPage" element={<AddProductPage />} />
           </Route>
         </Routes>
       </BrowserRouter>
