@@ -18,10 +18,20 @@ const TypeOfArtSelector: React.FC<props> = ({ TypeOfArt, setTypeOfArt }) => {
         <option value="" disabled hidden>
           None Selected
         </option>
+        <option value="Jewellery">Jewellery</option>
+        <option value="Home Decor">Home Decor</option>
+        <option value="Art">Art</option>
+        <option value="Pottery">Pottery</option>
+        <option value="Textiles">Textiles</option>
+        <option value="Woodwork">Woodwork</option>
+        <option value="Leather Goods">Leather Goods</option>
+        <option value="Macrame">Macrame</option>
+        <option value="Candles">Candles</option>
+        <option value="Stationery">Stationery</option>
         <option value="Painting">Painting</option>
-        <option value="Sculpture">Sculpture</option>
         <option value="Photography">Photography</option>
         <option value="Digital Art">Digital Art</option>
+        <option value="Sculpture">Sculpture</option>
       </select>
     </section>
   );

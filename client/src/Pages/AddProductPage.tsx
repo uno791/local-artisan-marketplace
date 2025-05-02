@@ -10,6 +10,9 @@ import StockInput from "../components/AddProductPageComp/StockInput";
 import TypeOfArtSelector from "../components/AddProductPageComp/TypeOfArtSelector";
 import DeliveryOptionSelector from "../components/AddProductPageComp/DeliveryOptionSelector";
 import NavBar from "../components/SellerHomeComp/NavBar";
+import AddTagsButton from "../components/AddProductPageComp/AddTagsButton";
+import { useUser } from "../Users/UserContext";
+
 const AddProductPage: React.FC = () => {
   const [ProdName, setProdName] = React.useState<string>("");
   const [Details, setDetails] = React.useState<string>("");
@@ -19,12 +22,15 @@ const AddProductPage: React.FC = () => {
   const [Height, setHeight] = React.useState<string>("");
   const [Weight, setWeight] = React.useState<string>("");
   const [DelMethod, setDelMethod] = React.useState<boolean>(true);
-  const [TypeOfArt, setTypeOfArt] = React.useState<string>("");
+  const [MajorCategory, setMajorCategory] = React.useState<string>(""); // renamed from TypeOfArt
   const [Tags, setTags] = React.useState<string[]>([]);
   const [submitted, setSubmitted] = React.useState(false);
   const [missingFields, setMissingFields] = React.useState<string[]>([]);
 
-  const handleConfirm = () => {
+  const { user } = useUser();
+  const [username] = React.useState(user?.username || "");
+
+  const handleConfirm = async () => {
     const missing: string[] = [];
 
     if (!ProdName.trim()) missing.push("Product Name");
@@ -34,15 +40,51 @@ const AddProductPage: React.FC = () => {
     if (!Width.trim()) missing.push("Width");
     if (!Height.trim()) missing.push("Height");
     if (!Weight.trim()) missing.push("Weight");
-    if (!TypeOfArt.trim()) missing.push("Type of Art");
+    if (!MajorCategory.trim()) missing.push("Major Category");
 
     if (missing.length > 0) {
       setMissingFields(missing);
       return;
     }
 
-    setMissingFields([]); // clear old errors if any
-    setSubmitted(true);
+    if (!username) {
+      alert("Username not set. Please log in again.");
+      return;
+    }
+
+    const payload = {
+      username: username,
+      product_name: ProdName,
+      description: Details, // 👈 Description is now ONLY Details
+      price: Price,
+      stock_quantity: Stock,
+      image_url: "",
+      width: parseInt(Width),
+      height: parseInt(Height),
+      weight: parseInt(Weight),
+      details: Details,
+      tags: Tags,
+      typeOfArt: MajorCategory
+    };
+
+    try {
+      const response = await fetch("http://localhost:3000/addproduct", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(payload),
+      });
+
+      const data = await response.json();
+      if (response.ok) {
+        console.log("✅ Product submitted:", data);
+        setSubmitted(true);
+      } else {
+        alert("Failed to add product: " + (data.error || "Unknown error"));
+      }
+    } catch (err) {
+      console.error("❌ Submit error:", err);
+      alert("Could not connect to backend.");
+    }
   };
 
   return (
@@ -72,71 +114,38 @@ const AddProductPage: React.FC = () => {
           />
           <section className={styles.row}>
             <TypeOfArtSelector
-              TypeOfArt={TypeOfArt}
-              setTypeOfArt={setTypeOfArt}
+              TypeOfArt={MajorCategory}
+              setTypeOfArt={setMajorCategory}
             />
-            <EditTagsButton />
+            <AddTagsButton onConfirm={(selectedTags) => setTags(selectedTags)} />
           </section>
           <button className={styles.confirmButton} onClick={handleConfirm}>
             confirm addition of new productS
           </button>
+
           {submitted && (
             <section className={styles.popupOverlay}>
-              <section
-                className={styles.popup}
-                role="dialog"
-                aria-modal="true"
-                aria-labelledby="popup-title"
-              >
-                <h2 id="popup-title">Submitted Product Info</h2>
-                <section>
-                  <p>
-                    <strong>Name:</strong> {ProdName}
-                  </p>
-                  <p>
-                    <strong>Details:</strong> {Details}
-                  </p>
-                  <p>
-                    <strong>Price:</strong> R{Price.toFixed(2)}
-                  </p>
-                  <p>
-                    <strong>Stock:</strong> {Stock}
-                  </p>
-                  <p>
-                    <strong>Width:</strong> {Width} cm
-                  </p>
-                  <p>
-                    <strong>Height:</strong> {Height} cm
-                  </p>
-                  <p>
-                    <strong>Weight:</strong> {Weight} kg
-                  </p>
-                  <p>
-                    <strong>Delivery Method:</strong>{" "}
-                    {DelMethod ? "Delivery" : "Pickup"}
-                  </p>
-                  <p>
-                    <strong>Type of Art:</strong> {TypeOfArt}
-                  </p>
-                  <p>
-                    <strong>Tags:</strong> {Tags.join(", ")}
-                  </p>
-                </section>
+              <section className={styles.popup}>
+                <h2>Submitted Product Info</h2>
+                <p><strong>Name:</strong> {ProdName}</p>
+                <p><strong>Details:</strong> {Details}</p>
+                <p><strong>Price:</strong> R{Price.toFixed(2)}</p>
+                <p><strong>Stock:</strong> {Stock}</p>
+                <p><strong>Width:</strong> {Width} cm</p>
+                <p><strong>Height:</strong> {Height} cm</p>
+                <p><strong>Weight:</strong> {Weight} kg</p>
+                <p><strong>Delivery Method:</strong> {DelMethod ? "Delivery" : "Pickup"}</p>
+                <p><strong>Major Category:</strong> {MajorCategory}</p>
+                <p><strong>Tags:</strong> {Tags.join(", ")}</p>
                 <button onClick={() => setSubmitted(false)}>Close</button>
               </section>
             </section>
           )}
+
           {missingFields.length > 0 && (
             <section className={styles.popupOverlay}>
-              <section
-                className={styles.popup}
-                role="alertdialog"
-                aria-modal="true"
-                aria-labelledby="error-popup-title"
-              >
-                <h2 id="error-popup-title">
-                  Please Fill Out All Required Fields
-                </h2>
+              <section className={styles.popup}>
+                <h2>Please Fill Out All Required Fields</h2>
                 <ul>
                   {missingFields.map((field, index) => (
                     <li key={index}>{field}</li>
