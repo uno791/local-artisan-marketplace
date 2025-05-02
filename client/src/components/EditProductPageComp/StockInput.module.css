@@ -1,0 +1,52 @@
+.container {
+  display: flex;
+  flex-direction: column;
+  gap: 0.25rem;
+}
+
+.controlGroup {
+  display: flex;
+  align-items: center;
+  gap: 0.25rem;
+}
+
+.input {
+  width: 50px;
+  height: 1.6rem;
+  background-color: white;
+  color: black;
+  padding: 0.1rem 0.4rem;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  font-size: 0.9rem;
+  font-family: inherit;
+  text-align: center;
+ 
+
+  margin-top: 10px; /* 👈 shifts input down */
+
+  /* Remove spinner buttons */
+  -moz-appearance: textfield;
+}
+
+.input::-webkit-inner-spin-button,
+.input::-webkit-outer-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+.button {
+  height: 1.6rem;
+  padding: 0 0.5rem;
+  font-size: 0.9rem;
+  border: 1px solid #4c2f0c;
+  background-color: #4c2f0c;
+    
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+.button:hover {
+  background-color: #3a230a;
+  border-color: #3a230a;
+}

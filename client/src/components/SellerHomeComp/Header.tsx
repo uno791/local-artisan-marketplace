@@ -1,0 +1,21 @@
+import styles from "./Header.module.css";
+import NavBar from "./NavBar";
+import logo from "../../assets/profile.png";
+import { BrowserRouter } from "react-router-dom";
+function Header() {
+  return (
+    <header className={styles.header}>
+      <NavBar />
+
+      <div className={styles.logoContainer}>
+        <img src={logo} alt="Shop logo" className={styles.logoImage} />
+        <div className={styles.shopDetails}>
+          <p className={styles.shopName}>shlongshop</p>
+          <p className={styles.sellerName}>8 Market Road, Pietermaritzburg</p>
+        </div>
+      </div>
+    </header>
+  );
+}
+
+export default Header;

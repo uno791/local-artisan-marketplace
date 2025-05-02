@@ -1,0 +1,36 @@
+.searchContainer {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 1rem;
+  gap: 1rem;
+}
+
+.searchInput {
+  flex: 1;
+  padding: 0.5rem 1rem;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  font-size: 1rem;
+  font-family: inherit;
+  color: black;
+  background-color: white;
+}
+
+.filterButton {
+  padding: 0.5rem 1rem;
+  background-color: #5c3a12;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 1rem;
+  color: white;
+  transition: background-color 0.2s ease, border 0.2s ease;
+  border-color: #5c3a12;
+  margin-bottom: 10;
+}
+
+.filterButton:hover {
+  background-color: #4c2f0c; /* Slightly lighter */
+  border-color: #4c2f0c;
+}

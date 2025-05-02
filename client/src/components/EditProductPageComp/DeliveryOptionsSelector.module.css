@@ -1,0 +1,29 @@
+.container {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  margin-top: 1rem;
+}
+
+.option {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  font-size: 1rem;
+  color: #999; /* default for unselected */
+}
+
+.option:has(input[type="radio"]:checked) {
+  color: #4c2f0c; /* selected radio text */
+}
+
+input[type="radio"] {
+  accent-color: #4c2f0c;
+}
+
+.heading {
+  font-size: 1rem;
+  font-weight: 600;
+  margin-bottom: 0.5rem;
+  color: #050000;
+}
