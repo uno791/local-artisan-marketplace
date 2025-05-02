@@ -4,6 +4,15 @@
   display: flex;
   flex-direction: column;
   align-items: center;
+  width: 100%;
+  max-width: 100%;
+  display: flex;
+  flex-direction: column;
+  padding: 6rem 2rem 2rem 2rem;
+  min-height: 1dvh;
+  width: 99vw;
+  box-sizing: border-box;
+  color: black;
 }
 
 

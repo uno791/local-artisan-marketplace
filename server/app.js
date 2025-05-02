@@ -45,6 +45,54 @@ app.get("/allproducts", async (req, res) => {
   }
 });
 
+//this one get the products from sp seller
+// app.get("/SellerProducts", async (req, res) => {
+//   const { username } = req.query; 
+
+//   try {
+//     const pool = await connectDB();
+//     const result = await pool
+//       .request()
+//       .input("username", username)
+//       .query("SELECT * FROM dbo.products WHERE username = @username");
+//     await pool.close();
+
+//     res.json(result.recordset);
+//   } catch (err) {
+//     console.error("Failed to fetch products:", err);
+//     res.status(500).json({ error: "DB query failed", details: err.message });
+//   }
+// });
+
+app.get("/SellerProducts", async (req, res) => {
+  const { username } = req.query;
+
+  try {
+    const pool = await connectDB();
+    const result = await pool
+      .request()
+      .input("username", username)
+      .query("SELECT product_id, product_name, price, image_url, description FROM dbo.products WHERE username = @username");
+    await pool.close();
+
+    
+    const formatted = result.recordset.map((p) => ({
+      id: p.product_id,
+      name: p.product_name,
+      price: `R${parseFloat(p.price).toLocaleString()}`, 
+      category: p.description || "Uncategorized", 
+      image: p.image_url,
+    }));
+
+    res.json(formatted);
+  } catch (err) {
+    console.error("Failed to fetch products:", err);
+    res.status(500).json({ error: "DB query failed", details: err.message });
+  }
+});
+
+
+
 //Get /specific product - fetch specific product by ID
 app.get("/product/:id", async (req, res) => {
   const productId = req.params.id;

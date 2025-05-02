@@ -44,7 +44,19 @@ export const products = [
   },
   {
     id: 8,
-    name: "Digital Nova",
+    name: "Digital Nova1",
+    price: "R7,700",
+    category: "Digital Art",
+  },
+  {
+    id: 9,
+    name: "Digital Nova2",
+    price: "R7,700",
+    category: "Digital Art",
+  },
+  {
+    id: 10,
+    name: "Digital Nova3",
     price: "R7,700",
     category: "Digital Art",
   },

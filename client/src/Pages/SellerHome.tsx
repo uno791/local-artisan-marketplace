@@ -1,17 +1,44 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import Header from "../components/SellerHomeComp/Header";
 import FilterBar from "../components/SellerHomeComp/FilterBar";
 import ProductCard from "../components/SellerHomeComp/ProductCard";
-import { products } from "../components/SellerHomeComp/Product";
 import styles from "../components/SellerHomeComp/SellerHome.module.css";
+import { baseURL } from "../config";
+import axios from "axios";
+import { useUser } from "../Users/UserContext";
+
+interface Product {
+  id: number;
+  name: string;
+  price: string;
+  category: string;
+  image?: string;
+}
 
 function SellerHome() {
   const [category, setCategory] = useState("All");
+  const { user } = useUser();
+  const [username] = useState(user?.username || "");
+  const [gridProducts, setProducts] = useState<Product[]>([]);
+
+  useEffect(() => {
+    if (!username) return;
+
+    axios
+      .get(`${baseURL}/SellerProducts`, {
+        params: { username },
+      })
+      .then((res) => {
+        console.log("res.data = ", res.data);
+        setProducts(res.data);
+      })
+      .catch((err) => console.error("Error loading products:", err));
+  }, [username]);
 
   const filteredProducts =
     category === "All"
-      ? products
-      : products.filter((p) => p.category === category);
+      ? gridProducts
+      : gridProducts.filter((p) => p.category === category);
 
   return (
     <>

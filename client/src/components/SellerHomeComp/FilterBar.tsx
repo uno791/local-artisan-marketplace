@@ -7,6 +7,7 @@ const categories = [
   "Photography",
   "Digital Art",
   "Sculpture",
+  "Ssss",
 ];
 
 type Props = {

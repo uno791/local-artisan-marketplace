@@ -11,7 +11,7 @@ function Header() {
         <img src={logo} alt="Shop logo" className={styles.logoImage} />
         <div className={styles.shopDetails}>
           <p className={styles.shopName}>shlongshop</p>
-          <p className={styles.sellerName}>Handcrafted by: big</p>
+          <p className={styles.sellerName}>8 Market Road, Pietermaritzburg</p>
         </div>
       </div>
     </header>
