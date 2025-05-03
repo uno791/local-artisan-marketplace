@@ -82,7 +82,7 @@
   }
 }
 
-/* Small + extra-small screens (iPhone SE, iPhone 14, etc.) */
+/* Small + extra-small screens */
 @media (max-width: 480px) {
   .container {
     padding-top: 80px;

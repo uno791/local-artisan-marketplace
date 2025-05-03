@@ -69,7 +69,7 @@ h2 {
   overflow: visible;
 }
 
-/* Enhanced Mobile Responsiveness */
+/*  Mobile Responsiveness */
 @media (max-width: 768px) {
   .container {
     padding: 5rem 1rem 1rem 1rem;
