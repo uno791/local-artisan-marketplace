@@ -587,6 +587,54 @@ app.post("/addproduct", async (req, res) => {
     res.status(500).json({ error: "Failed to add product", details: err.message });
   }
 });
+app.put("/editproduct/:id", async (req, res) => {
+  const id = req.params.id;
+  const {
+    product_name,
+    description,
+    price,
+    stock_quantity,
+    width,
+    height,
+    weight,
+    details,
+    typeOfArt,
+    tags
+  } = req.body;
+
+  try {
+    const pool = await connectDB();
+    await pool.request()
+      .input("id", id)
+      .input("product_name", product_name)
+      .input("description", description)
+      .input("price", price)
+      .input("stock_quantity", stock_quantity)
+      .input("width", width)
+      .input("height", height)
+      .input("weight", weight)
+      .input("details", details)
+      .query(`
+        UPDATE dbo.products
+        SET 
+          product_name = @product_name,
+          description = @description,
+          price = @price,
+          stock_quantity = @stock_quantity,
+          width = @width,
+          height = @height,
+          weight = @weight,
+          details = @details
+        WHERE product_id = @id
+      `);
+
+    // You’ll also need to handle category/tag updates if necessary
+    await pool.close();
+    res.json({ message: "Product updated" });
+  } catch (err) {
+    res.status(500).json({ error: "Update failed", details: err.message });
+  }
+});
 
 
 
