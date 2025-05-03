@@ -10,8 +10,7 @@ import SidebarInfo from "../components/ProductPageComp/SideBarInfo";
 import { baseURL } from "../config";
 import ReportProduct from "../components/ProductPageComp/ReportProduct";
 import { Link } from "react-router-dom";
-import shopLogo from "../assets/shop-logo.png"; // or mona-lisa.jpg if that's what you're using
-
+import shopLogo from "../assets/profile.png"; // or mona-lisa.jpg if that's what you're using
 
 interface Product {
   product_id: number;
@@ -62,19 +61,19 @@ function ProductPage() {
           <ProductImage image_url={product.image_url} />
 
           <Link to="/shop">
-    <img
-      src={shopLogo}
-      alt="Shop Logo"
-      style={{
-        width: "140px",
-        height: "140px",
-        marginTop: "1rem",
-        borderRadius: "8px",
-        cursor: "pointer",
-        objectFit: "cover"
-      }}
-    />
-  </Link>
+            <img
+              src={shopLogo}
+              alt="Shop Logo"
+              style={{
+                width: "140px",
+                height: "140px",
+                marginTop: "1rem",
+                borderRadius: "8px",
+                cursor: "pointer",
+                objectFit: "cover",
+              }}
+            />
+          </Link>
         </section>
 
         <section className={styles["product-middle"]}>
@@ -100,7 +99,6 @@ function ProductPage() {
 }
 
 export default ProductPage;
-
 
 /*import "./ProductPage.css";
 import BackButton from "../components/BackButton";
