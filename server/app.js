@@ -73,6 +73,7 @@ app.get("/seller-dashboard", async (req, res) => {
     }
 
     const artisan = artisanResult.recordset[0];
+    
 
     // Fetch products with category
     const productsResult = await pool

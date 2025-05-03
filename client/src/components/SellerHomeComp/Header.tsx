@@ -9,11 +9,14 @@ interface Artisan {
 }
 
 function Header({ artisan }: { artisan: Artisan }) {
+  console.log("Banner image in header:", artisan.shop_banner);
   return (
     <header
       className={styles.header}
       style={{
-        backgroundImage: `url(${artisan.shop_banner})`,
+        backgroundImage: artisan.shop_banner
+          ? `url("${artisan.shop_banner}")`
+          : `url("/fallback-banner.jpg")`,
       }}
     >
       <div className={styles.overlay}></div>
