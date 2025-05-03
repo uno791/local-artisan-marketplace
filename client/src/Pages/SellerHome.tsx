@@ -6,6 +6,7 @@ import styles from "../components/SellerHomeComp/SellerHome.module.css";
 import { baseURL } from "../config";
 import axios from "axios";
 import { useUser } from "../Users/UserContext";
+import { Link } from "react-router-dom";
 
 interface Product {
   id: number;
@@ -62,7 +63,9 @@ function SellerHome() {
       {artisan && <Header artisan={artisan} />}
       <div className={styles.pageContent}>
         <div className={styles.topBar}>
-          <button className={styles.addProductBtn}>Add New Product</button>
+          <Link to={"/AddProductPage"}>
+            <button className={styles.addProductBtn}>Add New Product</button>
+          </Link>
           <FilterBar
             selectedCategory={category}
             onSelectCategory={setCategory}
