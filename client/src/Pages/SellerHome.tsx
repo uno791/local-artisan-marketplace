@@ -16,10 +16,11 @@ interface Product {
 }
 
 function SellerHome() {
-  const [category, setCategory] = useState("All");
   const { user } = useUser();
   const [username] = useState(user?.username || "");
+  const [category, setCategory] = useState("All");
   const [gridProducts, setProducts] = useState<Product[]>([]);
+  const [categories, setCategories] = useState<string[]>(["All"]);
 
   useEffect(() => {
     if (!username) return;
@@ -29,8 +30,18 @@ function SellerHome() {
         params: { username },
       })
       .then((res) => {
-        console.log("res.data = ", res.data);
-        setProducts(res.data);
+        const allProducts = res.data;
+        setProducts(allProducts);
+
+        const uniqueCategories: string[] = Array.from(
+          new Set(
+            allProducts.map((p: Product) =>
+              String(p.category || "Uncategorized")
+            )
+          )
+        );
+
+        setCategories(["All", ...uniqueCategories]);
       })
       .catch((err) => console.error("Error loading products:", err));
   }, [username]);
@@ -49,6 +60,7 @@ function SellerHome() {
           <FilterBar
             selectedCategory={category}
             onSelectCategory={setCategory}
+            categories={categories}
           />
         </div>
         <div className={styles.grid}>
