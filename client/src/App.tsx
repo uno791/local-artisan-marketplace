@@ -46,7 +46,7 @@ function App() {
           <Route path="/SellerStats" element={<StatsPage />} />
           <Route path="/SellerOrders" element={<SellerOrdersPage />} />
           <Route path="/SellerProfile" element={<SellerHome />} />
-          <Route path="/EditProductPage" element={<EditProductPage />} />
+          <Route path="/EditProductPage/:id" element={<EditProductPage />} />
           <Route path="/AddProductPage" element={<AddProductPage />} />
 
           {/* For Pages with NavBar and Footer */}

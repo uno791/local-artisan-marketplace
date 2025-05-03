@@ -1,20 +1,16 @@
 .pageContent {
-  padding-top: 20px; /* adjust this as needed based on Nav + logo height */
+  padding-top: 1rem;
   width: 100%;
   display: flex;
   flex-direction: column;
   align-items: center;
-  width: 100%;
   max-width: 100%;
-  display: flex;
-  flex-direction: column;
-  padding: 6rem 2rem 2rem 2rem;
+  padding: 1rem 2rem 2rem 2rem;
   min-height: 1dvh;
   width: 99vw;
   box-sizing: border-box;
   color: black;
 }
-
 
 .topBar {
   display: flex;
@@ -23,7 +19,7 @@
   margin-bottom: 0.1rem;
   flex-wrap: wrap;
   gap: 1rem;
-  margin-top: 0.1rem; /* ensure spacing from header/logo */
+  margin-top: 0.1rem;
 }
 
 .addProductBtn {
@@ -35,6 +31,7 @@
   cursor: pointer;
   font-weight: bold;
 }
+
 .grid {
   display: flex;
   flex-wrap: wrap;
@@ -43,4 +40,29 @@
   padding: 2rem;
   width: 100%; 
   box-sizing: border-box;
+}
+
+/* Mobile responsiveness */
+@media (max-width: 768px) {
+  .pageContent {
+    padding: 1rem;
+    width: 100vw;
+  }
+
+  .topBar {
+    flex-direction: column;
+    gap: 0.5rem;
+  }
+
+  .grid {
+    flex-direction: column;
+    padding: 1rem 0;
+    align-items: center;
+  }
+
+  .addProductBtn {
+    width: 100%;
+    max-width: 300px;
+    text-align: center;
+  }
 }

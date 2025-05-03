@@ -45,13 +45,38 @@ app.get("/allproducts", async (req, res) => {
   }
 });
 
-//this one get the products from sp seller
-app.get("/SellerProducts", async (req, res) => {
+//this one get the products and category from sp seller
+
+app.get("/seller-dashboard", async (req, res) => {
   const { username } = req.query;
+
+  if (!username) {
+    return res.status(400).json({ error: "Missing username" });
+  }
 
   try {
     const pool = await connectDB();
-    const result = await pool
+
+    // Fetch artisan info
+    const artisanResult = await pool
+      .request()
+      .input("username", username)
+      .query(`
+        SELECT shop_name, bio, shop_pfp, shop_address, shop_banner
+        FROM dbo.artisans
+        WHERE username = @username AND verified = 1
+      `);
+
+    if (artisanResult.recordset.length === 0) {
+      await pool.close();
+      return res.status(404).json({ error: "Artisan not found or not verified" });
+    }
+
+    const artisan = artisanResult.recordset[0];
+    
+
+    // Fetch products with category
+    const productsResult = await pool
       .request()
       .input("username", username)
       .query(`
@@ -66,8 +91,10 @@ app.get("/SellerProducts", async (req, res) => {
         LEFT JOIN dbo.main_categories mc ON lmc.category_id = mc.category_id
         WHERE p.username = @username
       `);
+
     await pool.close();
-    const formatted = result.recordset.map((p) => ({
+//forrmating it to how i wanted:
+    const products = productsResult.recordset.map((p) => ({
       id: p.product_id,
       name: p.product_name,
       price: `R${parseFloat(p.price).toLocaleString()}`,
@@ -75,63 +102,64 @@ app.get("/SellerProducts", async (req, res) => {
       image: p.image_url,
     }));
 
-    res.json(formatted);
+    res.json({ artisan, products });
   } catch (err) {
-    console.error("Failed to fetch products:", err);
-    res.status(500).json({ error: "DB query failed", details: err.message });
+    console.error("❌ Failed to fetch seller dashboard:", err);
+    res.status(500).json({ error: "Server error", details: err.message });
   }
 });
-
-
-// app.get("/SellerProducts", async (req, res) => {
-//   const { username } = req.query;
-
-//   try {
-//     const pool = await connectDB();
-//     const result = await pool
-//       .request()
-//       .input("username", username)
-//       .query("SELECT product_id, product_name, price, image_url, description FROM dbo.products WHERE username = @username");
-//     await pool.close();
-
-    
-//     const formatted = result.recordset.map((p) => ({
-//       id: p.product_id,
-//       name: p.product_name,
-//       price: `R${parseFloat(p.price).toLocaleString()}`, 
-//       category: p.description || "Uncategorized", 
-//       image: p.image_url,
-//     }));
-
-//     res.json(formatted);
-//   } catch (err) {
-//     console.error("Failed to fetch products:", err);
-//     res.status(500).json({ error: "DB query failed", details: err.message });
-//   }
-// });
-
 
 
 //Get /specific product - fetch specific product by ID
 app.get("/product/:id", async (req, res) => {
   const productId = req.params.id;
+
   try {
     const pool = await connectDB();
-    const result = await pool
-      .request()
-      .query(`SELECT * FROM dbo.products WHERE product_id = ${productId}`);
-    await pool.close();
 
-    if (result.recordset.length === 0) {
+    // 1. Fetch main product + main category
+    const productResult = await pool
+      .request()
+      .input("id", productId)
+      .query(`
+        SELECT p.*, mc.category_name
+        FROM dbo.products p
+        LEFT JOIN dbo.link_main_categories lmc ON p.product_id = lmc.product_id
+        LEFT JOIN dbo.main_categories mc ON lmc.category_id = mc.category_id
+        WHERE p.product_id = @id
+      `);
+
+    if (productResult.recordset.length === 0) {
+      await pool.close();
       return res.status(404).json({ message: "Product not found" });
     }
 
-    res.json(result.recordset[0]);
+    const product = productResult.recordset[0];
+
+    // 2. Fetch minor categories (tags)
+    const tagsResult = await pool
+      .request()
+      .input("id", productId)
+      .query(`
+        SELECT mc.minor_category_name
+        FROM dbo.link_minor_categories lmc
+        JOIN dbo.minor_categories mc ON lmc.minor_category_id = mc.minor_category_id
+        WHERE lmc.product_id = @id
+      `);
+
+    const tags = tagsResult.recordset.map(r => r.minor_category_name);
+
+    await pool.close();
+
+    // 3. Return everything
+    res.json({ ...product, tags });
+
   } catch (err) {
     console.error("❌ Failed to fetch product:", err);
     res.status(500).json({ error: "DB query failed", details: err.message });
   }
 });
+
 
 app.get("/penartisans", async (req, res) => {
   try {
@@ -606,6 +634,104 @@ app.post("/addproduct", async (req, res) => {
     res.status(500).json({ error: "Failed to add product", details: err.message });
   }
 });
+app.put("/editproduct/:id", async (req, res) => {
+  const id = req.params.id;
+  const {
+    product_name,
+    description,
+    price,
+    stock_quantity,
+    width,
+    height,
+    weight,
+    details,
+    typeOfArt,
+    tags,
+  } = req.body;
+
+  try {
+    const pool = await connectDB();
+
+    // Step 1: Update main product fields
+    await pool.request()
+      .input("id", id)
+      .input("product_name", product_name)
+      .input("description", description)
+      .input("price", price)
+      .input("stock_quantity", stock_quantity)
+      .input("width", width)
+      .input("height", height)
+      .input("weight", weight)
+      .input("details", details)
+      .query(`
+        UPDATE dbo.products
+        SET 
+          product_name = @product_name,
+          description = @description,
+          price = @price,
+          stock_quantity = @stock_quantity,
+          width = @width,
+          height = @height,
+          weight = @weight,
+          details = @details
+        WHERE product_id = @id
+      `);
+
+    // Step 2: Update main category
+    const categoryResult = await pool.request()
+      .input("category_name", typeOfArt)
+      .query(`SELECT category_id FROM dbo.main_categories WHERE category_name = @category_name`);
+
+    if (categoryResult.recordset.length > 0) {
+      const categoryId = categoryResult.recordset[0].category_id;
+
+      // Remove old links
+      await pool.request()
+        .input("product_id", id)
+        .query(`DELETE FROM dbo.link_main_categories WHERE product_id = @product_id`);
+
+      // Add new one
+      await pool.request()
+        .input("product_id", id)
+        .input("category_id", categoryId)
+        .query(`INSERT INTO dbo.link_main_categories (product_id, category_id) VALUES (@product_id, @category_id)`);
+    }
+
+    // Step 3: Update tags (minor categories)
+    await pool.request()
+      .input("product_id", id)
+      .query(`DELETE FROM dbo.link_minor_categories WHERE product_id = @product_id`);
+
+    for (const tag of tags) {
+      let tagId;
+
+      const tagLookup = await pool.request()
+        .input("minor_category_name", tag)
+        .query(`SELECT minor_category_id FROM dbo.minor_categories WHERE minor_category_name = @minor_category_name`);
+
+      if (tagLookup.recordset.length === 0) {
+        const insertTag = await pool.request()
+          .input("minor_category_name", tag)
+          .query(`INSERT INTO dbo.minor_categories (minor_category_name) OUTPUT INSERTED.minor_category_id VALUES (@minor_category_name)`);
+        tagId = insertTag.recordset[0].minor_category_id;
+      } else {
+        tagId = tagLookup.recordset[0].minor_category_id;
+      }
+
+      await pool.request()
+        .input("product_id", id)
+        .input("minor_category_id", tagId)
+        .query(`INSERT INTO dbo.link_minor_categories (product_id, minor_category_id) VALUES (@product_id, @minor_category_id)`);
+    }
+
+    await pool.close();
+    res.json({ message: "✅ Product updated successfully" });
+  } catch (err) {
+    console.error("❌ Failed to update product:", err);
+    res.status(500).json({ error: "Update failed", details: err.message });
+  }
+});
+
 
 
 

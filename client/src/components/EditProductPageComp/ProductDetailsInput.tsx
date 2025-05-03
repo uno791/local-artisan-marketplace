@@ -1,12 +1,22 @@
 import React from "react";
 import styles from "./ProductDetailsInput.module.css";
 
-const ProductDetailsInput: React.FC = () => {
+interface Props {
+  Details: string;
+  setDetails: (details: string) => void;
+}
+
+const ProductDetailsInput: React.FC<Props> = ({ Details, setDetails }) => {
   return (
-    <div className={styles.container}>
+    <section className={styles.container}>
       <label><strong>Edit Product Description:</strong></label>
-      <textarea rows={6} className={styles.textarea} />
-    </div>
+      <textarea
+        rows={6}
+        value={Details}
+        onChange={(e) => setDetails(e.target.value)}
+        className={styles.textarea}
+      />
+    </section>
   );
 };
 
