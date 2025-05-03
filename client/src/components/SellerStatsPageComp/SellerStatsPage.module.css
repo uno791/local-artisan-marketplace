@@ -1,10 +1,10 @@
 .container {
   padding-top: 150px;
-  width: 100vw; /* take full  width */
+  width: 100vw;
   min-height: 100vh;
   display: flex;
   flex-direction: column;
-  align-items: center; /* center content horizontally */
+  align-items: center;
   box-sizing: border-box;
   padding-left: 2rem;
   padding-right: 2rem;
@@ -48,7 +48,7 @@
   text-align: center;
 }
 
-/* Mobile responsiveness */
+/* Medium screens */
 @media (max-width: 768px) {
   .container {
     padding-top: 100px;
@@ -65,13 +65,50 @@
   .card {
     width: 100%;
     max-width: 350px;
+    padding: 0.75rem 1.5rem;
   }
 
   .card h3 {
-    font-size: 1.4rem;
+    font-size: 1.3rem;
+  }
+
+  .card p {
+    font-size: 0.95rem;
   }
 
   .rating {
     font-size: 1rem;
+    margin-top: 1.5rem;
+  }
+}
+
+/* Small + extra-small screens (iPhone SE, iPhone 14, etc.) */
+@media (max-width: 480px) {
+  .container {
+    padding-top: 80px;
+    padding-left: 0.8rem;
+    padding-right: 0.8rem;
+  }
+
+  .card {
+    padding: 0.6rem 1rem;
+    border-radius: 6px;
+  }
+
+  .card h3 {
+    font-size: 1.1rem;
+  }
+
+  .card p {
+    font-size: 0.85rem;
+  }
+
+  .rating {
+    font-size: 0.9rem;
+    margin-top: 1rem;
+  }
+
+  .statsHeader {
+    gap: 0.75rem;
   }
 }
