@@ -30,10 +30,10 @@
   color: #efe2cc;
 }
 
-/* Tablet responsiveness */
+
 @media (max-width: 768px) {
   .filterBar {
-    flex-direction: row; /* stay in a row */
+    flex-direction: row; 
     justify-content: center;
   }
 
@@ -53,7 +53,7 @@
   }
 
   .filterButton {
-    width: 31%; /* three per row with gap */
+    width: 31%; 
     padding: 0.3rem 0.5rem;
     font-size: 0.75rem;
     text-align: center;
