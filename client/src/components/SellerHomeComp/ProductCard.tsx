@@ -15,23 +15,26 @@ type Props = {
 
 function ProductCard({ product }: Props) {
   return (
-    <div className={styles.card}>
-      <div className={styles.imageBox}>
+    <section className={styles.card}>
+      <section className={styles.imageBox}>
         {product.image ? (
           <img src={product.image} alt={product.name} />
         ) : (
-          <div className={styles.placeholder}>387 × 320</div>
+          <section className={styles.placeholder}>387 × 320</section>
         )}
-      </div>
-      <div className={styles.info}>
+      </section>
+
+      <section className={styles.info}>
         <h3>{product.name}</h3>
         <p>{product.price}</p>
         <p className={styles.category}>{product.category}</p>
-        <Link to={"/EditProductPage"}>
+
+        {/* ✅ Route with dynamic product ID */}
+        <Link to={`/EditProductPage/${product.id}`}>
           <button className={styles.button}>Edit Product</button>
         </Link>
-      </div>
-    </div>
+      </section>
+    </section>
   );
 }
 

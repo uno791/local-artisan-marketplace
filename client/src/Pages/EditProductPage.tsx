@@ -40,7 +40,10 @@ const EditProductPage: React.FC = () => {
         setWidth(data.width?.toString() || "");
         setHeight(data.height?.toString() || "");
         setWeight(data.weight?.toString() || "");
-        setMajorCategory(data.description || "");
+        setMajorCategory(data.category_name || "");
+        setTags(data.tags || []);
+
+
         // TODO: fetch tags and DelMethod if available
       } catch (err) {
         console.error("Failed to load product:", err);

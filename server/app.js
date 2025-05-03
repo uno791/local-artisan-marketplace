@@ -205,23 +205,53 @@ app.get("/seller-dashboard", async (req, res) => {
 //Get /specific product - fetch specific product by ID
 app.get("/product/:id", async (req, res) => {
   const productId = req.params.id;
+
   try {
     const pool = await connectDB();
-    const result = await pool
-      .request()
-      .query(`SELECT * FROM dbo.products WHERE product_id = ${productId}`);
-    await pool.close();
 
-    if (result.recordset.length === 0) {
+    // 1. Fetch main product + main category
+    const productResult = await pool
+      .request()
+      .input("id", productId)
+      .query(`
+        SELECT p.*, mc.category_name
+        FROM dbo.products p
+        LEFT JOIN dbo.link_main_categories lmc ON p.product_id = lmc.product_id
+        LEFT JOIN dbo.main_categories mc ON lmc.category_id = mc.category_id
+        WHERE p.product_id = @id
+      `);
+
+    if (productResult.recordset.length === 0) {
+      await pool.close();
       return res.status(404).json({ message: "Product not found" });
     }
 
-    res.json(result.recordset[0]);
+    const product = productResult.recordset[0];
+
+    // 2. Fetch minor categories (tags)
+    const tagsResult = await pool
+      .request()
+      .input("id", productId)
+      .query(`
+        SELECT mc.minor_category_name
+        FROM dbo.link_minor_categories lmc
+        JOIN dbo.minor_categories mc ON lmc.minor_category_id = mc.minor_category_id
+        WHERE lmc.product_id = @id
+      `);
+
+    const tags = tagsResult.recordset.map(r => r.minor_category_name);
+
+    await pool.close();
+
+    // 3. Return everything
+    res.json({ ...product, tags });
+
   } catch (err) {
     console.error("❌ Failed to fetch product:", err);
     res.status(500).json({ error: "DB query failed", details: err.message });
   }
 });
+
 
 app.get("/penartisans", async (req, res) => {
   try {
