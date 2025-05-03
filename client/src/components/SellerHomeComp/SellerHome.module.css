@@ -1,5 +1,5 @@
 .pageContent {
-  padding-top: 20px; /* adjust this as needed based on Nav + logo height */
+ padding-top: 1rem;
   width: 100%;
   display: flex;
   flex-direction: column;
@@ -8,12 +8,13 @@
   max-width: 100%;
   display: flex;
   flex-direction: column;
-  padding: 6rem 2rem 2rem 2rem;
+   padding: 1rem 2rem 2rem 2rem;
   min-height: 1dvh;
   width: 99vw;
   box-sizing: border-box;
   color: black;
 }
+
 
 
 .topBar {

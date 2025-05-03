@@ -45,13 +45,37 @@ app.get("/allproducts", async (req, res) => {
   }
 });
 
-//this one get the products from sp seller
-app.get("/SellerProducts", async (req, res) => {
+//this one get the products and category from sp seller
+
+app.get("/seller-dashboard", async (req, res) => {
   const { username } = req.query;
+
+  if (!username) {
+    return res.status(400).json({ error: "Missing username" });
+  }
 
   try {
     const pool = await connectDB();
-    const result = await pool
+
+    // Fetch artisan info
+    const artisanResult = await pool
+      .request()
+      .input("username", username)
+      .query(`
+        SELECT shop_name, bio, shop_pfp, shop_address, shop_banner
+        FROM dbo.artisans
+        WHERE username = @username AND verified = 1
+      `);
+
+    if (artisanResult.recordset.length === 0) {
+      await pool.close();
+      return res.status(404).json({ error: "Artisan not found or not verified" });
+    }
+
+    const artisan = artisanResult.recordset[0];
+
+    // Fetch products with category
+    const productsResult = await pool
       .request()
       .input("username", username)
       .query(`
@@ -66,8 +90,10 @@ app.get("/SellerProducts", async (req, res) => {
         LEFT JOIN dbo.main_categories mc ON lmc.category_id = mc.category_id
         WHERE p.username = @username
       `);
+
     await pool.close();
-    const formatted = result.recordset.map((p) => ({
+
+    const products = productsResult.recordset.map((p) => ({
       id: p.product_id,
       name: p.product_name,
       price: `R${parseFloat(p.price).toLocaleString()}`,
@@ -75,13 +101,76 @@ app.get("/SellerProducts", async (req, res) => {
       image: p.image_url,
     }));
 
-    res.json(formatted);
+    res.json({ artisan, products });
   } catch (err) {
-    console.error("Failed to fetch products:", err);
-    res.status(500).json({ error: "DB query failed", details: err.message });
+    console.error("❌ Failed to fetch seller dashboard:", err);
+    res.status(500).json({ error: "Server error", details: err.message });
   }
 });
 
+
+
+// app.get("/SellerProducts", async (req, res) => {
+//   const { username } = req.query;
+
+//   try {
+//     const pool = await connectDB();
+//     const result = await pool
+//       .request()
+//       .input("username", username)
+//       .query(`
+//         SELECT 
+//           p.product_id,
+//           p.product_name,
+//           p.price,
+//           p.image_url,
+//           ISNULL(mc.category_name, 'Uncategorized') AS category_name
+//         FROM dbo.products p
+//         LEFT JOIN dbo.link_main_categories lmc ON p.product_id = lmc.product_id
+//         LEFT JOIN dbo.main_categories mc ON lmc.category_id = mc.category_id
+//         WHERE p.username = @username
+//       `);
+//     await pool.close();
+//     const formatted = result.recordset.map((p) => ({
+//       id: p.product_id,
+//       name: p.product_name,
+//       price: `R${parseFloat(p.price).toLocaleString()}`,
+//       category: p.category_name,
+//       image: p.image_url,
+//     }));
+
+//     res.json(formatted);
+//   } catch (err) {
+//     console.error("Failed to fetch products:", err);
+//     res.status(500).json({ error: "DB query failed", details: err.message });
+//   }
+// });
+
+// app.get("/getartisan", async (req, res) => {
+//   const { username } = req.query;
+
+//   try {
+//     const pool = await connectDB();
+//     const result = await pool
+//       .request()
+//       .input("username", username)
+//       .query(`
+//         SELECT shop_name, bio, shop_pfp, shop_address
+//         FROM dbo.artisans
+//         WHERE username = @username AND verified = 1
+//       `);
+//     await pool.close();
+
+//     if (result.recordset.length === 0) {
+//       return res.status(404).json({ error: "Artisan not found or not verified" });
+//     }
+
+//     res.json(result.recordset[0]);
+//   } catch (err) {
+//     console.error("Error fetching artisan:", err);
+//     res.status(500).json({ error: "Server error", details: err.message });
+//   }
+// });
 
 // app.get("/SellerProducts", async (req, res) => {
 //   const { username } = req.query;

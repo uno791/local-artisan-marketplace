@@ -15,9 +15,18 @@ interface Product {
   image?: string;
 }
 
+interface Artisan {
+  shop_name: string;
+  bio: string;
+  shop_pfp: string;
+  shop_address: string;
+  shop_banner: string;
+}
+
 function SellerHome() {
   const { user } = useUser();
   const [username] = useState(user?.username || "");
+  const [artisan, setArtisan] = useState<Artisan | null>(null);
   const [category, setCategory] = useState("All");
   const [gridProducts, setProducts] = useState<Product[]>([]);
   const [categories, setCategories] = useState<string[]>(["All"]);
@@ -26,24 +35,21 @@ function SellerHome() {
     if (!username) return;
 
     axios
-      .get(`${baseURL}/SellerProducts`, {
+      .get(`${baseURL}/seller-dashboard`, {
         params: { username },
       })
       .then((res) => {
-        const allProducts = res.data;
-        setProducts(allProducts);
+        const { artisan, products } = res.data;
+        setArtisan(artisan);
+        setProducts(products);
 
         const uniqueCategories: string[] = Array.from(
-          new Set(
-            allProducts.map((p: Product) =>
-              String(p.category || "Uncategorized")
-            )
-          )
+          new Set(products.map((p: Product) => p.category || "Uncategorized"))
         );
 
         setCategories(["All", ...uniqueCategories]);
       })
-      .catch((err) => console.error("Error loading products:", err));
+      .catch((err) => console.error("Error loading seller dashboard:", err));
   }, [username]);
 
   const filteredProducts =
@@ -53,7 +59,7 @@ function SellerHome() {
 
   return (
     <>
-      <Header />
+      {artisan && <Header artisan={artisan} />}
       <div className={styles.pageContent}>
         <div className={styles.topBar}>
           <button className={styles.addProductBtn}>Add New Product</button>
