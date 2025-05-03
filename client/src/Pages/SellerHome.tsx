@@ -7,7 +7,7 @@ import { baseURL } from "../config";
 import axios from "axios";
 import { useUser } from "../Users/UserContext";
 import { Link } from "react-router-dom";
-
+//product per
 interface Product {
   id: number;
   name: string;
@@ -15,7 +15,7 @@ interface Product {
   category: string;
   image?: string;
 }
-
+//artisan
 interface Artisan {
   shop_name: string;
   bio: string;
@@ -52,7 +52,7 @@ function SellerHome() {
       })
       .catch((err) => console.error("Error loading seller dashboard:", err));
   }, [username]);
-
+  //filter by category
   const filteredProducts =
     category === "All"
       ? gridProducts

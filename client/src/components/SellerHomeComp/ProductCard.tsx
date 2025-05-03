@@ -29,7 +29,7 @@ function ProductCard({ product }: Props) {
         <p>{product.price}</p>
         <p className={styles.category}>{product.category}</p>
 
-        {/* ✅ Route with dynamic product ID */}
+        {/* Route with specificc product ID for the edit page h*/}
         <Link to={`/EditProductPage/${product.id}`}>
           <button className={styles.button}>Edit Product</button>
         </Link>

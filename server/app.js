@@ -93,7 +93,7 @@ app.get("/seller-dashboard", async (req, res) => {
       `);
 
     await pool.close();
-
+//forrmating it to how i wanted:
     const products = productsResult.recordset.map((p) => ({
       id: p.product_id,
       name: p.product_name,
@@ -108,98 +108,6 @@ app.get("/seller-dashboard", async (req, res) => {
     res.status(500).json({ error: "Server error", details: err.message });
   }
 });
-
-
-
-// app.get("/SellerProducts", async (req, res) => {
-//   const { username } = req.query;
-
-//   try {
-//     const pool = await connectDB();
-//     const result = await pool
-//       .request()
-//       .input("username", username)
-//       .query(`
-//         SELECT 
-//           p.product_id,
-//           p.product_name,
-//           p.price,
-//           p.image_url,
-//           ISNULL(mc.category_name, 'Uncategorized') AS category_name
-//         FROM dbo.products p
-//         LEFT JOIN dbo.link_main_categories lmc ON p.product_id = lmc.product_id
-//         LEFT JOIN dbo.main_categories mc ON lmc.category_id = mc.category_id
-//         WHERE p.username = @username
-//       `);
-//     await pool.close();
-//     const formatted = result.recordset.map((p) => ({
-//       id: p.product_id,
-//       name: p.product_name,
-//       price: `R${parseFloat(p.price).toLocaleString()}`,
-//       category: p.category_name,
-//       image: p.image_url,
-//     }));
-
-//     res.json(formatted);
-//   } catch (err) {
-//     console.error("Failed to fetch products:", err);
-//     res.status(500).json({ error: "DB query failed", details: err.message });
-//   }
-// });
-
-// app.get("/getartisan", async (req, res) => {
-//   const { username } = req.query;
-
-//   try {
-//     const pool = await connectDB();
-//     const result = await pool
-//       .request()
-//       .input("username", username)
-//       .query(`
-//         SELECT shop_name, bio, shop_pfp, shop_address
-//         FROM dbo.artisans
-//         WHERE username = @username AND verified = 1
-//       `);
-//     await pool.close();
-
-//     if (result.recordset.length === 0) {
-//       return res.status(404).json({ error: "Artisan not found or not verified" });
-//     }
-
-//     res.json(result.recordset[0]);
-//   } catch (err) {
-//     console.error("Error fetching artisan:", err);
-//     res.status(500).json({ error: "Server error", details: err.message });
-//   }
-// });
-
-// app.get("/SellerProducts", async (req, res) => {
-//   const { username } = req.query;
-
-//   try {
-//     const pool = await connectDB();
-//     const result = await pool
-//       .request()
-//       .input("username", username)
-//       .query("SELECT product_id, product_name, price, image_url, description FROM dbo.products WHERE username = @username");
-//     await pool.close();
-
-    
-//     const formatted = result.recordset.map((p) => ({
-//       id: p.product_id,
-//       name: p.product_name,
-//       price: `R${parseFloat(p.price).toLocaleString()}`, 
-//       category: p.description || "Uncategorized", 
-//       image: p.image_url,
-//     }));
-
-//     res.json(formatted);
-//   } catch (err) {
-//     console.error("Failed to fetch products:", err);
-//     res.status(500).json({ error: "DB query failed", details: err.message });
-//   }
-// });
-
 
 
 //Get /specific product - fetch specific product by ID

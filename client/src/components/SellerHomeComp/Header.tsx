@@ -9,7 +9,7 @@ interface Artisan {
 }
 
 function Header({ artisan }: { artisan: Artisan }) {
-  console.log("Banner image in header:", artisan.shop_banner);
+  //console.log("Banner in header:", artisan.shop_banner);
   return (
     <header
       className={styles.header}
@@ -23,7 +23,8 @@ function Header({ artisan }: { artisan: Artisan }) {
       <NavBar />
       <div className={styles.logoContainer}>
         <img
-          src={artisan.shop_pfp || "/fallback-profile.png"}
+          // this shoud put either pfp or puts the defualt pfp from kamal
+          src={artisan.shop_pfp || "/profile.png"}
           alt="Shop logo"
           className={styles.logoImage}
         />
