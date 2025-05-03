@@ -8,7 +8,7 @@
   box-sizing: border-box;
   padding-left: 2rem;
   padding-right: 2rem;
-  color:#3e2c14
+  color: #3e2c14;
 }
 
 .statsHeader {
@@ -20,7 +20,6 @@
   flex-wrap: wrap;
   width: 100%;
 }
-
 
 .card {
   background-color: #efe2cc;
@@ -47,4 +46,32 @@
   font-size: 1.2rem;
   color: #3e2c14;
   text-align: center;
+}
+
+/* Mobile responsiveness */
+@media (max-width: 768px) {
+  .container {
+    padding-top: 100px;
+    padding-left: 1rem;
+    padding-right: 1rem;
+  }
+
+  .statsHeader {
+    flex-direction: column;
+    align-items: center;
+    gap: 1rem;
+  }
+
+  .card {
+    width: 100%;
+    max-width: 350px;
+  }
+
+  .card h3 {
+    font-size: 1.4rem;
+  }
+
+  .rating {
+    font-size: 1rem;
+  }
 }

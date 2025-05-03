@@ -708,11 +708,13 @@ app.put("/editproduct/:id", async (req, res) => {
     weight,
     details,
     typeOfArt,
-    tags
+    tags,
   } = req.body;
 
   try {
     const pool = await connectDB();
+
+    // Step 1: Update main product fields
     await pool.request()
       .input("id", id)
       .input("product_name", product_name)
@@ -737,13 +739,61 @@ app.put("/editproduct/:id", async (req, res) => {
         WHERE product_id = @id
       `);
 
-    // You’ll also need to handle category/tag updates if necessary
+    // Step 2: Update main category
+    const categoryResult = await pool.request()
+      .input("category_name", typeOfArt)
+      .query(`SELECT category_id FROM dbo.main_categories WHERE category_name = @category_name`);
+
+    if (categoryResult.recordset.length > 0) {
+      const categoryId = categoryResult.recordset[0].category_id;
+
+      // Remove old links
+      await pool.request()
+        .input("product_id", id)
+        .query(`DELETE FROM dbo.link_main_categories WHERE product_id = @product_id`);
+
+      // Add new one
+      await pool.request()
+        .input("product_id", id)
+        .input("category_id", categoryId)
+        .query(`INSERT INTO dbo.link_main_categories (product_id, category_id) VALUES (@product_id, @category_id)`);
+    }
+
+    // Step 3: Update tags (minor categories)
+    await pool.request()
+      .input("product_id", id)
+      .query(`DELETE FROM dbo.link_minor_categories WHERE product_id = @product_id`);
+
+    for (const tag of tags) {
+      let tagId;
+
+      const tagLookup = await pool.request()
+        .input("minor_category_name", tag)
+        .query(`SELECT minor_category_id FROM dbo.minor_categories WHERE minor_category_name = @minor_category_name`);
+
+      if (tagLookup.recordset.length === 0) {
+        const insertTag = await pool.request()
+          .input("minor_category_name", tag)
+          .query(`INSERT INTO dbo.minor_categories (minor_category_name) OUTPUT INSERTED.minor_category_id VALUES (@minor_category_name)`);
+        tagId = insertTag.recordset[0].minor_category_id;
+      } else {
+        tagId = tagLookup.recordset[0].minor_category_id;
+      }
+
+      await pool.request()
+        .input("product_id", id)
+        .input("minor_category_id", tagId)
+        .query(`INSERT INTO dbo.link_minor_categories (product_id, minor_category_id) VALUES (@product_id, @minor_category_id)`);
+    }
+
     await pool.close();
-    res.json({ message: "Product updated" });
+    res.json({ message: "✅ Product updated successfully" });
   } catch (err) {
+    console.error("❌ Failed to update product:", err);
     res.status(500).json({ error: "Update failed", details: err.message });
   }
 });
+
 
 
 
