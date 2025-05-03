@@ -5,7 +5,8 @@ import ReportShop from "../components/ShopFrontComp/ReportShop";
 
 import styles from "../components/ShopFrontComp/ShopFront.module.css";
 
-import shopLogo from "../assets/shop-logo.png";
+//import shopLogo from "../assets/shop-logo.png";
+import shopLogo from "../assets/profile.png";
 import monaLisa from "../assets/mona-lisa.jpg";
 
 type Product = {
