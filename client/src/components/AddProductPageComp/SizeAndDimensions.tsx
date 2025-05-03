@@ -18,6 +18,16 @@ const SizeAndDimensions: React.FC<props> = ({
   Weight,
   setWeight,
 }) => {
+  const handleDecimalInput = (
+    value: string,
+    setter: (val: string) => void
+  ) => {
+    // Regex to allow numbers with optional 1 or 2 decimal places
+    if (/^\d*\.?\d{0,2}$/.test(value)) {
+      setter(value);
+    }
+  };
+
   return (
     <div className={styles.container}>
       <strong>Enter size and dimensions:</strong>
@@ -26,48 +36,33 @@ const SizeAndDimensions: React.FC<props> = ({
           Width (cm):
           <input
             type="text"
-            inputMode="numeric"
-            pattern="[0-9]*"
+            inputMode="decimal"
+            pattern="^\d*\.?\d{0,2}$"
             className={styles.input}
             value={Width}
-            onChange={(e) => {
-              const val = e.target.value;
-              if (/^\d*$/.test(val)) {
-                setWidth(val);
-              }
-            }}
+            onChange={(e) => handleDecimalInput(e.target.value, setWidth)}
           />
         </label>
         <label className={styles.label}>
           Height (cm):
           <input
             type="text"
-            inputMode="numeric"
-            pattern="[0-9]*"
+            inputMode="decimal"
+            pattern="^\d*\.?\d{0,2}$"
             className={styles.input}
             value={Height}
-            onChange={(e) => {
-              const val = e.target.value;
-              if (/^\d*$/.test(val)) {
-                setHeight(val);
-              }
-            }}
+            onChange={(e) => handleDecimalInput(e.target.value, setHeight)}
           />
         </label>
         <label className={styles.label}>
           Weight (kg):
           <input
             type="text"
-            inputMode="numeric"
-            pattern="[0-9]*"
+            inputMode="decimal"
+            pattern="^\d*\.?\d{0,2}$"
             className={styles.input}
             value={Weight}
-            onChange={(e) => {
-              const val = e.target.value;
-              if (/^\d*$/.test(val)) {
-                setWeight(val);
-              }
-            }}
+            onChange={(e) => handleDecimalInput(e.target.value, setWeight)}
           />
         </label>
       </div>

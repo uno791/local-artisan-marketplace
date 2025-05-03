@@ -498,3 +498,117 @@ app.post("/createartisan", async (req, res) => {
 app.listen(PORT, () => {
   console.log("🚀 Server Listening on PORT:", PORT);
 });
+
+app.post("/addproduct", async (req, res) => {
+  const {
+    username,
+    product_name,
+    description,
+    price,
+    stock_quantity,
+    image_url,
+    width,
+    height,
+    weight,
+    details,
+    tags,
+    typeOfArt
+  } = req.body;
+
+  try {
+    const pool = await connectDB();
+
+    // Step 1: Insert product
+    const insertProductResult = await pool.request()
+      .input("username", username)
+      .input("product_name", product_name)
+      .input("description", description)
+      .input("price", price)
+      .input("stock_quantity", stock_quantity)
+      .input("image_url", image_url)
+      .input("width", width)
+      .input("height", height)
+      .input("weight", weight)
+      .input("details", details)
+      .query(`
+        INSERT INTO dbo.products (
+          username, product_name, description, price, stock_quantity,
+          image_url, width, height, weight, details, created_at
+        )
+        OUTPUT INSERTED.product_id
+        VALUES (
+          @username, @product_name, @description, @price, @stock_quantity,
+          @image_url, @width, @height, @weight, @details, GETDATE()
+        )
+      `);
+
+    const productId = insertProductResult.recordset[0].product_id;
+
+    // Step 2: Link to main category
+    const categoryResult = await pool.request()
+      .input("category_name", typeOfArt)
+      .query(`
+        SELECT category_id 
+        FROM dbo.main_categories 
+        WHERE category_name = @category_name
+      `);
+
+    if (categoryResult.recordset.length > 0) {
+      const categoryId = categoryResult.recordset[0].category_id;
+      await pool.request()
+        .input("product_id", productId)
+        .input("category_id", categoryId)
+        .query(`
+          INSERT INTO dbo.link_main_categories (product_id, category_id)
+          VALUES (@product_id, @category_id)
+        `);
+    } else {
+      console.warn(`⚠️ No matching main category for: ${typeOfArt}`);
+    }
+
+    // Step 3: Handle and link tags (minor categories)
+    for (const tag of tags) {
+      let tagId;
+      const tagLookup = await pool.request()
+        .input("minor_category_name", tag)
+        .query(`
+          SELECT minor_category_id 
+          FROM dbo.minor_categories 
+          WHERE minor_category_name = @minor_category_name
+        `);
+
+      if (tagLookup.recordset.length === 0) {
+        const insertTag = await pool.request()
+          .input("minor_category_name", tag)
+          .query(`
+            INSERT INTO dbo.minor_categories (minor_category_name)
+            OUTPUT INSERTED.minor_category_id
+            VALUES (@minor_category_name)
+          `);
+        tagId = insertTag.recordset[0].minor_category_id;
+      } else {
+        tagId = tagLookup.recordset[0].minor_category_id;
+      }
+
+      await pool.request()
+        .input("product_id", productId)
+        .input("minor_category_id", tagId)
+        .query(`
+          INSERT INTO dbo.link_minor_categories (product_id, minor_category_id)
+          VALUES (@product_id, @minor_category_id)
+        `);
+    }
+
+    await pool.close();
+    res.status(201).json({ message: "✅ Product and categories added successfully" });
+  } catch (err) {
+    console.error("❌ Error inserting product:", err);
+    res.status(500).json({ error: "Failed to add product", details: err.message });
+  }
+});
+
+
+
+
+
+

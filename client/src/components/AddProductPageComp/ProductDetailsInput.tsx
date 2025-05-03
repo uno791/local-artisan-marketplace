@@ -8,7 +8,7 @@ interface Props{
 const ProductDetailsInput: React.FC<Props> = ({Details,setDetails}) => {
   return (
     <div className={styles.container}>
-      <label><strong>Enter Product Details:</strong></label>
+      <label><strong>Enter Product Description:</strong></label>
       <textarea rows={6} className={styles.textarea} 
       value={Details}
       onChange={(e)=>setDetails(e.target.value)}/>
