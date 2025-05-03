@@ -10,7 +10,7 @@ import SidebarInfo from "../components/ProductPageComp/SideBarInfo";
 import { baseURL } from "../config";
 import ReportProduct from "../components/ProductPageComp/ReportProduct";
 import { Link } from "react-router-dom";
-import shopLogo from "../assets/profile.png"; // or mona-lisa.jpg if that's what you're using
+//import shopLogo from "../assets/profile.png"; // or mona-lisa.jpg if that's what you're using
 
 interface Product {
   product_id: number;
@@ -60,7 +60,7 @@ function ProductPage() {
         <section className={styles["product-left"]}>
           <ProductImage image_url={product.image_url} />
 
-          <Link to="/shop">
+          {/* <Link to="/shop">
             <img
               src={shopLogo}
               alt="Shop Logo"
@@ -73,7 +73,7 @@ function ProductPage() {
                 objectFit: "cover",
               }}
             />
-          </Link>
+          </Link> */}
         </section>
 
         <section className={styles["product-middle"]}>
