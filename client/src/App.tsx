@@ -14,6 +14,9 @@ import MainLayout from "./layouts/MainLayout";
 import SellerVerification from "./Pages/SellerVerification";
 import AdminDashboard from "./Pages/AdminDashboard";
 import SellerSignup from "./Pages/SellerSignup";
+import ShopFront from "./Pages/ShopFront";
+import BuyerOrders from "./Pages/BuyerOrders";
+
 import EditProductPage from "./Pages/EditProductPage";
 import AddProductPage from "./Pages/AddProductPage";
 import UserReports from "./Pages/UserReports";
@@ -53,6 +56,8 @@ function App() {
             <Route path="/Cart" element={<Cart />} />
             <Route path="/Profile" element={<Profile />} />
             <Route path="/seller-signup" element={<SellerSignup />} />
+            <Route path="/shop" element={<ShopFront />} />
+            <Route path="/orders" element={<BuyerOrders />} />
           </Route>
         </Routes>
       </BrowserRouter>

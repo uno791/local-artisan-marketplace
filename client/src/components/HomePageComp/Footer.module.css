@@ -1,12 +1,15 @@
 .footer {
+  width: 100%; /* Ensure full width */
   background-color: #efe2cc;
-  padding: 2rem 3rem;
+  padding: 2rem 1.5rem;
   margin-top: 4rem;
   border-top: 1px solid #ddd;
   font-family: 'Montserrat', sans-serif;
   color: #3e2c14;
+  box-sizing: border-box;
 }
 
+/* Centered, responsive inner content */
 .footerContent {
   display: flex;
   justify-content: space-between;
@@ -14,33 +17,44 @@
   gap: 2rem;
   max-width: 1200px;
   margin: 0 auto;
+  width: 100%;
 }
 
+/* Left side: logo and description */
 .footerBranding {
   flex: 1 1 250px;
+  min-width: 200px;
 }
 
+/* Logo image */
 .footerLogo {
   height: 150px;
   margin-bottom: 1rem;
 }
 
+/* Tagline or blurb */
 .footerDescription {
   font-size: 0.9rem;
   color: #5c4a2f;
 }
 
+/* Right side sections (like links) */
 .footerSection {
   flex: 1 1 200px;
+  min-width: 150px;
 }
 
+/* Section headings */
 .footerHeading {
   margin-bottom: 0.75rem;
+  font-weight: bold;
 }
 
+/* Bottom copyright line */
 .footerBottom {
   text-align: center;
   font-size: 0.8rem;
   margin-top: 2rem;
   color: #7a6a4f;
+  width: 100%;
 }

@@ -1,3 +1,4 @@
+import { useNavigate } from "react-router-dom";
 import styles from "./Profile.module.css";
 
 type Props = {
@@ -5,9 +6,18 @@ type Props = {
 };
 
 function ActionButtons(props: Props) {
+  const navigate = useNavigate();
+
+  function goToOrders() {
+    navigate("/orders");
+  }
+
   return (
     <section className={styles["action-buttons"]}>
-      <button className={styles["action-btn"]}>View Orders</button>
+      <button className={styles["action-btn"]} onClick={goToOrders}>
+        View Orders
+      </button>
+
       <button className={styles["action-btn"]} onClick={props.onBecomeSeller}>
         Become A Seller
       </button>

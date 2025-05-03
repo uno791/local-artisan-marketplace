@@ -8,6 +8,10 @@ import ProductImage from "../components/ProductPageComp/ProductImage";
 import ProductInfo from "../components/ProductPageComp/ProductInfo";
 import SidebarInfo from "../components/ProductPageComp/SideBarInfo";
 import { baseURL } from "../config";
+import ReportProduct from "../components/ProductPageComp/ReportProduct";
+import { Link } from "react-router-dom";
+import shopLogo from "../assets/shop-logo.png"; // or mona-lisa.jpg if that's what you're using
+
 
 interface Product {
   product_id: number;
@@ -23,6 +27,7 @@ interface Product {
 function ProductPage() {
   const { id } = useParams();
   const [product, setProduct] = useState<Product | null>(null);
+  const [showReportModal, setShowReportModal] = useState(false);
 
   useEffect(() => {
     axios
@@ -41,11 +46,35 @@ function ProductPage() {
 
   return (
     <main className={styles["product-page"]}>
+      <section className={styles["report-button-container"]}>
+        <button
+          onClick={() => setShowReportModal(true)}
+          className={styles["report-btn"]}
+        >
+          Report Product
+        </button>
+      </section>
+
       <BackButton />
 
       <section className={styles["product-main"]}>
         <section className={styles["product-left"]}>
           <ProductImage image_url={product.image_url} />
+
+          <Link to="/shop">
+    <img
+      src={shopLogo}
+      alt="Shop Logo"
+      style={{
+        width: "140px",
+        height: "140px",
+        marginTop: "1rem",
+        borderRadius: "8px",
+        cursor: "pointer",
+        objectFit: "cover"
+      }}
+    />
+  </Link>
         </section>
 
         <section className={styles["product-middle"]}>
@@ -62,11 +91,16 @@ function ProductPage() {
           <SidebarInfo username={product.username} />
         </aside>
       </section>
+
+      {showReportModal && (
+        <ReportProduct onClose={() => setShowReportModal(false)} />
+      )}
     </main>
   );
 }
 
 export default ProductPage;
+
 
 /*import "./ProductPage.css";
 import BackButton from "../components/BackButton";

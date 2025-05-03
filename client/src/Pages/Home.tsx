@@ -15,31 +15,6 @@ interface Product {
 }
 
 function Home() {
-  const [currentIndex, setCurrentIndex] = useState(0);
-
-  const carouselProducts = new Array(10).fill(null);
-  const visibleCount = 5;
-  const cardWidth = 240;
-  const maxIndex = Math.ceil(carouselProducts.length / visibleCount) - 1;
-
-  function scrollTo(direction: "left" | "right") {
-    setCurrentIndex(function (current) {
-      let newIndex = current;
-
-      if (direction === "left") {
-        newIndex = current - 1;
-        if (newIndex < 0) newIndex = 0;
-      }
-
-      if (direction === "right") {
-        newIndex = current + 1;
-        if (newIndex > maxIndex) newIndex = maxIndex;
-      }
-
-      return newIndex;
-    });
-  }
-
   const [gridProducts, setProducts] = useState<Product[]>([]);
 
   useEffect(() => {
@@ -54,56 +29,6 @@ function Home() {
 
   return (
     <main className={styles.home}>
-      <section>
-        <header className={styles.homeHeader}>
-          <h1>Top 10 Products</h1>
-          <nav className={styles.homeArrows}>
-            <button
-              onClick={() => scrollTo("left")}
-              disabled={currentIndex === 0}
-            >
-              ‹
-            </button>
-            <button
-              onClick={() => scrollTo("right")}
-              disabled={currentIndex === maxIndex}
-            >
-              ›
-            </button>
-          </nav>
-        </header>
-
-        <section
-          className={styles.carousel}
-          style={{ width: `${visibleCount * cardWidth}px` }}
-        >
-          <ul
-            className={styles.carouselTrack}
-            style={{
-              transform: `translateX(-${
-                currentIndex * (cardWidth + 24) * visibleCount
-              }px)`,
-            }}
-          >
-            {carouselProducts.map((_, index) => (
-              <li key={index} className={styles.productCard}>
-                <article>
-                  <figure>
-                    {/* <img src={productImg} alt="Product" /> */}
-                    <Logo />
-                    <figcaption>
-                      <p className={styles.title}>Artwork Title</p>
-                      <p className={styles.artist}>Artist Name</p>
-                      <p className={styles.price}>R69</p>
-                    </figcaption>
-                  </figure>
-                </article>
-              </li>
-            ))}
-          </ul>
-        </section>
-      </section>
-
       <section className={styles.allProducts}>
         <h2>All Products</h2>
         <ul className={styles.allProductsGrid}>

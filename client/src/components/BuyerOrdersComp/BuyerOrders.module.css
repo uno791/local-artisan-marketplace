@@ -1,0 +1,94 @@
+.wrapper {
+    display: flex;
+    flex-direction: column;
+    align-items: stretch;
+    padding-top: 120px;
+    padding-left: 2rem;
+    padding-right: 2rem;
+    max-width: 1400px;
+    width: 100vw;
+    min-height: 100vh;
+    margin: 0 auto;
+    font-family: "Montserrat", sans-serif;
+    color: black; /* Default text color */
+    box-sizing: border-box;
+  }
+  
+  /* Headings */
+  h2 {
+    font-size: 1.5rem;
+    margin-bottom: 1rem;
+    color: black;
+  }
+  
+  /* Order Card Layout */
+  .orderCard {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: space-between;
+    padding: 1rem;
+    margin-bottom: 1rem;
+    border: 1px solid #999;
+    border-radius: 4px;
+    font-size: 0.95rem;
+    gap: 1rem;
+    background-color: inherit;
+    color: black;
+  }
+  
+  /* Image Container */
+  .imageBox {
+    width: 60px;
+    height: 60px;
+    flex-shrink: 0;
+  }
+  
+  .image {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    background-color: #ccc;
+    border-radius: 4px;
+  }
+  
+  /* Text Elements */
+  .name {
+    flex: 1 1 120px;
+    font-weight: 500;
+    color: black;
+  }
+  
+  .price {
+    font-weight: bold;
+    white-space: nowrap;
+    color: black;
+  }
+  
+  .quantity {
+    white-space: nowrap;
+    color: black;
+  }
+  
+  .date {
+    white-space: nowrap;
+    font-size: 0.85rem;
+    color: black;
+  }
+  
+  /* Status Colors */
+  .delivered {
+    color: green;
+    font-weight: 500;
+  }
+  
+  .shipped {
+    color: purple;
+    font-weight: 500;
+  }
+  
+  .paymentReceived {
+    color: black;
+    font-weight: 500;
+  }
+  

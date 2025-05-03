@@ -1,3 +1,5 @@
+/* Base layout */
+
 .navbar {
   position: fixed;
   top: 0;
@@ -22,60 +24,181 @@
   height: 80px;
 }
 
+/* Base styles for nav */
+
 .navbarLinks {
+  list-style: none;
+  padding: 0;
+  margin: 0;
   display: flex;
   gap: 1rem;
+}
+
+.navLink {
+  display: flex;
+  align-items: center;
+  padding: 1rem;
+  color: #3e2b18;
+  background: none;
+  border-radius: 0;
+  width: 100%;
+  text-decoration: none;
+  font-weight: 500;
+}
+
+.linkIcon {
+  position: static;
+  margin-right: 0.5rem;
+  width: 20px;
+  height: 20px;
+}
+
+.linkTitle {
+  opacity: 1;
+  transform: none;
+  text-indent: 0;
+  margin-left: 0.75rem;
+}
+
+/* Hamburger Button */
+
+.menuToggle {
+  display: none;
+  background: none;
+  border: none;
+  font-size: 1.5rem;
+  color: #3e2c14;
+  cursor: pointer;
+}
+
+.hideToggle {
+  display: none !important;
+}
+
+/* Backdrop for outside click */
+
+.backdrop {
+  position: fixed;
+  top: 80px; /* match navbar height */
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: transparent;
+  z-index: 1000;
   margin: 0;
   padding: 0;
   color: #efe2cc;
 }
 
-.navLink {
-  display: inline-flex;
-  justify-content: center;
-  align-items: center;
-  width: 70px;
-  height: 50px;
-  border-radius: 8px;
+/* Mobile menu */
+
+@media (max-width: 768px) {
+  .menuToggle {
+    display: block;
+  }
+
+  .navbarLinks {
+    z-index: 1001; /* Make it higher than .backdrop */
   position: relative;
-  z-index: 1;
-  overflow: hidden;
-  transform-origin: center left;
-  transition: width 0.2s ease-in;
-  text-decoration: none;
-  color: #333;
-  font-weight: 500;
-  background-color: #efe2cc;
+    display: none;
+    flex-direction: column;
+    width: 100%;
+    background-color: #efe2cc;
+    margin-top: 1rem;
+    border-top: 1px solid #ddd;
+  }
+
+  .showMenu {
+    display: flex;
+  }
+
+  .navLink {
+    width: 100%;
+    justify-content: flex-start;
+    padding: 1rem;
+  }
+
+  .navLink:hover,
+  .navLink:focus,
+  .active {
+    background-color: #3e2c14;
+    color: #efe2cc;
+  }
+
+  .linkIcon {
+    margin-right: 0.75rem;
+  }
+
+  .linkTitle {
+    opacity: 1;
+    transform: none;
+    margin-left: 0;
+  }
+
+  .navLink::before {
+    display: none;
+  }
 }
 
-.navLink::before {
-  content: "";
-  position: absolute;
-  z-index: -1;
-  border-radius: 8px;
-  width: 100%;
-  height: 100%;
-  top: 0;
-  left: 0;
-  transform: translateX(100%);
-  transition: transform 0.2s ease-in;
-  background-color: #3e2c14;
-  transform-origin: center right;
-}
+/* Desktop only: Fancy nav animations */
 
-.navLink:hover,
-.navLink:focus,
-.active {
-  width: 130px;
-  color: #efe2cc;
-}
+@media (min-width: 769px) {
+  .navLink {
+    display: inline-flex;
+    justify-content: center;
+    align-items: center;
+    width: 70px;
+    height: 50px;
+    border-radius: 8px;
+    position: relative;
+    z-index: 1;
+    overflow: hidden;
+    transform-origin: center left;
+    transition: width 0.2s ease-in;
+    text-decoration: none;
+    color: #333;
+    font-weight: 500;
+    background-color: #efe2cc;
+  }
 
-.navLink:hover::before,
-.navLink:focus::before,
-.active::before {
-  transform: translateX(0);
-}
+  .navLink::before {
+    content: "";
+    position: absolute;
+    z-index: -1;
+    border-radius: 8px;
+    width: 100%;
+    height: 100%;
+    top: 0;
+    left: 0;
+    transform: translateX(100%);
+    transition: transform 0.2s ease-in;
+    background-color: #3e2c14;
+    transform-origin: center right;
+  }
 
+  .navLink:hover,
+  .navLink:focus,
+  .active {
+    width: 130px;
+    color: #efe2cc;
+  }
+
+  .navLink:hover::before,
+  .navLink:focus::before,
+  .active::before {
+    transform: translateX(0);
+  }
+
+  .linkTitle {
+    transform: translateX(100%);
+    transition: transform 0.2s ease-in, opacity 0.2s ease-in;
+    transform-origin: center right;
+    display: block;
+    text-align: center;
+    text-indent: 28px;
+    width: 100%;
+    opacity: 0;
+  }
 .linkTitle {
   transform: translateX(100%);
   transition: transform 0.2s ease-in, opacity 0.2s ease-in;
@@ -88,13 +211,20 @@
   
 }
 
-.navLink:hover .linkTitle,
-.navLink:focus .linkTitle,
-.active .linkTitle {
-  transform: translateX(0);
-  opacity: 1;
-}
+  .navLink:hover .linkTitle,
+  .navLink:focus .linkTitle,
+  .active .linkTitle {
+    transform: translateX(0);
+    opacity: 1;
+  }
 
+  .linkIcon {
+    width: 28px;
+    height: 28px;
+    flex-shrink: 0;
+    position: absolute;
+    left: 18px;
+  }
 .linkIcon {
   width: 28px;
   height: 28px;
