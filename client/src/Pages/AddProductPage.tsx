@@ -55,7 +55,7 @@ const AddProductPage: React.FC = () => {
     const payload = {
       username: username,
       product_name: ProdName,
-      description: Details, // 👈 Description is now ONLY Details
+      description: Details, // Description is now ONLY Details
       price: Price,
       stock_quantity: Stock,
       image_url: "",
@@ -64,7 +64,7 @@ const AddProductPage: React.FC = () => {
       weight: parseInt(Weight),
       details: Details,
       tags: Tags,
-      typeOfArt: MajorCategory
+      typeOfArt: MajorCategory,
     };
 
     try {
@@ -117,26 +117,49 @@ const AddProductPage: React.FC = () => {
               TypeOfArt={MajorCategory}
               setTypeOfArt={setMajorCategory}
             />
-            <AddTagsButton onConfirm={(selectedTags) => setTags(selectedTags)} />
+            <AddTagsButton
+              onConfirm={(selectedTags) => setTags(selectedTags)}
+            />
           </section>
           <button className={styles.confirmButton} onClick={handleConfirm}>
-            confirm addition of new productS
+            confirm addition of new products
           </button>
 
           {submitted && (
             <section className={styles.popupOverlay}>
               <section className={styles.popup}>
                 <h2>Submitted Product Info</h2>
-                <p><strong>Name:</strong> {ProdName}</p>
-                <p><strong>Details:</strong> {Details}</p>
-                <p><strong>Price:</strong> R{Price.toFixed(2)}</p>
-                <p><strong>Stock:</strong> {Stock}</p>
-                <p><strong>Width:</strong> {Width} cm</p>
-                <p><strong>Height:</strong> {Height} cm</p>
-                <p><strong>Weight:</strong> {Weight} kg</p>
-                <p><strong>Delivery Method:</strong> {DelMethod ? "Delivery" : "Pickup"}</p>
-                <p><strong>Major Category:</strong> {MajorCategory}</p>
-                <p><strong>Tags:</strong> {Tags.join(", ")}</p>
+                <p>
+                  <strong>Name:</strong> {ProdName}
+                </p>
+                <p>
+                  <strong>Details:</strong> {Details}
+                </p>
+                <p>
+                  <strong>Price:</strong> R{Price.toFixed(2)}
+                </p>
+                <p>
+                  <strong>Stock:</strong> {Stock}
+                </p>
+                <p>
+                  <strong>Width:</strong> {Width} cm
+                </p>
+                <p>
+                  <strong>Height:</strong> {Height} cm
+                </p>
+                <p>
+                  <strong>Weight:</strong> {Weight} kg
+                </p>
+                <p>
+                  <strong>Delivery Method:</strong>{" "}
+                  {DelMethod ? "Delivery" : "Pickup"}
+                </p>
+                <p>
+                  <strong>Major Category:</strong> {MajorCategory}
+                </p>
+                <p>
+                  <strong>Tags:</strong> {Tags.join(", ")}
+                </p>
                 <button onClick={() => setSubmitted(false)}>Close</button>
               </section>
             </section>
