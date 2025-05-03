@@ -1,10 +1,50 @@
 .header {
-  background-color: #efe2cc;
-  border-bottom: 1px solid #ddd;
   width: 100%;
-  padding-top: 150px; /* push below fixed navbar */
-  z-index: 999; /* still sits above normal content */
+  padding-top: 110px; 
+  min-height: 220px; 
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: flex-start;
+  gap: 1rem; 
+  color: #3e2c14;
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  position: relative;
+  z-index: 999;
 }
+.overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(255, 255, 255, 0.2);
+  z-index: 0;
+}
+
+
+.logoContainer {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+    gap: 1rem; 
+    padding: 0.5rem 1.5rem;
+  border-radius: 12px;
+  z-index: 1;
+}
+.logoContainer {
+  z-index: 1;
+  
+  padding: 1rem;
+  border-radius: 12px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+
 
 
 .navWrapper {
@@ -14,15 +54,9 @@
   padding: 1.2rem 2rem;
 }
 
-.logoContainer {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  padding-bottom: 1rem;
-}
 
 .logoImage {
-  height: 80px;
+  height: 100px;
 }
 
 .shopDetails {
@@ -38,5 +72,9 @@
 
 .sellerName {
   font-size: 0.95rem;
+  color: #5f4a2d;
+}
+.bio{
+  font-size: 0.65rem;
   color: #5f4a2d;
 }

@@ -1,4 +1,5 @@
 import styles from "./ProductCard.module.css";
+import { Link } from "react-router-dom";
 
 type Product = {
   id: number;
@@ -26,7 +27,9 @@ function ProductCard({ product }: Props) {
         <h3>{product.name}</h3>
         <p>{product.price}</p>
         <p className={styles.category}>{product.category}</p>
-        <button className={styles.button}>Edit Product</button>
+        <Link to={"/EditProductPage"}>
+          <button className={styles.button}>Edit Product</button>
+        </Link>
       </div>
     </div>
   );
