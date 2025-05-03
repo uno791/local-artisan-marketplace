@@ -14,6 +14,7 @@
   position: relative;
   z-index: 999;
 }
+
 .overlay {
   position: absolute;
   top: 0;
@@ -24,28 +25,15 @@
   z-index: 0;
 }
 
-
 .logoContainer {
   display: flex;
   flex-direction: column;
   align-items: center;
-    gap: 1rem; 
-    padding: 0.5rem 1.5rem;
+  gap: 1rem; 
+  padding: 0.5rem 1.5rem;
   border-radius: 12px;
   z-index: 1;
 }
-.logoContainer {
-  z-index: 1;
-  
-  padding: 1rem;
-  border-radius: 12px;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-}
-
-
-
 
 .navWrapper {
   display: flex;
@@ -53,7 +41,6 @@
   align-items: center;
   padding: 1.2rem 2rem;
 }
-
 
 .logoImage {
   height: 100px;
@@ -74,7 +61,47 @@
   font-size: 0.95rem;
   color: #5f4a2d;
 }
-.bio{
+
+.bio {
   font-size: 0.65rem;
   color: #5f4a2d;
+}
+
+/* Mobile responsiveness */
+@media (max-width: 768px) {
+  .navWrapper {
+    flex-direction: column;
+    align-items: center;
+    gap: 0.5rem;
+    padding: 1rem;
+  }
+
+  .logoImage {
+    height: 80px;
+  }
+
+  .shopName {
+    font-size: 1rem;
+    text-align: center;
+  }
+
+  .sellerName {
+    font-size: 0.85rem;
+    text-align: center;
+  }
+
+  .bio {
+    font-size: 0.75rem;
+    text-align: center;
+    padding: 0 1rem;
+  }
+
+  .logoContainer {
+    padding: 0.5rem 1rem;
+  }
+
+  .header {
+    padding-top: 90px;
+    min-height: 180px;
+  }
 }
