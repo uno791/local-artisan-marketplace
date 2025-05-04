@@ -1,43 +1,52 @@
 import { useEffect, useState } from "react";
+import { useParams } from "react-router-dom";
+import axios from "axios";
+
 import Header from "../components/ShopFrontComp/Header";
 import ProductGrid from "../components/ShopFrontComp/ProductGrid";
 import ReportShop from "../components/ShopFrontComp/ReportShop";
-
 import styles from "../components/ShopFrontComp/ShopFront.module.css";
 
 import shopLogo from "../assets/shop-logo.png";
-import monaLisa from "../assets/mona-lisa.jpg";
+import { baseURL } from "../config";
 
-type Product = {
-  id: number;
-  title: string;
-  artist: string;
-  price: string;
-  category: string;
-  image: string;
-};
+interface Product {
+  product_id: number;
+  product_name: string;
+  price: number;
+  image_url: string;
+  username: string;
+}
+
+interface Artisan {
+  shop_name: string;
+  shop_pfp: string;
+  bio: string;
+  shop_address: string;
+}
 
 function ShopFront() {
+  const { username } = useParams();
+  const [artisan, setArtisan] = useState<Artisan | null>(null);
   const [products, setProducts] = useState<Product[]>([]);
   const [showReportModal, setShowReportModal] = useState(false);
 
   useEffect(() => {
-    const dummyProduct: Product = {
-      id: 1,
-      title: "Art Name",
-      artist: "Artist Name",
-      price: "R200",
-      category: "Painting",
-      image: monaLisa,
-    };
+    axios
+      .get(`${baseURL}/artisan/${username}`)
+      .then((res) => setArtisan(res.data))
+      .catch((err) => console.error("❌ Failed to fetch artisan:", err));
 
-    const filled = Array.from({ length: 9 }, (_, i) => ({
-      ...dummyProduct,
-      id: i + 1,
-    }));
-
-    setProducts(filled);
-  }, []);
+    axios
+      .get(`${baseURL}/allproducts`)
+      .then((res) => {
+        const artisanProducts = res.data.filter(
+          (p: Product) => p.username === username
+        );
+        setProducts(artisanProducts);
+      })
+      .catch((err) => console.error("❌ Failed to fetch products:", err));
+  }, [username]);
 
   return (
     <main className={styles["shopfront-page"]}>
@@ -50,9 +59,23 @@ function ShopFront() {
         </button>
       </section>
 
-      <Header logo={shopLogo} />
+      <Header
+  logo={artisan?.shop_pfp || shopLogo}
+  name={artisan?.shop_name || "Artisan Shop"}
+  bio={artisan?.bio}
+/>
 
-      <ProductGrid products={products} />
+
+      <ProductGrid
+        products={products.map((p) => ({
+          id: p.product_id,
+          title: p.product_name,
+          artist: artisan?.shop_name || "Unknown",
+          price: `R${p.price}`,
+          category: "Custom",
+          image: p.image_url,
+        }))}
+      />
 
       {showReportModal && (
         <ReportShop onClose={() => setShowReportModal(false)} />
@@ -62,3 +85,4 @@ function ShopFront() {
 }
 
 export default ShopFront;
+

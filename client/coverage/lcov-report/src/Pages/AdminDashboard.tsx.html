@@ -23,30 +23,30 @@
         <div class='clearfix'>
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">100% </span>
+                <span class="strong">0% </span>
                 <span class="quiet">Statements</span>
-                <span class='fraction'>12/12</span>
+                <span class='fraction'>0/5</span>
             </div>
         
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">50% </span>
+                <span class="strong">0% </span>
                 <span class="quiet">Branches</span>
-                <span class='fraction'>3/6</span>
+                <span class='fraction'>0/6</span>
             </div>
         
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">100% </span>
+                <span class="strong">0% </span>
                 <span class="quiet">Functions</span>
-                <span class='fraction'>2/2</span>
+                <span class='fraction'>0/2</span>
             </div>
         
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">100% </span>
+                <span class="strong">0% </span>
                 <span class="quiet">Lines</span>
-                <span class='fraction'>10/10</span>
+                <span class='fraction'>0/4</span>
             </div>
         
             
@@ -61,7 +61,7 @@
             </div>
         </template>
     </div>
-    <div class='status-line high'></div>
+    <div class='status-line low'></div>
     <pre><table class="coverage">
 <tr><td class="line-count quiet"><a name='L1'></a><a href='#L1'>1</a>
 <a name='L2'></a><a href='#L2'>2</a>
@@ -130,19 +130,13 @@
 <a name='L65'></a><a href='#L65'>65</a>
 <a name='L66'></a><a href='#L66'>66</a>
 <a name='L67'></a><a href='#L67'>67</a>
-<a name='L68'></a><a href='#L68'>68</a></td><td class="line-coverage quiet"><span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">1x</span>
-<span class="cline-any cline-yes">1x</span>
-<span class="cline-any cline-yes">1x</span>
-<span class="cline-any cline-yes">1x</span>
-<span class="cline-any cline-yes">1x</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">1x</span>
-<span class="cline-any cline-yes">1x</span>
-<span class="cline-any cline-yes">3x</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">1x</span>
+<a name='L68'></a><a href='#L68'>68</a>
+<a name='L69'></a><a href='#L69'>69</a>
+<a name='L70'></a><a href='#L70'>70</a>
+<a name='L71'></a><a href='#L71'>71</a>
+<a name='L72'></a><a href='#L72'>72</a>
+<a name='L73'></a><a href='#L73'>73</a>
+<a name='L74'></a><a href='#L74'>74</a></td><td class="line-coverage quiet"><span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -150,7 +144,11 @@
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -196,7 +194,21 @@
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span></td><td class="text"><pre class="prettyprint lang-js">"use client";
 &nbsp;
 import React from "react";
@@ -205,11 +217,11 @@ import styles from "../components/SellerVerificationPageComp/SellerVerification.
 import StatsCard from "../components/AdminDashboard/StatsCard";
 import GraphCard from "../components/AdminDashboard/GraphCard";
 &nbsp;
-export const AdminDashboard: React.FC = () =&gt; {
-  const location = useLocation();
-  const isActive = (path: string) =&gt; location.pathname === path;
+export const AdminDashboard: React.FC = <span class="cstat-no" title="statement not covered" ><span class="fstat-no" title="function not covered" >() =</span>&gt; {</span>
+  const location = <span class="cstat-no" title="statement not covered" >useLocation();</span>
+  const isActive = <span class="cstat-no" title="statement not covered" ><span class="fstat-no" title="function not covered" >(p</span>ath: string) =&gt; <span class="cstat-no" title="statement not covered" >location.pathname === path;</span></span>
 &nbsp;
-  return (
+<span class="cstat-no" title="statement not covered" >  return (</span>
     &lt;div className={styles.wrapper}&gt;
       {/* Sidebar */}
       &lt;div className={styles.sidebar}&gt;
@@ -217,21 +229,27 @@ export const AdminDashboard: React.FC = () =&gt; {
 &nbsp;
         &lt;Link
           to="/AdminDashboard"
-          className={`${styles.navItem} ${isActive("/AdminDashboard") ? styles.navItemActive : <span class="branch-1 cbranch-no" title="branch not covered" >""}</span>`}
+          className={`${styles.navItem} ${
+            isActive("/AdminDashboard") ? styles.navItemActive : ""
+          }`}
         &gt;
           Sales Analytics
         &lt;/Link&gt;
 &nbsp;
         &lt;Link
           to="#"
-          className={`${styles.navItem} ${isActive("/UserReports") ? <span class="branch-0 cbranch-no" title="branch not covered" >styles.navItemActive </span>: ""}`}
+          className={`${styles.navItem} ${
+            isActive("/UserReports") ? styles.navItemActive : ""
+          }`}
         &gt;
           User Reports
         &lt;/Link&gt;
 &nbsp;
         &lt;Link
           to="/SellerVerification"
-          className={`${styles.navItem} ${isActive("/SellerVerification") ? <span class="branch-0 cbranch-no" title="branch not covered" >styles.navItemActive </span>: ""}`}
+          className={`${styles.navItem} ${
+            isActive("/SellerVerification") ? styles.navItemActive : ""
+          }`}
         &gt;
           Seller Verification
         &lt;/Link&gt;
@@ -242,11 +260,11 @@ export const AdminDashboard: React.FC = () =&gt; {
         {/* Stats Row */}
         &lt;div
           style={{
-            display: "grid",
-            gridTemplateColumns: "repeat(3, 1fr)",
+            display: "flex",
+            flexWrap: "wrap",
             gap: "16px",
-            // marginBottom: "8px",
             width: "100%",
+            justifyContent: "flex-start",
           }}
         &gt;
           &lt;StatsCard label="Total Sales" value="R245,000" /&gt;
@@ -271,7 +289,7 @@ export default AdminDashboard;
             <div class='footer quiet pad2 space-top1 center small'>
                 Code coverage generated by
                 <a href="https://istanbul.js.org/" target="_blank" rel="noopener noreferrer">istanbul</a>
-                at 2025-04-21T21:12:37.668Z
+                at 2025-05-02T18:07:18.379Z
             </div>
         <script src="../../prettify.js"></script>
         <script>
