@@ -223,3 +223,36 @@ test("renders correct subtotal based on price and quantity", async () => {
     )
   ).toBeInTheDocument();
 });
+
+test("navigates to PaymentPage when Proceed to Payment button is clicked", async () => {
+  mockedAxios.get.mockResolvedValueOnce({
+    data: [], // Simulate empty cart
+  });
+
+  // This mock PaymentPage must return the exact heading you're checking for
+  const PaymentPage = () => <h1>From Your Cart</h1>;
+
+  await act(async () => {
+    render(
+      <UserProvider>
+        <MemoryRouter initialEntries={["/Cart"]}>
+          <Routes>
+            <Route path="/Cart" element={<Cart />} />
+            <Route path="/PaymentPage" element={<PaymentPage />} />
+          </Routes>
+        </MemoryRouter>
+      </UserProvider>
+    );
+  });
+
+  const proceedButton = await screen.findByRole("button", {
+    name: /proceed to payment/i,
+  });
+
+  await act(async () => {
+    fireEvent.click(proceedButton);
+  });
+
+  //Use the heading that your mock PaymentPage actually renders
+  expect(await screen.findByText("From Your Cart")).toBeInTheDocument();
+});

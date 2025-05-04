@@ -12,7 +12,7 @@ import {
 
 const navItems = [
   { name: "Home", path: "/Home", icon: <FaHome /> },
-  { name: "Search", path: "/Search", icon: <FaSearch /> },
+  { name: "Search", path: "/SearchPage", icon: <FaSearch /> },
   { name: "Cart", path: "/Cart", icon: <FaShoppingCart /> },
   { name: "Profile", path: "/Profile", icon: <FaUser /> },
 ];

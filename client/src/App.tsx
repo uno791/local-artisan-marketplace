@@ -16,6 +16,9 @@ import AdminDashboard from "./Pages/AdminDashboard";
 import SellerSignup from "./Pages/SellerSignup";
 import ShopFront from "./Pages/ShopFront";
 import BuyerOrders from "./Pages/BuyerOrders";
+import PaymentPage from "./Pages/PaymentPage";
+import SearchPage from "./Pages/SearchPage";
+import { SearchProvider } from "./components/SearchPageComp1/SearchContext";
 
 import EditProductPage from "./Pages/EditProductPage";
 import AddProductPage from "./Pages/AddProductPage";
@@ -52,7 +55,14 @@ function App() {
           {/* For Pages with NavBar and Footer */}
           <Route element={<MainLayout />}>
             <Route path="/Home" element={<Home />} />
-            <Route path="/Search" element={<Search />} />
+            <Route
+              path="/SearchPage"
+              element={
+                <SearchProvider>
+                  <SearchPage></SearchPage>
+                </SearchProvider>
+              }
+            />
             <Route path="/Cart" element={<Cart />} />
             <Route path="/Profile" element={<Profile />} />
             <Route path="/seller-signup" element={<SellerSignup />} />

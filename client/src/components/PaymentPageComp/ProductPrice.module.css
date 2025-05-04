@@ -1,0 +1,39 @@
+.article {
+    /* Flex layout: title left, price right, vertically centered */
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  
+    /* Vertical padding */
+    padding: 1rem 0;
+  
+    /* Visible bottom border */
+    border-bottom: 1px solid #000;
+  }
+  
+  .h2 {
+    margin: 0;               /* reset default <h2> margin */
+    letter-spacing: 3.2px;
+    font-size: 32px;
+  }
+  
+  .p {
+    margin: 0;               /* reset default <p> margin */
+    letter-spacing: 3.2px;
+    font-size: 32px;
+  }
+  
+  @media (max-width: 640px) {
+    /* On narrow screens, stack title above price */
+    .article {
+      flex-direction: column;
+      gap: 0.5rem;
+    }
+  
+    /* Smaller text on mobile */
+    .h2,
+    .p {
+      font-size: 24px;
+    }
+  }
+  
