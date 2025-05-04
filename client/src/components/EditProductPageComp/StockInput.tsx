@@ -24,16 +24,31 @@ const StockInput: React.FC<Props> = ({ stock, setStock }) => {
 
   return (
     <section className={styles.container}>
-      <label><strong>Stock Count</strong></label>
+      <label htmlFor="stockCount">
+  <strong>Stock Count</strong>
+</label>
       <section className={styles.controlGroup}>
-        <button type="button" className={styles.button} onClick={() => setStock(Math.max(0, stock - 1))}>-</button>
+        <button
+          type="button"
+          className={styles.button}
+          onClick={() => setStock(Math.max(0, stock - 1))}
+        >
+          -
+        </button>
         <input
+          id="stockCount"
           type="text"
           value={inputValue}
           onChange={handleChange}
           className={styles.input}
         />
-        <button type="button" className={styles.button} onClick={() => setStock(stock + 1)}>+</button>
+        <button
+          type="button"
+          className={styles.button}
+          onClick={() => setStock(stock + 1)}
+        >
+          +
+        </button>
       </section>
     </section>
   );

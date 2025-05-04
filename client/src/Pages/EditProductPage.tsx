@@ -19,9 +19,9 @@ const EditProductPage: React.FC = () => {
   const [Details, setDetails] = useState<string>("");
   const [Price, setPrice] = useState<number>(0);
   const [Stock, setStock] = useState<number>(1);
-  const [Width, setWidth] = useState<string>("");
-  const [Height, setHeight] = useState<string>("");
-  const [Weight, setWeight] = useState<string>("");
+  const [Width, setWidth] = useState<number>(0);
+  const [Height, setHeight] = useState<number>(0);
+  const [Weight, setWeight] = useState<number>(0);
   const [DelMethod, setDelMethod] = useState<boolean>(true);
   const [MajorCategory, setMajorCategory] = useState<string>("");
   const [Tags, setTags] = useState<string[]>([]);
@@ -35,16 +35,13 @@ const EditProductPage: React.FC = () => {
         const data = await res.json();
         setProdName(data.product_name || "");
         setDetails(data.details || "");
-        setPrice(data.price || 0);
-        setStock(data.stock_quantity || 1);
-        setWidth(data.width?.toString() || "");
-        setHeight(data.height?.toString() || "");
-        setWeight(data.weight?.toString() || "");
+        setPrice(Number(data.price) || 0);
+        setStock(Number(data.stock_quantity) || 1);
+        setWidth(Number(data.width) || 0);
+        setHeight(Number(data.height) || 0);
+        setWeight(Number(data.weight) || 0);
         setMajorCategory(data.category_name || "");
         setTags(data.tags || []);
-
-
-        // TODO: fetch tags and DelMethod if available
       } catch (err) {
         console.error("Failed to load product:", err);
       }
@@ -59,9 +56,9 @@ const EditProductPage: React.FC = () => {
     if (!Details.trim()) missing.push("Product Details");
     if (!Price || isNaN(Price)) missing.push("Price");
     if (!Stock || isNaN(Stock)) missing.push("Stock");
-    if (!Width.trim()) missing.push("Width");
-    if (!Height.trim()) missing.push("Height");
-    if (!Weight.trim()) missing.push("Weight");
+    if (!Width) missing.push("Width");
+    if (!Height) missing.push("Height");
+    if (!Weight) missing.push("Weight");
     if (!MajorCategory.trim()) missing.push("Major Category");
 
     if (missing.length > 0) {
@@ -74,12 +71,12 @@ const EditProductPage: React.FC = () => {
       description: Details,
       price: Price,
       stock_quantity: Stock,
-      width: parseInt(Width),
-      height: parseInt(Height),
-      weight: parseInt(Weight),
+      width: Width,
+      height: Height,
+      weight: Weight,
       details: Details,
       tags: Tags,
-      typeOfArt: MajorCategory
+      typeOfArt: MajorCategory,
     };
 
     try {

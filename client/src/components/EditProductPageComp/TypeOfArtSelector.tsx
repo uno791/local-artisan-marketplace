@@ -9,8 +9,11 @@ interface Props {
 const TypeOfArtSelector: React.FC<Props> = ({ TypeOfArt, setTypeOfArt }) => {
   return (
     <section className={styles.container}>
-      <label><strong>Type of Art:</strong></label>
+      <label htmlFor="typeOfArt">
+  <strong>Type of Art:</strong>
+</label>
       <select
+        id="typeOfArt"
         className={styles.select}
         value={TypeOfArt}
         onChange={(e) => setTypeOfArt(e.target.value)}

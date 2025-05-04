@@ -24,8 +24,11 @@ const PriceInput: React.FC<Props> = ({ Price, setPrice }) => {
 
   return (
     <section className={styles.container}>
-      <label><strong>Price (Rands):</strong></label>
+      <label htmlFor="priceInput">
+        <strong>Price (Rands):</strong>
+      </label>
       <input
+        id="priceInput"
         type="text"
         value={inputValue}
         onChange={handleChange}

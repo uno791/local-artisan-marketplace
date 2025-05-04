@@ -1,6 +1,8 @@
 import styles from "./NavBar.module.css";
 import { NavLink } from "react-router-dom";
-import logo from "../../assets/localish-logo.png";
+// import logo from "../../assets/localish-logo.png";
+// import {Logo} from "../WelcomePageComp/Logo";
+
 import { FaHome, FaChartBar, FaBoxOpen, FaUser } from "react-icons/fa";
 
 const navItems = [
@@ -15,7 +17,10 @@ function NavBar() {
     <header className={styles.navbar}>
       <nav className={styles.navbarInner}>
         <a href="/Home" className={styles.navbarLogo}>
-          <img src={logo} alt="Localish logo" />
+        <img
+        src="https://cdn.builder.io/api/v1/image/assets/TEMP/3ce563473ae3143012b658856f2516018aeee3a0"
+        alt="Localish logo"
+      />
         </a>
         <ul className={styles.navbarLinks}>
           {navItems.map((item) => (

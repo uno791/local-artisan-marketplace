@@ -9,8 +9,11 @@ interface Props {
 const ProductDetailsInput: React.FC<Props> = ({ Details, setDetails }) => {
   return (
     <section className={styles.container}>
-      <label><strong>Edit Product Description:</strong></label>
+      <label htmlFor="productDescription">
+  <strong>Edit Product Description:</strong>
+</label>
       <textarea
+        id="productDescription"
         rows={6}
         value={Details}
         onChange={(e) => setDetails(e.target.value)}

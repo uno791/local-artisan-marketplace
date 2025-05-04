@@ -2,12 +2,12 @@ import React from "react";
 import styles from "./SizeAndDimensions.module.css";
 
 interface Props {
-  Width: string;
-  Height: string;
-  Weight: string;
-  setWidth: (width: string) => void;
-  setHeight: (height: string) => void;
-  setWeight: (weight: string) => void;
+  Width: number;
+  Height: number;
+  Weight: number;
+  setWidth: (w: number) => void;
+  setHeight: (h: number) => void;
+  setWeight: (w: number) => void;
 }
 
 const SizeAndDimensions: React.FC<Props> = ({
@@ -18,43 +18,42 @@ const SizeAndDimensions: React.FC<Props> = ({
   setHeight,
   setWeight,
 }) => {
-  const handleDecimalInput = (value: string, setter: (val: string) => void) => {
-    if (/^\d*\.?\d{0,2}$/.test(value)) {
-      setter(value);
-    }
-  };
-
   return (
     <section className={styles.container}>
       <strong>Edit size and dimensions:</strong>
       <section className={styles.group}>
-        <label className={styles.label}>
+        <label className={styles.label} htmlFor="width">
           Width (cm):
-          <input
-            type="text"
-            value={Width}
-            onChange={(e) => handleDecimalInput(e.target.value, setWidth)}
-            className={styles.input}
-          />
         </label>
-        <label className={styles.label}>
+        <input
+          className={styles.input}
+          id="width"
+          type="number"
+          value={Width}
+          onChange={(e) => setWidth(Number(e.target.value))}
+        />
+
+        <label className={styles.label} htmlFor="height">
           Height (cm):
-          <input
-            type="text"
-            value={Height}
-            onChange={(e) => handleDecimalInput(e.target.value, setHeight)}
-            className={styles.input}
-          />
         </label>
-        <label className={styles.label}>
+        <input
+          className={styles.input}
+          id="height"
+          type="number"
+          value={Height}
+          onChange={(e) => setHeight(Number(e.target.value))}
+        />
+
+        <label className={styles.label} htmlFor="weight">
           Weight (kg):
-          <input
-            type="text"
-            value={Weight}
-            onChange={(e) => handleDecimalInput(e.target.value, setWeight)}
-            className={styles.input}
-          />
         </label>
+        <input
+          className={styles.input}
+          id="weight"
+          type="number"
+          value={Weight}
+          onChange={(e) => setWeight(Number(e.target.value))}
+        />
       </section>
     </section>
   );
