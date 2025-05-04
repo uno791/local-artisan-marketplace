@@ -109,6 +109,37 @@ app.get("/seller-dashboard", async (req, res) => {
   }
 });
 
+// GET all main categories
+app.get("/main-categories", async (req, res) => {
+  try {
+    const pool = await connectDB();
+    const result = await pool
+      .request()
+      .query("SELECT category_name FROM dbo.main_categories ORDER BY category_name");
+    await pool.close();
+    // return as a simple array of strings
+    res.json(result.recordset.map((r) => r.category_name));
+  } catch (err) {
+    console.error("❌ Failed to fetch main categories:", err);
+    res.status(500).json({ error: "DB query failed", details: err.message });
+  }
+});
+
+// GET all minor categories
+app.get("/minor-categories", async (req, res) => {
+  try {
+    const pool = await connectDB();
+    const result = await pool
+      .request()
+      .query("SELECT minor_category_name FROM dbo.minor_categories ORDER BY minor_category_name");
+    await pool.close();
+    res.json(result.recordset.map((r) => r.minor_category_name));
+  } catch (err) {
+    console.error("❌ Failed to fetch minor categories:", err);
+    res.status(500).json({ error: "DB query failed", details: err.message });
+  }
+});
+
 
 //Get /specific product - fetch specific product by ID
 app.get("/product/:id", async (req, res) => {

@@ -1,0 +1,51 @@
+.imageGrid {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 16px;
+    justify-content: flex-start;
+  }
+  
+  /* make cards fluidly take up half the row (minus gap) */
+  .card {
+    /* remove any fixed width/height */
+    /* width: 400px; 
+       height: 500px; */
+  
+    flex: 1 1 calc(50% - 16px);
+    max-width: 400px;      /* they won’t grow beyond 400px */
+    aspect-ratio: 4 / 5;    /* keep 4:5 shape */
+  
+    background-color: #ddd2b5;
+    border-radius: 8px;
+    padding: 12px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    box-sizing: border-box;
+  }
+  
+  .card img {
+    width: 100%;
+    height: auto;
+    border-radius: 6px;
+  }
+  
+  .card h3 {
+    font-size: 1rem;
+    margin: 8px 0 4px;
+  }
+  
+  .price {
+    font-weight: bold;
+    color: #333;
+  }
+  
+  /* smaller tweaks on very narrow phones */
+  @media (max-width: 600px) {
+    .card {
+      flex: 1 1 calc(50% - 16px); /* two per row */
+    }
+  }
+  
+  
+  

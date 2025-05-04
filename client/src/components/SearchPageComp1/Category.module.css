@@ -1,0 +1,74 @@
+.sidebar {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+  }
+  
+  .sidebar h2 {
+    font-size: 1.3rem;
+    margin-top: 1rem;
+    font-weight: 900;
+  }
+  
+  .sidebar ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+  }
+  
+  /* Buttons full-width by default on desktop */
+  .sidebar li button {
+    background: none;
+    border: none;
+    padding: 6px 8px;
+    cursor: pointer;
+    color: #333;
+    font-size: 0.95rem;
+    border-radius: 4px;
+    text-align: left;
+    width: 100%;
+  }
+  
+  .sidebar li button:hover {
+    background-color: #ddeeff;
+    color: #003366;
+  }
+  
+  /* MOBILE: wrap tags horizontally, then minor categories below */
+  @media (max-width: 768px) {
+    .sidebar {
+      flex-direction: row;    /* switch to horizontal flow */
+      flex-wrap: wrap;        /* wrap onto new lines */
+      gap: 8px;
+    }
+  
+    .sidebar h2 {
+      width: 100%;            /* full-width headings */
+      margin: 1rem 0 0.5rem;
+    }
+  
+    .sidebar ul {
+      display: flex;          /* flatten the <ul> to use flex */
+      flex-wrap: wrap;
+      gap: 8px;
+      padding: 0;
+      margin: 0;
+      width: 100%;
+    }
+  
+    .sidebar li {
+      list-style: none;
+      flex: 0 1 auto;         /* size to content */
+    }
+  
+    .sidebar li button {
+      width: auto;
+      white-space: nowrap;    /* prevent breaking tag text */
+      padding: 6px 10px;
+      border-radius: 16px;
+      border: 1px solid #ccc;
+      background: #e6dfd0;
+      text-align: center;
+    }
+  }
+  

@@ -2,9 +2,16 @@ import styles from "../components/CartPageComp/Cart.module.css";
 import CartItemsList from "../components/CartPageComp/CartItemsList";
 import YouMayAlsoLike from "../components/CartPageComp/YouMayAlsoLike";
 import { useState } from "react";
+import { useNavigate } from "react-router-dom"; // ← Add this import
 
 function Cart() {
   const [total, setTotal] = useState<number>(0);
+  const navigate = useNavigate();
+
+  const handleProceedToPayment = () => {
+    navigate("/PaymentPage"); //This navigates to the payment page
+  };
+
   return (
     <main className={styles.cartPage}>
       <section className={styles.cartPageContentRow}>
@@ -21,7 +28,12 @@ function Cart() {
             <p className={styles.totalText}>
               Total: <strong>R{total.toFixed(2)}</strong>
             </p>
-            <button className={styles.proceedButton}>Proceed to Payment</button>
+            <button
+              className={styles.proceedButton}
+              onClick={handleProceedToPayment} //Connect the handler
+            >
+              Proceed to Payment
+            </button>
           </section>
         </section>
 
