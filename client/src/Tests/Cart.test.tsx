@@ -1,4 +1,5 @@
 import { render, screen, fireEvent, waitFor } from "@testing-library/react";
+import { Routes, Route } from "react-router-dom";
 import { MemoryRouter } from "react-router-dom";
 import { UserProvider } from "../Users/UserContext";
 import Cart from "../Pages/Cart";
