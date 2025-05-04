@@ -18,6 +18,32 @@ app.get("/status", (req, res) => {
 });
 
 // Users Fetch
+// GET /artisan/:username - fetch artisan shop info
+app.get("/artisan/:username", async (req, res) => {
+  const { username } = req.params;
+
+  try {
+    const pool = await connectDB();
+    const result = await pool
+      .request()
+      .input("username", username)
+      .query("SELECT * FROM dbo.artisans WHERE username = @username");
+    await pool.close();
+
+    if (result.recordset.length === 0) {
+      return res.status(404).json({ error: "Artisan not found" });
+    }
+
+    res.json(result.recordset[0]);
+  } catch (err) {
+    console.error("❌ Failed to fetch artisan:", err);
+    res.status(500).json({ error: "Failed to fetch artisan", details: err.message });
+  }
+});
+
+
+
+
 app.get("/users", async (req, res) => {
   try {
     const pool = await connectDB();
