@@ -1,0 +1,41 @@
+/* PaymentPage.module.css */
+
+/* 1. Full-bleed “wrapper” taking full viewport */
+.container {
+  display: flex;
+  flex-direction: column;
+
+  /* Fill the screen */
+  width: 98vw;
+  height: 120vh;
+  padding-top: 180px;
+  padding-right: 35px;
+
+  /* Page background (adjust to your beige) */
+  background-color: #f6eede;
+
+  /* Prevent horizontal scrollbars */
+  
+
+  /* Inner spacing & gap between sections */
+  
+  gap: 24px;
+
+  /* Include padding in width/height calculations */
+  box-sizing: border-box;
+}
+
+/* 2. The summary block still stacks its rows vertically */
+.summary {
+  display: flex;
+  flex-direction: column;
+  gap: 0; /* each row has its own padding & border */
+}
+
+/* 3. Responsive tweaks for narrow screens */
+@media (max-width: 600px) {
+  .container {
+    padding: 16px;
+    gap: 16px;
+  }
+}

@@ -1,0 +1,102 @@
+/* Header.module.css */
+.searchHeader {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+    align-items: center;
+  }
+  
+  .searchForm {
+    position: relative;
+    display: flex;
+    flex-direction: row;
+    gap: 8px;
+    align-items: center;
+    justify-content: center;
+  
+    /* full width but capped on large screens */
+    width: 100%;
+    max-width: 800px;
+    margin: 0 auto;
+  }
+  
+  
+  .searchForm input {
+    padding: 10px;
+    font-size: 1rem;
+    border: 1px solid #ccc;
+    border-radius: 8px;
+    width: 100%;
+    max-width: 800px;;
+  }
+  
+  .searchForm button[type="submit"] {
+    padding: 8px 12px;
+    border: none;
+    background-color: #333;
+    color: #fff;
+    border-radius: 6px;
+  }
+  
+  .suggestions {
+    position: absolute;
+    top: calc(100% + 4px);
+    left: 50%;
+    transform: translateX(-50%);
+  
+    /* match input width */
+    width: 100%;
+    max-width: 800px;
+  
+    background-color: #fff;      /* white as in Figma */
+    border: 1px solid #ccc;
+    border-radius: 8px;
+  
+    /* reset list styling */
+    list-style: none;
+    margin: 0;
+    padding: 8px 0;
+  
+    max-height: 200px;
+    overflow-y: auto;
+    z-index: 10;
+  }
+  
+  .suggestions li {
+    list-style: none;
+  }
+  
+  .suggestions li button {
+    width: 100%;
+    text-align: left;
+    padding: 8px 12px;
+    border: none;
+    background: transparent;
+    cursor: pointer;
+    color: #000;
+    background-color: #fff;
+  }
+  
+  .suggestions li button:hover {
+    background-color: #f0f0f0;
+  }
+  
+  .sortButtons {
+    display: flex;
+    gap: 12px;
+    flex-wrap: wrap;
+    justify-content: center;
+  }
+  
+  .sortButtons button {
+    padding: 6px 12px;
+    background-color: #eee;
+    border: 1px solid #bbb;
+    border-radius: 4px;
+    cursor: pointer;
+  }
+  
+  .sortButtons button:hover {
+    background-color: #ddd;
+  }
+  

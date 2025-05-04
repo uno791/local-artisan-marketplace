@@ -1,0 +1,61 @@
+/* Search.module.css */
+
+/* 1. Desktop layout: sidebar left, content right */
+.wrapper {
+    padding-top: 120px;
+    display: flex;
+    flex-direction: row;
+    width: 100vw;
+    min-height: 100vh;
+    background-color: #f6ebd9;
+    overflow-x: hidden;
+    flex-wrap: nowrap;
+  }
+  
+  /* Sidebar on the left */
+  .sidebarArea {
+    width: clamp(180px, 20vw, 240px);
+    overflow-y: auto;
+    padding: 16px;
+    box-sizing: border-box;
+    background-color: #f6ebd9; /* match page bg */
+  }
+  
+  /* Main content (images + sorts) */
+  .mainContent {
+    flex: 1;
+    padding: 16px;
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+    box-sizing: border-box;
+    overflow: hidden; /* contain inner scroll */
+  }
+  
+  /* 2. Mobile layout: stack content, then sidebar */
+  @media (max-width: 768px) {
+    .wrapper {
+      flex-direction: column;
+      height: 100vh;     /* lock to viewport */
+      overflow: hidden;  /* prevent body scrolling */
+    }
+  
+    .mainContent {
+      order: 1;
+      flex: 1 1 auto;    /* take remaining space */
+      overflow-y: auto;  /* scroll images only */
+    }
+  
+    .sidebarArea {
+      order: 2;
+      flex: 0 0 auto;    /* no grow */
+      width: 100%;
+      max-height: 30vh;  /* sidebar caps at 30% viewport */
+      overflow-y: auto;  /* scroll tags if too many */
+      border-top: 1px solid #ccc;
+      background-color: #f6ebd9;
+    }
+  }
+  
+  
+  

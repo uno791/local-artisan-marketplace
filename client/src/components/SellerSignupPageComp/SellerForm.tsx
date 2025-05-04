@@ -1,13 +1,15 @@
 import { useState } from "react";
+import { useNavigate } from "react-router-dom";
 import axios from "axios";
 import styles from "./SellerSignup.module.css";
 import { useUser } from "../../Users/UserContext";
 import { baseURL } from "../../config";
-import { Link } from "react-router-dom"; 
-import EditProductPage from "../../Pages/EditProductPage";
+import { Link } from "react-router-dom";
 
 function SellerForm() {
   const { user } = useUser();
+  const navigate = useNavigate();
+
   const [shopName, setShopName] = useState("");
   const [shopDescription, setShopDescription] = useState("");
   const [shopAddress, setShopAddress] = useState("");
@@ -38,6 +40,7 @@ function SellerForm() {
         shop_pfp: shopLogoFile ? shopLogoFile.name : "",
       });
       alert("✅ Seller account created!");
+      navigate("/profile"); // ✅ Redirect to profile after form submission
     } catch (err) {
       console.error("❌ Error creating seller:", err);
       alert("Failed to create seller account.");
@@ -92,9 +95,8 @@ function SellerForm() {
         Place your username and shop name in the subject of the email for it to
         be reviewed.
       </p>
-    <Link to="/EditProductPage" className={styles["verification-link"]}>
       <button type="submit">Create Seller Account</button>
-      </Link>
+      <Link to="/Profile" className={styles["verification-link"]}></Link>
     </form>
   );
 }

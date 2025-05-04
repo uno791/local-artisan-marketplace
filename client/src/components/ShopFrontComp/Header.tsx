@@ -2,16 +2,19 @@ import styles from "./ShopFront.module.css";
 
 type Props = {
   logo: string;
+  name: string;
+  bio?: string;
 };
 
-function Header({ logo }: Props) {
+function Header({ logo, name, bio }: Props) {
   return (
     <header className={styles.header}>
       <img src={logo} alt="Shop Logo" className={styles.logo} />
-      <p className={styles.location}>Cape Town, Waterfront</p>
-      <p className={styles.location}>Johannesburg, Sandton</p>
+      <h2 className={styles.shopName}>{name}</h2>
+      {bio && <p className={styles.bio}>{bio}</p>}
     </header>
   );
 }
 
 export default Header;
+

@@ -2,11 +2,17 @@ import { useState } from "react";
 import styles from "./NavBar.module.css";
 import { NavLink } from "react-router-dom";
 import logo from "../../assets/localish-logo.png";
-import { FaHome, FaSearch, FaShoppingCart, FaUser, FaBars } from "react-icons/fa";
+import {
+  FaHome,
+  FaSearch,
+  FaShoppingCart,
+  FaUser,
+  FaBars,
+} from "react-icons/fa";
 
 const navItems = [
   { name: "Home", path: "/Home", icon: <FaHome /> },
-  { name: "Search", path: "/Search", icon: <FaSearch /> },
+  { name: "Search", path: "/SearchPage", icon: <FaSearch /> },
   { name: "Cart", path: "/Cart", icon: <FaShoppingCart /> },
   { name: "Profile", path: "/Profile", icon: <FaUser /> },
 ];
@@ -17,12 +23,14 @@ function NavBar() {
   return (
     <header className={styles.navbar}>
       <nav className={styles.navbarInner}>
-        <a href="/" className={styles.navbarLogo}>
+        <a href="/Home" className={styles.navbarLogo}>
           <img src={logo} alt="Localish logo" />
         </a>
 
         <button
-          className={`${styles.menuToggle} ${menuOpen ? styles.hideToggle : ""}`}
+          className={`${styles.menuToggle} ${
+            menuOpen ? styles.hideToggle : ""
+          }`}
           onClick={() => setMenuOpen(!menuOpen)}
         >
           <FaBars />

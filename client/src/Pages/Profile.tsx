@@ -12,10 +12,10 @@ import styles from "../components/ProfilePageComp/Profile.module.css";
 
 import { useUser } from "../Users/UserContext";
 import { baseURL } from "../config";
+
 function Profile() {
   const navigate = useNavigate();
 
-  // ✅ tell TypeScript the ref is for an <input> element
   const fileInputRef = useRef<HTMLInputElement>(null);
   const { user } = useUser();
   const [image, setImage] = useState(profileImg);
@@ -23,6 +23,9 @@ function Profile() {
   const [postalCode, setPostalCode] = useState("-");
   const [phone, setPhone] = useState("");
   const [showModal, setShowModal] = useState(false);
+  const [sellerStatus, setSellerStatus] = useState<
+    "none" | "pending" | "approved"
+  >("none");
 
   useEffect(() => {
     async function fetchUserInfo() {
@@ -33,15 +36,26 @@ function Profile() {
         const data = res.data;
         setPostalCode(data.postal_code?.toString() || "-");
         setPhone(data.phone_no || "");
+
+        // Updated route to fetch artisan verification status
+        const artisanRes = await axios.get(
+          `${baseURL}/artisan/${user.username}`
+        );
+        if (artisanRes.data) {
+          const verified = artisanRes.data.verified;
+          setSellerStatus(verified === 1 ? "approved" : "pending");
+        } else {
+          setSellerStatus("none");
+        }
       } catch (err) {
-        console.error("❌ Failed to fetch user data:", err);
+        console.error("❌ Failed to fetch user or artisan data:", err);
       }
     }
 
     fetchUserInfo();
   }, [user?.username]);
+
   function openFilePicker() {
-    // ✅ check it's not null before clicking
     if (fileInputRef.current !== null) {
       fileInputRef.current.click();
     }
@@ -87,7 +101,10 @@ function Profile() {
           }}
         />
 
-        <ActionButtons onBecomeSeller={goToSellerSignup} />
+        <ActionButtons
+          onBecomeSeller={goToSellerSignup}
+          sellerStatus={sellerStatus}
+        />
       </article>
 
       {showModal === true && (
