@@ -8,7 +8,6 @@ import ProductImage from "../components/ProductPageComp/ProductImage";
 import ProductInfo from "../components/ProductPageComp/ProductInfo";
 import SidebarInfo from "../components/ProductPageComp/SideBarInfo";
 import ReportProduct from "../components/ProductPageComp/ReportProduct";
-import { Link } from "react-router-dom";
 import shopLogo from "../assets/shop-logo.png"; // or mona-lisa.jpg if that's what you're using
 import { baseURL } from "../config";
 

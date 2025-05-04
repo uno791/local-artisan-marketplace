@@ -14,7 +14,7 @@ function ActionButtons({ onBecomeSeller, sellerStatus }: Props) {
   }
 
   function goToDashboard() {
-    navigate("/seller-dashboard");
+    navigate("/SellerHome");
   }
 
   return (

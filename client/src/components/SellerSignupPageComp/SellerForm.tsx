@@ -4,8 +4,7 @@ import axios from "axios";
 import styles from "./SellerSignup.module.css";
 import { useUser } from "../../Users/UserContext";
 import { baseURL } from "../../config";
-import { Link } from "react-router-dom"; 
-import EditProductPage from "../../Pages/EditProductPage";
+import { Link } from "react-router-dom";
 
 function SellerForm() {
   const { user } = useUser();
@@ -96,9 +95,8 @@ function SellerForm() {
         Place your username and shop name in the subject of the email for it to
         be reviewed.
       </p>
-    <Link to="/EditProductPage" className={styles["verification-link"]}>
       <button type="submit">Create Seller Account</button>
-      </Link>
+      <Link to="/Profile" className={styles["verification-link"]}></Link>
     </form>
   );
 }

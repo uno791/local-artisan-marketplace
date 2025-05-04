@@ -14,7 +14,7 @@ function NavBar() {
   return (
     <header className={styles.navbar}>
       <nav className={styles.navbarInner}>
-        <a href="/" className={styles.navbarLogo}>
+        <a href="/Home" className={styles.navbarLogo}>
           <img src={logo} alt="Localish logo" />
         </a>
         <ul className={styles.navbarLinks}>

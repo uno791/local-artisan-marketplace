@@ -23,7 +23,9 @@ function Profile() {
   const [postalCode, setPostalCode] = useState("-");
   const [phone, setPhone] = useState("");
   const [showModal, setShowModal] = useState(false);
-  const [sellerStatus, setSellerStatus] = useState<"none" | "pending" | "approved">("none");
+  const [sellerStatus, setSellerStatus] = useState<
+    "none" | "pending" | "approved"
+  >("none");
 
   useEffect(() => {
     async function fetchUserInfo() {
@@ -36,7 +38,9 @@ function Profile() {
         setPhone(data.phone_no || "");
 
         // Updated route to fetch artisan verification status
-        const artisanRes = await axios.get(`${baseURL}/artisan/${user.username}`);
+        const artisanRes = await axios.get(
+          `${baseURL}/artisan/${user.username}`
+        );
         if (artisanRes.data) {
           const verified = artisanRes.data.verified;
           setSellerStatus(verified === 1 ? "approved" : "pending");
