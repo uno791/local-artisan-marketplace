@@ -11,6 +11,7 @@ import StockInput from "../components/EditProductPageComp/StockInput";
 import TypeOfArtSelector from "../components/EditProductPageComp/TypeOfArtSelector";
 import DeliveryOptionSelector from "../components/EditProductPageComp/DeliveryOptionSelector";
 import NavBar from "../components/SellerHomeComp/NavBar";
+import { baseURL } from "../config";
 
 const EditProductPage: React.FC = () => {
   const { id } = useParams();
@@ -31,7 +32,7 @@ const EditProductPage: React.FC = () => {
   useEffect(() => {
     const fetchProduct = async () => {
       try {
-        const res = await fetch(`http://localhost:3000/product/${id}`);
+        const res = await fetch(`${baseURL}/product/${id}`);
         const data = await res.json();
         setProdName(data.product_name || "");
         setDetails(data.details || "");
@@ -80,7 +81,7 @@ const EditProductPage: React.FC = () => {
     };
 
     try {
-      const res = await fetch(`http://localhost:3000/editproduct/${id}`, {
+      const res = await fetch(`${baseURL}/editproduct/${id}`, {
         method: "PUT",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(payload),
@@ -129,7 +130,9 @@ const EditProductPage: React.FC = () => {
               TypeOfArt={MajorCategory}
               setTypeOfArt={setMajorCategory}
             />
-            <EditTagsButton onConfirm={(selectedTags) => setTags(selectedTags)} />
+            <EditTagsButton
+              onConfirm={(selectedTags) => setTags(selectedTags)}
+            />
           </section>
 
           <button className={styles.confirmButton} onClick={handleConfirm}>
@@ -140,16 +143,37 @@ const EditProductPage: React.FC = () => {
             <section className={styles.popupOverlay}>
               <section className={styles.popup}>
                 <h2>Updated Product Info</h2>
-                <p><strong>Name:</strong> {ProdName}</p>
-                <p><strong>Details:</strong> {Details}</p>
-                <p><strong>Price:</strong> R{Price.toFixed(2)}</p>
-                <p><strong>Stock:</strong> {Stock}</p>
-                <p><strong>Width:</strong> {Width} cm</p>
-                <p><strong>Height:</strong> {Height} cm</p>
-                <p><strong>Weight:</strong> {Weight} kg</p>
-                <p><strong>Delivery Method:</strong> {DelMethod ? "Delivery" : "Pickup"}</p>
-                <p><strong>Major Category:</strong> {MajorCategory}</p>
-                <p><strong>Tags:</strong> {Tags.join(", ")}</p>
+                <p>
+                  <strong>Name:</strong> {ProdName}
+                </p>
+                <p>
+                  <strong>Details:</strong> {Details}
+                </p>
+                <p>
+                  <strong>Price:</strong> R{Price.toFixed(2)}
+                </p>
+                <p>
+                  <strong>Stock:</strong> {Stock}
+                </p>
+                <p>
+                  <strong>Width:</strong> {Width} cm
+                </p>
+                <p>
+                  <strong>Height:</strong> {Height} cm
+                </p>
+                <p>
+                  <strong>Weight:</strong> {Weight} kg
+                </p>
+                <p>
+                  <strong>Delivery Method:</strong>{" "}
+                  {DelMethod ? "Delivery" : "Pickup"}
+                </p>
+                <p>
+                  <strong>Major Category:</strong> {MajorCategory}
+                </p>
+                <p>
+                  <strong>Tags:</strong> {Tags.join(", ")}
+                </p>
                 <button onClick={() => setSubmitted(false)}>Close</button>
               </section>
             </section>

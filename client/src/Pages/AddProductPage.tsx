@@ -12,6 +12,7 @@ import DeliveryOptionSelector from "../components/AddProductPageComp/DeliveryOpt
 import NavBar from "../components/SellerHomeComp/NavBar";
 import AddTagsButton from "../components/AddProductPageComp/AddTagsButton";
 import { useUser } from "../Users/UserContext";
+import { baseURL } from "../config";
 
 const AddProductPage: React.FC = () => {
   const [ProdName, setProdName] = React.useState<string>("");
@@ -68,7 +69,7 @@ const AddProductPage: React.FC = () => {
     };
 
     try {
-      const response = await fetch("http://localhost:3000/addproduct", {
+      const response = await fetch(`${baseURL}/addproduct`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(payload),
