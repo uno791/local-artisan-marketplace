@@ -7,8 +7,6 @@ import ProductGrid from "../components/ShopFrontComp/ProductGrid";
 import ReportShop from "../components/ShopFrontComp/ReportShop";
 import styles from "../components/ShopFrontComp/ShopFront.module.css";
 
-import shopLogo from "../assets/shop-logo.png";
-import monaLisa from "../assets/mona-lisa.jpg";
 import { baseURL } from "../config";
 
 interface Product {
@@ -61,7 +59,7 @@ function ShopFront() {
       </section>
 
       <Header
-        logo={artisan?.shop_pfp || shopLogo}
+        logo={artisan?.shop_pfp}
         name={artisan?.shop_name || "Artisan Shop"}
         bio={artisan?.bio}
       />

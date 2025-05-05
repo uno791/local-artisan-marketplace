@@ -8,7 +8,6 @@ import ProductImage from "../components/ProductPageComp/ProductImage";
 import ProductInfo from "../components/ProductPageComp/ProductInfo";
 import SidebarInfo from "../components/ProductPageComp/SideBarInfo";
 import ReportProduct from "../components/ProductPageComp/ReportProduct";
-import shopLogo from "../assets/shop-logo.png"; // or mona-lisa.jpg if that's what you're using
 import { baseURL } from "../config";
 
 interface Product {
@@ -72,18 +71,20 @@ function ProductPage() {
           <ProductImage image_url={product.image_url} />
 
           <Link to={`/shop/${product.username}`}>
-            <img
-              src={artisan?.shop_pfp || shopLogo}
-              alt={`${artisan?.shop_name || "Shop"} Logo`}
-              style={{
-                width: "140px",
-                height: "140px",
-                marginTop: "1rem",
-                borderRadius: "8px",
-                cursor: "pointer",
-                objectFit: "cover",
-              }}
-            />
+            {artisan?.shop_pfp && (
+              <img
+                src={artisan.shop_pfp}
+                alt={`${artisan.shop_name} Logo`}
+                style={{
+                  width: "140px",
+                  height: "140px",
+                  marginTop: "1rem",
+                  borderRadius: "8px",
+                  cursor: "pointer",
+                  objectFit: "cover",
+                }}
+              />
+            )}
           </Link>
         </section>
 

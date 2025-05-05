@@ -13,9 +13,16 @@ export default {
     '^react$': '<rootDir>/node_modules/react',
     '^react-dom$': '<rootDir>/node_modules/react-dom',
     '^.+\\.module\\.(css|sass|scss)$': 'identity-obj-proxy',
-    '^.+\\.(css|sass|scss)$': '<rootDir>/__mocks__/styleMock.js',
+    '^.+\\.(css|sass|scss)$': '<rootDir>/_mocks_/styleMock.js',
+    '^.+\\.(jpg|jpeg|png|gif|svg)$': '<rootDir>/_mocks_/fileMock.js',
     '^@/(.*)$': '<rootDir>/src/$1',
+    '^react-phone-number-input/style.css$': '<rootDir>/_mocks_/styleMock.js'
   },
+  
+  
+  
+  
+  
   setupFilesAfterEnv: ['<rootDir>/jest.setup.ts'],
 
   // Code coverage settings
