@@ -1,26 +1,7 @@
+// src/components/AdminDashboard/GraphCard.tsx
 import React, { forwardRef } from "react";
-import {
-  Chart as ChartJS,
-  CategoryScale,
-  LinearScale,
-  PointElement,
-  LineElement,
-  Title,
-  Tooltip,
-  Legend,
-  ChartData,
-} from "chart.js";
 import { Line } from "react-chartjs-2";
-
-ChartJS.register(
-  CategoryScale,
-  LinearScale,
-  PointElement,
-  LineElement,
-  Title,
-  Tooltip,
-  Legend
-);
+import "chart.js/auto";
 
 const options = {
   responsive: true,
@@ -35,7 +16,10 @@ const options = {
 };
 
 interface GraphCardProps {
-  data: ChartData<"line", number[], string>;
+  data: {
+    labels: string[];
+    datasets: { data: number[]; label: string; backgroundColor?: string }[];
+  };
 }
 
 const GraphCard = forwardRef<HTMLDivElement, GraphCardProps>(
