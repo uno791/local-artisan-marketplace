@@ -1,5 +1,4 @@
-//import * as React from "react";
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import styles from "../components/QuestionsPageComp/QuestionsPage.module.css";
 import UserNameHeader from "../components/QuestionsPageComp/UserNameHeader";
 import ApplyButton from "../components/QuestionsPageComp/ApplyButton";
@@ -7,21 +6,35 @@ import ArtFormSection from "../components/QuestionsPageComp/ArtFormSection";
 import { useUser } from "../Users/UserContext";
 import axios from "axios";
 import { baseURL } from "../config";
-import { Link } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 
 function QuestionsPage() {
-  const [userName, setUserName] = React.useState<string>("");
-  const [selectedArtForms, setSelectedArtForms] = React.useState<string[]>([]);
-  const [submitted, setSubmitted] = React.useState(false);
-  const [error, setError] = React.useState<string | null>(null);
+  const [userName, setUserName] = useState<string>("");
+  const [selectedArtForms, setSelectedArtForms] = useState<string[]>([]);
+  const [availableTags, setAvailableTags] = useState<string[]>([]);
+  const [submitted, setSubmitted] = useState(false);
+  const [error, setError] = useState<string | null>(null);
   const [message, setMessage] = useState("");
-  //const baseURL = import.meta.env.VITE_API_BASE_URL;
   const { user } = useUser();
-  //const [userData, setUserData] = useState<UserData | null>(null);
+  const navigate = useNavigate();
+
+  // Fetch tags from DB
+  useEffect(() => {
+    const fetchTags = async () => {
+      try {
+        const res = await axios.get(`${baseURL}/main-categories`);
+        setAvailableTags(res.data);
+      } catch (err) {
+        console.error("Error fetching tags:", err);
+      }
+    };
+    fetchTags();
+  }, []);
 
   const handleApplyClick = async () => {
     setError(null);
-    if (!userName.trim() || "") {
+
+    if (!userName.trim()) {
       setError("Please enter a username.");
       return;
     }
@@ -40,10 +53,17 @@ function QuestionsPage() {
         setError("Username already taken. Please choose another one.");
         return;
       }
-      //obv you gonna need to change this to add actual user info
+
+      // Add user to database
       const res = await axios.post(`${baseURL}/adduser`, {
         username: userName,
         user_ID: user.id,
+      });
+
+      // Save selected art tags
+      await axios.post(`${baseURL}/save-user-tags`, {
+        username: userName,
+        tags: selectedArtForms,
       });
 
       setSubmitted(true);
@@ -60,16 +80,21 @@ function QuestionsPage() {
   return (
     <main className={styles.container}>
       <UserNameHeader userName={userName} setUserName={setUserName} />
+
       <section className={styles.artInterestSection}>
         <h1 className={styles.mainQuestion}>What kind of art interests you?</h1>
         <h2 className={styles.sectionTitle}>Art Forms</h2>
         <ArtFormSection
           selectedArtForms={selectedArtForms}
           setSelectedArtForms={setSelectedArtForms}
+          availableTags={availableTags}
         />
       </section>
+
       <ApplyButton onApply={handleApplyClick} />
+
       {error && <p className={styles.error}>{error}</p>}
+
       {submitted && (
         <div className={styles.popup}>
           <h2>Submitted Info</h2>
@@ -79,11 +104,9 @@ function QuestionsPage() {
           <p>
             <strong>Selected Art Forms:</strong> {selectedArtForms.join(", ")}
           </p>
-          <Link to="/LogInPage">
-            <button onClick={() => setSubmitted(false)}>
-              Proceed to LogIn
-            </button>
-          </Link>
+          <button onClick={() => navigate("/")}>
+            Proceed to Homepage
+          </button>
         </div>
       )}
     </main>
