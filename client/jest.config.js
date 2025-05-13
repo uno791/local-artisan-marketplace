@@ -22,9 +22,8 @@ export default {
     "^react-phone-number-input/style.css$": "<rootDir>/_mocks_/styleMock.js",
   },
 
-  setupFiles: ["jest-canvas-mock", "whatwg-fetch"],
-
   setupFilesAfterEnv: ["<rootDir>/jest.setup.ts"],
+
   // Code coverage settings
   collectCoverage: true,
   collectCoverageFrom: ["src/**/*.{js,jsx,ts,tsx}", "!src/**/*.d.ts"],
