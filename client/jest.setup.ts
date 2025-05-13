@@ -1,7 +1,6 @@
 // jest.setup.ts
 import 'jest-canvas-mock';
 import 'whatwg-fetch';
-
 import '@testing-library/jest-dom';
 
 jest.mock('@/config', () => ({
@@ -11,12 +10,31 @@ jest.mock('@/config', () => ({
 import { TextEncoder, TextDecoder } from 'util';
 Object.assign(global, { TextEncoder, TextDecoder });
 
+// ─────────────────────────────────────────────────────────────────────────────
+// Polyfill ResizeObserver so Recharts/<ResponsiveContainer> can mount under JSDOM
 class ResizeObserver {
-  observe() {}
-  unobserve() {}
-  disconnect() {}
+  constructor(callback: ResizeObserverCallback) {
+    // no-op
+  }
+  observe(target: Element) {
+    // no-op
+  }
+  unobserve(target: Element) {
+    // no-op
+  }
+  disconnect() {
+    // no-op
+  }
 }
-global.ResizeObserver = ResizeObserver;
+// install on window (what Recharts actually checks)
+Object.defineProperty(window, 'ResizeObserver', {
+  value: ResizeObserver,
+  writable: true,
+});
+
+// also put it on global, in case some imports use that
+;(global as any).ResizeObserver = ResizeObserver;
+// ─────────────────────────────────────────────────────────────────────────────
 
 const fakeSalesData = [
   { month: 1, monthName: 'January', total: 0 },
