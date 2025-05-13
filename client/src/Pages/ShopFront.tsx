@@ -70,7 +70,7 @@ function ShopFront() {
           title: p.product_name,
           artist: artisan?.shop_name || "Unknown",
           price: `R${p.price}`,
-          category: "Custom",
+          //category: "Custom",
           image: p.image_url,
         }))}
       />

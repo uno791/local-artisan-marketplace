@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import styles from "./NavBar.module.css";
 import { NavLink } from "react-router-dom";
 import logo from "../../assets/localish-logo.png";
@@ -8,6 +8,7 @@ import {
   FaShoppingCart,
   FaUser,
   FaBars,
+  FaTimes,
 } from "react-icons/fa";
 
 const navItems = [
@@ -19,6 +20,11 @@ const navItems = [
 
 function NavBar() {
   const [menuOpen, setMenuOpen] = useState(false);
+
+  // Optional: prevent background scroll
+  useEffect(() => {
+    document.body.style.overflow = menuOpen ? "hidden" : "";
+  }, [menuOpen]);
 
   return (
     <header className={styles.navbar}>
@@ -44,8 +50,22 @@ function NavBar() {
         )}
 
         <ul
-          className={`${styles.navbarLinks} ${menuOpen ? styles.showMenu : ""}`}
+          className={`${styles.navbarLinks} ${
+            menuOpen ? styles.showMenu : ""
+          }`}
         >
+          {menuOpen && (
+            <li className={styles.closeButtonWrapper}>
+              <button
+                className={styles.closeButton}
+                onClick={() => setMenuOpen(false)}
+                aria-label="Close menu"
+              >
+                <FaTimes />
+              </button>
+            </li>
+          )}
+
           {navItems.map((item) => (
             <li key={item.name}>
               <NavLink

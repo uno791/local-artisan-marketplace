@@ -4,18 +4,21 @@ import styles from "./SideBarInfo.module.css";
 
 interface Artisan {
   username: string;
+  shop_pfp: string;
+  shop_name: string;
 }
 
-function SidebarInfo({ username }: Artisan) {
+function SidebarInfo({ username, shop_pfp, shop_name }: Artisan) {
   return (
     <aside className={styles["sidebar-info"]}>
-      <ArtistInfo Uname={username} />
+      <ArtistInfo Uname={username} shop_pfp={shop_pfp} shop_name={shop_name} />
       <ReviewList />
     </aside>
   );
 }
 
 export default SidebarInfo;
+
 
 /*import ArtistInfo from "./SideBarComp/ArtistInfo";
 import ReviewList from "./SideBarComp/ReviewList";

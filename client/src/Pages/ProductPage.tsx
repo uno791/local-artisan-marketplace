@@ -1,4 +1,4 @@
-import { useParams, Link } from "react-router-dom";
+import { useParams } from "react-router-dom";
 import { useEffect, useState } from "react";
 import axios from "axios";
 
@@ -69,23 +69,6 @@ function ProductPage() {
       <section className={styles["product-main"]}>
         <section className={styles["product-left"]}>
           <ProductImage image_url={product.image_url} />
-
-          <Link to={`/shop/${product.username}`}>
-            {artisan?.shop_pfp && (
-              <img
-                src={artisan.shop_pfp}
-                alt={`${artisan.shop_name} Logo`}
-                style={{
-                  width: "140px",
-                  height: "140px",
-                  marginTop: "1rem",
-                  borderRadius: "8px",
-                  cursor: "pointer",
-                  objectFit: "cover",
-                }}
-              />
-            )}
-          </Link>
         </section>
 
         <section className={styles["product-middle"]}>
@@ -99,7 +82,11 @@ function ProductPage() {
         </section>
 
         <aside className={styles["product-right"]}>
-          <SidebarInfo username={product.username} />
+          <SidebarInfo
+            username={product.username}
+            shop_pfp={artisan?.shop_pfp || ""}
+            shop_name={artisan?.shop_name || ""}
+          />
         </aside>
       </section>
 
@@ -111,6 +98,7 @@ function ProductPage() {
 }
 
 export default ProductPage;
+
 
 /*import "./ProductPage.css";
 import BackButton from "../components/BackButton";

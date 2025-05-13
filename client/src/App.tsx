@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import { GoogleOAuthProvider } from "@react-oauth/google";
 import LoginPage from "./Pages/LoginPage";
@@ -19,15 +19,31 @@ import BuyerOrders from "./Pages/BuyerOrders";
 import PaymentPage from "./Pages/PaymentPage";
 import SearchPage from "./Pages/SearchPage";
 import { SearchProvider } from "./components/SearchPageComp1/SearchContext";
-
 import EditProductPage from "./Pages/EditProductPage";
 import AddProductPage from "./Pages/AddProductPage";
 import UserReports from "./Pages/UserReports";
 import SellerHome from "./Pages/SellerHome";
 import StatsPage from "./Pages/SellerStatsPage";
 import SellerOrdersPage from "./Pages/SellerOrdersPage";
+import Preloader from "./Pre-loader/Preloader";
 
 function App() {
+  const [loading, setLoading] = useState(true);
+
+  useEffect(function () {
+    const timer = setTimeout(function () {
+      setLoading(false);
+    }, 1500); // Simulated delay
+
+    return function () {
+      clearTimeout(timer);
+    };
+  }, []);
+
+  if (loading) {
+    return <Preloader />;
+  }
+
   return (
     <GoogleOAuthProvider clientId="719123023157-2l972akc1n9ktkksvlhajau4s9aclcng.apps.googleusercontent.com">
       <BrowserRouter>
@@ -43,8 +59,6 @@ function App() {
           <Route path="/UserReports" element={<UserReports />} />
 
           {/* Protected routes with MainLayout */}
-
-          {/* Pages with MainLayout (includes NavBar & Footer) */}
           <Route path="/SellerHome" element={<SellerHome />} />
           <Route path="/SellerStats" element={<StatsPage />} />
           <Route path="/SellerOrders" element={<SellerOrdersPage />} />
@@ -52,14 +66,14 @@ function App() {
           <Route path="/EditProductPage/:id" element={<EditProductPage />} />
           <Route path="/AddProductPage" element={<AddProductPage />} />
 
-          {/* For Pages with NavBar and Footer */}
+          {/* Pages with NavBar and Footer */}
           <Route element={<MainLayout />}>
             <Route path="/Home" element={<Home />} />
             <Route
               path="/SearchPage"
               element={
                 <SearchProvider>
-                  <SearchPage></SearchPage>
+                  <SearchPage />
                 </SearchProvider>
               }
             />
