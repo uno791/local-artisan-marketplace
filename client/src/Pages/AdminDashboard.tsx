@@ -1,15 +1,14 @@
-"use client";
-
-import React from "react";
+import React, { useRef } from "react";
 import { Link, useLocation } from "react-router-dom";
 import styles from "../components/SellerVerificationPageComp/SellerVerification.module.css";
 import StatsCard from "../components/AdminDashboard/StatsCard";
 import GraphCard from "../components/AdminDashboard/GraphCard";
+import Export from "../components/AdminDashboard/Export";
 
 export const AdminDashboard: React.FC = () => {
   const location = useLocation();
   const isActive = (path: string) => location.pathname === path;
-
+  const chartRef = useRef<HTMLDivElement>(null);
   return (
     <div className={styles.wrapper}>
       {/* Sidebar */}
@@ -61,9 +60,10 @@ export const AdminDashboard: React.FC = () => {
           <StatsCard label="Weekly Sales" value="R6,800" />
         </div>
 
-        {/* Graph Below */}
-        <div style={{ width: "100%" }}>
-          <GraphCard />
+        <div style={{ width: "100%", marginTop: 20 }}>
+          <GraphCard ref={chartRef} />
+
+          <Export chartRef={chartRef} />
         </div>
       </div>
     </div>
