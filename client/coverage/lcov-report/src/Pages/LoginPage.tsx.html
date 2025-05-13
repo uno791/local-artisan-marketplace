@@ -23,30 +23,30 @@
         <div class='clearfix'>
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">68.75% </span>
+                <span class="strong">93.75% </span>
                 <span class="quiet">Statements</span>
-                <span class='fraction'>11/16</span>
+                <span class='fraction'>15/16</span>
             </div>
         
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">50% </span>
+                <span class="strong">100% </span>
                 <span class="quiet">Branches</span>
-                <span class='fraction'>3/6</span>
+                <span class='fraction'>6/6</span>
             </div>
         
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">16.66% </span>
+                <span class="strong">83.33% </span>
                 <span class="quiet">Functions</span>
-                <span class='fraction'>1/6</span>
+                <span class='fraction'>5/6</span>
             </div>
         
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">68.75% </span>
+                <span class="strong">93.75% </span>
                 <span class="quiet">Lines</span>
-                <span class='fraction'>11/16</span>
+                <span class='fraction'>15/16</span>
             </div>
         
             
@@ -61,7 +61,7 @@
             </div>
         </template>
     </div>
-    <div class='status-line medium'></div>
+    <div class='status-line high'></div>
     <pre><table class="coverage">
 <tr><td class="line-count quiet"><a name='L1'></a><a href='#L1'>1</a>
 <a name='L2'></a><a href='#L2'>2</a>
@@ -119,19 +119,27 @@
 <a name='L54'></a><a href='#L54'>54</a>
 <a name='L55'></a><a href='#L55'>55</a>
 <a name='L56'></a><a href='#L56'>56</a>
-<a name='L57'></a><a href='#L57'>57</a></td><td class="line-coverage quiet"><span class="cline-any cline-yes">2x</span>
-<span class="cline-any cline-yes">2x</span>
-<span class="cline-any cline-yes">2x</span>
-<span class="cline-any cline-yes">2x</span>
-<span class="cline-any cline-yes">2x</span>
-<span class="cline-any cline-yes">2x</span>
-<span class="cline-any cline-yes">2x</span>
-<span class="cline-any cline-yes">2x</span>
+<a name='L57'></a><a href='#L57'>57</a></td><td class="line-coverage quiet"><span class="cline-any cline-yes">3x</span>
 <span class="cline-any cline-yes">3x</span>
 <span class="cline-any cline-yes">3x</span>
+<span class="cline-any cline-yes">3x</span>
+<span class="cline-any cline-yes">3x</span>
+<span class="cline-any cline-yes">3x</span>
+<span class="cline-any cline-yes">3x</span>
+<span class="cline-any cline-yes">3x</span>
+<span class="cline-any cline-yes">15x</span>
+<span class="cline-any cline-yes">15x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">15x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-yes">3x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -139,18 +147,10 @@
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -167,7 +167,7 @@
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -195,23 +195,23 @@ export default function LoginPage() {
         &lt;Logo /&gt;
         &lt;WelcomeMessage /&gt;
         &lt;GoogleLogInButton
-          onError={<span class="fstat-no" title="function not covered" >(m</span>sg: string) =&gt; <span class="cstat-no" title="statement not covered" >setErrorMessage(msg)}</span>
-          onSuccessMessage={<span class="fstat-no" title="function not covered" >(m</span>sg: string) =&gt; {
-<span class="cstat-no" title="statement not covered" >            setSuccessMessage(msg);</span>
+          onError={(msg: string) =&gt; setErrorMessage(msg)}
+          onSuccessMessage={(msg: string) =&gt; {
+            setSuccessMessage(msg);
             //navigate("/home"); // ✅ Go to home page on success
           }}
         /&gt;
         &lt;SignUpPrompt /&gt;
 &nbsp;
         {errorMessage &amp;&amp; (
-<span class="branch-1 cbranch-no" title="branch not covered" >          &lt;div className={styles.popupError} style={{ zIndex: 1000 }}&gt;</span>
+          &lt;div className={styles.popupError} style={{ zIndex: 1000 }}&gt;
             &lt;p&gt;{errorMessage}&lt;/p&gt;
-            &lt;button onClick={<span class="fstat-no" title="function not covered" >() =</span>&gt; <span class="cstat-no" title="statement not covered" >setErrorMessage(null)}</span>&gt;Close&lt;/button&gt;
+            &lt;button onClick={() =&gt; setErrorMessage(null)}&gt;Close&lt;/button&gt;
           &lt;/div&gt;
         )}
 &nbsp;
         {successMessage === "Successfully logged in!" &amp;&amp; (
-<span class="branch-1 cbranch-no" title="branch not covered" >          &lt;div className={styles.popupSuccess} style={{ zIndex: 1000 }}&gt;</span>
+          &lt;div className={styles.popupSuccess} style={{ zIndex: 1000 }}&gt;
             &lt;p&gt;{successMessage}&lt;/p&gt;
             &lt;Link to="/Home"&gt;
               &lt;button onClick={<span class="fstat-no" title="function not covered" >() =</span>&gt; <span class="cstat-no" title="statement not covered" >setSuccessMessage(null)}</span>&gt;Close&lt;/button&gt;
@@ -220,10 +220,10 @@ export default function LoginPage() {
         )}
 &nbsp;
         {successMessage === "Welcome back, Admin!" &amp;&amp; (
-<span class="branch-1 cbranch-no" title="branch not covered" >          &lt;div className={styles.popupSuccess} style={{ zIndex: 1000 }}&gt;</span>
+          &lt;div className={styles.popupSuccess} style={{ zIndex: 1000 }}&gt;
             &lt;p&gt;{successMessage}&lt;/p&gt;
             &lt;Link to="/AdminDashboard"&gt;
-              &lt;button onClick={<span class="fstat-no" title="function not covered" >() =</span>&gt; <span class="cstat-no" title="statement not covered" >setSuccessMessage(null)}</span>&gt;Close&lt;/button&gt;
+              &lt;button onClick={() =&gt; setSuccessMessage(null)}&gt;Close&lt;/button&gt;
             &lt;/Link&gt;
           &lt;/div&gt;
         )}
@@ -238,7 +238,7 @@ export default function LoginPage() {
             <div class='footer quiet pad2 space-top1 center small'>
                 Code coverage generated by
                 <a href="https://istanbul.js.org/" target="_blank" rel="noopener noreferrer">istanbul</a>
-                at 2025-05-13T18:56:41.597Z
+                at 2025-05-13T19:07:08.903Z
             </div>
         <script src="../../prettify.js"></script>
         <script>

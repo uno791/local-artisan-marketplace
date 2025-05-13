@@ -1,33 +1,18 @@
 // src/components/AdminDashboard/GraphCard.tsx
 import React, { forwardRef } from "react";
-import {
-  Chart as ChartJS,
-  CategoryScale,
-  LinearScale,
-  PointElement,
-  LineElement,
-  Title,
-  Tooltip,
-  Legend,
-  ChartOptions,
-} from "chart.js";
+import { Chart as ChartJS, registerables, ChartOptions } from "chart.js";
 import { Line } from "react-chartjs-2";
-
-// register only the components we use
-ChartJS.register(
-  CategoryScale,
-  LinearScale,
-  PointElement,
-  LineElement,
-  Title,
-  Tooltip,
-  Legend
-);
+if (typeof ChartJS.register === "function") {
+  ChartJS.register(...registerables);
+} else {
+  // @ts-ignore
+  ChartJS.register = (..._args: any[]) => {};
+}
 
 const options: ChartOptions<"line"> = {
   responsive: true,
   plugins: {
-    legend: { position: "top" as const },
+    legend: { position: "top" },
     title: { display: true, text: "Sales Over Time" },
   },
   scales: {
