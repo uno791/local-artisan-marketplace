@@ -2,9 +2,9 @@ import React, { useState, useEffect } from "react";
 import styles from "../components/SellerVerificationPageComp/SellerVerification.module.css";
 import SellerCard from "../components/SellerVerificationPageComp/SellerCard";
 import { Seller } from "../Users";
-import { Link } from "react-router-dom";
 import axios from "axios";
 import { baseURL } from "../config";
+import AdminSidebar from "../components/AdminDashboard/AdminSidebar";
 
 const SellerVerification: React.FC = () => {
   const [sellers, setSellers] = useState<Seller[]>([]);
@@ -52,26 +52,9 @@ const SellerVerification: React.FC = () => {
 
   return (
     <div className={styles.wrapper}>
-      <div className={styles.sidebar}>
-        <h2>Admin Dashboard</h2>
-        <Link to="/AdminDashboard" className={styles.navItem}>
-          Sales Analytics
-        </Link>
-
-        <Link to="/UserReports" className={styles.navItem}>
-          User Reports
-        </Link>
-
-        <Link
-          to="/SellerVerification"
-          className={`${styles.navItem} ${styles.navItemActive}`}
-        >
-          Seller Verification
-        </Link>
-      </div>
-
+      <AdminSidebar />
       <div className={styles.container}>
-      <h1 data-testid="seller-verification-title">Seller Verification</h1>
+        <h1 data-testid="seller-verification-title">Seller Verification</h1>
         <div className={styles.cards}>
           {sellers
             .filter((s) => s.verified <= 3)
