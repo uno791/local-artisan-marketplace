@@ -6,6 +6,7 @@ import StatsCard from "../components/AdminDashboard/StatsCard";
 import GraphCard from "../components/AdminDashboard/GraphCard";
 import Export from "../components/AdminDashboard/Export";
 import { baseURL } from "../config";
+
 interface SalesRow {
   month: number;
   monthName: string;
@@ -50,9 +51,8 @@ export const AdminDashboard: React.FC = () => {
 
   const totalSales = salesRows.reduce((sum, r) => sum + r.total, 0);
 
-  // compute this Month’s Sales
   const now = new Date();
-  const currentMonth = now.getMonth() + 1; // JS: 0 = Jan
+  const currentMonth = now.getMonth() + 1;
   const currentRow = salesRows.find((r) => r.month === currentMonth);
   const monthlySales = currentRow?.total ?? 0;
 
@@ -64,7 +64,6 @@ export const AdminDashboard: React.FC = () => {
       {/* Sidebar */}
       <div className={styles.sidebar}>
         <h2>Admin Dashboard</h2>
-
         <Link
           to="/AdminDashboard"
           className={`${styles.navItem} ${
@@ -73,7 +72,6 @@ export const AdminDashboard: React.FC = () => {
         >
           Sales Analytics
         </Link>
-
         <Link
           to="/UserReports"
           className={`${styles.navItem} ${
@@ -82,7 +80,6 @@ export const AdminDashboard: React.FC = () => {
         >
           User Reports
         </Link>
-
         <Link
           to="/SellerVerification"
           className={`${styles.navItem} ${

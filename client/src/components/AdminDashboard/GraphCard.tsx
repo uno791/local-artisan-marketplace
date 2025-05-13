@@ -1,7 +1,13 @@
 // src/components/AdminDashboard/GraphCard.tsx
 import React, { forwardRef } from "react";
-import { Chart as ChartJS, registerables, ChartOptions } from "chart.js";
+import {
+  Chart as ChartJS,
+  registerables,
+  ChartOptions,
+  type ChartData,
+} from "chart.js";
 import { Line } from "react-chartjs-2";
+
 if (typeof ChartJS.register === "function") {
   ChartJS.register(...registerables);
 } else {
@@ -22,10 +28,7 @@ const options: ChartOptions<"line"> = {
 };
 
 interface GraphCardProps {
-  data: {
-    labels: string[];
-    datasets: { data: number[]; label: string; backgroundColor?: string }[];
-  };
+  data: ChartData<"line", number[], string>;
 }
 
 const GraphCard = forwardRef<HTMLDivElement, GraphCardProps>(
