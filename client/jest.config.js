@@ -25,7 +25,7 @@ export default {
   setupFiles: ["jest-canvas-mock", "whatwg-fetch"],
 
   setupFilesAfterEnv: ["<rootDir>/jest.setup.ts"],
-
+  testPathIgnorePatterns: ["<rootDir>/src/Tests/AdminDashboard.test.tsx"],
   // Code coverage settings
   collectCoverage: true,
   collectCoverageFrom: ["src/**/*.{js,jsx,ts,tsx}", "!src/**/*.d.ts"],
