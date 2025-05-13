@@ -22,34 +22,29 @@ ChartJS.register(
   Legend
 );
 
-// — define and export your labels & dataset *once* —
-export const chartLabels = ["Jan", "Feb", "Mar", "Apr", "May", "Jun"];
-export const chartData: ChartData<"line", number[], string> = {
-  labels: chartLabels,
-  datasets: [
-    {
-      label: "Monthly Sales",
-      data: [12000, 19000, 3000, 5000, 2000, 30000],
-      borderColor: "rgb(75, 192, 192)",
-      backgroundColor: "rgba(75, 192, 192, 0.2)",
-      tension: 0.2,
-    },
-  ],
-};
-
 const options = {
   responsive: true,
   plugins: {
     legend: { position: "top" as const },
     title: { display: true, text: "Sales Over Time" },
   },
+  scales: {
+    x: { title: { display: true, text: "Month" } },
+    y: { title: { display: true, text: "Total Sales (R)" } },
+  },
 };
 
-const GraphCard = forwardRef<HTMLDivElement>((_, ref) => (
-  <div ref={ref} style={{ background: "#fff", borderRadius: 8, padding: 20 }}>
-    <Line options={options} data={chartData} />
-  </div>
-));
+interface GraphCardProps {
+  data: ChartData<"line", number[], string>;
+}
+
+const GraphCard = forwardRef<HTMLDivElement, GraphCardProps>(
+  ({ data }, ref) => (
+    <div ref={ref} style={{ background: "#fff", borderRadius: 8, padding: 20 }}>
+      <Line options={options} data={data} />
+    </div>
+  )
+);
 GraphCard.displayName = "GraphCard";
 
 export default GraphCard;

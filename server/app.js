@@ -209,6 +209,27 @@ app.get("/product/:id", async (req, res) => {
   }
 });
 
+app.get("/sales-data", async (req, res) => {
+  try {
+    const pool = await connectDB();
+    // Group by month number and name, order chronologically
+    const result = await pool.request().query(`
+      SELECT
+        MONTH(created_at)      AS month,
+        DATENAME(month, created_at) AS monthName,
+        SUM(total_amount)      AS total
+      FROM dbo.orders
+      GROUP BY MONTH(created_at), DATENAME(month, created_at)
+      ORDER BY MONTH(created_at);
+    `);
+    await pool.close();
+    res.json(result.recordset);
+  } catch (err) {
+    console.error("Error fetching sales data", err);
+    res.status(500).json({ error: "Failed to fetch sales data" });
+  }
+});
+
 app.get("/penartisans", async (req, res) => {
   try {
     const pool = await connectDB();

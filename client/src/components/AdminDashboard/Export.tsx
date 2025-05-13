@@ -1,18 +1,20 @@
 import React from "react";
 import html2canvas from "html2canvas";
 import { jsPDF } from "jspdf";
-import { chartData } from "./GraphCard";
+import type { ChartData } from "chart.js";
 
 interface ExportProps {
   chartRef: React.RefObject<HTMLDivElement | null>;
+  data: ChartData<"line", number[], string>;
 }
-const Export: React.FC<ExportProps> = ({ chartRef }) => {
-  const labels = chartData.labels as string[];
-  const values = chartData.datasets[0].data as number[];
+
+const Export: React.FC<ExportProps> = ({ chartRef, data }) => {
+  const labels = data.labels as string[];
+  const values = data.datasets[0].data as number[];
 
   const exportCSV = () => {
-    const header = "label,value\n";
-    const rows = labels.map((l, i) => `${l},${values[i]}`).join("\n");
+    const header = "month,total\n";
+    const rows = labels.map((m, i) => `${m},${values[i]}`).join("\n");
     const blob = new Blob([header + rows], { type: "text/csv" });
     const url = URL.createObjectURL(blob);
     const a = document.createElement("a");
