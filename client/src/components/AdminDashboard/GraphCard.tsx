@@ -1,9 +1,30 @@
 // src/components/AdminDashboard/GraphCard.tsx
 import React, { forwardRef } from "react";
+import {
+  Chart as ChartJS,
+  CategoryScale,
+  LinearScale,
+  PointElement,
+  LineElement,
+  Title,
+  Tooltip,
+  Legend,
+  ChartOptions,
+} from "chart.js";
 import { Line } from "react-chartjs-2";
-import "chart.js/auto";
 
-const options = {
+// register only the components we use
+ChartJS.register(
+  CategoryScale,
+  LinearScale,
+  PointElement,
+  LineElement,
+  Title,
+  Tooltip,
+  Legend
+);
+
+const options: ChartOptions<"line"> = {
   responsive: true,
   plugins: {
     legend: { position: "top" as const },

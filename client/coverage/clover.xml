@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<coverage generated="1747162139015" clover="3.2.0">
-  <project timestamp="1747162139015" name="All files">
-    <metrics statements="1185" coveredstatements="842" conditionals="275" coveredconditionals="130" methods="333" coveredmethods="203" elements="1793" coveredelements="1175" complexity="0" loc="1185" ncloc="1185" packages="27" files="114" classes="114"/>
+<coverage generated="1747162601694" clover="3.2.0">
+  <project timestamp="1747162601694" name="All files">
+    <metrics statements="1186" coveredstatements="842" conditionals="275" coveredconditionals="130" methods="333" coveredmethods="203" elements="1794" coveredelements="1175" complexity="0" loc="1186" ncloc="1186" packages="27" files="114" classes="114"/>
     <package name="src">
       <metrics statements="3" coveredstatements="0" conditionals="0" coveredconditionals="0" methods="1" coveredmethods="0"/>
       <file name="App.tsx" path="/Users/harshilvallabh/Wits/2025/Software Design/PROJECT/SPRINT 4/local-artisan-marketplace/client/src/App.tsx">
@@ -697,7 +697,7 @@
       </file>
     </package>
     <package name="src.components.AdminDashboard">
-      <metrics statements="27" coveredstatements="0" conditionals="1" coveredconditionals="0" methods="6" coveredmethods="0"/>
+      <metrics statements="28" coveredstatements="0" conditionals="1" coveredconditionals="0" methods="6" coveredmethods="0"/>
       <file name="Export.tsx" path="/Users/harshilvallabh/Wits/2025/Software Design/PROJECT/SPRINT 4/local-artisan-marketplace/client/src/components/AdminDashboard/Export.tsx">
         <metrics statements="21" coveredstatements="0" conditionals="1" coveredconditionals="0" methods="4" coveredmethods="0"/>
         <line num="11" count="0" type="stmt"/>
@@ -723,11 +723,12 @@
         <line num="40" count="0" type="stmt"/>
       </file>
       <file name="GraphCard.tsx" path="/Users/harshilvallabh/Wits/2025/Software Design/PROJECT/SPRINT 4/local-artisan-marketplace/client/src/components/AdminDashboard/GraphCard.tsx">
-        <metrics statements="4" coveredstatements="0" conditionals="0" coveredconditionals="0" methods="1" coveredmethods="0"/>
-        <line num="6" count="0" type="stmt"/>
-        <line num="25" count="0" type="stmt"/>
+        <metrics statements="5" coveredstatements="0" conditionals="0" coveredconditionals="0" methods="1" coveredmethods="0"/>
+        <line num="17" count="0" type="stmt"/>
         <line num="27" count="0" type="stmt"/>
-        <line num="32" count="0" type="stmt"/>
+        <line num="46" count="0" type="stmt"/>
+        <line num="48" count="0" type="stmt"/>
+        <line num="53" count="0" type="stmt"/>
       </file>
       <file name="StatsCard.tsx" path="/Users/harshilvallabh/Wits/2025/Software Design/PROJECT/SPRINT 4/local-artisan-marketplace/client/src/components/AdminDashboard/StatsCard.tsx">
         <metrics statements="2" coveredstatements="0" conditionals="0" coveredconditionals="0" methods="1" coveredmethods="0"/>
