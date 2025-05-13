@@ -1,26 +1,26 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<coverage generated="1746431777340" clover="3.2.0">
-  <project timestamp="1746431777340" name="All files">
-    <metrics statements="1132" coveredstatements="868" conditionals="270" coveredconditionals="170" methods="320" coveredmethods="207" elements="1722" coveredelements="1245" complexity="0" loc="1132" ncloc="1132" packages="27" files="113" classes="113"/>
+<coverage generated="1747158826475" clover="3.2.0">
+  <project timestamp="1747158826475" name="All files">
+    <metrics statements="1215" coveredstatements="974" conditionals="275" coveredconditionals="156" methods="333" coveredmethods="235" elements="1823" coveredelements="1365" complexity="0" loc="1215" ncloc="1215" packages="27" files="114" classes="114"/>
     <package name="src">
       <metrics statements="3" coveredstatements="0" conditionals="0" coveredconditionals="0" methods="1" coveredmethods="0"/>
-      <file name="App.tsx" path="C:\Users\lallo\Desktop\Computer Science - Third Year\My notes\Software Design\Sprint 3.6\local-artisan-marketplace\client\src\App.tsx">
+      <file name="App.tsx" path="/Users/harshilvallabh/Wits/2025/Software Design/PROJECT/SPRINT 4/local-artisan-marketplace/client/src/App.tsx">
         <metrics statements="1" coveredstatements="0" conditionals="0" coveredconditionals="0" methods="1" coveredmethods="0"/>
         <line num="31" count="0" type="stmt"/>
       </file>
-      <file name="config.ts" path="C:\Users\lallo\Desktop\Computer Science - Third Year\My notes\Software Design\Sprint 3.6\local-artisan-marketplace\client\src\config.ts">
+      <file name="config.ts" path="/Users/harshilvallabh/Wits/2025/Software Design/PROJECT/SPRINT 4/local-artisan-marketplace/client/src/config.ts">
         <metrics statements="1" coveredstatements="0" conditionals="0" coveredconditionals="0" methods="0" coveredmethods="0"/>
         <line num="1" count="0" type="stmt"/>
       </file>
-      <file name="main.tsx" path="C:\Users\lallo\Desktop\Computer Science - Third Year\My notes\Software Design\Sprint 3.6\local-artisan-marketplace\client\src\main.tsx">
+      <file name="main.tsx" path="/Users/harshilvallabh/Wits/2025/Software Design/PROJECT/SPRINT 4/local-artisan-marketplace/client/src/main.tsx">
         <metrics statements="1" coveredstatements="0" conditionals="0" coveredconditionals="0" methods="0" coveredmethods="0"/>
         <line num="8" count="0" type="stmt"/>
       </file>
     </package>
     <package name="src.Pages">
-      <metrics statements="424" coveredstatements="361" conditionals="136" coveredconditionals="98" methods="93" coveredmethods="70"/>
-      <file name="AddProductPage.tsx" path="C:\Users\lallo\Desktop\Computer Science - Third Year\My notes\Software Design\Sprint 3.6\local-artisan-marketplace\client\src\Pages\AddProductPage.tsx">
-        <metrics statements="60" coveredstatements="55" conditionals="26" coveredconditionals="19" methods="6" coveredmethods="6"/>
+      <metrics statements="452" coveredstatements="376" conditionals="140" coveredconditionals="79" methods="102" coveredmethods="75"/>
+      <file name="AddProductPage.tsx" path="/Users/harshilvallabh/Wits/2025/Software Design/PROJECT/SPRINT 4/local-artisan-marketplace/client/src/Pages/AddProductPage.tsx">
+        <metrics statements="61" coveredstatements="53" conditionals="26" coveredconditionals="16" methods="6" coveredmethods="5"/>
         <line num="1" count="1" type="stmt"/>
         <line num="2" count="1" type="stmt"/>
         <line num="4" count="1" type="stmt"/>
@@ -34,68 +34,89 @@
         <line num="12" count="1" type="stmt"/>
         <line num="13" count="1" type="stmt"/>
         <line num="14" count="1" type="stmt"/>
-        <line num="16" count="1" type="stmt"/>
-        <line num="17" count="44" type="stmt"/>
-        <line num="18" count="44" type="stmt"/>
-        <line num="19" count="44" type="stmt"/>
-        <line num="20" count="44" type="stmt"/>
-        <line num="21" count="44" type="stmt"/>
-        <line num="22" count="44" type="stmt"/>
-        <line num="23" count="44" type="stmt"/>
-        <line num="24" count="44" type="stmt"/>
-        <line num="25" count="44" type="stmt"/>
-        <line num="26" count="44" type="stmt"/>
-        <line num="27" count="44" type="stmt"/>
-        <line num="28" count="44" type="stmt"/>
-        <line num="30" count="44" type="stmt"/>
-        <line num="31" count="44" type="cond" truecount="1" falsecount="1"/>
-        <line num="33" count="44" type="stmt"/>
-        <line num="34" count="5" type="stmt"/>
-        <line num="36" count="5" type="cond" truecount="1" falsecount="0"/>
+        <line num="15" count="1" type="stmt"/>
+        <line num="17" count="1" type="stmt"/>
+        <line num="18" count="41" type="stmt"/>
+        <line num="19" count="41" type="stmt"/>
+        <line num="20" count="41" type="stmt"/>
+        <line num="21" count="41" type="stmt"/>
+        <line num="22" count="41" type="stmt"/>
+        <line num="23" count="41" type="stmt"/>
+        <line num="24" count="41" type="stmt"/>
+        <line num="25" count="41" type="stmt"/>
+        <line num="26" count="41" type="stmt"/>
+        <line num="27" count="41" type="stmt"/>
+        <line num="28" count="41" type="stmt"/>
+        <line num="29" count="41" type="stmt"/>
+        <line num="31" count="41" type="stmt"/>
+        <line num="32" count="41" type="cond" truecount="1" falsecount="1"/>
+        <line num="34" count="41" type="stmt"/>
+        <line num="35" count="5" type="stmt"/>
         <line num="37" count="5" type="cond" truecount="1" falsecount="0"/>
-        <line num="38" count="5" type="cond" truecount="3" falsecount="0"/>
-        <line num="39" count="5" type="cond" truecount="2" falsecount="1"/>
-        <line num="40" count="5" type="cond" truecount="1" falsecount="0"/>
+        <line num="38" count="5" type="cond" truecount="1" falsecount="0"/>
+        <line num="39" count="5" type="cond" truecount="3" falsecount="0"/>
+        <line num="40" count="5" type="cond" truecount="2" falsecount="1"/>
         <line num="41" count="5" type="cond" truecount="1" falsecount="0"/>
         <line num="42" count="5" type="cond" truecount="1" falsecount="0"/>
         <line num="43" count="5" type="cond" truecount="1" falsecount="0"/>
-        <line num="45" count="5" type="cond" truecount="1" falsecount="0"/>
-        <line num="46" count="2" type="stmt"/>
+        <line num="44" count="5" type="cond" truecount="1" falsecount="0"/>
+        <line num="46" count="5" type="cond" truecount="1" falsecount="0"/>
         <line num="47" count="2" type="stmt"/>
-        <line num="50" count="3" type="cond" truecount="0" falsecount="1"/>
-        <line num="51" count="0" type="stmt"/>
+        <line num="48" count="2" type="stmt"/>
+        <line num="51" count="3" type="cond" truecount="0" falsecount="1"/>
         <line num="52" count="0" type="stmt"/>
-        <line num="55" count="3" type="stmt"/>
-        <line num="70" count="3" type="stmt"/>
+        <line num="53" count="0" type="stmt"/>
+        <line num="56" count="3" type="stmt"/>
         <line num="71" count="3" type="stmt"/>
-        <line num="77" count="3" type="stmt"/>
-        <line num="78" count="3" type="cond" truecount="1" falsecount="1"/>
-        <line num="79" count="3" type="stmt"/>
-        <line num="80" count="3" type="stmt"/>
-        <line num="82" count="0" type="cond" truecount="0" falsecount="2"/>
-        <line num="85" count="0" type="stmt"/>
-        <line num="86" count="0" type="stmt"/>
-        <line num="90" count="44" type="stmt"/>
-        <line num="121" count="1" type="stmt"/>
-        <line num="163" count="1" type="stmt"/>
-        <line num="174" count="14" type="stmt"/>
-        <line num="177" count="1" type="stmt"/>
-        <line num="187" count="1" type="stmt"/>
+        <line num="72" count="3" type="stmt"/>
+        <line num="78" count="0" type="stmt"/>
+        <line num="79" count="0" type="cond" truecount="0" falsecount="2"/>
+        <line num="80" count="0" type="stmt"/>
+        <line num="81" count="0" type="stmt"/>
+        <line num="83" count="0" type="cond" truecount="0" falsecount="2"/>
+        <line num="86" count="3" type="stmt"/>
+        <line num="87" count="3" type="stmt"/>
+        <line num="91" count="41" type="stmt"/>
+        <line num="122" count="1" type="stmt"/>
+        <line num="164" count="0" type="stmt"/>
+        <line num="175" count="14" type="stmt"/>
+        <line num="178" count="1" type="stmt"/>
+        <line num="188" count="1" type="stmt"/>
       </file>
-      <file name="AdminDashboard.tsx" path="C:\Users\lallo\Desktop\Computer Science - Third Year\My notes\Software Design\Sprint 3.6\local-artisan-marketplace\client\src\Pages\AdminDashboard.tsx">
-        <metrics statements="10" coveredstatements="10" conditionals="6" coveredconditionals="4" methods="2" coveredmethods="2"/>
-        <line num="3" count="2" type="stmt"/>
+      <file name="AdminDashboard.tsx" path="/Users/harshilvallabh/Wits/2025/Software Design/PROJECT/SPRINT 4/local-artisan-marketplace/client/src/Pages/AdminDashboard.tsx">
+        <metrics statements="30" coveredstatements="29" conditionals="10" coveredconditionals="7" methods="11" coveredmethods="8"/>
+        <line num="1" count="2" type="stmt"/>
+        <line num="2" count="2" type="stmt"/>
         <line num="4" count="2" type="stmt"/>
         <line num="5" count="2" type="stmt"/>
         <line num="6" count="2" type="stmt"/>
         <line num="7" count="2" type="stmt"/>
-        <line num="9" count="2" type="stmt"/>
-        <line num="10" count="2" type="stmt"/>
-        <line num="11" count="6" type="stmt"/>
-        <line num="13" count="2" type="stmt"/>
-        <line num="73" count="2" type="stmt"/>
+        <line num="8" count="2" type="stmt"/>
+        <line num="15" count="2" type="stmt"/>
+        <line num="16" count="2" type="stmt"/>
+        <line num="17" count="6" type="stmt"/>
+        <line num="18" count="2" type="stmt"/>
+        <line num="19" count="2" type="stmt"/>
+        <line num="20" count="2" type="stmt"/>
+        <line num="27" count="2" type="stmt"/>
+        <line num="28" count="2" type="stmt"/>
+        <line num="29" count="2" type="stmt"/>
+        <line num="31" count="2" type="stmt"/>
+        <line num="32" count="6" type="stmt"/>
+        <line num="33" count="6" type="stmt"/>
+        <line num="34" count="2" type="stmt"/>
+        <line num="48" count="0" type="stmt"/>
+        <line num="51" count="2" type="stmt"/>
+        <line num="54" count="2" type="stmt"/>
+        <line num="55" count="2" type="stmt"/>
+        <line num="56" count="2" type="stmt"/>
+        <line num="57" count="2" type="cond" truecount="2" falsecount="0"/>
+        <line num="59" count="2" type="stmt"/>
+        <line num="60" count="4" type="stmt"/>
+        <line num="62" count="2" type="stmt"/>
+        <line num="123" count="2" type="stmt"/>
       </file>
-      <file name="BuyerOrders.tsx" path="C:\Users\lallo\Desktop\Computer Science - Third Year\My notes\Software Design\Sprint 3.6\local-artisan-marketplace\client\src\Pages\BuyerOrders.tsx">
+      <file name="BuyerOrders.tsx" path="/Users/harshilvallabh/Wits/2025/Software Design/PROJECT/SPRINT 4/local-artisan-marketplace/client/src/Pages/BuyerOrders.tsx">
         <metrics statements="5" coveredstatements="0" conditionals="0" coveredconditionals="0" methods="3" coveredmethods="0"/>
         <line num="6" count="0" type="stmt"/>
         <line num="25" count="0" type="stmt"/>
@@ -103,7 +124,7 @@
         <line num="60" count="0" type="stmt"/>
         <line num="78" count="0" type="stmt"/>
       </file>
-      <file name="Cart.tsx" path="C:\Users\lallo\Desktop\Computer Science - Third Year\My notes\Software Design\Sprint 3.6\local-artisan-marketplace\client\src\Pages\Cart.tsx">
+      <file name="Cart.tsx" path="/Users/harshilvallabh/Wits/2025/Software Design/PROJECT/SPRINT 4/local-artisan-marketplace/client/src/Pages/Cart.tsx">
         <metrics statements="11" coveredstatements="11" conditionals="0" coveredconditionals="0" methods="2" coveredmethods="2"/>
         <line num="1" count="1" type="stmt"/>
         <line num="2" count="1" type="stmt"/>
@@ -117,8 +138,8 @@
         <line num="15" count="11" type="stmt"/>
         <line num="48" count="1" type="stmt"/>
       </file>
-      <file name="EditProductPage.tsx" path="C:\Users\lallo\Desktop\Computer Science - Third Year\My notes\Software Design\Sprint 3.6\local-artisan-marketplace\client\src\Pages\EditProductPage.tsx">
-        <metrics statements="71" coveredstatements="66" conditionals="41" coveredconditionals="34" methods="8" coveredmethods="8"/>
+      <file name="EditProductPage.tsx" path="/Users/harshilvallabh/Wits/2025/Software Design/PROJECT/SPRINT 4/local-artisan-marketplace/client/src/Pages/EditProductPage.tsx">
+        <metrics statements="72" coveredstatements="57" conditionals="41" coveredconditionals="15" methods="8" coveredmethods="7"/>
         <line num="1" count="1" type="stmt"/>
         <line num="2" count="1" type="stmt"/>
         <line num="3" count="1" type="stmt"/>
@@ -132,66 +153,67 @@
         <line num="11" count="1" type="stmt"/>
         <line num="12" count="1" type="stmt"/>
         <line num="13" count="1" type="stmt"/>
-        <line num="15" count="1" type="stmt"/>
-        <line num="16" count="55" type="stmt"/>
-        <line num="18" count="55" type="stmt"/>
-        <line num="19" count="55" type="stmt"/>
-        <line num="20" count="55" type="stmt"/>
-        <line num="21" count="55" type="stmt"/>
-        <line num="22" count="55" type="stmt"/>
-        <line num="23" count="55" type="stmt"/>
-        <line num="24" count="55" type="stmt"/>
-        <line num="25" count="55" type="stmt"/>
-        <line num="26" count="55" type="stmt"/>
-        <line num="27" count="55" type="stmt"/>
-        <line num="28" count="55" type="stmt"/>
-        <line num="29" count="55" type="stmt"/>
-        <line num="31" count="55" type="stmt"/>
-        <line num="32" count="11" type="stmt"/>
+        <line num="14" count="1" type="stmt"/>
+        <line num="16" count="1" type="stmt"/>
+        <line num="17" count="41" type="stmt"/>
+        <line num="19" count="41" type="stmt"/>
+        <line num="20" count="41" type="stmt"/>
+        <line num="21" count="41" type="stmt"/>
+        <line num="22" count="41" type="stmt"/>
+        <line num="23" count="41" type="stmt"/>
+        <line num="24" count="41" type="stmt"/>
+        <line num="25" count="41" type="stmt"/>
+        <line num="26" count="41" type="stmt"/>
+        <line num="27" count="41" type="stmt"/>
+        <line num="28" count="41" type="stmt"/>
+        <line num="29" count="41" type="stmt"/>
+        <line num="30" count="41" type="stmt"/>
+        <line num="32" count="41" type="stmt"/>
         <line num="33" count="11" type="stmt"/>
         <line num="34" count="11" type="stmt"/>
         <line num="35" count="11" type="stmt"/>
-        <line num="36" count="11" type="cond" truecount="2" falsecount="0"/>
-        <line num="37" count="11" type="cond" truecount="2" falsecount="0"/>
-        <line num="38" count="11" type="cond" truecount="2" falsecount="0"/>
-        <line num="39" count="11" type="cond" truecount="1" falsecount="1"/>
-        <line num="40" count="11" type="cond" truecount="2" falsecount="0"/>
-        <line num="41" count="11" type="cond" truecount="2" falsecount="0"/>
-        <line num="42" count="11" type="cond" truecount="2" falsecount="0"/>
-        <line num="43" count="11" type="cond" truecount="2" falsecount="0"/>
-        <line num="44" count="11" type="cond" truecount="1" falsecount="1"/>
-        <line num="46" count="0" type="stmt"/>
-        <line num="49" count="11" type="stmt"/>
-        <line num="52" count="55" type="stmt"/>
-        <line num="53" count="5" type="stmt"/>
-        <line num="55" count="5" type="cond" truecount="1" falsecount="0"/>
+        <line num="36" count="0" type="stmt"/>
+        <line num="37" count="0" type="cond" truecount="0" falsecount="2"/>
+        <line num="38" count="0" type="cond" truecount="0" falsecount="2"/>
+        <line num="39" count="0" type="cond" truecount="0" falsecount="2"/>
+        <line num="40" count="0" type="cond" truecount="0" falsecount="2"/>
+        <line num="41" count="0" type="cond" truecount="0" falsecount="2"/>
+        <line num="42" count="0" type="cond" truecount="0" falsecount="2"/>
+        <line num="43" count="0" type="cond" truecount="0" falsecount="2"/>
+        <line num="44" count="0" type="cond" truecount="0" falsecount="2"/>
+        <line num="45" count="0" type="cond" truecount="0" falsecount="2"/>
+        <line num="47" count="11" type="stmt"/>
+        <line num="50" count="11" type="stmt"/>
+        <line num="53" count="41" type="stmt"/>
+        <line num="54" count="5" type="stmt"/>
         <line num="56" count="5" type="cond" truecount="1" falsecount="0"/>
-        <line num="57" count="5" type="cond" truecount="3" falsecount="0"/>
-        <line num="58" count="5" type="cond" truecount="2" falsecount="1"/>
-        <line num="59" count="5" type="cond" truecount="1" falsecount="0"/>
+        <line num="57" count="5" type="cond" truecount="1" falsecount="0"/>
+        <line num="58" count="5" type="cond" truecount="3" falsecount="0"/>
+        <line num="59" count="5" type="cond" truecount="2" falsecount="1"/>
         <line num="60" count="5" type="cond" truecount="1" falsecount="0"/>
         <line num="61" count="5" type="cond" truecount="1" falsecount="0"/>
         <line num="62" count="5" type="cond" truecount="1" falsecount="0"/>
-        <line num="64" count="5" type="cond" truecount="1" falsecount="0"/>
-        <line num="65" count="2" type="stmt"/>
+        <line num="63" count="5" type="cond" truecount="1" falsecount="0"/>
+        <line num="65" count="5" type="cond" truecount="1" falsecount="0"/>
         <line num="66" count="2" type="stmt"/>
-        <line num="69" count="3" type="stmt"/>
-        <line num="82" count="3" type="stmt"/>
+        <line num="67" count="2" type="stmt"/>
+        <line num="70" count="3" type="stmt"/>
         <line num="83" count="3" type="stmt"/>
-        <line num="89" count="3" type="cond" truecount="1" falsecount="1"/>
-        <line num="90" count="3" type="stmt"/>
-        <line num="92" count="0" type="stmt"/>
-        <line num="93" count="0" type="cond" truecount="0" falsecount="2"/>
-        <line num="96" count="0" type="stmt"/>
-        <line num="97" count="0" type="stmt"/>
-        <line num="101" count="55" type="stmt"/>
-        <line num="132" count="1" type="stmt"/>
-        <line num="153" count="1" type="stmt"/>
-        <line num="164" count="14" type="stmt"/>
-        <line num="167" count="1" type="stmt"/>
-        <line num="177" count="1" type="stmt"/>
+        <line num="84" count="3" type="stmt"/>
+        <line num="90" count="0" type="cond" truecount="0" falsecount="2"/>
+        <line num="91" count="0" type="stmt"/>
+        <line num="93" count="0" type="stmt"/>
+        <line num="94" count="0" type="cond" truecount="0" falsecount="2"/>
+        <line num="97" count="3" type="stmt"/>
+        <line num="98" count="3" type="stmt"/>
+        <line num="102" count="41" type="stmt"/>
+        <line num="134" count="1" type="stmt"/>
+        <line num="177" count="0" type="stmt"/>
+        <line num="188" count="14" type="stmt"/>
+        <line num="191" count="1" type="stmt"/>
+        <line num="201" count="1" type="stmt"/>
       </file>
-      <file name="Home.tsx" path="C:\Users\lallo\Desktop\Computer Science - Third Year\My notes\Software Design\Sprint 3.6\local-artisan-marketplace\client\src\Pages\Home.tsx">
+      <file name="Home.tsx" path="/Users/harshilvallabh/Wits/2025/Software Design/PROJECT/SPRINT 4/local-artisan-marketplace/client/src/Pages/Home.tsx">
         <metrics statements="14" coveredstatements="13" conditionals="0" coveredconditionals="0" methods="5" coveredmethods="4"/>
         <line num="1" count="2" type="stmt"/>
         <line num="2" count="2" type="stmt"/>
@@ -208,7 +230,7 @@
         <line num="36" count="2" type="stmt"/>
         <line num="61" count="2" type="stmt"/>
       </file>
-      <file name="LoginPage.tsx" path="C:\Users\lallo\Desktop\Computer Science - Third Year\My notes\Software Design\Sprint 3.6\local-artisan-marketplace\client\src\Pages\LoginPage.tsx">
+      <file name="LoginPage.tsx" path="/Users/harshilvallabh/Wits/2025/Software Design/PROJECT/SPRINT 4/local-artisan-marketplace/client/src/Pages/LoginPage.tsx">
         <metrics statements="16" coveredstatements="15" conditionals="6" coveredconditionals="6" methods="6" coveredmethods="5"/>
         <line num="1" count="3" type="stmt"/>
         <line num="2" count="3" type="stmt"/>
@@ -227,11 +249,11 @@
         <line num="40" count="0" type="stmt"/>
         <line num="49" count="1" type="stmt"/>
       </file>
-      <file name="PaymentPage.tsx" path="C:\Users\lallo\Desktop\Computer Science - Third Year\My notes\Software Design\Sprint 3.6\local-artisan-marketplace\client\src\Pages\PaymentPage.tsx">
+      <file name="PaymentPage.tsx" path="/Users/harshilvallabh/Wits/2025/Software Design/PROJECT/SPRINT 4/local-artisan-marketplace/client/src/Pages/PaymentPage.tsx">
         <metrics statements="1" coveredstatements="0" conditionals="0" coveredconditionals="0" methods="1" coveredmethods="0"/>
         <line num="12" count="0" type="stmt"/>
       </file>
-      <file name="ProductPage.tsx" path="C:\Users\lallo\Desktop\Computer Science - Third Year\My notes\Software Design\Sprint 3.6\local-artisan-marketplace\client\src\Pages\ProductPage.tsx">
+      <file name="ProductPage.tsx" path="/Users/harshilvallabh/Wits/2025/Software Design/PROJECT/SPRINT 4/local-artisan-marketplace/client/src/Pages/ProductPage.tsx">
         <metrics statements="26" coveredstatements="23" conditionals="5" coveredconditionals="3" methods="7" coveredmethods="4"/>
         <line num="1" count="1" type="stmt"/>
         <line num="2" count="1" type="stmt"/>
@@ -260,7 +282,7 @@
         <line num="107" count="0" type="stmt"/>
         <line num="113" count="1" type="stmt"/>
       </file>
-      <file name="Profile.tsx" path="C:\Users\lallo\Desktop\Computer Science - Third Year\My notes\Software Design\Sprint 3.6\local-artisan-marketplace\client\src\Pages\Profile.tsx">
+      <file name="Profile.tsx" path="/Users/harshilvallabh/Wits/2025/Software Design/PROJECT/SPRINT 4/local-artisan-marketplace/client/src/Pages/Profile.tsx">
         <metrics statements="48" coveredstatements="44" conditionals="18" coveredconditionals="15" methods="9" coveredmethods="7"/>
         <line num="1" count="1" type="stmt"/>
         <line num="2" count="1" type="stmt"/>
@@ -311,7 +333,7 @@
         <line num="100" count="1" type="stmt"/>
         <line num="125" count="1" type="stmt"/>
       </file>
-      <file name="QuestionsPage.tsx" path="C:\Users\lallo\Desktop\Computer Science - Third Year\My notes\Software Design\Sprint 3.6\local-artisan-marketplace\client\src\Pages\QuestionsPage.tsx">
+      <file name="QuestionsPage.tsx" path="/Users/harshilvallabh/Wits/2025/Software Design/PROJECT/SPRINT 4/local-artisan-marketplace/client/src/Pages/QuestionsPage.tsx">
         <metrics statements="39" coveredstatements="18" conditionals="9" coveredconditionals="2" methods="3" coveredmethods="1"/>
         <line num="2" count="1" type="stmt"/>
         <line num="3" count="1" type="stmt"/>
@@ -353,15 +375,21 @@
         <line num="83" count="0" type="stmt"/>
         <line num="93" count="1" type="stmt"/>
       </file>
-      <file name="Search.tsx" path="C:\Users\lallo\Desktop\Computer Science - Third Year\My notes\Software Design\Sprint 3.6\local-artisan-marketplace\client\src\Pages\Search.tsx">
+      <file name="Search.tsx" path="/Users/harshilvallabh/Wits/2025/Software Design/PROJECT/SPRINT 4/local-artisan-marketplace/client/src/Pages/Search.tsx">
         <metrics statements="1" coveredstatements="0" conditionals="0" coveredconditionals="0" methods="1" coveredmethods="0"/>
         <line num="2" count="0" type="stmt"/>
       </file>
-      <file name="SearchPage.tsx" path="C:\Users\lallo\Desktop\Computer Science - Third Year\My notes\Software Design\Sprint 3.6\local-artisan-marketplace\client\src\Pages\SearchPage.tsx">
-        <metrics statements="1" coveredstatements="0" conditionals="0" coveredconditionals="0" methods="1" coveredmethods="0"/>
-        <line num="8" count="0" type="stmt"/>
+      <file name="SearchPage.tsx" path="/Users/harshilvallabh/Wits/2025/Software Design/PROJECT/SPRINT 4/local-artisan-marketplace/client/src/Pages/SearchPage.tsx">
+        <metrics statements="7" coveredstatements="7" conditionals="0" coveredconditionals="0" methods="1" coveredmethods="1"/>
+        <line num="1" count="1" type="stmt"/>
+        <line num="2" count="1" type="stmt"/>
+        <line num="3" count="1" type="stmt"/>
+        <line num="4" count="1" type="stmt"/>
+        <line num="5" count="1" type="stmt"/>
+        <line num="8" count="10" type="stmt"/>
+        <line num="21" count="1" type="stmt"/>
       </file>
-      <file name="SellerHome.tsx" path="C:\Users\lallo\Desktop\Computer Science - Third Year\My notes\Software Design\Sprint 3.6\local-artisan-marketplace\client\src\Pages\SellerHome.tsx">
+      <file name="SellerHome.tsx" path="/Users/harshilvallabh/Wits/2025/Software Design/PROJECT/SPRINT 4/local-artisan-marketplace/client/src/Pages/SellerHome.tsx">
         <metrics statements="30" coveredstatements="30" conditionals="9" coveredconditionals="7" methods="7" coveredmethods="7"/>
         <line num="1" count="1" type="stmt"/>
         <line num="2" count="1" type="stmt"/>
@@ -394,21 +422,21 @@
         <line num="77" count="12" type="stmt"/>
         <line num="85" count="1" type="stmt"/>
       </file>
-      <file name="SellerOrdersPage.tsx" path="C:\Users\lallo\Desktop\Computer Science - Third Year\My notes\Software Design\Sprint 3.6\local-artisan-marketplace\client\src\Pages\SellerOrdersPage.tsx">
+      <file name="SellerOrdersPage.tsx" path="/Users/harshilvallabh/Wits/2025/Software Design/PROJECT/SPRINT 4/local-artisan-marketplace/client/src/Pages/SellerOrdersPage.tsx">
         <metrics statements="2" coveredstatements="0" conditionals="0" coveredconditionals="0" methods="1" coveredmethods="0"/>
         <line num="5" count="0" type="stmt"/>
         <line num="6" count="0" type="stmt"/>
       </file>
-      <file name="SellerSignup.tsx" path="C:\Users\lallo\Desktop\Computer Science - Third Year\My notes\Software Design\Sprint 3.6\local-artisan-marketplace\client\src\Pages\SellerSignup.tsx">
+      <file name="SellerSignup.tsx" path="/Users/harshilvallabh/Wits/2025/Software Design/PROJECT/SPRINT 4/local-artisan-marketplace/client/src/Pages/SellerSignup.tsx">
         <metrics statements="1" coveredstatements="0" conditionals="0" coveredconditionals="0" methods="1" coveredmethods="0"/>
         <line num="5" count="0" type="stmt"/>
       </file>
-      <file name="SellerStatsPage.tsx" path="C:\Users\lallo\Desktop\Computer Science - Third Year\My notes\Software Design\Sprint 3.6\local-artisan-marketplace\client\src\Pages\SellerStatsPage.tsx">
+      <file name="SellerStatsPage.tsx" path="/Users/harshilvallabh/Wits/2025/Software Design/PROJECT/SPRINT 4/local-artisan-marketplace/client/src/Pages/SellerStatsPage.tsx">
         <metrics statements="2" coveredstatements="0" conditionals="0" coveredconditionals="0" methods="1" coveredmethods="0"/>
         <line num="7" count="0" type="stmt"/>
         <line num="8" count="0" type="stmt"/>
       </file>
-      <file name="SellerVerification.tsx" path="C:\Users\lallo\Desktop\Computer Science - Third Year\My notes\Software Design\Sprint 3.6\local-artisan-marketplace\client\src\Pages\SellerVerification.tsx">
+      <file name="SellerVerification.tsx" path="/Users/harshilvallabh/Wits/2025/Software Design/PROJECT/SPRINT 4/local-artisan-marketplace/client/src/Pages/SellerVerification.tsx">
         <metrics statements="38" coveredstatements="38" conditionals="4" coveredconditionals="3" methods="13" coveredmethods="13"/>
         <line num="1" count="1" type="stmt"/>
         <line num="2" count="1" type="stmt"/>
@@ -449,7 +477,7 @@
         <line num="84" count="1" type="stmt"/>
         <line num="93" count="1" type="stmt"/>
       </file>
-      <file name="ShopFront.tsx" path="C:\Users\lallo\Desktop\Computer Science - Third Year\My notes\Software Design\Sprint 3.6\local-artisan-marketplace\client\src\Pages\ShopFront.tsx">
+      <file name="ShopFront.tsx" path="/Users/harshilvallabh/Wits/2025/Software Design/PROJECT/SPRINT 4/local-artisan-marketplace/client/src/Pages/ShopFront.tsx">
         <metrics statements="26" coveredstatements="25" conditionals="6" coveredconditionals="5" methods="10" coveredmethods="9"/>
         <line num="1" count="1" type="stmt"/>
         <line num="2" count="1" type="stmt"/>
@@ -478,7 +506,7 @@
         <line num="79" count="0" type="stmt"/>
         <line num="85" count="1" type="stmt"/>
       </file>
-      <file name="SignUpPage.tsx" path="C:\Users\lallo\Desktop\Computer Science - Third Year\My notes\Software Design\Sprint 3.6\local-artisan-marketplace\client\src\Pages\SignUpPage.tsx">
+      <file name="SignUpPage.tsx" path="/Users/harshilvallabh/Wits/2025/Software Design/PROJECT/SPRINT 4/local-artisan-marketplace/client/src/Pages/SignUpPage.tsx">
         <metrics statements="7" coveredstatements="7" conditionals="0" coveredconditionals="0" methods="1" coveredmethods="1"/>
         <line num="2" count="3" type="stmt"/>
         <line num="3" count="3" type="stmt"/>
@@ -488,7 +516,7 @@
         <line num="8" count="3" type="stmt"/>
         <line num="9" count="5" type="stmt"/>
       </file>
-      <file name="UserReports.tsx" path="C:\Users\lallo\Desktop\Computer Science - Third Year\My notes\Software Design\Sprint 3.6\local-artisan-marketplace\client\src\Pages\UserReports.tsx">
+      <file name="UserReports.tsx" path="/Users/harshilvallabh/Wits/2025/Software Design/PROJECT/SPRINT 4/local-artisan-marketplace/client/src/Pages/UserReports.tsx">
         <metrics statements="9" coveredstatements="0" conditionals="6" coveredconditionals="0" methods="4" coveredmethods="0"/>
         <line num="8" count="0" type="stmt"/>
         <line num="31" count="0" type="stmt"/>
@@ -500,7 +528,7 @@
         <line num="40" count="0" type="stmt"/>
         <line num="80" count="0" type="stmt"/>
       </file>
-      <file name="WelcomePage.tsx" path="C:\Users\lallo\Desktop\Computer Science - Third Year\My notes\Software Design\Sprint 3.6\local-artisan-marketplace\client\src\Pages\WelcomePage.tsx">
+      <file name="WelcomePage.tsx" path="/Users/harshilvallabh/Wits/2025/Software Design/PROJECT/SPRINT 4/local-artisan-marketplace/client/src/Pages/WelcomePage.tsx">
         <metrics statements="6" coveredstatements="6" conditionals="0" coveredconditionals="0" methods="1" coveredmethods="1"/>
         <line num="1" count="1" type="stmt"/>
         <line num="2" count="1" type="stmt"/>
@@ -512,9 +540,9 @@
     </package>
     <package name="src.Users">
       <metrics statements="41" coveredstatements="37" conditionals="4" coveredconditionals="2" methods="6" coveredmethods="5"/>
-      <file name="User.ts" path="C:\Users\lallo\Desktop\Computer Science - Third Year\My notes\Software Design\Sprint 3.6\local-artisan-marketplace\client\src\Users\User.ts">
+      <file name="User.ts" path="/Users/harshilvallabh/Wits/2025/Software Design/PROJECT/SPRINT 4/local-artisan-marketplace/client/src/Users/User.ts">
         <metrics statements="16" coveredstatements="15" conditionals="0" coveredconditionals="0" methods="2" coveredmethods="1"/>
-        <line num="1" count="7" type="stmt"/>
+        <line num="1" count="8" type="stmt"/>
         <line num="2" count="4" type="stmt"/>
         <line num="3" count="4" type="stmt"/>
         <line num="4" count="4" type="stmt"/>
@@ -531,29 +559,29 @@
         <line num="33" count="4" type="stmt"/>
         <line num="37" count="0" type="stmt"/>
       </file>
-      <file name="UserContext.tsx" path="C:\Users\lallo\Desktop\Computer Science - Third Year\My notes\Software Design\Sprint 3.6\local-artisan-marketplace\client\src\Users\UserContext.tsx">
+      <file name="UserContext.tsx" path="/Users/harshilvallabh/Wits/2025/Software Design/PROJECT/SPRINT 4/local-artisan-marketplace/client/src/Users/UserContext.tsx">
         <metrics statements="25" coveredstatements="22" conditionals="4" coveredconditionals="2" methods="4" coveredmethods="4"/>
-        <line num="1" count="7" type="stmt"/>
-        <line num="2" count="7" type="stmt"/>
-        <line num="11" count="7" type="stmt"/>
-        <line num="13" count="7" type="stmt"/>
-        <line num="16" count="28" type="stmt"/>
-        <line num="17" count="28" type="stmt"/>
-        <line num="20" count="28" type="stmt"/>
-        <line num="21" count="24" type="stmt"/>
-        <line num="22" count="24" type="cond" truecount="1" falsecount="0"/>
+        <line num="1" count="8" type="stmt"/>
+        <line num="2" count="8" type="stmt"/>
+        <line num="11" count="8" type="stmt"/>
+        <line num="13" count="8" type="stmt"/>
+        <line num="16" count="32" type="stmt"/>
+        <line num="17" count="32" type="stmt"/>
+        <line num="20" count="32" type="stmt"/>
+        <line num="21" count="28" type="stmt"/>
+        <line num="22" count="28" type="cond" truecount="1" falsecount="0"/>
         <line num="23" count="3" type="stmt"/>
         <line num="24" count="3" type="stmt"/>
         <line num="25" count="3" type="stmt"/>
-        <line num="29" count="28" type="stmt"/>
+        <line num="29" count="32" type="stmt"/>
         <line num="30" count="1" type="cond" truecount="1" falsecount="1"/>
         <line num="31" count="1" type="stmt"/>
         <line num="32" count="1" type="stmt"/>
         <line num="34" count="0" type="stmt"/>
         <line num="35" count="0" type="stmt"/>
         <line num="37" count="1" type="stmt"/>
-        <line num="40" count="28" type="stmt"/>
-        <line num="47" count="7" type="stmt"/>
+        <line num="40" count="32" type="stmt"/>
+        <line num="47" count="8" type="stmt"/>
         <line num="48" count="26" type="stmt"/>
         <line num="49" count="26" type="cond" truecount="0" falsecount="1"/>
         <line num="50" count="0" type="stmt"/>
@@ -562,156 +590,188 @@
     </package>
     <package name="src.components.AddProductPageComp">
       <metrics statements="93" coveredstatements="91" conditionals="21" coveredconditionals="18" methods="32" coveredmethods="30"/>
-      <file name="AddTagsButton.tsx" path="C:\Users\lallo\Desktop\Computer Science - Third Year\My notes\Software Design\Sprint 3.6\local-artisan-marketplace\client\src\components\AddProductPageComp\AddTagsButton.tsx">
+      <file name="AddTagsButton.tsx" path="/Users/harshilvallabh/Wits/2025/Software Design/PROJECT/SPRINT 4/local-artisan-marketplace/client/src/components/AddProductPageComp/AddTagsButton.tsx">
         <metrics statements="22" coveredstatements="22" conditionals="6" coveredconditionals="6" methods="9" coveredmethods="9"/>
         <line num="1" count="1" type="stmt"/>
         <line num="2" count="1" type="stmt"/>
         <line num="4" count="1" type="stmt"/>
-        <line num="5" count="53" type="stmt"/>
-        <line num="6" count="53" type="stmt"/>
-        <line num="7" count="53" type="stmt"/>
-        <line num="9" count="53" type="stmt"/>
+        <line num="5" count="50" type="stmt"/>
+        <line num="6" count="50" type="stmt"/>
+        <line num="7" count="50" type="stmt"/>
+        <line num="9" count="50" type="stmt"/>
         <line num="10" count="2" type="stmt"/>
         <line num="11" count="2" type="cond" truecount="3" falsecount="0"/>
         <line num="12" count="2" type="stmt"/>
         <line num="13" count="2" type="stmt"/>
-        <line num="17" count="53" type="stmt"/>
+        <line num="17" count="50" type="stmt"/>
         <line num="18" count="1" type="stmt"/>
-        <line num="21" count="53" type="stmt"/>
+        <line num="21" count="50" type="stmt"/>
         <line num="22" count="1" type="cond" truecount="1" falsecount="0"/>
         <line num="23" count="1" type="stmt"/>
-        <line num="26" count="53" type="stmt"/>
+        <line num="26" count="50" type="stmt"/>
         <line num="28" count="4" type="stmt"/>
         <line num="42" count="2" type="stmt"/>
         <line num="51" count="2" type="stmt"/>
         <line num="56" count="1" type="stmt"/>
         <line num="75" count="1" type="stmt"/>
       </file>
-      <file name="DeliveryOptionSelector.tsx" path="C:\Users\lallo\Desktop\Computer Science - Third Year\My notes\Software Design\Sprint 3.6\local-artisan-marketplace\client\src\components\AddProductPageComp\DeliveryOptionSelector.tsx">
+      <file name="DeliveryOptionSelector.tsx" path="/Users/harshilvallabh/Wits/2025/Software Design/PROJECT/SPRINT 4/local-artisan-marketplace/client/src/components/AddProductPageComp/DeliveryOptionSelector.tsx">
         <metrics statements="7" coveredstatements="5" conditionals="0" coveredconditionals="0" methods="3" coveredmethods="1"/>
         <line num="1" count="1" type="stmt"/>
         <line num="2" count="1" type="stmt"/>
         <line num="9" count="1" type="stmt"/>
-        <line num="10" count="44" type="stmt"/>
+        <line num="10" count="41" type="stmt"/>
         <line num="19" count="0" type="stmt"/>
         <line num="29" count="0" type="stmt"/>
         <line num="37" count="1" type="stmt"/>
       </file>
-      <file name="ImageAdder.tsx" path="C:\Users\lallo\Desktop\Computer Science - Third Year\My notes\Software Design\Sprint 3.6\local-artisan-marketplace\client\src\components\AddProductPageComp\ImageAdder.tsx">
+      <file name="ImageAdder.tsx" path="/Users/harshilvallabh/Wits/2025/Software Design/PROJECT/SPRINT 4/local-artisan-marketplace/client/src/components/AddProductPageComp/ImageAdder.tsx">
         <metrics statements="5" coveredstatements="5" conditionals="0" coveredconditionals="0" methods="1" coveredmethods="1"/>
         <line num="1" count="1" type="stmt"/>
         <line num="2" count="1" type="stmt"/>
         <line num="4" count="1" type="stmt"/>
-        <line num="5" count="44" type="stmt"/>
+        <line num="5" count="41" type="stmt"/>
         <line num="13" count="1" type="stmt"/>
       </file>
-      <file name="PriceInput.tsx" path="C:\Users\lallo\Desktop\Computer Science - Third Year\My notes\Software Design\Sprint 3.6\local-artisan-marketplace\client\src\components\AddProductPageComp\PriceInput.tsx">
+      <file name="PriceInput.tsx" path="/Users/harshilvallabh/Wits/2025/Software Design/PROJECT/SPRINT 4/local-artisan-marketplace/client/src/components/AddProductPageComp/PriceInput.tsx">
         <metrics statements="14" coveredstatements="14" conditionals="8" coveredconditionals="7" methods="3" coveredmethods="3"/>
         <line num="1" count="1" type="stmt"/>
         <line num="2" count="1" type="stmt"/>
         <line num="9" count="1" type="stmt"/>
-        <line num="10" count="47" type="stmt"/>
-        <line num="12" count="47" type="stmt"/>
+        <line num="10" count="44" type="stmt"/>
+        <line num="12" count="44" type="stmt"/>
         <line num="13" count="14" type="cond" truecount="3" falsecount="0"/>
         <line num="14" count="3" type="stmt"/>
-        <line num="17" count="47" type="stmt"/>
+        <line num="17" count="44" type="stmt"/>
         <line num="18" count="3" type="stmt"/>
         <line num="19" count="3" type="cond" truecount="1" falsecount="0"/>
         <line num="20" count="3" type="stmt"/>
         <line num="21" count="3" type="cond" truecount="3" falsecount="1"/>
-        <line num="25" count="47" type="stmt"/>
+        <line num="25" count="44" type="stmt"/>
         <line num="40" count="1" type="stmt"/>
       </file>
-      <file name="ProductDetailsInput.tsx" path="C:\Users\lallo\Desktop\Computer Science - Third Year\My notes\Software Design\Sprint 3.6\local-artisan-marketplace\client\src\components\AddProductPageComp\ProductDetailsInput.tsx">
+      <file name="ProductDetailsInput.tsx" path="/Users/harshilvallabh/Wits/2025/Software Design/PROJECT/SPRINT 4/local-artisan-marketplace/client/src/components/AddProductPageComp/ProductDetailsInput.tsx">
         <metrics statements="6" coveredstatements="6" conditionals="0" coveredconditionals="0" methods="2" coveredmethods="2"/>
         <line num="1" count="1" type="stmt"/>
         <line num="2" count="1" type="stmt"/>
         <line num="9" count="1" type="stmt"/>
-        <line num="10" count="44" type="stmt"/>
+        <line num="10" count="41" type="stmt"/>
         <line num="20" count="3" type="stmt"/>
         <line num="26" count="1" type="stmt"/>
       </file>
-      <file name="ProductNameInput.tsx" path="C:\Users\lallo\Desktop\Computer Science - Third Year\My notes\Software Design\Sprint 3.6\local-artisan-marketplace\client\src\components\AddProductPageComp\ProductNameInput.tsx">
+      <file name="ProductNameInput.tsx" path="/Users/harshilvallabh/Wits/2025/Software Design/PROJECT/SPRINT 4/local-artisan-marketplace/client/src/components/AddProductPageComp/ProductNameInput.tsx">
         <metrics statements="6" coveredstatements="6" conditionals="0" coveredconditionals="0" methods="2" coveredmethods="2"/>
         <line num="1" count="1" type="stmt"/>
         <line num="2" count="1" type="stmt"/>
         <line num="9" count="1" type="stmt"/>
-        <line num="10" count="44" type="stmt"/>
+        <line num="10" count="41" type="stmt"/>
         <line num="16" count="3" type="stmt"/>
         <line num="22" count="1" type="stmt"/>
       </file>
-      <file name="SizeAndDimensions.tsx" path="C:\Users\lallo\Desktop\Computer Science - Third Year\My notes\Software Design\Sprint 3.6\local-artisan-marketplace\client\src\components\AddProductPageComp\SizeAndDimensions.tsx">
+      <file name="SizeAndDimensions.tsx" path="/Users/harshilvallabh/Wits/2025/Software Design/PROJECT/SPRINT 4/local-artisan-marketplace/client/src/components/AddProductPageComp/SizeAndDimensions.tsx">
         <metrics statements="11" coveredstatements="11" conditionals="1" coveredconditionals="1" methods="5" coveredmethods="5"/>
         <line num="1" count="1" type="stmt"/>
         <line num="2" count="1" type="stmt"/>
         <line num="13" count="1" type="stmt"/>
-        <line num="21" count="44" type="stmt"/>
+        <line num="21" count="41" type="stmt"/>
         <line num="25" count="9" type="cond" truecount="1" falsecount="0"/>
         <line num="26" count="9" type="stmt"/>
-        <line num="30" count="44" type="stmt"/>
+        <line num="30" count="41" type="stmt"/>
         <line num="45" count="3" type="stmt"/>
         <line num="59" count="3" type="stmt"/>
         <line num="73" count="3" type="stmt"/>
         <line num="80" count="1" type="stmt"/>
       </file>
-      <file name="StockInput.tsx" path="C:\Users\lallo\Desktop\Computer Science - Third Year\My notes\Software Design\Sprint 3.6\local-artisan-marketplace\client\src\components\AddProductPageComp\StockInput.tsx">
+      <file name="StockInput.tsx" path="/Users/harshilvallabh/Wits/2025/Software Design/PROJECT/SPRINT 4/local-artisan-marketplace/client/src/components/AddProductPageComp/StockInput.tsx">
         <metrics statements="16" coveredstatements="16" conditionals="6" coveredconditionals="4" methods="5" coveredmethods="5"/>
         <line num="1" count="1" type="stmt"/>
         <line num="2" count="1" type="stmt"/>
         <line num="9" count="1" type="stmt"/>
-        <line num="10" count="60" type="stmt"/>
-        <line num="12" count="60" type="stmt"/>
+        <line num="10" count="57" type="stmt"/>
+        <line num="12" count="57" type="stmt"/>
         <line num="13" count="16" type="cond" truecount="2" falsecount="1"/>
         <line num="14" count="16" type="stmt"/>
-        <line num="17" count="60" type="stmt"/>
+        <line num="17" count="57" type="stmt"/>
         <line num="18" count="3" type="stmt"/>
         <line num="19" count="3" type="cond" truecount="1" falsecount="0"/>
         <line num="20" count="3" type="stmt"/>
         <line num="21" count="3" type="cond" truecount="1" falsecount="1"/>
-        <line num="25" count="60" type="stmt"/>
+        <line num="25" count="57" type="stmt"/>
         <line num="32" count="1" type="stmt"/>
         <line num="48" count="1" type="stmt"/>
         <line num="57" count="1" type="stmt"/>
       </file>
-      <file name="TypeOfArtSelector.tsx" path="C:\Users\lallo\Desktop\Computer Science - Third Year\My notes\Software Design\Sprint 3.6\local-artisan-marketplace\client\src\components\AddProductPageComp\TypeOfArtSelector.tsx">
+      <file name="TypeOfArtSelector.tsx" path="/Users/harshilvallabh/Wits/2025/Software Design/PROJECT/SPRINT 4/local-artisan-marketplace/client/src/components/AddProductPageComp/TypeOfArtSelector.tsx">
         <metrics statements="6" coveredstatements="6" conditionals="0" coveredconditionals="0" methods="2" coveredmethods="2"/>
         <line num="1" count="1" type="stmt"/>
         <line num="2" count="1" type="stmt"/>
         <line num="9" count="1" type="stmt"/>
-        <line num="10" count="44" type="stmt"/>
+        <line num="10" count="41" type="stmt"/>
         <line num="19" count="3" type="stmt"/>
         <line num="43" count="1" type="stmt"/>
       </file>
     </package>
     <package name="src.components.AdminDashboard">
-      <metrics statements="10" coveredstatements="10" conditionals="0" coveredconditionals="0" methods="2" coveredmethods="2"/>
-      <file name="GraphCard.tsx" path="C:\Users\lallo\Desktop\Computer Science - Third Year\My notes\Software Design\Sprint 3.6\local-artisan-marketplace\client\src\components\AdminDashboard\GraphCard.tsx">
-        <metrics statements="5" coveredstatements="5" conditionals="0" coveredconditionals="0" methods="1" coveredmethods="1"/>
+      <metrics statements="39" coveredstatements="19" conditionals="1" coveredconditionals="0" methods="6" coveredmethods="2"/>
+      <file name="Export.tsx" path="/Users/harshilvallabh/Wits/2025/Software Design/PROJECT/SPRINT 4/local-artisan-marketplace/client/src/components/AdminDashboard/Export.tsx">
+        <metrics statements="25" coveredstatements="5" conditionals="1" coveredconditionals="0" methods="4" coveredmethods="0"/>
         <line num="1" count="2" type="stmt"/>
         <line num="2" count="2" type="stmt"/>
-        <line num="4" count="2" type="stmt"/>
-        <line num="5" count="2" type="stmt"/>
-        <line num="13" count="2" type="stmt"/>
+        <line num="3" count="2" type="stmt"/>
+        <line num="11" count="2" type="stmt"/>
+        <line num="12" count="0" type="stmt"/>
+        <line num="13" count="0" type="stmt"/>
+        <line num="15" count="0" type="stmt"/>
+        <line num="16" count="0" type="stmt"/>
+        <line num="17" count="0" type="stmt"/>
+        <line num="18" count="0" type="stmt"/>
+        <line num="19" count="0" type="stmt"/>
+        <line num="20" count="0" type="stmt"/>
+        <line num="21" count="0" type="stmt"/>
+        <line num="22" count="0" type="stmt"/>
+        <line num="23" count="0" type="stmt"/>
+        <line num="24" count="0" type="stmt"/>
+        <line num="27" count="0" type="stmt"/>
+        <line num="28" count="0" type="cond" truecount="0" falsecount="1"/>
+        <line num="29" count="0" type="stmt"/>
+        <line num="30" count="0" type="stmt"/>
+        <line num="31" count="0" type="stmt"/>
+        <line num="36" count="0" type="stmt"/>
+        <line num="37" count="0" type="stmt"/>
+        <line num="40" count="0" type="stmt"/>
+        <line num="48" count="2" type="stmt"/>
       </file>
-      <file name="StatsCard.tsx" path="C:\Users\lallo\Desktop\Computer Science - Third Year\My notes\Software Design\Sprint 3.6\local-artisan-marketplace\client\src\components\AdminDashboard\StatsCard.tsx">
+      <file name="GraphCard.tsx" path="/Users/harshilvallabh/Wits/2025/Software Design/PROJECT/SPRINT 4/local-artisan-marketplace/client/src/components/AdminDashboard/GraphCard.tsx">
+        <metrics statements="9" coveredstatements="9" conditionals="0" coveredconditionals="0" methods="1" coveredmethods="1"/>
+        <line num="1" count="2" type="stmt"/>
+        <line num="2" count="2" type="stmt"/>
+        <line num="13" count="2" type="stmt"/>
+        <line num="15" count="2" type="stmt"/>
+        <line num="25" count="2" type="stmt"/>
+        <line num="41" count="2" type="stmt"/>
+        <line num="43" count="2" type="stmt"/>
+        <line num="48" count="2" type="stmt"/>
+        <line num="50" count="2" type="stmt"/>
+      </file>
+      <file name="StatsCard.tsx" path="/Users/harshilvallabh/Wits/2025/Software Design/PROJECT/SPRINT 4/local-artisan-marketplace/client/src/components/AdminDashboard/StatsCard.tsx">
         <metrics statements="5" coveredstatements="5" conditionals="0" coveredconditionals="0" methods="1" coveredmethods="1"/>
         <line num="1" count="2" type="stmt"/>
         <line num="2" count="2" type="stmt"/>
         <line num="9" count="2" type="stmt"/>
-        <line num="10" count="6" type="stmt"/>
+        <line num="10" count="4" type="stmt"/>
         <line num="18" count="2" type="stmt"/>
       </file>
     </package>
     <package name="src.components.BuyerOrdersComp">
       <metrics statements="1" coveredstatements="0" conditionals="4" coveredconditionals="0" methods="1" coveredmethods="0"/>
-      <file name="OrderCard.tsx" path="C:\Users\lallo\Desktop\Computer Science - Third Year\My notes\Software Design\Sprint 3.6\local-artisan-marketplace\client\src\components\BuyerOrdersComp\OrderCard.tsx">
+      <file name="OrderCard.tsx" path="/Users/harshilvallabh/Wits/2025/Software Design/PROJECT/SPRINT 4/local-artisan-marketplace/client/src/components/BuyerOrdersComp/OrderCard.tsx">
         <metrics statements="1" coveredstatements="0" conditionals="4" coveredconditionals="0" methods="1" coveredmethods="0"/>
         <line num="14" count="0" type="stmt"/>
       </file>
     </package>
     <package name="src.components.CartPageComp">
       <metrics statements="62" coveredstatements="60" conditionals="8" coveredconditionals="4" methods="22" coveredmethods="20"/>
-      <file name="CartItemsList.tsx" path="C:\Users\lallo\Desktop\Computer Science - Third Year\My notes\Software Design\Sprint 3.6\local-artisan-marketplace\client\src\components\CartPageComp\CartItemsList.tsx">
+      <file name="CartItemsList.tsx" path="/Users/harshilvallabh/Wits/2025/Software Design/PROJECT/SPRINT 4/local-artisan-marketplace/client/src/components/CartPageComp/CartItemsList.tsx">
         <metrics statements="50" coveredstatements="48" conditionals="8" coveredconditionals="4" methods="18" coveredmethods="16"/>
         <line num="1" count="1" type="stmt"/>
         <line num="2" count="1" type="stmt"/>
@@ -764,20 +824,20 @@
         <line num="138" count="2" type="stmt"/>
         <line num="149" count="1" type="stmt"/>
       </file>
-      <file name="RecommendationScroller.tsx" path="C:\Users\lallo\Desktop\Computer Science - Third Year\My notes\Software Design\Sprint 3.6\local-artisan-marketplace\client\src\components\CartPageComp\RecommendationScroller.tsx">
+      <file name="RecommendationScroller.tsx" path="/Users/harshilvallabh/Wits/2025/Software Design/PROJECT/SPRINT 4/local-artisan-marketplace/client/src/components/CartPageComp/RecommendationScroller.tsx">
         <metrics statements="4" coveredstatements="4" conditionals="0" coveredconditionals="0" methods="2" coveredmethods="2"/>
         <line num="1" count="1" type="stmt"/>
         <line num="4" count="11" type="stmt"/>
         <line num="7" count="99" type="stmt"/>
         <line num="22" count="1" type="stmt"/>
       </file>
-      <file name="SectionHeading.tsx" path="C:\Users\lallo\Desktop\Computer Science - Third Year\My notes\Software Design\Sprint 3.6\local-artisan-marketplace\client\src\components\CartPageComp\SectionHeading.tsx">
+      <file name="SectionHeading.tsx" path="/Users/harshilvallabh/Wits/2025/Software Design/PROJECT/SPRINT 4/local-artisan-marketplace/client/src/components/CartPageComp/SectionHeading.tsx">
         <metrics statements="3" coveredstatements="3" conditionals="0" coveredconditionals="0" methods="1" coveredmethods="1"/>
         <line num="1" count="1" type="stmt"/>
         <line num="4" count="11" type="stmt"/>
         <line num="15" count="1" type="stmt"/>
       </file>
-      <file name="YouMayAlsoLike.tsx" path="C:\Users\lallo\Desktop\Computer Science - Third Year\My notes\Software Design\Sprint 3.6\local-artisan-marketplace\client\src\components\CartPageComp\YouMayAlsoLike.tsx">
+      <file name="YouMayAlsoLike.tsx" path="/Users/harshilvallabh/Wits/2025/Software Design/PROJECT/SPRINT 4/local-artisan-marketplace/client/src/components/CartPageComp/YouMayAlsoLike.tsx">
         <metrics statements="5" coveredstatements="5" conditionals="0" coveredconditionals="0" methods="1" coveredmethods="1"/>
         <line num="1" count="1" type="stmt"/>
         <line num="2" count="1" type="stmt"/>
@@ -788,135 +848,135 @@
     </package>
     <package name="src.components.EditProductPageComp">
       <metrics statements="90" coveredstatements="88" conditionals="20" coveredconditionals="17" methods="31" coveredmethods="29"/>
-      <file name="DeliveryOptionSelector.tsx" path="C:\Users\lallo\Desktop\Computer Science - Third Year\My notes\Software Design\Sprint 3.6\local-artisan-marketplace\client\src\components\EditProductPageComp\DeliveryOptionSelector.tsx">
+      <file name="DeliveryOptionSelector.tsx" path="/Users/harshilvallabh/Wits/2025/Software Design/PROJECT/SPRINT 4/local-artisan-marketplace/client/src/components/EditProductPageComp/DeliveryOptionSelector.tsx">
         <metrics statements="7" coveredstatements="5" conditionals="0" coveredconditionals="0" methods="3" coveredmethods="1"/>
         <line num="1" count="1" type="stmt"/>
         <line num="2" count="1" type="stmt"/>
         <line num="9" count="1" type="stmt"/>
-        <line num="10" count="55" type="stmt"/>
+        <line num="10" count="41" type="stmt"/>
         <line num="18" count="0" type="stmt"/>
         <line num="27" count="0" type="stmt"/>
         <line num="35" count="1" type="stmt"/>
       </file>
-      <file name="EditTagsButton.tsx" path="C:\Users\lallo\Desktop\Computer Science - Third Year\My notes\Software Design\Sprint 3.6\local-artisan-marketplace\client\src\components\EditProductPageComp\EditTagsButton.tsx">
+      <file name="EditTagsButton.tsx" path="/Users/harshilvallabh/Wits/2025/Software Design/PROJECT/SPRINT 4/local-artisan-marketplace/client/src/components/EditProductPageComp/EditTagsButton.tsx">
         <metrics statements="22" coveredstatements="22" conditionals="6" coveredconditionals="6" methods="9" coveredmethods="9"/>
         <line num="1" count="1" type="stmt"/>
         <line num="2" count="1" type="stmt"/>
         <line num="8" count="1" type="stmt"/>
-        <line num="9" count="64" type="stmt"/>
-        <line num="10" count="64" type="stmt"/>
-        <line num="11" count="64" type="stmt"/>
-        <line num="13" count="64" type="stmt"/>
+        <line num="9" count="50" type="stmt"/>
+        <line num="10" count="50" type="stmt"/>
+        <line num="11" count="50" type="stmt"/>
+        <line num="13" count="50" type="stmt"/>
         <line num="14" count="2" type="stmt"/>
         <line num="15" count="2" type="cond" truecount="3" falsecount="0"/>
         <line num="16" count="2" type="stmt"/>
         <line num="17" count="2" type="stmt"/>
-        <line num="21" count="64" type="stmt"/>
+        <line num="21" count="50" type="stmt"/>
         <line num="22" count="1" type="stmt"/>
-        <line num="25" count="64" type="stmt"/>
+        <line num="25" count="50" type="stmt"/>
         <line num="26" count="1" type="cond" truecount="1" falsecount="0"/>
         <line num="27" count="1" type="stmt"/>
-        <line num="30" count="64" type="stmt"/>
+        <line num="30" count="50" type="stmt"/>
         <line num="32" count="4" type="stmt"/>
         <line num="42" count="2" type="stmt"/>
         <line num="48" count="2" type="stmt"/>
         <line num="52" count="1" type="stmt"/>
         <line num="65" count="1" type="stmt"/>
       </file>
-      <file name="ImageEditor.tsx" path="C:\Users\lallo\Desktop\Computer Science - Third Year\My notes\Software Design\Sprint 3.6\local-artisan-marketplace\client\src\components\EditProductPageComp\ImageEditor.tsx">
+      <file name="ImageEditor.tsx" path="/Users/harshilvallabh/Wits/2025/Software Design/PROJECT/SPRINT 4/local-artisan-marketplace/client/src/components/EditProductPageComp/ImageEditor.tsx">
         <metrics statements="5" coveredstatements="5" conditionals="0" coveredconditionals="0" methods="1" coveredmethods="1"/>
         <line num="1" count="1" type="stmt"/>
         <line num="2" count="1" type="stmt"/>
         <line num="4" count="1" type="stmt"/>
-        <line num="5" count="55" type="stmt"/>
+        <line num="5" count="41" type="stmt"/>
         <line num="13" count="1" type="stmt"/>
       </file>
-      <file name="PriceInput.tsx" path="C:\Users\lallo\Desktop\Computer Science - Third Year\My notes\Software Design\Sprint 3.6\local-artisan-marketplace\client\src\components\EditProductPageComp\PriceInput.tsx">
+      <file name="PriceInput.tsx" path="/Users/harshilvallabh/Wits/2025/Software Design/PROJECT/SPRINT 4/local-artisan-marketplace/client/src/components/EditProductPageComp/PriceInput.tsx">
         <metrics statements="14" coveredstatements="14" conditionals="8" coveredconditionals="7" methods="3" coveredmethods="3"/>
         <line num="1" count="1" type="stmt"/>
         <line num="2" count="1" type="stmt"/>
         <line num="9" count="1" type="stmt"/>
-        <line num="10" count="58" type="stmt"/>
-        <line num="12" count="58" type="stmt"/>
+        <line num="10" count="44" type="stmt"/>
+        <line num="12" count="44" type="stmt"/>
         <line num="13" count="14" type="cond" truecount="3" falsecount="0"/>
         <line num="14" count="3" type="stmt"/>
-        <line num="17" count="58" type="stmt"/>
+        <line num="17" count="44" type="stmt"/>
         <line num="18" count="3" type="stmt"/>
         <line num="19" count="3" type="cond" truecount="1" falsecount="0"/>
         <line num="20" count="3" type="stmt"/>
         <line num="21" count="3" type="cond" truecount="3" falsecount="1"/>
-        <line num="25" count="58" type="stmt"/>
+        <line num="25" count="44" type="stmt"/>
         <line num="41" count="1" type="stmt"/>
       </file>
-      <file name="ProductDetailsInput.tsx" path="C:\Users\lallo\Desktop\Computer Science - Third Year\My notes\Software Design\Sprint 3.6\local-artisan-marketplace\client\src\components\EditProductPageComp\ProductDetailsInput.tsx">
+      <file name="ProductDetailsInput.tsx" path="/Users/harshilvallabh/Wits/2025/Software Design/PROJECT/SPRINT 4/local-artisan-marketplace/client/src/components/EditProductPageComp/ProductDetailsInput.tsx">
         <metrics statements="6" coveredstatements="6" conditionals="0" coveredconditionals="0" methods="2" coveredmethods="2"/>
         <line num="1" count="1" type="stmt"/>
         <line num="2" count="1" type="stmt"/>
         <line num="9" count="1" type="stmt"/>
-        <line num="10" count="55" type="stmt"/>
+        <line num="10" count="41" type="stmt"/>
         <line num="19" count="3" type="stmt"/>
         <line num="26" count="1" type="stmt"/>
       </file>
-      <file name="ProductNameInput.tsx" path="C:\Users\lallo\Desktop\Computer Science - Third Year\My notes\Software Design\Sprint 3.6\local-artisan-marketplace\client\src\components\EditProductPageComp\ProductNameInput.tsx">
+      <file name="ProductNameInput.tsx" path="/Users/harshilvallabh/Wits/2025/Software Design/PROJECT/SPRINT 4/local-artisan-marketplace/client/src/components/EditProductPageComp/ProductNameInput.tsx">
         <metrics statements="6" coveredstatements="6" conditionals="0" coveredconditionals="0" methods="2" coveredmethods="2"/>
         <line num="1" count="1" type="stmt"/>
         <line num="2" count="1" type="stmt"/>
         <line num="9" count="1" type="stmt"/>
-        <line num="10" count="55" type="stmt"/>
+        <line num="10" count="41" type="stmt"/>
         <line num="19" count="3" type="stmt"/>
         <line num="26" count="1" type="stmt"/>
       </file>
-      <file name="SizeAndDimensions.tsx" path="C:\Users\lallo\Desktop\Computer Science - Third Year\My notes\Software Design\Sprint 3.6\local-artisan-marketplace\client\src\components\EditProductPageComp\SizeAndDimensions.tsx">
+      <file name="SizeAndDimensions.tsx" path="/Users/harshilvallabh/Wits/2025/Software Design/PROJECT/SPRINT 4/local-artisan-marketplace/client/src/components/EditProductPageComp/SizeAndDimensions.tsx">
         <metrics statements="8" coveredstatements="8" conditionals="0" coveredconditionals="0" methods="4" coveredmethods="4"/>
         <line num="1" count="1" type="stmt"/>
         <line num="2" count="1" type="stmt"/>
         <line num="13" count="1" type="stmt"/>
-        <line num="21" count="55" type="stmt"/>
+        <line num="21" count="41" type="stmt"/>
         <line num="33" count="3" type="stmt"/>
         <line num="44" count="3" type="stmt"/>
         <line num="55" count="3" type="stmt"/>
         <line num="62" count="1" type="stmt"/>
       </file>
-      <file name="StockInput.tsx" path="C:\Users\lallo\Desktop\Computer Science - Third Year\My notes\Software Design\Sprint 3.6\local-artisan-marketplace\client\src\components\EditProductPageComp\StockInput.tsx">
+      <file name="StockInput.tsx" path="/Users/harshilvallabh/Wits/2025/Software Design/PROJECT/SPRINT 4/local-artisan-marketplace/client/src/components/EditProductPageComp/StockInput.tsx">
         <metrics statements="16" coveredstatements="16" conditionals="6" coveredconditionals="4" methods="5" coveredmethods="5"/>
         <line num="1" count="1" type="stmt"/>
         <line num="2" count="1" type="stmt"/>
         <line num="9" count="1" type="stmt"/>
-        <line num="10" count="71" type="stmt"/>
-        <line num="12" count="71" type="stmt"/>
+        <line num="10" count="57" type="stmt"/>
+        <line num="12" count="57" type="stmt"/>
         <line num="13" count="16" type="cond" truecount="2" falsecount="1"/>
         <line num="14" count="16" type="stmt"/>
-        <line num="17" count="71" type="stmt"/>
+        <line num="17" count="57" type="stmt"/>
         <line num="18" count="3" type="stmt"/>
         <line num="19" count="3" type="cond" truecount="1" falsecount="0"/>
         <line num="20" count="3" type="stmt"/>
         <line num="21" count="3" type="cond" truecount="1" falsecount="1"/>
-        <line num="25" count="71" type="stmt"/>
+        <line num="25" count="57" type="stmt"/>
         <line num="34" count="1" type="stmt"/>
         <line num="48" count="1" type="stmt"/>
         <line num="57" count="1" type="stmt"/>
       </file>
-      <file name="TypeOfArtSelector.tsx" path="C:\Users\lallo\Desktop\Computer Science - Third Year\My notes\Software Design\Sprint 3.6\local-artisan-marketplace\client\src\components\EditProductPageComp\TypeOfArtSelector.tsx">
+      <file name="TypeOfArtSelector.tsx" path="/Users/harshilvallabh/Wits/2025/Software Design/PROJECT/SPRINT 4/local-artisan-marketplace/client/src/components/EditProductPageComp/TypeOfArtSelector.tsx">
         <metrics statements="6" coveredstatements="6" conditionals="0" coveredconditionals="0" methods="2" coveredmethods="2"/>
         <line num="1" count="1" type="stmt"/>
         <line num="2" count="1" type="stmt"/>
         <line num="9" count="1" type="stmt"/>
-        <line num="10" count="55" type="stmt"/>
+        <line num="10" count="41" type="stmt"/>
         <line num="19" count="3" type="stmt"/>
         <line num="41" count="1" type="stmt"/>
       </file>
     </package>
     <package name="src.components.HomePageComp">
       <metrics statements="10" coveredstatements="0" conditionals="8" coveredconditionals="0" methods="8" coveredmethods="0"/>
-      <file name="Footer.tsx" path="C:\Users\lallo\Desktop\Computer Science - Third Year\My notes\Software Design\Sprint 3.6\local-artisan-marketplace\client\src\components\HomePageComp\Footer.tsx">
+      <file name="Footer.tsx" path="/Users/harshilvallabh/Wits/2025/Software Design/PROJECT/SPRINT 4/local-artisan-marketplace/client/src/components/HomePageComp/Footer.tsx">
         <metrics statements="1" coveredstatements="0" conditionals="0" coveredconditionals="0" methods="1" coveredmethods="0"/>
         <line num="5" count="0" type="stmt"/>
       </file>
-      <file name="Localish-ProductImage.tsx" path="C:\Users\lallo\Desktop\Computer Science - Third Year\My notes\Software Design\Sprint 3.6\local-artisan-marketplace\client\src\components\HomePageComp\Localish-ProductImage.tsx">
+      <file name="Localish-ProductImage.tsx" path="/Users/harshilvallabh/Wits/2025/Software Design/PROJECT/SPRINT 4/local-artisan-marketplace/client/src/components/HomePageComp/Localish-ProductImage.tsx">
         <metrics statements="1" coveredstatements="0" conditionals="0" coveredconditionals="0" methods="1" coveredmethods="0"/>
         <line num="5" count="0" type="stmt"/>
       </file>
-      <file name="NavBar.tsx" path="C:\Users\lallo\Desktop\Computer Science - Third Year\My notes\Software Design\Sprint 3.6\local-artisan-marketplace\client\src\components\HomePageComp\NavBar.tsx">
+      <file name="NavBar.tsx" path="/Users/harshilvallabh/Wits/2025/Software Design/PROJECT/SPRINT 4/local-artisan-marketplace/client/src/components/HomePageComp/NavBar.tsx">
         <metrics statements="8" coveredstatements="0" conditionals="8" coveredconditionals="0" methods="6" coveredmethods="0"/>
         <line num="13" count="0" type="stmt"/>
         <line num="21" count="0" type="stmt"/>
@@ -930,7 +990,7 @@
     </package>
     <package name="src.components.LogInPageComp">
       <metrics statements="41" coveredstatements="38" conditionals="8" coveredconditionals="7" methods="7" coveredmethods="6"/>
-      <file name="GoogleLoginButton.tsx" path="C:\Users\lallo\Desktop\Computer Science - Third Year\My notes\Software Design\Sprint 3.6\local-artisan-marketplace\client\src\components\LogInPageComp\GoogleLoginButton.tsx">
+      <file name="GoogleLoginButton.tsx" path="/Users/harshilvallabh/Wits/2025/Software Design/PROJECT/SPRINT 4/local-artisan-marketplace/client/src/components/LogInPageComp/GoogleLoginButton.tsx">
         <metrics statements="28" coveredstatements="25" conditionals="8" coveredconditionals="7" methods="4" coveredmethods="3"/>
         <line num="1" count="3" type="stmt"/>
         <line num="2" count="3" type="stmt"/>
@@ -961,14 +1021,14 @@
         <line num="71" count="18" type="stmt"/>
         <line num="72" count="5" type="stmt"/>
       </file>
-      <file name="Logo.tsx" path="C:\Users\lallo\Desktop\Computer Science - Third Year\My notes\Software Design\Sprint 3.6\local-artisan-marketplace\client\src\components\LogInPageComp\Logo.tsx">
+      <file name="Logo.tsx" path="/Users/harshilvallabh/Wits/2025/Software Design/PROJECT/SPRINT 4/local-artisan-marketplace/client/src/components/LogInPageComp/Logo.tsx">
         <metrics statements="4" coveredstatements="4" conditionals="0" coveredconditionals="0" methods="1" coveredmethods="1"/>
         <line num="1" count="3" type="stmt"/>
         <line num="2" count="3" type="stmt"/>
         <line num="4" count="3" type="stmt"/>
         <line num="5" count="15" type="stmt"/>
       </file>
-      <file name="SignUpPrompt.tsx" path="C:\Users\lallo\Desktop\Computer Science - Third Year\My notes\Software Design\Sprint 3.6\local-artisan-marketplace\client\src\components\LogInPageComp\SignUpPrompt.tsx">
+      <file name="SignUpPrompt.tsx" path="/Users/harshilvallabh/Wits/2025/Software Design/PROJECT/SPRINT 4/local-artisan-marketplace/client/src/components/LogInPageComp/SignUpPrompt.tsx">
         <metrics statements="5" coveredstatements="5" conditionals="0" coveredconditionals="0" methods="1" coveredmethods="1"/>
         <line num="1" count="3" type="stmt"/>
         <line num="2" count="3" type="stmt"/>
@@ -976,7 +1036,7 @@
         <line num="5" count="3" type="stmt"/>
         <line num="6" count="15" type="stmt"/>
       </file>
-      <file name="WelcomeMessage.tsx" path="C:\Users\lallo\Desktop\Computer Science - Third Year\My notes\Software Design\Sprint 3.6\local-artisan-marketplace\client\src\components\LogInPageComp\WelcomeMessage.tsx">
+      <file name="WelcomeMessage.tsx" path="/Users/harshilvallabh/Wits/2025/Software Design/PROJECT/SPRINT 4/local-artisan-marketplace/client/src/components/LogInPageComp/WelcomeMessage.tsx">
         <metrics statements="4" coveredstatements="4" conditionals="0" coveredconditionals="0" methods="1" coveredmethods="1"/>
         <line num="1" count="3" type="stmt"/>
         <line num="2" count="3" type="stmt"/>
@@ -986,39 +1046,39 @@
     </package>
     <package name="src.components.PaymentPageComp">
       <metrics statements="17" coveredstatements="0" conditionals="7" coveredconditionals="0" methods="13" coveredmethods="0"/>
-      <file name="DeliveryPrice.tsx" path="C:\Users\lallo\Desktop\Computer Science - Third Year\My notes\Software Design\Sprint 3.6\local-artisan-marketplace\client\src\components\PaymentPageComp\DeliveryPrice.tsx">
+      <file name="DeliveryPrice.tsx" path="/Users/harshilvallabh/Wits/2025/Software Design/PROJECT/SPRINT 4/local-artisan-marketplace/client/src/components/PaymentPageComp/DeliveryPrice.tsx">
         <metrics statements="1" coveredstatements="0" conditionals="0" coveredconditionals="0" methods="1" coveredmethods="0"/>
         <line num="5" count="0" type="stmt"/>
       </file>
-      <file name="GalleryItem.tsx" path="C:\Users\lallo\Desktop\Computer Science - Third Year\My notes\Software Design\Sprint 3.6\local-artisan-marketplace\client\src\components\PaymentPageComp\GalleryItem.tsx">
+      <file name="GalleryItem.tsx" path="/Users/harshilvallabh/Wits/2025/Software Design/PROJECT/SPRINT 4/local-artisan-marketplace/client/src/components/PaymentPageComp/GalleryItem.tsx">
         <metrics statements="1" coveredstatements="0" conditionals="0" coveredconditionals="0" methods="1" coveredmethods="0"/>
         <line num="10" count="0" type="stmt"/>
       </file>
-      <file name="Header.tsx" path="C:\Users\lallo\Desktop\Computer Science - Third Year\My notes\Software Design\Sprint 3.6\local-artisan-marketplace\client\src\components\PaymentPageComp\Header.tsx">
+      <file name="Header.tsx" path="/Users/harshilvallabh/Wits/2025/Software Design/PROJECT/SPRINT 4/local-artisan-marketplace/client/src/components/PaymentPageComp/Header.tsx">
         <metrics statements="4" coveredstatements="0" conditionals="2" coveredconditionals="0" methods="3" coveredmethods="0"/>
         <line num="6" count="0" type="stmt"/>
         <line num="8" count="0" type="stmt"/>
         <line num="15" count="0" type="stmt"/>
         <line num="16" count="0" type="stmt"/>
       </file>
-      <file name="ImageGallery.tsx" path="C:\Users\lallo\Desktop\Computer Science - Third Year\My notes\Software Design\Sprint 3.6\local-artisan-marketplace\client\src\components\PaymentPageComp\ImageGallery.tsx">
+      <file name="ImageGallery.tsx" path="/Users/harshilvallabh/Wits/2025/Software Design/PROJECT/SPRINT 4/local-artisan-marketplace/client/src/components/PaymentPageComp/ImageGallery.tsx">
         <metrics statements="3" coveredstatements="0" conditionals="0" coveredconditionals="0" methods="2" coveredmethods="0"/>
         <line num="14" count="0" type="stmt"/>
         <line num="67" count="0" type="stmt"/>
         <line num="75" count="0" type="stmt"/>
       </file>
-      <file name="ProductPrice.tsx" path="C:\Users\lallo\Desktop\Computer Science - Third Year\My notes\Software Design\Sprint 3.6\local-artisan-marketplace\client\src\components\PaymentPageComp\ProductPrice.tsx">
+      <file name="ProductPrice.tsx" path="/Users/harshilvallabh/Wits/2025/Software Design/PROJECT/SPRINT 4/local-artisan-marketplace/client/src/components/PaymentPageComp/ProductPrice.tsx">
         <metrics statements="1" coveredstatements="0" conditionals="2" coveredconditionals="0" methods="1" coveredmethods="0"/>
         <line num="13" count="0" type="stmt"/>
       </file>
-      <file name="PurchaseButton.tsx" path="C:\Users\lallo\Desktop\Computer Science - Third Year\My notes\Software Design\Sprint 3.6\local-artisan-marketplace\client\src\components\PaymentPageComp\PurchaseButton.tsx">
+      <file name="PurchaseButton.tsx" path="/Users/harshilvallabh/Wits/2025/Software Design/PROJECT/SPRINT 4/local-artisan-marketplace/client/src/components/PaymentPageComp/PurchaseButton.tsx">
         <metrics statements="4" coveredstatements="0" conditionals="2" coveredconditionals="0" methods="3" coveredmethods="0"/>
         <line num="6" count="0" type="stmt"/>
         <line num="8" count="0" type="stmt"/>
         <line num="12" count="0" type="stmt"/>
         <line num="13" count="0" type="stmt"/>
       </file>
-      <file name="TotalPrice.tsx" path="C:\Users\lallo\Desktop\Computer Science - Third Year\My notes\Software Design\Sprint 3.6\local-artisan-marketplace\client\src\components\PaymentPageComp\TotalPrice.tsx">
+      <file name="TotalPrice.tsx" path="/Users/harshilvallabh/Wits/2025/Software Design/PROJECT/SPRINT 4/local-artisan-marketplace/client/src/components/PaymentPageComp/TotalPrice.tsx">
         <metrics statements="3" coveredstatements="0" conditionals="1" coveredconditionals="0" methods="2" coveredmethods="0"/>
         <line num="10" count="0" type="stmt"/>
         <line num="11" count="0" type="stmt"/>
@@ -1027,7 +1087,7 @@
     </package>
     <package name="src.components.ProductPageComp">
       <metrics statements="32" coveredstatements="27" conditionals="0" coveredconditionals="0" methods="8" coveredmethods="5"/>
-      <file name="BackButton.tsx" path="C:\Users\lallo\Desktop\Computer Science - Third Year\My notes\Software Design\Sprint 3.6\local-artisan-marketplace\client\src\components\ProductPageComp\BackButton.tsx">
+      <file name="BackButton.tsx" path="/Users/harshilvallabh/Wits/2025/Software Design/PROJECT/SPRINT 4/local-artisan-marketplace/client/src/components/ProductPageComp/BackButton.tsx">
         <metrics statements="7" coveredstatements="7" conditionals="0" coveredconditionals="0" methods="2" coveredmethods="2"/>
         <line num="1" count="1" type="stmt"/>
         <line num="2" count="1" type="stmt"/>
@@ -1037,13 +1097,13 @@
         <line num="11" count="1" type="stmt"/>
         <line num="18" count="1" type="stmt"/>
       </file>
-      <file name="ProductImage.tsx" path="C:\Users\lallo\Desktop\Computer Science - Third Year\My notes\Software Design\Sprint 3.6\local-artisan-marketplace\client\src\components\ProductPageComp\ProductImage.tsx">
+      <file name="ProductImage.tsx" path="/Users/harshilvallabh/Wits/2025/Software Design/PROJECT/SPRINT 4/local-artisan-marketplace/client/src/components/ProductPageComp/ProductImage.tsx">
         <metrics statements="3" coveredstatements="3" conditionals="0" coveredconditionals="0" methods="1" coveredmethods="1"/>
         <line num="1" count="1" type="stmt"/>
         <line num="8" count="1" type="stmt"/>
         <line num="15" count="1" type="stmt"/>
       </file>
-      <file name="ProductInfo.tsx" path="C:\Users\lallo\Desktop\Computer Science - Third Year\My notes\Software Design\Sprint 3.6\local-artisan-marketplace\client\src\components\ProductPageComp\ProductInfo.tsx">
+      <file name="ProductInfo.tsx" path="/Users/harshilvallabh/Wits/2025/Software Design/PROJECT/SPRINT 4/local-artisan-marketplace/client/src/components/ProductPageComp/ProductInfo.tsx">
         <metrics statements="9" coveredstatements="9" conditionals="0" coveredconditionals="0" methods="1" coveredmethods="1"/>
         <line num="1" count="1" type="stmt"/>
         <line num="2" count="1" type="stmt"/>
@@ -1055,7 +1115,7 @@
         <line num="32" count="1" type="stmt"/>
         <line num="44" count="1" type="stmt"/>
       </file>
-      <file name="ReportProduct.tsx" path="C:\Users\lallo\Desktop\Computer Science - Third Year\My notes\Software Design\Sprint 3.6\local-artisan-marketplace\client\src\components\ProductPageComp\ReportProduct.tsx">
+      <file name="ReportProduct.tsx" path="/Users/harshilvallabh/Wits/2025/Software Design/PROJECT/SPRINT 4/local-artisan-marketplace/client/src/components/ProductPageComp/ReportProduct.tsx">
         <metrics statements="8" coveredstatements="3" conditionals="0" coveredconditionals="0" methods="3" coveredmethods="0"/>
         <line num="1" count="1" type="stmt"/>
         <line num="2" count="1" type="stmt"/>
@@ -1066,7 +1126,7 @@
         <line num="25" count="0" type="stmt"/>
         <line num="42" count="1" type="stmt"/>
       </file>
-      <file name="SideBarInfo.tsx" path="C:\Users\lallo\Desktop\Computer Science - Third Year\My notes\Software Design\Sprint 3.6\local-artisan-marketplace\client\src\components\ProductPageComp\SideBarInfo.tsx">
+      <file name="SideBarInfo.tsx" path="/Users/harshilvallabh/Wits/2025/Software Design/PROJECT/SPRINT 4/local-artisan-marketplace/client/src/components/ProductPageComp/SideBarInfo.tsx">
         <metrics statements="5" coveredstatements="5" conditionals="0" coveredconditionals="0" methods="1" coveredmethods="1"/>
         <line num="1" count="1" type="stmt"/>
         <line num="2" count="1" type="stmt"/>
@@ -1077,7 +1137,7 @@
     </package>
     <package name="src.components.ProductPageComp.ProductInfoSubComp">
       <metrics statements="41" coveredstatements="26" conditionals="7" coveredconditionals="2" methods="7" coveredmethods="6"/>
-      <file name="AddToCart.tsx" path="C:\Users\lallo\Desktop\Computer Science - Third Year\My notes\Software Design\Sprint 3.6\local-artisan-marketplace\client\src\components\ProductPageComp\ProductInfoSubComp\AddToCart.tsx">
+      <file name="AddToCart.tsx" path="/Users/harshilvallabh/Wits/2025/Software Design/PROJECT/SPRINT 4/local-artisan-marketplace/client/src/components/ProductPageComp/ProductInfoSubComp/AddToCart.tsx">
         <metrics statements="26" coveredstatements="11" conditionals="7" coveredconditionals="2" methods="2" coveredmethods="1"/>
         <line num="1" count="1" type="stmt"/>
         <line num="2" count="1" type="stmt"/>
@@ -1106,31 +1166,31 @@
         <line num="54" count="1" type="stmt"/>
         <line num="69" count="1" type="stmt"/>
       </file>
-      <file name="Bio.tsx" path="C:\Users\lallo\Desktop\Computer Science - Third Year\My notes\Software Design\Sprint 3.6\local-artisan-marketplace\client\src\components\ProductPageComp\ProductInfoSubComp\Bio.tsx">
+      <file name="Bio.tsx" path="/Users/harshilvallabh/Wits/2025/Software Design/PROJECT/SPRINT 4/local-artisan-marketplace/client/src/components/ProductPageComp/ProductInfoSubComp/Bio.tsx">
         <metrics statements="3" coveredstatements="3" conditionals="0" coveredconditionals="0" methods="1" coveredmethods="1"/>
         <line num="1" count="1" type="stmt"/>
         <line num="8" count="1" type="stmt"/>
         <line num="16" count="1" type="stmt"/>
       </file>
-      <file name="DeliveryOption.tsx" path="C:\Users\lallo\Desktop\Computer Science - Third Year\My notes\Software Design\Sprint 3.6\local-artisan-marketplace\client\src\components\ProductPageComp\ProductInfoSubComp\DeliveryOption.tsx">
+      <file name="DeliveryOption.tsx" path="/Users/harshilvallabh/Wits/2025/Software Design/PROJECT/SPRINT 4/local-artisan-marketplace/client/src/components/ProductPageComp/ProductInfoSubComp/DeliveryOption.tsx">
         <metrics statements="3" coveredstatements="3" conditionals="0" coveredconditionals="0" methods="1" coveredmethods="1"/>
         <line num="1" count="1" type="stmt"/>
         <line num="4" count="1" type="stmt"/>
         <line num="17" count="1" type="stmt"/>
       </file>
-      <file name="Heading.tsx" path="C:\Users\lallo\Desktop\Computer Science - Third Year\My notes\Software Design\Sprint 3.6\local-artisan-marketplace\client\src\components\ProductPageComp\ProductInfoSubComp\Heading.tsx">
+      <file name="Heading.tsx" path="/Users/harshilvallabh/Wits/2025/Software Design/PROJECT/SPRINT 4/local-artisan-marketplace/client/src/components/ProductPageComp/ProductInfoSubComp/Heading.tsx">
         <metrics statements="3" coveredstatements="3" conditionals="0" coveredconditionals="0" methods="1" coveredmethods="1"/>
         <line num="1" count="1" type="stmt"/>
         <line num="8" count="1" type="stmt"/>
         <line num="16" count="1" type="stmt"/>
       </file>
-      <file name="Price.tsx" path="C:\Users\lallo\Desktop\Computer Science - Third Year\My notes\Software Design\Sprint 3.6\local-artisan-marketplace\client\src\components\ProductPageComp\ProductInfoSubComp\Price.tsx">
+      <file name="Price.tsx" path="/Users/harshilvallabh/Wits/2025/Software Design/PROJECT/SPRINT 4/local-artisan-marketplace/client/src/components/ProductPageComp/ProductInfoSubComp/Price.tsx">
         <metrics statements="3" coveredstatements="3" conditionals="0" coveredconditionals="0" methods="1" coveredmethods="1"/>
         <line num="1" count="1" type="stmt"/>
         <line num="8" count="1" type="stmt"/>
         <line num="15" count="1" type="stmt"/>
       </file>
-      <file name="ProductDetails.tsx" path="C:\Users\lallo\Desktop\Computer Science - Third Year\My notes\Software Design\Sprint 3.6\local-artisan-marketplace\client\src\components\ProductPageComp\ProductInfoSubComp\ProductDetails.tsx">
+      <file name="ProductDetails.tsx" path="/Users/harshilvallabh/Wits/2025/Software Design/PROJECT/SPRINT 4/local-artisan-marketplace/client/src/components/ProductPageComp/ProductInfoSubComp/ProductDetails.tsx">
         <metrics statements="3" coveredstatements="3" conditionals="0" coveredconditionals="0" methods="1" coveredmethods="1"/>
         <line num="1" count="1" type="stmt"/>
         <line num="8" count="1" type="stmt"/>
@@ -1139,13 +1199,13 @@
     </package>
     <package name="src.components.ProductPageComp.SideBarSubComp">
       <metrics statements="6" coveredstatements="6" conditionals="0" coveredconditionals="0" methods="2" coveredmethods="2"/>
-      <file name="ArtistInfo.tsx" path="C:\Users\lallo\Desktop\Computer Science - Third Year\My notes\Software Design\Sprint 3.6\local-artisan-marketplace\client\src\components\ProductPageComp\SideBarSubComp\ArtistInfo.tsx">
+      <file name="ArtistInfo.tsx" path="/Users/harshilvallabh/Wits/2025/Software Design/PROJECT/SPRINT 4/local-artisan-marketplace/client/src/components/ProductPageComp/SideBarSubComp/ArtistInfo.tsx">
         <metrics statements="3" coveredstatements="3" conditionals="0" coveredconditionals="0" methods="1" coveredmethods="1"/>
         <line num="1" count="1" type="stmt"/>
         <line num="8" count="1" type="stmt"/>
         <line num="21" count="1" type="stmt"/>
       </file>
-      <file name="ReviewList.tsx" path="C:\Users\lallo\Desktop\Computer Science - Third Year\My notes\Software Design\Sprint 3.6\local-artisan-marketplace\client\src\components\ProductPageComp\SideBarSubComp\ReviewList.tsx">
+      <file name="ReviewList.tsx" path="/Users/harshilvallabh/Wits/2025/Software Design/PROJECT/SPRINT 4/local-artisan-marketplace/client/src/components/ProductPageComp/SideBarSubComp/ReviewList.tsx">
         <metrics statements="3" coveredstatements="3" conditionals="0" coveredconditionals="0" methods="1" coveredmethods="1"/>
         <line num="1" count="1" type="stmt"/>
         <line num="4" count="1" type="stmt"/>
@@ -1154,7 +1214,7 @@
     </package>
     <package name="src.components.ProfilePageComp">
       <metrics statements="39" coveredstatements="24" conditionals="10" coveredconditionals="7" methods="14" coveredmethods="6"/>
-      <file name="ActionButtons.tsx" path="C:\Users\lallo\Desktop\Computer Science - Third Year\My notes\Software Design\Sprint 3.6\local-artisan-marketplace\client\src\components\ProfilePageComp\ActionButtons.tsx">
+      <file name="ActionButtons.tsx" path="/Users/harshilvallabh/Wits/2025/Software Design/PROJECT/SPRINT 4/local-artisan-marketplace/client/src/components/ProfilePageComp/ActionButtons.tsx">
         <metrics statements="7" coveredstatements="5" conditionals="6" coveredconditionals="6" methods="3" coveredmethods="1"/>
         <line num="1" count="1" type="stmt"/>
         <line num="2" count="1" type="stmt"/>
@@ -1164,7 +1224,7 @@
         <line num="20" count="9" type="stmt"/>
         <line num="47" count="1" type="stmt"/>
       </file>
-      <file name="EditInfo.tsx" path="C:\Users\lallo\Desktop\Computer Science - Third Year\My notes\Software Design\Sprint 3.6\local-artisan-marketplace\client\src\components\ProfilePageComp\EditInfo.tsx">
+      <file name="EditInfo.tsx" path="/Users/harshilvallabh/Wits/2025/Software Design/PROJECT/SPRINT 4/local-artisan-marketplace/client/src/components/ProfilePageComp/EditInfo.tsx">
         <metrics statements="26" coveredstatements="13" conditionals="4" coveredconditionals="1" methods="9" coveredmethods="3"/>
         <line num="1" count="1" type="stmt"/>
         <line num="2" count="1" type="stmt"/>
@@ -1193,13 +1253,13 @@
         <line num="77" count="0" type="cond" truecount="0" falsecount="2"/>
         <line num="102" count="1" type="stmt"/>
       </file>
-      <file name="ProfileImage.tsx" path="C:\Users\lallo\Desktop\Computer Science - Third Year\My notes\Software Design\Sprint 3.6\local-artisan-marketplace\client\src\components\ProfilePageComp\ProfileImage.tsx">
+      <file name="ProfileImage.tsx" path="/Users/harshilvallabh/Wits/2025/Software Design/PROJECT/SPRINT 4/local-artisan-marketplace/client/src/components/ProfilePageComp/ProfileImage.tsx">
         <metrics statements="3" coveredstatements="3" conditionals="0" coveredconditionals="0" methods="1" coveredmethods="1"/>
         <line num="1" count="1" type="stmt"/>
         <line num="11" count="9" type="stmt"/>
         <line num="29" count="1" type="stmt"/>
       </file>
-      <file name="ProfileInfo.tsx" path="C:\Users\lallo\Desktop\Computer Science - Third Year\My notes\Software Design\Sprint 3.6\local-artisan-marketplace\client\src\components\ProfilePageComp\ProfileInfo.tsx">
+      <file name="ProfileInfo.tsx" path="/Users/harshilvallabh/Wits/2025/Software Design/PROJECT/SPRINT 4/local-artisan-marketplace/client/src/components/ProfilePageComp/ProfileInfo.tsx">
         <metrics statements="3" coveredstatements="3" conditionals="0" coveredconditionals="0" methods="1" coveredmethods="1"/>
         <line num="1" count="1" type="stmt"/>
         <line num="11" count="9" type="stmt"/>
@@ -1208,7 +1268,7 @@
     </package>
     <package name="src.components.QuestionsPageComp">
       <metrics statements="29" coveredstatements="24" conditionals="4" coveredconditionals="1" methods="9" coveredmethods="6"/>
-      <file name="ApplyButton.tsx" path="C:\Users\lallo\Desktop\Computer Science - Third Year\My notes\Software Design\Sprint 3.6\local-artisan-marketplace\client\src\components\QuestionsPageComp\ApplyButton.tsx">
+      <file name="ApplyButton.tsx" path="/Users/harshilvallabh/Wits/2025/Software Design/PROJECT/SPRINT 4/local-artisan-marketplace/client/src/components/QuestionsPageComp/ApplyButton.tsx">
         <metrics statements="5" coveredstatements="5" conditionals="0" coveredconditionals="0" methods="1" coveredmethods="1"/>
         <line num="1" count="1" type="stmt"/>
         <line num="2" count="1" type="stmt"/>
@@ -1216,7 +1276,7 @@
         <line num="9" count="1" type="stmt"/>
         <line num="21" count="1" type="stmt"/>
       </file>
-      <file name="ArtFormButton.tsx" path="C:\Users\lallo\Desktop\Computer Science - Third Year\My notes\Software Design\Sprint 3.6\local-artisan-marketplace\client\src\components\QuestionsPageComp\ArtFormButton.tsx">
+      <file name="ArtFormButton.tsx" path="/Users/harshilvallabh/Wits/2025/Software Design/PROJECT/SPRINT 4/local-artisan-marketplace/client/src/components/QuestionsPageComp/ArtFormButton.tsx">
         <metrics statements="5" coveredstatements="5" conditionals="2" coveredconditionals="1" methods="1" coveredmethods="1"/>
         <line num="1" count="1" type="stmt"/>
         <line num="2" count="1" type="stmt"/>
@@ -1224,7 +1284,7 @@
         <line num="15" count="20" type="stmt"/>
         <line num="25" count="1" type="stmt"/>
       </file>
-      <file name="ArtFormSection.tsx" path="C:\Users\lallo\Desktop\Computer Science - Third Year\My notes\Software Design\Sprint 3.6\local-artisan-marketplace\client\src\components\QuestionsPageComp\ArtFormSection.tsx">
+      <file name="ArtFormSection.tsx" path="/Users/harshilvallabh/Wits/2025/Software Design/PROJECT/SPRINT 4/local-artisan-marketplace/client/src/components/QuestionsPageComp/ArtFormSection.tsx">
         <metrics statements="13" coveredstatements="9" conditionals="2" coveredconditionals="0" methods="5" coveredmethods="3"/>
         <line num="1" count="1" type="stmt"/>
         <line num="2" count="1" type="stmt"/>
@@ -1240,7 +1300,7 @@
         <line num="57" count="0" type="stmt"/>
         <line num="67" count="1" type="stmt"/>
       </file>
-      <file name="UserNameHeader.tsx" path="C:\Users\lallo\Desktop\Computer Science - Third Year\My notes\Software Design\Sprint 3.6\local-artisan-marketplace\client\src\components\QuestionsPageComp\UserNameHeader.tsx">
+      <file name="UserNameHeader.tsx" path="/Users/harshilvallabh/Wits/2025/Software Design/PROJECT/SPRINT 4/local-artisan-marketplace/client/src/components/QuestionsPageComp/UserNameHeader.tsx">
         <metrics statements="6" coveredstatements="5" conditionals="0" coveredconditionals="0" methods="2" coveredmethods="1"/>
         <line num="1" count="1" type="stmt"/>
         <line num="2" count="1" type="stmt"/>
@@ -1251,83 +1311,109 @@
       </file>
     </package>
     <package name="src.components.SearchPageComp1">
-      <metrics statements="57" coveredstatements="0" conditionals="6" coveredconditionals="0" methods="24" coveredmethods="0"/>
-      <file name="Category.tsx" path="C:\Users\lallo\Desktop\Computer Science - Third Year\My notes\Software Design\Sprint 3.6\local-artisan-marketplace\client\src\components\SearchPageComp1\Category.tsx">
-        <metrics statements="13" coveredstatements="0" conditionals="0" coveredconditionals="0" methods="5" coveredmethods="0"/>
-        <line num="8" count="0" type="stmt"/>
-        <line num="9" count="0" type="stmt"/>
-        <line num="10" count="0" type="stmt"/>
-        <line num="12" count="0" type="stmt"/>
-        <line num="14" count="0" type="stmt"/>
-        <line num="15" count="0" type="stmt"/>
-        <line num="19" count="0" type="stmt"/>
-        <line num="20" count="0" type="stmt"/>
-        <line num="22" count="0" type="stmt"/>
-        <line num="25" count="0" type="stmt"/>
-        <line num="28" count="0" type="stmt"/>
-        <line num="33" count="0" type="stmt"/>
-        <line num="34" count="0" type="stmt"/>
+      <metrics statements="83" coveredstatements="82" conditionals="6" coveredconditionals="5" methods="24" coveredmethods="23"/>
+      <file name="Category.tsx" path="/Users/harshilvallabh/Wits/2025/Software Design/PROJECT/SPRINT 4/local-artisan-marketplace/client/src/components/SearchPageComp1/Category.tsx">
+        <metrics statements="19" coveredstatements="19" conditionals="0" coveredconditionals="0" methods="5" coveredmethods="5"/>
+        <line num="1" count="1" type="stmt"/>
+        <line num="2" count="1" type="stmt"/>
+        <line num="3" count="1" type="stmt"/>
+        <line num="4" count="1" type="stmt"/>
+        <line num="5" count="1" type="stmt"/>
+        <line num="8" count="21" type="stmt"/>
+        <line num="9" count="21" type="stmt"/>
+        <line num="10" count="21" type="stmt"/>
+        <line num="12" count="21" type="stmt"/>
+        <line num="14" count="10" type="stmt"/>
+        <line num="15" count="10" type="stmt"/>
+        <line num="19" count="8" type="stmt"/>
+        <line num="20" count="8" type="stmt"/>
+        <line num="22" count="2" type="stmt"/>
+        <line num="25" count="10" type="stmt"/>
+        <line num="28" count="21" type="stmt"/>
+        <line num="33" count="18" type="stmt"/>
+        <line num="34" count="1" type="stmt"/>
+        <line num="42" count="1" type="stmt"/>
       </file>
-      <file name="Header.tsx" path="C:\Users\lallo\Desktop\Computer Science - Third Year\My notes\Software Design\Sprint 3.6\local-artisan-marketplace\client\src\components\SearchPageComp1\Header.tsx">
-        <metrics statements="29" coveredstatements="0" conditionals="4" coveredconditionals="0" methods="10" coveredmethods="0"/>
-        <line num="9" count="0" type="stmt"/>
-        <line num="10" count="0" type="stmt"/>
-        <line num="11" count="0" type="stmt"/>
-        <line num="12" count="0" type="stmt"/>
-        <line num="15" count="0" type="stmt"/>
-        <line num="16" count="0" type="stmt"/>
-        <line num="20" count="0" type="stmt"/>
-        <line num="22" count="0" type="stmt"/>
-        <line num="23" count="0" type="stmt"/>
-        <line num="27" count="0" type="stmt"/>
-        <line num="29" count="0" type="stmt"/>
-        <line num="32" count="0" type="stmt"/>
-        <line num="36" count="0" type="stmt"/>
-        <line num="37" count="0" type="stmt"/>
-        <line num="38" count="0" type="stmt"/>
-        <line num="39" count="0" type="cond" truecount="0" falsecount="2"/>
-        <line num="40" count="0" type="stmt"/>
-        <line num="41" count="0" type="stmt"/>
+      <file name="Header.tsx" path="/Users/harshilvallabh/Wits/2025/Software Design/PROJECT/SPRINT 4/local-artisan-marketplace/client/src/components/SearchPageComp1/Header.tsx">
+        <metrics statements="35" coveredstatements="34" conditionals="4" coveredconditionals="3" methods="10" coveredmethods="10"/>
+        <line num="2" count="1" type="stmt"/>
+        <line num="3" count="1" type="stmt"/>
+        <line num="4" count="1" type="stmt"/>
+        <line num="5" count="1" type="stmt"/>
+        <line num="6" count="1" type="stmt"/>
+        <line num="8" count="1" type="stmt"/>
+        <line num="9" count="28" type="stmt"/>
+        <line num="10" count="28" type="stmt"/>
+        <line num="11" count="28" type="stmt"/>
+        <line num="12" count="28" type="stmt"/>
+        <line num="15" count="28" type="stmt"/>
+        <line num="16" count="13" type="stmt"/>
+        <line num="20" count="28" type="stmt"/>
+        <line num="22" count="10" type="stmt"/>
+        <line num="23" count="10" type="stmt"/>
+        <line num="27" count="8" type="stmt"/>
+        <line num="29" count="2" type="stmt"/>
+        <line num="32" count="10" type="stmt"/>
+        <line num="36" count="28" type="stmt"/>
+        <line num="37" count="4" type="stmt"/>
+        <line num="38" count="4" type="stmt"/>
+        <line num="39" count="4" type="cond" truecount="1" falsecount="1"/>
+        <line num="40" count="4" type="stmt"/>
+        <line num="41" count="10" type="stmt"/>
         <line num="43" count="0" type="stmt"/>
-        <line num="48" count="0" type="stmt"/>
-        <line num="49" count="0" type="stmt"/>
-        <line num="50" count="0" type="stmt"/>
-        <line num="51" count="0" type="stmt"/>
-        <line num="55" count="0" type="stmt"/>
-        <line num="56" count="0" type="stmt"/>
-        <line num="57" count="0" type="stmt"/>
-        <line num="61" count="0" type="stmt"/>
-        <line num="75" count="0" type="stmt"/>
-        <line num="76" count="0" type="stmt"/>
+        <line num="48" count="28" type="stmt"/>
+        <line num="49" count="1" type="stmt"/>
+        <line num="50" count="1" type="stmt"/>
+        <line num="51" count="1" type="stmt"/>
+        <line num="55" count="28" type="stmt"/>
+        <line num="56" count="1" type="stmt"/>
+        <line num="57" count="1" type="stmt"/>
+        <line num="61" count="28" type="stmt"/>
+        <line num="75" count="2" type="stmt"/>
+        <line num="76" count="1" type="stmt"/>
       </file>
-      <file name="ImageGrid.tsx" path="C:\Users\lallo\Desktop\Computer Science - Third Year\My notes\Software Design\Sprint 3.6\local-artisan-marketplace\client\src\components\SearchPageComp1\ImageGrid.tsx">
-        <metrics statements="9" coveredstatements="0" conditionals="2" coveredconditionals="0" methods="5" coveredmethods="0"/>
-        <line num="10" count="0" type="stmt"/>
-        <line num="11" count="0" type="stmt"/>
-        <line num="13" count="0" type="stmt"/>
-        <line num="14" count="0" type="cond" truecount="0" falsecount="2"/>
-        <line num="17" count="0" type="stmt"/>
-        <line num="19" count="0" type="stmt"/>
-        <line num="20" count="0" type="stmt"/>
-        <line num="23" count="0" type="stmt"/>
-        <line num="26" count="0" type="stmt"/>
+      <file name="ImageGrid.tsx" path="/Users/harshilvallabh/Wits/2025/Software Design/PROJECT/SPRINT 4/local-artisan-marketplace/client/src/components/SearchPageComp1/ImageGrid.tsx">
+        <metrics statements="16" coveredstatements="16" conditionals="2" coveredconditionals="2" methods="5" coveredmethods="5"/>
+        <line num="2" count="1" type="stmt"/>
+        <line num="3" count="1" type="stmt"/>
+        <line num="4" count="1" type="stmt"/>
+        <line num="5" count="1" type="stmt"/>
+        <line num="6" count="1" type="stmt"/>
+        <line num="7" count="1" type="stmt"/>
+        <line num="9" count="1" type="stmt"/>
+        <line num="10" count="20" type="stmt"/>
+        <line num="11" count="20" type="stmt"/>
+        <line num="13" count="20" type="stmt"/>
+        <line num="14" count="13" type="cond" truecount="2" falsecount="0"/>
+        <line num="17" count="13" type="stmt"/>
+        <line num="19" count="7" type="stmt"/>
+        <line num="20" count="6" type="stmt"/>
+        <line num="23" count="20" type="stmt"/>
+        <line num="26" count="1" type="stmt"/>
       </file>
-      <file name="ProductCard.tsx" path="C:\Users\lallo\Desktop\Computer Science - Third Year\My notes\Software Design\Sprint 3.6\local-artisan-marketplace\client\src\components\SearchPageComp1\ProductCard.tsx">
-        <metrics statements="2" coveredstatements="0" conditionals="0" coveredconditionals="0" methods="1" coveredmethods="0"/>
-        <line num="14" count="0" type="stmt"/>
-        <line num="15" count="0" type="stmt"/>
+      <file name="ProductCard.tsx" path="/Users/harshilvallabh/Wits/2025/Software Design/PROJECT/SPRINT 4/local-artisan-marketplace/client/src/components/SearchPageComp1/ProductCard.tsx">
+        <metrics statements="6" coveredstatements="6" conditionals="0" coveredconditionals="0" methods="1" coveredmethods="1"/>
+        <line num="2" count="1" type="stmt"/>
+        <line num="3" count="1" type="stmt"/>
+        <line num="4" count="1" type="stmt"/>
+        <line num="14" count="1" type="stmt"/>
+        <line num="15" count="1" type="stmt"/>
+        <line num="29" count="1" type="stmt"/>
       </file>
-      <file name="SearchContext.tsx" path="C:\Users\lallo\Desktop\Computer Science - Third Year\My notes\Software Design\Sprint 3.6\local-artisan-marketplace\client\src\components\SearchPageComp1\SearchContext.tsx">
-        <metrics statements="4" coveredstatements="0" conditionals="0" coveredconditionals="0" methods="3" coveredmethods="0"/>
-        <line num="8" count="0" type="stmt"/>
-        <line num="14" count="0" type="stmt"/>
-        <line num="15" count="0" type="stmt"/>
-        <line num="23" count="0" type="stmt"/>
+      <file name="SearchContext.tsx" path="/Users/harshilvallabh/Wits/2025/Software Design/PROJECT/SPRINT 4/local-artisan-marketplace/client/src/components/SearchPageComp1/SearchContext.tsx">
+        <metrics statements="7" coveredstatements="7" conditionals="0" coveredconditionals="0" methods="3" coveredmethods="2"/>
+        <line num="1" count="1" type="stmt"/>
+        <line num="8" count="1" type="stmt"/>
+        <line num="13" count="1" type="stmt"/>
+        <line num="14" count="9" type="stmt"/>
+        <line num="15" count="9" type="stmt"/>
+        <line num="22" count="1" type="stmt"/>
+        <line num="23" count="69" type="stmt"/>
       </file>
     </package>
     <package name="src.components.SellerHomeComp">
       <metrics statements="23" coveredstatements="22" conditionals="10" coveredconditionals="6" methods="8" coveredmethods="8"/>
-      <file name="FilterBar.tsx" path="C:\Users\lallo\Desktop\Computer Science - Third Year\My notes\Software Design\Sprint 3.6\local-artisan-marketplace\client\src\components\SellerHomeComp\FilterBar.tsx">
+      <file name="FilterBar.tsx" path="/Users/harshilvallabh/Wits/2025/Software Design/PROJECT/SPRINT 4/local-artisan-marketplace/client/src/components/SellerHomeComp/FilterBar.tsx">
         <metrics statements="6" coveredstatements="6" conditionals="2" coveredconditionals="2" methods="3" coveredmethods="3"/>
         <line num="1" count="1" type="stmt"/>
         <line num="2" count="1" type="stmt"/>
@@ -1336,29 +1422,29 @@
         <line num="19" count="1" type="stmt"/>
         <line num="28" count="1" type="stmt"/>
       </file>
-      <file name="Header.tsx" path="C:\Users\lallo\Desktop\Computer Science - Third Year\My notes\Software Design\Sprint 3.6\local-artisan-marketplace\client\src\components\SellerHomeComp\Header.tsx">
+      <file name="Header.tsx" path="/Users/harshilvallabh/Wits/2025/Software Design/PROJECT/SPRINT 4/local-artisan-marketplace/client/src/components/SellerHomeComp/Header.tsx">
         <metrics statements="4" coveredstatements="4" conditionals="4" coveredconditionals="2" methods="1" coveredmethods="1"/>
         <line num="1" count="1" type="stmt"/>
         <line num="2" count="1" type="stmt"/>
         <line num="13" count="7" type="stmt"/>
         <line num="40" count="1" type="stmt"/>
       </file>
-      <file name="NavBar.tsx" path="C:\Users\lallo\Desktop\Computer Science - Third Year\My notes\Software Design\Sprint 3.6\local-artisan-marketplace\client\src\components\SellerHomeComp\NavBar.tsx">
+      <file name="NavBar.tsx" path="/Users/harshilvallabh/Wits/2025/Software Design/PROJECT/SPRINT 4/local-artisan-marketplace/client/src/components/SellerHomeComp/NavBar.tsx">
         <metrics statements="8" coveredstatements="8" conditionals="2" coveredconditionals="1" methods="3" coveredmethods="3"/>
         <line num="1" count="3" type="stmt"/>
         <line num="2" count="3" type="stmt"/>
         <line num="6" count="3" type="stmt"/>
         <line num="8" count="3" type="stmt"/>
-        <line num="16" count="106" type="stmt"/>
-        <line num="27" count="424" type="stmt"/>
-        <line num="31" count="424" type="cond" truecount="1" falsecount="1"/>
+        <line num="16" count="89" type="stmt"/>
+        <line num="27" count="356" type="stmt"/>
+        <line num="31" count="356" type="cond" truecount="1" falsecount="1"/>
         <line num="47" count="3" type="stmt"/>
       </file>
-      <file name="Product.ts" path="C:\Users\lallo\Desktop\Computer Science - Third Year\My notes\Software Design\Sprint 3.6\local-artisan-marketplace\client\src\components\SellerHomeComp\Product.ts">
+      <file name="Product.ts" path="/Users/harshilvallabh/Wits/2025/Software Design/PROJECT/SPRINT 4/local-artisan-marketplace/client/src/components/SellerHomeComp/Product.ts">
         <metrics statements="1" coveredstatements="0" conditionals="0" coveredconditionals="0" methods="0" coveredmethods="0"/>
         <line num="1" count="0" type="stmt"/>
       </file>
-      <file name="ProductCard.tsx" path="C:\Users\lallo\Desktop\Computer Science - Third Year\My notes\Software Design\Sprint 3.6\local-artisan-marketplace\client\src\components\SellerHomeComp\ProductCard.tsx">
+      <file name="ProductCard.tsx" path="/Users/harshilvallabh/Wits/2025/Software Design/PROJECT/SPRINT 4/local-artisan-marketplace/client/src/components/SellerHomeComp/ProductCard.tsx">
         <metrics statements="4" coveredstatements="4" conditionals="2" coveredconditionals="1" methods="1" coveredmethods="1"/>
         <line num="1" count="1" type="stmt"/>
         <line num="2" count="1" type="stmt"/>
@@ -1368,7 +1454,7 @@
     </package>
     <package name="src.components.SellerOrders">
       <metrics statements="6" coveredstatements="0" conditionals="0" coveredconditionals="0" methods="3" coveredmethods="0"/>
-      <file name="SellerOrders.tsx" path="C:\Users\lallo\Desktop\Computer Science - Third Year\My notes\Software Design\Sprint 3.6\local-artisan-marketplace\client\src\components\SellerOrders\SellerOrders.tsx">
+      <file name="SellerOrders.tsx" path="/Users/harshilvallabh/Wits/2025/Software Design/PROJECT/SPRINT 4/local-artisan-marketplace/client/src/components/SellerOrders/SellerOrders.tsx">
         <metrics statements="6" coveredstatements="0" conditionals="0" coveredconditionals="0" methods="3" coveredmethods="0"/>
         <line num="14" count="0" type="stmt"/>
         <line num="31" count="0" type="stmt"/>
@@ -1380,7 +1466,7 @@
     </package>
     <package name="src.components.SellerSignupPageComp">
       <metrics statements="30" coveredstatements="0" conditionals="7" coveredconditionals="0" methods="7" coveredmethods="0"/>
-      <file name="SellerForm.tsx" path="C:\Users\lallo\Desktop\Computer Science - Third Year\My notes\Software Design\Sprint 3.6\local-artisan-marketplace\client\src\components\SellerSignupPageComp\SellerForm.tsx">
+      <file name="SellerForm.tsx" path="/Users/harshilvallabh/Wits/2025/Software Design/PROJECT/SPRINT 4/local-artisan-marketplace/client/src/components/SellerSignupPageComp/SellerForm.tsx">
         <metrics statements="30" coveredstatements="0" conditionals="7" coveredconditionals="0" methods="7" coveredmethods="0"/>
         <line num="10" count="0" type="stmt"/>
         <line num="11" count="0" type="stmt"/>
@@ -1416,7 +1502,7 @@
     </package>
     <package name="src.components.SellerStatsPageComp">
       <metrics statements="5" coveredstatements="0" conditionals="0" coveredconditionals="0" methods="2" coveredmethods="0"/>
-      <file name="StatsChart.tsx" path="C:\Users\lallo\Desktop\Computer Science - Third Year\My notes\Software Design\Sprint 3.6\local-artisan-marketplace\client\src\components\SellerStatsPageComp\StatsChart.tsx">
+      <file name="StatsChart.tsx" path="/Users/harshilvallabh/Wits/2025/Software Design/PROJECT/SPRINT 4/local-artisan-marketplace/client/src/components/SellerStatsPageComp/StatsChart.tsx">
         <metrics statements="5" coveredstatements="0" conditionals="0" coveredconditionals="0" methods="2" coveredmethods="0"/>
         <line num="4" count="0" type="stmt"/>
         <line num="19" count="0" type="stmt"/>
@@ -1427,7 +1513,7 @@
     </package>
     <package name="src.components.SellerVerificationPageComp">
       <metrics statements="7" coveredstatements="7" conditionals="4" coveredconditionals="4" methods="1" coveredmethods="1"/>
-      <file name="SellerCard.tsx" path="C:\Users\lallo\Desktop\Computer Science - Third Year\My notes\Software Design\Sprint 3.6\local-artisan-marketplace\client\src\components\SellerVerificationPageComp\SellerCard.tsx">
+      <file name="SellerCard.tsx" path="/Users/harshilvallabh/Wits/2025/Software Design/PROJECT/SPRINT 4/local-artisan-marketplace/client/src/components/SellerVerificationPageComp/SellerCard.tsx">
         <metrics statements="7" coveredstatements="7" conditionals="4" coveredconditionals="4" methods="1" coveredmethods="1"/>
         <line num="1" count="1" type="stmt"/>
         <line num="3" count="1" type="stmt"/>
@@ -1440,19 +1526,19 @@
     </package>
     <package name="src.components.ShopFrontComp">
       <metrics statements="19" coveredstatements="16" conditionals="4" coveredconditionals="4" methods="7" coveredmethods="5"/>
-      <file name="Header.tsx" path="C:\Users\lallo\Desktop\Computer Science - Third Year\My notes\Software Design\Sprint 3.6\local-artisan-marketplace\client\src\components\ShopFrontComp\Header.tsx">
+      <file name="Header.tsx" path="/Users/harshilvallabh/Wits/2025/Software Design/PROJECT/SPRINT 4/local-artisan-marketplace/client/src/components/ShopFrontComp/Header.tsx">
         <metrics statements="3" coveredstatements="3" conditionals="4" coveredconditionals="4" methods="1" coveredmethods="1"/>
         <line num="1" count="1" type="stmt"/>
         <line num="10" count="8" type="stmt"/>
         <line num="19" count="1" type="stmt"/>
       </file>
-      <file name="ProductCard.tsx" path="C:\Users\lallo\Desktop\Computer Science - Third Year\My notes\Software Design\Sprint 3.6\local-artisan-marketplace\client\src\components\ShopFrontComp\ProductCard.tsx">
+      <file name="ProductCard.tsx" path="/Users/harshilvallabh/Wits/2025/Software Design/PROJECT/SPRINT 4/local-artisan-marketplace/client/src/components/ShopFrontComp/ProductCard.tsx">
         <metrics statements="3" coveredstatements="3" conditionals="0" coveredconditionals="0" methods="1" coveredmethods="1"/>
         <line num="1" count="1" type="stmt"/>
         <line num="12" count="3" type="stmt"/>
         <line num="26" count="1" type="stmt"/>
       </file>
-      <file name="ProductGrid.tsx" path="C:\Users\lallo\Desktop\Computer Science - Third Year\My notes\Software Design\Sprint 3.6\local-artisan-marketplace\client\src\components\ShopFrontComp\ProductGrid.tsx">
+      <file name="ProductGrid.tsx" path="/Users/harshilvallabh/Wits/2025/Software Design/PROJECT/SPRINT 4/local-artisan-marketplace/client/src/components/ShopFrontComp/ProductGrid.tsx">
         <metrics statements="5" coveredstatements="5" conditionals="0" coveredconditionals="0" methods="2" coveredmethods="2"/>
         <line num="1" count="1" type="stmt"/>
         <line num="2" count="1" type="stmt"/>
@@ -1460,7 +1546,7 @@
         <line num="21" count="3" type="stmt"/>
         <line num="34" count="1" type="stmt"/>
       </file>
-      <file name="ReportShop.tsx" path="C:\Users\lallo\Desktop\Computer Science - Third Year\My notes\Software Design\Sprint 3.6\local-artisan-marketplace\client\src\components\ShopFrontComp\ReportShop.tsx">
+      <file name="ReportShop.tsx" path="/Users/harshilvallabh/Wits/2025/Software Design/PROJECT/SPRINT 4/local-artisan-marketplace/client/src/components/ShopFrontComp/ReportShop.tsx">
         <metrics statements="8" coveredstatements="5" conditionals="0" coveredconditionals="0" methods="3" coveredmethods="1"/>
         <line num="1" count="1" type="stmt"/>
         <line num="2" count="1" type="stmt"/>
@@ -1474,7 +1560,7 @@
     </package>
     <package name="src.components.SignUpPageComp">
       <metrics statements="31" coveredstatements="22" conditionals="0" coveredconditionals="0" methods="6" coveredmethods="4"/>
-      <file name="GoogleSignUpButton.tsx" path="C:\Users\lallo\Desktop\Computer Science - Third Year\My notes\Software Design\Sprint 3.6\local-artisan-marketplace\client\src\components\SignUpPageComp\GoogleSignUpButton.tsx">
+      <file name="GoogleSignUpButton.tsx" path="/Users/harshilvallabh/Wits/2025/Software Design/PROJECT/SPRINT 4/local-artisan-marketplace/client/src/components/SignUpPageComp/GoogleSignUpButton.tsx">
         <metrics statements="22" coveredstatements="13" conditionals="0" coveredconditionals="0" methods="4" coveredmethods="2"/>
         <line num="1" count="3" type="stmt"/>
         <line num="2" count="3" type="stmt"/>
@@ -1499,7 +1585,7 @@
         <line num="54" count="7" type="stmt"/>
         <line num="55" count="2" type="stmt"/>
       </file>
-      <file name="LoginPrompt.tsx" path="C:\Users\lallo\Desktop\Computer Science - Third Year\My notes\Software Design\Sprint 3.6\local-artisan-marketplace\client\src\components\SignUpPageComp\LoginPrompt.tsx">
+      <file name="LoginPrompt.tsx" path="/Users/harshilvallabh/Wits/2025/Software Design/PROJECT/SPRINT 4/local-artisan-marketplace/client/src/components/SignUpPageComp/LoginPrompt.tsx">
         <metrics statements="5" coveredstatements="5" conditionals="0" coveredconditionals="0" methods="1" coveredmethods="1"/>
         <line num="1" count="3" type="stmt"/>
         <line num="2" count="3" type="stmt"/>
@@ -1507,7 +1593,7 @@
         <line num="5" count="3" type="stmt"/>
         <line num="6" count="5" type="stmt"/>
       </file>
-      <file name="Logo.tsx" path="C:\Users\lallo\Desktop\Computer Science - Third Year\My notes\Software Design\Sprint 3.6\local-artisan-marketplace\client\src\components\SignUpPageComp\Logo.tsx">
+      <file name="Logo.tsx" path="/Users/harshilvallabh/Wits/2025/Software Design/PROJECT/SPRINT 4/local-artisan-marketplace/client/src/components/SignUpPageComp/Logo.tsx">
         <metrics statements="4" coveredstatements="4" conditionals="0" coveredconditionals="0" methods="1" coveredmethods="1"/>
         <line num="1" count="3" type="stmt"/>
         <line num="2" count="3" type="stmt"/>
@@ -1517,13 +1603,13 @@
     </package>
     <package name="src.components.UserReportsComp">
       <metrics statements="5" coveredstatements="0" conditionals="2" coveredconditionals="0" methods="3" coveredmethods="0"/>
-      <file name="SearchBar.tsx" path="C:\Users\lallo\Desktop\Computer Science - Third Year\My notes\Software Design\Sprint 3.6\local-artisan-marketplace\client\src\components\UserReportsComp\SearchBar.tsx">
+      <file name="SearchBar.tsx" path="/Users/harshilvallabh/Wits/2025/Software Design/PROJECT/SPRINT 4/local-artisan-marketplace/client/src/components/UserReportsComp/SearchBar.tsx">
         <metrics statements="3" coveredstatements="0" conditionals="0" coveredconditionals="0" methods="2" coveredmethods="0"/>
         <line num="9" count="0" type="stmt"/>
         <line num="10" count="0" type="stmt"/>
         <line num="17" count="0" type="stmt"/>
       </file>
-      <file name="UserReportCard.tsx" path="C:\Users\lallo\Desktop\Computer Science - Third Year\My notes\Software Design\Sprint 3.6\local-artisan-marketplace\client\src\components\UserReportsComp\UserReportCard.tsx">
+      <file name="UserReportCard.tsx" path="/Users/harshilvallabh/Wits/2025/Software Design/PROJECT/SPRINT 4/local-artisan-marketplace/client/src/components/UserReportsComp/UserReportCard.tsx">
         <metrics statements="2" coveredstatements="0" conditionals="2" coveredconditionals="0" methods="1" coveredmethods="0"/>
         <line num="15" count="0" type="stmt"/>
         <line num="25" count="0" type="stmt"/>
@@ -1531,7 +1617,7 @@
     </package>
     <package name="src.components.WelcomePageComp">
       <metrics statements="9" coveredstatements="9" conditionals="0" coveredconditionals="0" methods="2" coveredmethods="2"/>
-      <file name="ActionButtons.tsx" path="C:\Users\lallo\Desktop\Computer Science - Third Year\My notes\Software Design\Sprint 3.6\local-artisan-marketplace\client\src\components\WelcomePageComp\ActionButtons.tsx">
+      <file name="ActionButtons.tsx" path="/Users/harshilvallabh/Wits/2025/Software Design/PROJECT/SPRINT 4/local-artisan-marketplace/client/src/components/WelcomePageComp/ActionButtons.tsx">
         <metrics statements="5" coveredstatements="5" conditionals="0" coveredconditionals="0" methods="1" coveredmethods="1"/>
         <line num="2" count="1" type="stmt"/>
         <line num="3" count="1" type="stmt"/>
@@ -1539,7 +1625,7 @@
         <line num="6" count="1" type="stmt"/>
         <line num="7" count="2" type="stmt"/>
       </file>
-      <file name="Logo.tsx" path="C:\Users\lallo\Desktop\Computer Science - Third Year\My notes\Software Design\Sprint 3.6\local-artisan-marketplace\client\src\components\WelcomePageComp\Logo.tsx">
+      <file name="Logo.tsx" path="/Users/harshilvallabh/Wits/2025/Software Design/PROJECT/SPRINT 4/local-artisan-marketplace/client/src/components/WelcomePageComp/Logo.tsx">
         <metrics statements="4" coveredstatements="4" conditionals="0" coveredconditionals="0" methods="1" coveredmethods="1"/>
         <line num="1" count="1" type="stmt"/>
         <line num="2" count="1" type="stmt"/>
@@ -1549,7 +1635,7 @@
     </package>
     <package name="src.layouts">
       <metrics statements="1" coveredstatements="0" conditionals="0" coveredconditionals="0" methods="1" coveredmethods="0"/>
-      <file name="MainLayout.tsx" path="C:\Users\lallo\Desktop\Computer Science - Third Year\My notes\Software Design\Sprint 3.6\local-artisan-marketplace\client\src\layouts\MainLayout.tsx">
+      <file name="MainLayout.tsx" path="/Users/harshilvallabh/Wits/2025/Software Design/PROJECT/SPRINT 4/local-artisan-marketplace/client/src/layouts/MainLayout.tsx">
         <metrics statements="1" coveredstatements="0" conditionals="0" coveredconditionals="0" methods="1" coveredmethods="0"/>
         <line num="6" count="0" type="stmt"/>
       </file>
