@@ -3,6 +3,8 @@ const cors = require("cors");
 const { connectDB } = require("./dbConfig");
 
 const app = express();
+app.use(express.json({ limit: "5mb" }));
+app.use(express.urlencoded({ extended: true, limit: "5mb" }));
 app.use(cors());
 
 app.use(express.json());
@@ -615,7 +617,31 @@ app.put("/api/users/:username", async (req, res) => {
     res.status(500).json({ error: "Failed to update user info" });
   }
 });
+//update users with out interests 
+app.put("/api/users/:username", async (req, res) => {
+  const { username } = req.params;
+  const { postal_code, phone_no } = req.body;
 
+  try {
+    const pool = await connectDB();
+    await pool
+      .request()
+      .input("postal_code", postal_code ?? 0)
+      .input("phone_no", phone_no ?? null)
+      .input("username", username).query(`
+        UPDATE dbo.users
+        SET postal_code = @postal_code,
+            phone_no = @phone_no,
+            interests = @interests
+        WHERE username = @username
+      `);
+    await pool.close();
+    res.json({ message: "User info updated successfully" });
+  } catch (err) {
+    console.error("❌ Error updating user info:", err);
+    res.status(500).json({ error: "Failed to update user info" });
+  }
+});
 // POST /api/artisans
 app.post("/createartisan", async (req, res) => {
   const { username, shop_name, bio, shop_address, shop_pfp } = req.body;
@@ -870,5 +896,32 @@ app.put("/editproduct/:id", async (req, res) => {
   } catch (err) {
     console.error("❌ Failed to update product:", err);
     res.status(500).json({ error: "Update failed", details: err.message });
+  }
+});
+
+app.put("/api/user-profile-image", async (req, res) => {
+  const { username, user_pfp } = req.body;
+
+  if (!username || !user_pfp) {
+    return res.status(400).json({ error: "Missing username or image data" });
+  }
+
+  try {
+    const pool = await connectDB();
+    await pool
+      .request()
+      .input("username", username)
+      .input("user_pfp", user_pfp)
+      .query(`
+        UPDATE dbo.users
+        SET user_pfp = @user_pfp
+        WHERE username = @username
+      `);
+    await pool.close();
+
+    res.json({ message: "✅ Profile image updated successfully" });
+  } catch (err) {
+    console.error("❌ Failed to update user profile image:", err);
+    res.status(500).json({ error: "DB update failed", details: err.message });
   }
 });
