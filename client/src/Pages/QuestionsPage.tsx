@@ -4,6 +4,7 @@ import UserNameHeader from "../components/QuestionsPageComp/UserNameHeader";
 import ApplyButton from "../components/QuestionsPageComp/ApplyButton";
 import ArtFormSection from "../components/QuestionsPageComp/ArtFormSection";
 import { useUser } from "../Users/UserContext";
+import { User } from "../Users/User";
 import axios from "axios";
 import { baseURL } from "../config";
 import { useNavigate } from "react-router-dom";
@@ -15,10 +16,10 @@ function QuestionsPage() {
   const [submitted, setSubmitted] = useState(false);
   const [error, setError] = useState<string | null>(null);
   const [message, setMessage] = useState("");
-  const { user } = useUser();
+  const { user, setUser } = useUser();
   const navigate = useNavigate();
 
-  // Fetch tags from DB
+  // Fetch art form categories
   useEffect(() => {
     const fetchTags = async () => {
       try {
@@ -44,7 +45,13 @@ function QuestionsPage() {
       return;
     }
 
+    if (selectedArtForms.length === 0) {
+      setError("Please select at least one art form.");
+      return;
+    }
+
     try {
+      //  Check if username is already taken
       const checkRes = await axios.post(`${baseURL}/check-user`, {
         username: userName,
       });
@@ -54,23 +61,32 @@ function QuestionsPage() {
         return;
       }
 
-      // Add user to database
+      //  Add user to DB with interests
+      const interests = selectedArtForms.join(", ");
       const res = await axios.post(`${baseURL}/adduser`, {
         username: userName,
         user_ID: user.id,
+        interests: interests,
       });
 
-      // Save selected art tags
-      await axios.post(`${baseURL}/save-user-tags`, {
+      //  Update user context
+      const updatedUser = new User({
+        id: user.id,
+        name: user.name,
+        firstName: user.firstName,
+        lastName: user.lastName,
+        email: user.email,
+        picture: user.picture,
         username: userName,
-        tags: selectedArtForms,
       });
 
+      setUser(updatedUser);
+
+      // on Success
       setSubmitted(true);
       setMessage(res.data.message);
-      setError("");
-      console.log(message, res.data);
-    } catch (err) {
+      setError(null);
+    } catch (err: any) {
       console.error("User creation failed:", err);
       setError("Something went wrong. Please try again.");
       setMessage("");
@@ -104,9 +120,7 @@ function QuestionsPage() {
           <p>
             <strong>Selected Art Forms:</strong> {selectedArtForms.join(", ")}
           </p>
-          <button onClick={() => navigate("/")}>
-            Proceed to Homepage
-          </button>
+          <button onClick={() => navigate("/Home")}>Proceed to Homepage</button>
         </div>
       )}
     </main>
