@@ -2,6 +2,10 @@ import { render, screen, fireEvent, waitFor } from "@testing-library/react";
 import { Routes, Route } from "react-router-dom";
 import { MemoryRouter } from "react-router-dom";
 import { UserProvider } from "../Users/UserContext";
+jest.mock("../utils/getYocoKey", () => ({
+  getYocoKey: () => "test_public_key",
+}));
+
 import Cart from "../Pages/Cart";
 import { act } from "react";
 import axios from "axios";
@@ -225,35 +229,55 @@ test("renders correct subtotal based on price and quantity", async () => {
   ).toBeInTheDocument();
 });
 
-test("navigates to PaymentPage when Proceed to Payment button is clicked", async () => {
+test("initiates Yoco payment and sends token to backend", async () => {
   mockedAxios.get.mockResolvedValueOnce({
-    data: [], // Simulate empty cart
+    data: [],
   });
 
-  // This mock PaymentPage must return the exact heading you're checking for
-  const PaymentPage = () => <h1>From Your Cart</h1>;
+  // Mock window.YocoSDK and the showPopup method
+  const mockShowPopup = jest.fn();
 
-  await act(async () => {
-    render(
-      <UserProvider>
-        <MemoryRouter initialEntries={["/Cart"]}>
-          <Routes>
-            <Route path="/Cart" element={<Cart />} />
-            <Route path="/PaymentPage" element={<PaymentPage />} />
-          </Routes>
-        </MemoryRouter>
-      </UserProvider>
-    );
-  });
+  (window as any).YocoSDK = jest.fn().mockImplementation(() => ({
+    showPopup: mockShowPopup,
+  }));
 
+  render(
+    <UserProvider>
+      <MemoryRouter initialEntries={["/Cart"]}>
+        <Cart />
+      </MemoryRouter>
+    </UserProvider>
+  );
+
+  // Click the payment button
   const proceedButton = await screen.findByRole("button", {
     name: /proceed to payment/i,
   });
 
+  fireEvent.click(proceedButton);
+
+  expect(mockShowPopup).toHaveBeenCalled();
+
+  // Extract and call the callback manually to simulate successful token
+  const popupArgs = mockShowPopup.mock.calls[0][0];
+  expect(popupArgs.amountInCents).toBeDefined();
+  expect(typeof popupArgs.callback).toBe("function");
+
+  // Mock successful token callback
+  mockedAxios.post.mockResolvedValueOnce({ data: { success: true } });
+
   await act(async () => {
-    fireEvent.click(proceedButton);
+    await popupArgs.callback({ id: "mock-token-id" });
   });
 
-  //Use the heading that your mock PaymentPage actually renders
-  expect(await screen.findByText("From Your Cart")).toBeInTheDocument();
+  expect(mockedAxios.post).toHaveBeenCalledWith(
+    expect.stringContaining("/checkout"),
+    expect.objectContaining({
+      username: "testuser",
+      token: "mock-token-id",
+    })
+  );
 });
+
+
+ 

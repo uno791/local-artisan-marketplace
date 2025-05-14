@@ -25,28 +25,28 @@
             <div class='fl pad1y space-right2'>
                 <span class="strong">0% </span>
                 <span class="quiet">Statements</span>
-                <span class='fraction'>0/1</span>
+                <span class='fraction'>0/9</span>
             </div>
         
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">100% </span>
+                <span class="strong">0% </span>
                 <span class="quiet">Branches</span>
-                <span class='fraction'>0/0</span>
+                <span class='fraction'>0/1</span>
             </div>
         
             
             <div class='fl pad1y space-right2'>
                 <span class="strong">0% </span>
                 <span class="quiet">Functions</span>
-                <span class='fraction'>0/1</span>
+                <span class='fraction'>0/4</span>
             </div>
         
             
             <div class='fl pad1y space-right2'>
                 <span class="strong">0% </span>
                 <span class="quiet">Lines</span>
-                <span class='fraction'>0/1</span>
+                <span class='fraction'>0/9</span>
             </div>
         
             
@@ -141,7 +141,21 @@
 <a name='L76'></a><a href='#L76'>76</a>
 <a name='L77'></a><a href='#L77'>77</a>
 <a name='L78'></a><a href='#L78'>78</a>
-<a name='L79'></a><a href='#L79'>79</a></td><td class="line-coverage quiet"><span class="cline-any cline-neutral">&nbsp;</span>
+<a name='L79'></a><a href='#L79'>79</a>
+<a name='L80'></a><a href='#L80'>80</a>
+<a name='L81'></a><a href='#L81'>81</a>
+<a name='L82'></a><a href='#L82'>82</a>
+<a name='L83'></a><a href='#L83'>83</a>
+<a name='L84'></a><a href='#L84'>84</a>
+<a name='L85'></a><a href='#L85'>85</a>
+<a name='L86'></a><a href='#L86'>86</a>
+<a name='L87'></a><a href='#L87'>87</a>
+<a name='L88'></a><a href='#L88'>88</a>
+<a name='L89'></a><a href='#L89'>89</a>
+<a name='L90'></a><a href='#L90'>90</a>
+<a name='L91'></a><a href='#L91'>91</a>
+<a name='L92'></a><a href='#L92'>92</a>
+<a name='L93'></a><a href='#L93'>93</a></td><td class="line-coverage quiet"><span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -169,6 +183,22 @@
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
@@ -217,9 +247,7 @@
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span></td><td class="text"><pre class="prettyprint lang-js">import React from "react";
+<span class="cline-any cline-neutral">&nbsp;</span></td><td class="text"><pre class="prettyprint lang-js">import React, { useState, useEffect } from "react";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import { GoogleOAuthProvider } from "@react-oauth/google";
 import LoginPage from "./Pages/LoginPage";
@@ -240,15 +268,31 @@ import BuyerOrders from "./Pages/BuyerOrders";
 import PaymentPage from "./Pages/PaymentPage";
 import SearchPage from "./Pages/SearchPage";
 import { SearchProvider } from "./components/SearchPageComp1/SearchContext";
-&nbsp;
 import EditProductPage from "./Pages/EditProductPage";
 import AddProductPage from "./Pages/AddProductPage";
 import UserReports from "./Pages/UserReports";
 import SellerHome from "./Pages/SellerHome";
 import StatsPage from "./Pages/SellerStatsPage";
 import SellerOrdersPage from "./Pages/SellerOrdersPage";
+import Preloader from "./Pre-loader/Preloader";
 &nbsp;
 function <span class="fstat-no" title="function not covered" >App(</span>) {
+  const [loading, setLoading] = <span class="cstat-no" title="statement not covered" >useState(true);</span>
+&nbsp;
+<span class="cstat-no" title="statement not covered" >  useEffect(<span class="fstat-no" title="function not covered" >function () {</span></span>
+    const timer = <span class="cstat-no" title="statement not covered" >setTimeout(<span class="fstat-no" title="function not covered" >function () {</span></span>
+<span class="cstat-no" title="statement not covered" >      setLoading(false);</span>
+    }, 1500); // Simulated delay
+&nbsp;
+<span class="cstat-no" title="statement not covered" >    return <span class="fstat-no" title="function not covered" >function () {</span></span>
+<span class="cstat-no" title="statement not covered" >      clearTimeout(timer);</span>
+    };
+  }, []);
+&nbsp;
+<span class="cstat-no" title="statement not covered" >  <span class="missing-if-branch" title="if path not taken" >I</span>if (loading) {</span>
+<span class="cstat-no" title="statement not covered" >    return &lt;Preloader /&gt;;</span>
+  }
+&nbsp;
 <span class="cstat-no" title="statement not covered" >  return (</span>
     &lt;GoogleOAuthProvider clientId="719123023157-2l972akc1n9ktkksvlhajau4s9aclcng.apps.googleusercontent.com"&gt;
       &lt;BrowserRouter&gt;
@@ -264,8 +308,6 @@ function <span class="fstat-no" title="function not covered" >App(</span>) {
           &lt;Route path="/UserReports" element={&lt;UserReports /&gt;} /&gt;
 &nbsp;
           {/* Protected routes with MainLayout */}
-&nbsp;
-          {/* Pages with MainLayout (includes NavBar &amp; Footer) */}
           &lt;Route path="/SellerHome" element={&lt;SellerHome /&gt;} /&gt;
           &lt;Route path="/SellerStats" element={&lt;StatsPage /&gt;} /&gt;
           &lt;Route path="/SellerOrders" element={&lt;SellerOrdersPage /&gt;} /&gt;
@@ -273,14 +315,14 @@ function <span class="fstat-no" title="function not covered" >App(</span>) {
           &lt;Route path="/EditProductPage/:id" element={&lt;EditProductPage /&gt;} /&gt;
           &lt;Route path="/AddProductPage" element={&lt;AddProductPage /&gt;} /&gt;
 &nbsp;
-          {/* For Pages with NavBar and Footer */}
+          {/* Pages with NavBar and Footer */}
           &lt;Route element={&lt;MainLayout /&gt;}&gt;
             &lt;Route path="/Home" element={&lt;Home /&gt;} /&gt;
             &lt;Route
               path="/SearchPage"
               element={
                 &lt;SearchProvider&gt;
-                  &lt;SearchPage&gt;&lt;/SearchPage&gt;
+                  &lt;SearchPage /&gt;
                 &lt;/SearchProvider&gt;
               }
             /&gt;
@@ -304,7 +346,7 @@ export default App;
             <div class='footer quiet pad2 space-top1 center small'>
                 Code coverage generated by
                 <a href="https://istanbul.js.org/" target="_blank" rel="noopener noreferrer">istanbul</a>
-                at 2025-05-13T19:07:08.903Z
+                at 2025-05-07T08:25:30.090Z
             </div>
         <script src="../prettify.js"></script>
         <script>
