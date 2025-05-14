@@ -1,13 +1,12 @@
 .home {
   padding-top: 100px;
-  padding-left: 50px;
-  padding-right: 0;
+  padding-left: 2vw;
+  padding-right: 2vw;
   width: 100vw;
   min-height: 100vh;
-  max-width: 1400px;
-  margin: 0 auto;
   box-sizing: border-box;
 }
+
 
 .homeHeader {
   display: flex;
@@ -56,38 +55,31 @@
 
 /* Flex Layout for Cards */
 .allProductsGrid {
-  display: flex;
-  flex-wrap: wrap;
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(230px, 1fr));
   gap: 2rem;
   list-style: none;
   padding: 0;
-  margin: 0;
-  justify-content: center;
+  margin: 0 auto;
+  justify-items: center;
 }
 
 /* Each Card Container */
 .productCard {
-  flex: 1 1 240px;  /* allows shrinking & growing */
-  max-width: 300px;
-  display: flex;
-}
-
-/* Main Card Styling */
-.productCard article {
+  width: 100%;
+  max-width: 270px;
   background-color: #f5e8d8;
   border-radius: 8px;
   box-shadow: 0 0 4px rgba(0, 0, 0, 0.1);
   overflow: hidden;
+  
   display: flex;
   flex-direction: column;
-  justify-content: space-between;
-  width: 100%;
   transition: transform 0.2s ease, box-shadow 0.2s ease;
-  cursor: pointer;
-  height: 100%;
 }
 
-.productCard article:hover {
+/* Hover Effect */
+.productCard:hover {
   transform: scale(1.02);
   box-shadow: 0 8px 32px rgba(0, 0, 0, 0.2);
   z-index: 1;
@@ -96,10 +88,9 @@
 /* Product Image */
 .productCard img {
   width: 100%;
-  height: 220px;
+  height: 200px;
   object-fit: cover;
   background-color: #e0e0e0;
-  border-radius: 0;
 }
 
 /* Info Section */
@@ -115,23 +106,28 @@
 .title {
   font-weight: 600;
   font-size: 1rem;
-  margin: 0;
   color: #000;
-  overflow: hidden;
-  text-overflow: ellipsis;
-  white-space: nowrap;
+  margin: 0;
+  text-align: left;
 }
 
 .artist {
   font-size: 0.95rem;
   color: #444;
-  overflow: hidden;
-  text-overflow: ellipsis;
-  white-space: nowrap;
+  text-align: left;
 }
 
 .price {
   font-size: 1rem;
   font-weight: bold;
   color: #3e2b18;
+  text-align: left;
 }
+
+
+@media (max-width: 600px) {
+  .allProductsGrid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+

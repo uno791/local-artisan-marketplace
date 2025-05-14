@@ -4,7 +4,7 @@ type Props = {
   title: string;
   artist: string;
   price: string;
-  category: string;
+  category?: string;
   image: string;
 };
 
@@ -17,7 +17,6 @@ function ProductCard({ title, artist, price, category, image }: Props) {
         <p className={styles.cardArtist}>{artist}</p>
         <p className={styles.cardPrice}>{price}</p>
         <p className={styles.cardCategory}>{category}</p>
-        <button className={styles.cardButton}>Add to Cart</button>
       </section>
     </section>
   );

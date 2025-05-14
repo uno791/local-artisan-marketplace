@@ -1,3 +1,4 @@
+import { Link } from "react-router-dom";
 import ProductCard from "./ProductCard";
 import styles from "./ShopFront.module.css";
 
@@ -6,7 +7,6 @@ type Product = {
   title: string;
   artist: string;
   price: string;
-  category: string;
   image: string;
 };
 
@@ -18,14 +18,18 @@ function ProductGrid({ products }: Props) {
   return (
     <section className={styles.grid}>
       {products.map((product) => (
-        <ProductCard
+        <Link
           key={product.id}
-          title={product.title}
-          artist={product.artist}
-          price={product.price}
-          category={product.category}
-          image={product.image}
-        />
+          to={`/Product/${product.id}`}
+          style={{ textDecoration: "none", color: "inherit" }}
+        >
+          <ProductCard
+            title={product.title}
+            artist={product.artist}
+            price={product.price}
+            image={product.image}
+          />
+        </Link>
       ))}
     </section>
   );

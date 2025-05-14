@@ -231,4 +231,23 @@
     text-align: center;
   }
   
+  .dropdown {
+  all: unset;
+  width: 100%;
+  padding: 0.75rem;
+  font-size: 1rem;
+  border: 1px solid #ccc;
+  border-radius: 8px;
+  background-color: #ffffff;
+  margin-bottom: 1rem;
+  box-sizing: border-box;
+  color: #3e2b18;
+}
+
+.file-input {
+  margin-top: 0.5rem;
+  margin-bottom: 1rem;
+  font-family: 'Montserrat', sans-serif;
+}
+
   

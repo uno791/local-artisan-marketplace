@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import { GoogleOAuthProvider } from "@react-oauth/google";
 import LoginPage from "./Pages/LoginPage";
@@ -7,7 +7,7 @@ import SignUpPage from "./Pages/SignUpPage";
 import WelcomePage from "./Pages/WelcomePage";
 import Home from "./Pages/Home";
 import Profile from "./Pages/Profile";
-import Search from "./Pages/Search";
+//import Search from "./Pages/Search";
 import Cart from "./Pages/Cart";
 import ProductPage from "./Pages/ProductPage";
 import MainLayout from "./layouts/MainLayout";
@@ -16,19 +16,36 @@ import AdminDashboard from "./Pages/AdminDashboard";
 import SellerSignup from "./Pages/SellerSignup";
 import ShopFront from "./Pages/ShopFront";
 import BuyerOrders from "./Pages/BuyerOrders";
-import PaymentPage from "./Pages/PaymentPage";
+//import PaymentPage from "./Pages/PaymentPage";
 import SearchPage from "./Pages/SearchPage";
 import { SearchProvider } from "./components/SearchPageComp1/SearchContext";
 import SellerLayout from "./layouts/SellerLayout";
-import Footer from "./components/HomePageComp/Footer";
+//import Footer from "./components/HomePageComp/Footer";
 import EditProductPage from "./Pages/EditProductPage";
 import AddProductPage from "./Pages/AddProductPage";
 import UserReports from "./Pages/UserReports";
 import SellerHome from "./Pages/SellerHome";
 import StatsPage from "./Pages/SellerStatsPage";
 import SellerOrdersPage from "./Pages/SellerOrdersPage";
+import Preloader from "./Pre-loader/Preloader";
 
 function App() {
+  const [loading, setLoading] = useState(true);
+
+  useEffect(function () {
+    const timer = setTimeout(function () {
+      setLoading(false);
+    }, 1500); // Simulated delay
+
+    return function () {
+      clearTimeout(timer);
+    };
+  }, []);
+
+  if (loading) {
+    return <Preloader />;
+  }
+
   return (
     <GoogleOAuthProvider clientId="719123023157-2l972akc1n9ktkksvlhajau4s9aclcng.apps.googleusercontent.com">
       <BrowserRouter>
@@ -55,14 +72,14 @@ function App() {
             <Route path="/AddProductPage" element={<AddProductPage />} />
           </Route>
 
-          {/* For Pages with NavBar and Footer */}
+          {/* Pages with NavBar and Footer */}
           <Route element={<MainLayout />}>
             <Route path="/Home" element={<Home />} />
             <Route
               path="/SearchPage"
               element={
                 <SearchProvider>
-                  <SearchPage></SearchPage>
+                  <SearchPage />
                 </SearchProvider>
               }
             />
