@@ -1,94 +1,78 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { OrderCard } from "../components/BuyerOrdersComp/OrderCard";
 import styles from "../components/BuyerOrdersComp/BuyerOrders.module.css";
+import axios from "axios";
+import { baseURL } from "../config";
+import { useUser } from "../Users/UserContext";
 
-// Sample data for current and previous orders
-const currentOrders = [
-  {
-    imageUrl: "https://via.placeholder.com/60",
-    name: "Sexy Bag",
-    price: 90,
-    quantity: 2,
-    status: "Payment Received",
-    date: "2024-01-15",
-  },
-  {
-    imageUrl: "https://via.placeholder.com/60",
-    name: "Sexy Bottle",
-    price: 90,
-    quantity: 1,
-    status: "Shipped",
-    date: "2024-01-14",
-  },
-];
-
-const previousOrders = [
-  {
-    imageUrl: "https://via.placeholder.com/60",
-    name: "Sexy Bag",
-    price: 90,
-    quantity: 3,
-    status: "Delivered",
-    date: "2024-01-10",
-  },
-  {
-    imageUrl: "https://via.placeholder.com/60",
-    name: "Sexy Bottle",
-    price: 90,
-    quantity: 1,
-    status: "Delivered",
-    date: "2024-01-08",
-  },
-  {
-    imageUrl: "https://via.placeholder.com/60",
-    name: "Sexy Bag",
-    price: 90,
-    quantity: 2,
-    status: "Delivered",
-    date: "2024-01-05",
-  },
-];
+interface OrderItem {
+  image_url: string;
+  product_name: string;
+  price: number;
+  quantity: number;
+  status: string;
+  created_at: string;
+}
 
 function BuyerOrders() {
+  const { user } = useUser();
+  const [orders, setOrders] = useState<OrderItem[]>([]);
+  const [error, setError] = useState<string | null>(null);
+
+  useEffect(() => {
+    const fetchOrders = async () => {
+      if (!user?.username) return;
+
+      try {
+        const res = await axios.get(`${baseURL}/orders/${user.username}`);
+        setOrders(res.data);
+      } catch (err) {
+        console.error("❌ Failed to fetch orders:", err);
+        setError("Failed to load orders.");
+      }
+    };
+
+    fetchOrders();
+  }, [user?.username]);
+
+  const currentOrders = orders.filter((o) => o.status !== "Delivered");
+  const previousOrders = orders.filter((o) => o.status === "Delivered");
+
   return (
     <main className={styles.wrapper}>
-
       <section>
         <h2>Current Orders</h2>
-
-        {currentOrders.map(function (order, index) {
-          return (
-            <OrderCard
-              key={index}
-              imageUrl={order.imageUrl}
-              name={order.name}
-              price={order.price}
-              quantity={order.quantity}
-              status={order.status}
-              date={order.date}
-            />
-          );
-        })}
+        {currentOrders.length === 0 && <p>No current orders.</p>}
+        {currentOrders.map((order, index) => (
+          <OrderCard
+            key={index}
+            imageUrl={order.image_url}
+            name={order.product_name}
+            price={order.price}
+            quantity={order.quantity}
+            status={order.status}
+            date={order.created_at.split("T")[0]}
+          />
+        ))}
       </section>
 
       <section>
         <h2>Previous Orders</h2>
-
-        {previousOrders.map(function (order, index) {
-          return (
-            <OrderCard
-              key={index}
-              imageUrl={order.imageUrl}
-              name={order.name}
-              price={order.price}
-              quantity={order.quantity}
-              status={order.status}
-              date={order.date}
-            />
-          );
-        })}
+        {previousOrders.length === 0 && <p>No previous orders.</p>}
+        {previousOrders.map((order, index) => (
+          <OrderCard
+            key={index}
+            imageUrl={order.image_url}
+            name={order.product_name}
+            price={order.price}
+            quantity={order.quantity}
+            status={order.status}
+            date={order.created_at.split("T")[0]}
+          />
+        ))}
       </section>
 
+      {error && <p>{error}</p>}
     </main>
   );
 }

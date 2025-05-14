@@ -209,6 +209,27 @@ app.get("/product/:id", async (req, res) => {
   }
 });
 
+app.get("/sales-data", async (req, res) => {
+  try {
+    const pool = await connectDB();
+    // Group by month number and name, order chronologically
+    const result = await pool.request().query(`
+      SELECT
+        MONTH(created_at)      AS month,
+        DATENAME(month, created_at) AS monthName,
+        SUM(total_amount)      AS total
+      FROM dbo.orders
+      GROUP BY MONTH(created_at), DATENAME(month, created_at)
+      ORDER BY MONTH(created_at);
+    `);
+    await pool.close();
+    res.json(result.recordset);
+  } catch (err) {
+    console.error("Error fetching sales data", err);
+    res.status(500).json({ error: "Failed to fetch sales data" });
+  }
+});
+
 app.get("/penartisans", async (req, res) => {
   try {
     const pool = await connectDB();
@@ -849,3 +870,100 @@ app.put("/editproduct/:id", async (req, res) => {
     res.status(500).json({ error: "Update failed", details: err.message });
   }
 });
+
+//Adding stuff for cart
+app.post("/checkout", async (req, res) => {
+  const { username, token } = req.body;
+
+  if (!username) return res.status(400).json({ error: "Missing username" });
+
+  try {
+    const pool = await connectDB();
+
+    // FIXED: Explicitly prefix column names to avoid ambiguity
+    const cartRes = await pool.request()
+      .input("username", username)
+      .query(`
+        SELECT p.product_id, ci.quantity, p.price 
+        FROM dbo.cart_items ci
+        JOIN dbo.products p ON ci.product_id = p.product_id
+        WHERE ci.username = @username
+      `);
+
+    const cartItems = cartRes.recordset;
+    if (cartItems.length === 0) {
+      await pool.close();
+      return res.status(400).json({ error: "Cart is empty" });
+    }
+
+    const totalAmount = cartItems.reduce(
+      (sum, item) => sum + item.price * item.quantity,
+      0
+    );
+
+    const orderResult = await pool.request()
+      .input("buyer_username", username)
+      .input("total_amount", totalAmount)
+      .query(`
+        INSERT INTO dbo.orders (buyer_username, created_at, total_amount, status)
+        OUTPUT INSERTED.order_id
+        VALUES (@buyer_username, GETDATE(), @total_amount, 'Payment Received')
+      `);
+
+    const orderId = orderResult.recordset[0].order_id;
+
+    for (const item of cartItems) {
+      await pool.request()
+        .input("order_id", orderId)
+        .input("product_id", item.product_id)
+        .input("quantity", item.quantity)
+        .query(`
+          INSERT INTO dbo.order_items (order_id, product_id, quantity)
+          VALUES (@order_id, @product_id, @quantity)
+        `);
+    }
+
+    /*await pool.request()
+      .input("order_id", orderId)
+      .input("payment_status", "Paid")
+      .query(`
+        INSERT INTO dbo.payments (order_id, payment_status, paid_at)
+        VALUES (@order_id, @payment_status, GETDATE())
+      `);*/
+
+    await pool.request()
+      .input("username", username)
+      .query(`DELETE FROM dbo.cart_items WHERE username = @username`);
+
+    await pool.close();
+    res.status(200).json({ message: "Order placed", orderId });
+  } catch (err) {
+    console.error("❌ Checkout failed:", err);
+    res.status(500).json({ error: "Checkout failed", details: err.message });
+  }
+});
+app.get("/orders/:username", async (req, res) => {
+  const { username } = req.params;
+
+  try {
+    const pool = await connectDB();
+    const result = await pool.request()
+      .input("username", username)
+      .query(`
+        SELECT o.order_id, o.status, o.created_at,
+               oi.quantity, p.product_name, p.price, p.image_url
+        FROM dbo.orders o
+        JOIN dbo.order_items oi ON o.order_id = oi.order_id
+        JOIN dbo.products p ON oi.product_id = p.product_id
+        WHERE o.buyer_username = @username
+        ORDER BY o.created_at DESC
+      `);
+
+    await pool.close();
+    res.json(result.recordset);
+  } catch (err) {
+    console.error("❌ Failed to fetch orders:", err);
+    res.status(500).json({ error: "Could not fetch orders" });
+  }
+});
+
