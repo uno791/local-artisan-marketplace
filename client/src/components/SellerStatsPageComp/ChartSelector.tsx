@@ -43,8 +43,27 @@ const ChartSelector: React.FC = () => {
       .get(`${baseURL}${endpoint}`, { params: { username } })
       .then((res) => {
         if (chartKey === "salesTrends") {
-          setMonths(res.data.months);
-          setSalesData(res.data.data);
+          if (chartKey === "salesTrends") {
+            const monthNames = [
+              "Jan",
+              "Feb",
+              "Mar",
+              "Apr",
+              "May",
+              "Jun",
+              "Jul",
+              "Aug",
+              "Sep",
+              "Oct",
+              "Nov",
+              "Dec",
+            ];
+            const convertedMonths = res.data.months.map(
+              (m: number) => monthNames[m - 1]
+            );
+            setMonths(convertedMonths);
+            setSalesData(res.data.data);
+          }
         } else if (chartKey === "inventoryStatus") {
           setProducts(res.data.products);
           setStockData(res.data.data);
