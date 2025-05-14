@@ -648,6 +648,37 @@ app.get("/seller-inventory-status", async (req, res) => {
   }
 });
 
+app.get("/seller-top-products", async (req, res) => {
+  const { username } = req.query;
+  if (!username) {
+    return res.status(400).json({ error: "Missing username query parameter" });
+  }
+
+  try {
+    const pool = await connectDB();
+    const result = await pool.request().input("username", username).query(`
+        SELECT TOP 5
+          p.product_name   AS productName,
+          SUM(oi.quantity) AS unitsSold
+        FROM dbo.order_items oi
+        JOIN dbo.orders o   ON oi.order_id   = o.order_id
+        JOIN dbo.products p ON oi.product_id = p.product_id
+        WHERE p.username = @username
+        GROUP BY p.product_name
+        ORDER BY unitsSold DESC;
+      `);
+    await pool.close();
+
+    const productNames = result.recordset.map((r) => r.productName);
+    const unitsSold = result.recordset.map((r) => Number(r.unitsSold));
+
+    res.json({ productNames, unitsSold });
+  } catch (err) {
+    console.error("❌ /seller-top-products error:", err);
+    res.status(500).json({ error: "Server error", details: err.message });
+  }
+});
+
 // PUT /api/users/:username
 app.put("/api/users/:username", async (req, res) => {
   const { username } = req.params;

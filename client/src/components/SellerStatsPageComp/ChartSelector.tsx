@@ -7,25 +7,10 @@ import { useUser } from "../../Users/UserContext";
 import { baseURL } from "../../config";
 import SalesTrendsChart from "./SalesTrendsChart";
 import InventoryStatusChart from "./InventoryStatusChart";
+import TopProductsPieChart from "./TopProductsPieChart";
 import styles from "./ChartSelector.module.css";
 
-export type ChartKey = "salesTrends" | "inventoryStatus";
-
-// Map month numbers (1–12) to short names
-const MONTH_NAMES = [
-  "Jan",
-  "Feb",
-  "Mar",
-  "Apr",
-  "May",
-  "Jun",
-  "Jul",
-  "Aug",
-  "Sep",
-  "Oct",
-  "Nov",
-  "Dec",
-];
+export type ChartKey = "salesTrends" | "inventoryStatus" | "topProducts";
 
 const ChartSelector: React.FC = () => {
   const { user } = useUser();
@@ -36,34 +21,39 @@ const ChartSelector: React.FC = () => {
   const [salesData, setSalesData] = useState<number[]>([]);
   const [products, setProducts] = useState<string[]>([]);
   const [stockData, setStockData] = useState<number[]>([]);
+  const [unitsSold, setUnitsSold] = useState<number[]>([]);
   const chartRef = useRef<HTMLDivElement>(null);
 
-  // Whenever user or chartKey changes, fetch the right data
   useEffect(() => {
     if (!username) return;
-    const endpoint =
-      chartKey === "salesTrends"
-        ? "/seller-sales-trends"
-        : "/seller-inventory-status";
+    let endpoint: string;
+    switch (chartKey) {
+      case "salesTrends":
+        endpoint = "/seller-sales-trends";
+        break;
+      case "inventoryStatus":
+        endpoint = "/seller-inventory-status";
+        break;
+      case "topProducts":
+        endpoint = "/seller-top-products";
+        break;
+    }
 
     axios
       .get(`${baseURL}${endpoint}`, { params: { username } })
       .then((res) => {
         if (chartKey === "salesTrends") {
-          // res.data.months is [1,2,3,...]
-          const nums: number[] = res.data.months;
-          // convert to ["Jan","Feb",...]
-          const labels = nums.map((m) => MONTH_NAMES[m - 1] || "");
-          setMonths(labels);
+          setMonths(res.data.months);
           setSalesData(res.data.data);
-        } else {
+        } else if (chartKey === "inventoryStatus") {
           setProducts(res.data.products);
           setStockData(res.data.data);
+        } else if (chartKey === "topProducts") {
+          setProducts(res.data.productNames);
+          setUnitsSold(res.data.unitsSold);
         }
       })
-      .catch((err) => {
-        console.error("❌ Chart data fetch error:", err);
-      });
+      .catch(console.error);
   }, [username, chartKey]);
 
   // PDF export
@@ -80,16 +70,24 @@ const ChartSelector: React.FC = () => {
 
   // CSV export
   const exportCSV = () => {
-    const rows =
-      chartKey === "salesTrends"
-        ? [
-            ["Month", ...months],
-            ["Revenue", ...salesData.map((n) => n.toString())],
-          ]
-        : [
-            ["Product", "Stock"],
-            ...products.map((p, i) => [p, stockData[i].toString()]),
-          ];
+    let rows: string[][];
+    if (chartKey === "salesTrends") {
+      rows = [
+        ["Month", ...months],
+        ["Revenue", ...salesData.map(String)],
+      ];
+    } else if (chartKey === "inventoryStatus") {
+      rows = [
+        ["Product", "Stock"],
+        ...products.map((p, i) => [p, stockData[i].toString()]),
+      ];
+    } else {
+      // topProducts
+      rows = [
+        ["Product", ...products],
+        ["Units Sold", ...unitsSold.map(String)],
+      ];
+    }
 
     const csv = rows.map((r) => r.join(",")).join("\n");
     const blob = new Blob([csv], { type: "text/csv" });
@@ -111,6 +109,7 @@ const ChartSelector: React.FC = () => {
         >
           <option value="salesTrends">Sales Trends</option>
           <option value="inventoryStatus">Inventory Status</option>
+          <option value="topProducts">Top Products</option>
         </select>
         <button onClick={exportPDF} className={styles.button}>
           Export as PDF
@@ -121,10 +120,14 @@ const ChartSelector: React.FC = () => {
       </div>
 
       <div ref={chartRef} className={styles.chartWrapper}>
-        {chartKey === "salesTrends" ? (
+        {chartKey === "salesTrends" && (
           <SalesTrendsChart months={months} data={salesData} />
-        ) : (
+        )}
+        {chartKey === "inventoryStatus" && (
           <InventoryStatusChart products={products} data={stockData} />
+        )}
+        {chartKey === "topProducts" && (
+          <TopProductsPieChart products={products} data={unitsSold} />
         )}
       </div>
     </div>
