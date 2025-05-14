@@ -18,7 +18,7 @@ function Profile() {
 
   const fileInputRef = useRef<HTMLInputElement>(null);
   const { user } = useUser();
-  const [image, setImage] = useState(profileImg);
+  const [image, setImage] = useState<string>(profileImg);
   const [username, setUsername] = useState(user?.username || "");
   const [postalCode, setPostalCode] = useState("-");
   const [phone, setPhone] = useState("");
@@ -34,16 +34,23 @@ function Profile() {
       try {
         const res = await axios.get(`${baseURL}/getuser/${user.username}`);
         const data = res.data;
+
         setPostalCode(data.postal_code?.toString() || "-");
         setPhone(data.phone_no || "");
 
-        // Updated route to fetch artisan verification status
+        if (data.user_pfp) {
+          setImage(data.user_pfp); // Display saved base64 image
+        } else {
+          setImage(profileImg); // Fallback default image
+        }
+
         const artisanRes = await axios.get(
           `${baseURL}/artisan/${user.username}`
         );
         if (artisanRes.data) {
-          const verified = artisanRes.data.verified;
-          setSellerStatus(verified === 1 ? "approved" : "pending");
+          setSellerStatus(
+            artisanRes.data.verified === 1 ? "approved" : "pending"
+          );
         } else {
           setSellerStatus("none");
         }
@@ -56,20 +63,29 @@ function Profile() {
   }, [user?.username]);
 
   function openFilePicker() {
-    if (fileInputRef.current !== null) {
-      fileInputRef.current.click();
-    }
+    fileInputRef.current?.click();
   }
 
   function handleImageChange(event: React.ChangeEvent<HTMLInputElement>) {
-    const file = event.target.files && event.target.files[0];
-    if (file) {
+    const file = event.target.files?.[0];
+    if (file && user?.username) {
       const reader = new FileReader();
-      reader.onload = function () {
-        if (typeof reader.result === "string") {
-          setImage(reader.result);
+
+      reader.onload = async () => {
+        const base64 = reader.result as string;
+        setImage(base64); // Show instantly
+
+        try {
+          await axios.put(`${baseURL}/api/user-profile-image`, {
+            username: user.username,
+            user_pfp: base64,
+          });
+          console.log("✅ Profile image uploaded");
+        } catch (err) {
+          console.error("❌ Failed to upload profile image:", err);
         }
       };
+
       reader.readAsDataURL(file);
     }
   }
@@ -96,9 +112,7 @@ function Profile() {
           username={username}
           postalCode={postalCode}
           phone={phone}
-          onEdit={function () {
-            setShowModal(true);
-          }}
+          onEdit={() => setShowModal(true)}
         />
 
         <ActionButtons
@@ -107,7 +121,7 @@ function Profile() {
         />
       </article>
 
-      {showModal === true && (
+      {showModal && (
         <EditInfo
           username={username}
           postalCode={postalCode}

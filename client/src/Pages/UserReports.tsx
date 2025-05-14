@@ -1,10 +1,10 @@
 import React, { useState } from "react";
 import styles from "../components/SellerVerificationPageComp/SellerVerification.module.css";
-import { Link, useLocation } from "react-router-dom";
 import ReportSearchBar from "../components/UserReportsComp/SearchBar";
 import UserReportCard from "../components/UserReportsComp/UserReportCard";
+import { useLocation } from "react-router-dom";
+import AdminSidebar from "../components/AdminDashboard/AdminSidebar";
 
-// Sample data (replace with real fetch if needed)
 const mockReports = [
   {
     status: "pending",
@@ -39,39 +39,7 @@ const UserReports: React.FC = () => {
 
   return (
     <div className={styles.wrapper}>
-      {/* Sidebar */}
-      <div className={styles.sidebar}>
-        <h2>Admin Dashboard</h2>
-
-        <Link
-          to="/AdminDashboard"
-          className={`${styles.navItem} ${
-            isActive("/AdminDashboard") ? styles.navItemActive : ""
-          }`}
-        >
-          Sales Analytics
-        </Link>
-
-        <Link
-          to="/UserReports"
-          className={`${styles.navItem} ${
-            isActive("/UserReports") ? styles.navItemActive : ""
-          }`}
-        >
-          User Reports
-        </Link>
-
-        <Link
-          to="/SellerVerification"
-          className={`${styles.navItem} ${
-            isActive("/SellerVerification") ? styles.navItemActive : ""
-          }`}
-        >
-          Seller Verification
-        </Link>
-      </div>
-
-      {/* Main Content */}
+      <AdminSidebar />
       <div className={styles.container}>
         <h1>User Reports</h1>
         <ReportSearchBar value={search} onChange={setSearch} />

@@ -3,6 +3,8 @@ const cors = require("cors");
 const { connectDB } = require("./dbConfig");
 
 const app = express();
+app.use(express.json({ limit: "5mb" }));
+app.use(express.urlencoded({ extended: true, limit: "5mb" }));
 app.use(cors());
 
 app.use(express.json());
@@ -415,18 +417,22 @@ app.post("/check-user", async (req, res) => {
 });
 
 app.post("/adduser", async (req, res) => {
-  const { username, user_ID, role, postal_code, phone_no } = req.body;
+  const { username, user_ID, role, postal_code, phone_no, interests } =
+    req.body;
 
   try {
     const pool = await connectDB();
     // Check if the user already exists
 
-    await pool.request().input("username", username).input("user_ID", user_ID)
-      .query(`
+    await pool
+      .request()
+      .input("username", username)
+      .input("user_ID", user_ID)
+      .input("interests", interests).query(`
         INSERT INTO dbo.users 
-        (username, user_ID)
+        (username, user_ID, interests)
         VALUES 
-        (@username, @user_ID)
+        (@username, @user_ID, @interests)
       `);
 
     await pool.close();
@@ -682,18 +688,20 @@ app.get("/seller-top-products", async (req, res) => {
 // PUT /api/users/:username
 app.put("/api/users/:username", async (req, res) => {
   const { username } = req.params;
-  const { postal_code, phone_no } = req.body;
+  const { postal_code, phone_no, interests } = req.body;
 
   try {
     const pool = await connectDB();
     await pool
       .request()
-      .input("postal_code", postal_code)
-      .input("phone_no", phone_no)
+      .input("postal_code", postal_code ?? 0)
+      .input("phone_no", phone_no ?? null)
+      .input("interests", interests ?? "")
       .input("username", username).query(`
         UPDATE dbo.users
         SET postal_code = @postal_code,
-            phone_no = @phone_no
+            phone_no = @phone_no,
+            interests = @interests
         WHERE username = @username
       `);
     await pool.close();
@@ -703,7 +711,32 @@ app.put("/api/users/:username", async (req, res) => {
     res.status(500).json({ error: "Failed to update user info" });
   }
 });
+//update users with out interests
+//update users with out interests
+app.put("/api/users/:username", async (req, res) => {
+  const { username } = req.params;
+  const { postal_code, phone_no } = req.body;
 
+  try {
+    const pool = await connectDB();
+    await pool
+      .request()
+      .input("postal_code", postal_code ?? 0)
+      .input("phone_no", phone_no ?? null)
+      .input("username", username).query(`
+        UPDATE dbo.users
+        SET postal_code = @postal_code,
+            phone_no = @phone_no,
+            interests = @interests
+        WHERE username = @username
+      `);
+    await pool.close();
+    res.json({ message: "User info updated successfully" });
+  } catch (err) {
+    console.error("❌ Error updating user info:", err);
+    res.status(500).json({ error: "Failed to update user info" });
+  }
+});
 // POST /api/artisans
 app.post("/createartisan", async (req, res) => {
   const { username, shop_name, bio, shop_address, shop_pfp } = req.body;
@@ -961,6 +994,30 @@ app.put("/editproduct/:id", async (req, res) => {
   }
 });
 
+app.put("/api/user-profile-image", async (req, res) => {
+  const { username, user_pfp } = req.body;
+
+  if (!username || !user_pfp) {
+    return res.status(400).json({ error: "Missing username or image data" });
+  }
+
+  try {
+    const pool = await connectDB();
+    await pool.request().input("username", username).input("user_pfp", user_pfp)
+      .query(`
+        UPDATE dbo.users
+        SET user_pfp = @user_pfp
+        WHERE username = @username
+      `);
+    await pool.close();
+
+    res.json({ message: "✅ Profile image updated successfully" });
+  } catch (err) {
+    console.error("❌ Failed to update user profile image:", err);
+    res.status(500).json({ error: "DB update failed", details: err.message });
+  }
+});
+
 //Adding stuff for cart
 app.post("/checkout", async (req, res) => {
   const { username, token } = req.body;
@@ -971,9 +1028,7 @@ app.post("/checkout", async (req, res) => {
     const pool = await connectDB();
 
     // FIXED: Explicitly prefix column names to avoid ambiguity
-    const cartRes = await pool.request()
-      .input("username", username)
-      .query(`
+    const cartRes = await pool.request().input("username", username).query(`
         SELECT p.product_id, ci.quantity, p.price 
         FROM dbo.cart_items ci
         JOIN dbo.products p ON ci.product_id = p.product_id
@@ -991,10 +1046,10 @@ app.post("/checkout", async (req, res) => {
       0
     );
 
-    const orderResult = await pool.request()
+    const orderResult = await pool
+      .request()
       .input("buyer_username", username)
-      .input("total_amount", totalAmount)
-      .query(`
+      .input("total_amount", totalAmount).query(`
         INSERT INTO dbo.orders (buyer_username, created_at, total_amount, status)
         OUTPUT INSERTED.order_id
         VALUES (@buyer_username, GETDATE(), @total_amount, 'Payment Received')
@@ -1003,11 +1058,11 @@ app.post("/checkout", async (req, res) => {
     const orderId = orderResult.recordset[0].order_id;
 
     for (const item of cartItems) {
-      await pool.request()
+      await pool
+        .request()
         .input("order_id", orderId)
         .input("product_id", item.product_id)
-        .input("quantity", item.quantity)
-        .query(`
+        .input("quantity", item.quantity).query(`
           INSERT INTO dbo.order_items (order_id, product_id, quantity)
           VALUES (@order_id, @product_id, @quantity)
         `);
@@ -1021,7 +1076,8 @@ app.post("/checkout", async (req, res) => {
         VALUES (@order_id, @payment_status, GETDATE())
       `);*/
 
-    await pool.request()
+    await pool
+      .request()
       .input("username", username)
       .query(`DELETE FROM dbo.cart_items WHERE username = @username`);
 
@@ -1037,9 +1093,7 @@ app.get("/orders/:username", async (req, res) => {
 
   try {
     const pool = await connectDB();
-    const result = await pool.request()
-      .input("username", username)
-      .query(`
+    const result = await pool.request().input("username", username).query(`
         SELECT o.order_id, o.status, o.created_at,
                oi.quantity, p.product_name, p.price, p.image_url
         FROM dbo.orders o
@@ -1056,4 +1110,3 @@ app.get("/orders/:username", async (req, res) => {
     res.status(500).json({ error: "Could not fetch orders" });
   }
 });
-

@@ -16,6 +16,8 @@
   display: flex;
   flex-direction: column;
   flex-shrink: 1;
+  height: 100vh;
+  justify-content: space-between;
 }
 
 .sidebar h2 {
@@ -52,6 +54,23 @@
   font-weight: bold;
 }
 
+.logoutButton {
+  padding: 10px 20px;
+  background-color: #cc3333;
+  color: white;
+  border: none;
+  border-radius: 6px;
+  font-weight: 500;
+  cursor: pointer;
+  transition: background-color 0.2s ease;
+  text-align: center;
+  width: 100%;
+}
+
+.logoutButton:hover {
+  background-color: #a62828;
+}
+
 .container {
   flex: 1;
   padding: 24px;
@@ -85,6 +104,7 @@
     border-bottom: 1px solid #ddd;
     padding: 12px;
     gap: 12px;
+    height: auto;
   }
 
   .sidebar h2 {

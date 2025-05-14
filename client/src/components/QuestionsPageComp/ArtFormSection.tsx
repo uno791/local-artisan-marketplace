@@ -5,61 +5,32 @@ import styles from "./QuestionsPage.module.css";
 interface ArtFormSectionProps {
   selectedArtForms: string[];
   setSelectedArtForms: (forms: string[]) => void;
+  availableTags: string[]; // NEW: fetched from backend
 }
 
 const ArtFormSection: React.FC<ArtFormSectionProps> = ({
   selectedArtForms,
   setSelectedArtForms,
+  availableTags,
 }) => {
-  const artForms = [
-    [
-      "Painting",
-      "Sculpture",
-      "Pottery",
-      "Photography",
-      "Digital Art",
-      "Printmaking",
-      "Textile Art",
-    ],
-    [
-      "Glass Art",
-      "Ceramics",
-      "Drawing",
-      "Installation Art",
-      "Pixel Art",
-      "Street Art",
-    ],
-    [
-      "Mixed Media",
-      "Illustration",
-      "Calligraphy",
-      "Metal Arts",
-      "Wood Crafting",
-      "Jewelry Making",
-    ],
-    ["Film & Video"],
-  ];
-
   return (
     <div className={styles.artFormsContainer}>
-      {artForms.map((row, rowIndex) => (
-        <div key={rowIndex} className={styles.buttonRow}>
-          {row.map((artForm, index) => (
-            <ArtFormButton
-              key={`${rowIndex}-${index}`}
-              label={artForm}
-              isSelected={selectedArtForms.includes(artForm)} // ✅ add this
-              onClick={() => {
-                let isAlreadySelected = selectedArtForms.includes(artForm);
-                let updated = isAlreadySelected
-                  ? selectedArtForms.filter((form) => form !== artForm)
-                  : [...selectedArtForms, artForm];
-                setSelectedArtForms(updated);
-              }}
-            />
-          ))}
-        </div>
-      ))}
+      <div className={styles.buttonRow}>
+        {availableTags.map((artForm, index) => (
+          <ArtFormButton
+            key={index}
+            label={artForm}
+            isSelected={selectedArtForms.includes(artForm)}
+            onClick={() => {
+              const isAlreadySelected = selectedArtForms.includes(artForm);
+              const updated = isAlreadySelected
+                ? selectedArtForms.filter((form) => form !== artForm)
+                : [...selectedArtForms, artForm];
+              setSelectedArtForms(updated);
+            }}
+          />
+        ))}
+      </div>
     </div>
   );
 };
