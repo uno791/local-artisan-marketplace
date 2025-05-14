@@ -6,17 +6,17 @@ import axios from "axios";
 import { baseURL } from "../../config";
 
 export default function Header() {
-  const { query, setQuery } = useSearch();
+  const { query, setQuery, sort, setSort } = useSearch();
   const [local, setLocal] = useState(query);
   const [allTags, setAllTags] = useState<string[]>([]);
   const [filtered, setFiltered] = useState<string[]>([]);
 
-  // Keep input in sync when query changes (e.g. from Category buttons)
+  // keep input in sync
   useEffect(() => {
     setLocal(query);
   }, [query]);
 
-  // Load main + minor categories once for autocomplete
+  // load categories for suggestions
   useEffect(() => {
     async function loadTags() {
       try {
@@ -32,7 +32,7 @@ export default function Header() {
     loadTags();
   }, []);
 
-  // Update dropdown as you type
+  // autocomplete filter
   const handleInput = (e: React.ChangeEvent<HTMLInputElement>) => {
     const v = e.target.value;
     setLocal(v);
@@ -44,18 +44,15 @@ export default function Header() {
     }
   };
 
-  // Submit search on button click or Enter
   const handleSearch = (e: React.FormEvent) => {
     e.preventDefault();
     setQuery(local.trim());
     setFiltered([]);
   };
 
-  // Click a suggestion
   const handleSelect = (tag: string) => {
     setQuery(tag);
     setFiltered([]);
-    // local will update via useEffect above
   };
 
   return (
@@ -68,7 +65,6 @@ export default function Header() {
           onChange={handleInput}
         />
         <button type="submit">Search</button>
-
         {filtered.length > 0 && (
           <ul className={styles.suggestions} role="listbox">
             {filtered.map((tag) => (
@@ -83,9 +79,27 @@ export default function Header() {
       </form>
 
       <nav className={styles.sortButtons} aria-label="Sort options">
-        <button type="button">New</button>
-        <button type="button">Price ↑</button>
-        <button type="button">Price ↓</button>
+        <button
+          type="button"
+          className={sort === "new" ? styles.active : ""}
+          onClick={() => setSort("new")}
+        >
+          New
+        </button>
+        <button
+          type="button"
+          className={sort === "priceAsc" ? styles.active : ""}
+          onClick={() => setSort("priceAsc")}
+        >
+          Price ↓
+        </button>
+        <button
+          type="button"
+          className={sort === "priceDesc" ? styles.active : ""}
+          onClick={() => setSort("priceDesc")}
+        >
+          Price ↑
+        </button>
       </nav>
     </header>
   );

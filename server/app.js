@@ -19,6 +19,11 @@ app.get("/status", (req, res) => {
   res.json({ status: "Running" });
 });
 
+const normalizeSort = (raw) => {
+  const allowed = ["new", "price_asc", "price_desc"];
+  return allowed.includes(raw) ? raw : "new";
+};
+
 // Users Fetch
 // GET /artisan/:username - fetch artisan shop info
 app.get("/artisan/:username", async (req, res) => {
@@ -58,13 +63,36 @@ app.get("/users", async (req, res) => {
   }
 });
 
-// --- Existing Products Fetch ---
 app.get("/allproducts", async (req, res) => {
+  const sort = req.query.sort;
+  let orderBy;
+  switch (sort) {
+    case "priceAsc":
+      orderBy = "price ASC, product_id ASC";
+      break;
+    case "priceDesc":
+      orderBy = "price DESC, product_id ASC";
+      break;
+    default:
+      orderBy = "created_at DESC, product_id ASC";
+  }
+
   try {
     const pool = await connectDB();
-    const result = await pool.request().query("SELECT * FROM dbo.products");
+    const sql = `
+      SELECT 
+        product_id,
+        product_name,
+        description,
+        price,
+        image_url,
+        username         AS artisan_username,
+        created_at
+      FROM dbo.products
+      ORDER BY ${orderBy};
+    `;
+    const result = await pool.request().query(sql);
     await pool.close();
-
     res.json(result.recordset);
   } catch (err) {
     console.error("❌ Failed to fetch products:", err);
@@ -502,23 +530,36 @@ app.post("/adduser", async (req, res) => {
 });
 
 app.get("/products/search", async (req, res) => {
-  const { query } = req.query;
+  const q = String(req.query.query || "");
+  const sort = req.query.sort;
+
+  let orderBy;
+  switch (sort) {
+    case "priceAsc":
+      orderBy = "p.price ASC, p.product_id ASC";
+      break;
+    case "priceDesc":
+      orderBy = "p.price DESC, p.product_id ASC";
+      break;
+    default:
+      // "new"
+      orderBy = "p.created_at DESC, p.product_id ASC";
+  }
+
   try {
     const pool = await connectDB();
-    const request = pool.request();
-    request.input("q", query ?? "");
-
-    const result = await request.query(`
-      SELECT DISTINCT
+    const request = pool.request().input("q", q);
+    const sql = `
+      SELECT
         p.product_id,
         p.product_name,
         p.description,
         p.price,
         p.image_url,
-        a.username
+        a.username         AS artisan_username,
+        p.created_at
       FROM dbo.products p
-      JOIN dbo.artisans a 
-        ON p.username = a.username
+      JOIN dbo.artisans a ON p.username = a.username
       LEFT JOIN dbo.link_main_categories lmc
         ON p.product_id = lmc.product_id
       LEFT JOIN dbo.main_categories mc
@@ -528,24 +569,21 @@ app.get("/products/search", async (req, res) => {
       LEFT JOIN dbo.minor_categories mnc
         ON lmnc.minor_category_id = mnc.minor_category_id
       WHERE
-        p.product_name        LIKE '%' + @q + '%' OR
-        a.username            LIKE '%' + @q + '%' OR
-        mc.category_name      LIKE '%' + @q + '%' OR
-        mnc.minor_category_name LIKE '%' + @q + '%'
-    `);
-
+        p.product_name           LIKE '%' + @q + '%'
+        OR a.username            LIKE '%' + @q + '%'
+        OR mc.category_name      LIKE '%' + @q + '%'
+        OR mnc.minor_category_name LIKE '%' + @q + '%'
+      ORDER BY ${orderBy};
+    `;
+    const result = await request.query(sql);
     await pool.close();
     res.json(result.recordset);
   } catch (err) {
-    console.error("Error in /products/search:", err);
+    console.error("❌ Error in /products/search:", err);
     res
       .status(500)
       .json({ error: "Error searching products", details: err.message });
   }
-});
-
-app.listen(PORT, () => {
-  console.log(`API server listening on port ${PORT}`);
 });
 
 app.post("/check-userid", async (req, res) => {
@@ -815,11 +853,6 @@ app.post("/createartisan", async (req, res) => {
     console.error("❌ Error inserting artisan:", err);
     res.status(500).json({ error: "Failed to create artisan" });
   }
-});
-
-// --- Server Listen ---
-app.listen(PORT, () => {
-  console.log("🚀 Server Listening on PORT:", PORT);
 });
 
 app.post("/addproduct", async (req, res) => {
@@ -1165,4 +1198,9 @@ app.get("/orders/:username", async (req, res) => {
     console.error("❌ Failed to fetch orders:", err);
     res.status(500).json({ error: "Could not fetch orders" });
   }
+});
+
+// --- Server Listen ---
+app.listen(PORT, () => {
+  console.log("🚀 Server Listening on PORT:", PORT);
 });
