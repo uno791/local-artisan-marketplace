@@ -5,11 +5,14 @@ import { useState } from "react";
 import axios from "axios";
 import { baseURL } from "../config";
 import { useUser } from "../Users/UserContext";
+import { getYocoKey } from "../utils/getYocoKey";
 
 function Cart() {
   const [total, setTotal] = useState<number>(0);
 
-  const publicKey = import.meta.env.VITE_YOCO_PUBLIC_KEY;
+  //const publicKey = import.meta.env.VITE_YOCO_PUBLIC_KEY;
+  
+const publicKey = getYocoKey();
   const { user } = useUser();
 
   const handleProceedToPayment = () => {
