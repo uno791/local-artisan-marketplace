@@ -87,3 +87,27 @@
   border-radius: 6px;
   
 }
+.error {
+  color: red;
+  font-size: 0.85rem;
+  margin: 0.5rem 0;
+}
+
+.inputRow {
+  display: flex;
+  gap: 0.5rem;
+  margin-top: 1rem;
+  align-items: center;
+  justify-content: center;
+  flex-wrap: wrap;
+}
+
+.addButton:disabled,
+.confirmButton:disabled {
+  background-color: #aaa;
+  cursor: not-allowed;
+}
+
+.tagItem button {
+  margin-left: 0.5rem;
+}
