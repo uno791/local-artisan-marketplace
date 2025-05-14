@@ -1,0 +1,7 @@
+.chartInner {
+  height: 70vh;    /* 70% of viewport height */
+  width: 70vw;     /* 70% of viewport width */
+  max-width: 800px;
+  max-height: 800px;
+  margin: 0 auto;
+}

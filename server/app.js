@@ -589,6 +589,96 @@ app.get("/getuser/:username", async (req, res) => {
   }
 });
 
+app.get("/seller-sales-trends", async (req, res) => {
+  const { username } = req.query;
+  if (!username) {
+    return res.status(400).json({ error: "Missing username query parameter" });
+  }
+  try {
+    const pool = await connectDB();
+    const result = await pool.request().input("username", username).query(`
+        SELECT
+          MONTH(o.created_at)             AS mon,
+          SUM(oi.quantity * p.price)      AS revenue
+        FROM dbo.orders o
+        JOIN dbo.order_items oi ON o.order_id    = oi.order_id
+        JOIN dbo.products p     ON oi.product_id  = p.product_id
+        WHERE p.username = @username
+        GROUP BY MONTH(o.created_at)
+        ORDER BY MONTH(o.created_at);
+      `);
+
+    // build full 12‐month array
+    const map = {};
+    result.recordset.forEach((r) => (map[r.mon] = +r.revenue));
+    const months = Array.from({ length: 12 }, (_, i) => i + 1);
+    const data = months.map((m) => map[m] || 0);
+
+    await pool.close();
+    res.json({ months, data });
+  } catch (err) {
+    console.error(err);
+    res.status(500).json({ error: "Server error", details: err.message });
+  }
+});
+
+// 2) current stock per product for that artisan
+app.get("/seller-inventory-status", async (req, res) => {
+  const { username } = req.query;
+  if (!username) {
+    return res.status(400).json({ error: "Missing username query parameter" });
+  }
+  try {
+    const pool = await connectDB();
+    const result = await pool.request().input("username", username).query(`
+        SELECT product_name, stock_quantity
+        FROM dbo.products
+        WHERE username = @username
+        ORDER BY product_name;
+      `);
+
+    await pool.close();
+    res.json({
+      products: result.recordset.map((r) => r.product_name),
+      data: result.recordset.map((r) => r.stock_quantity),
+    });
+  } catch (err) {
+    console.error(err);
+    res.status(500).json({ error: "Server error", details: err.message });
+  }
+});
+
+app.get("/seller-top-products", async (req, res) => {
+  const { username } = req.query;
+  if (!username) {
+    return res.status(400).json({ error: "Missing username query parameter" });
+  }
+
+  try {
+    const pool = await connectDB();
+    const result = await pool.request().input("username", username).query(`
+        SELECT TOP 5
+          p.product_name   AS productName,
+          SUM(oi.quantity) AS unitsSold
+        FROM dbo.order_items oi
+        JOIN dbo.orders o   ON oi.order_id   = o.order_id
+        JOIN dbo.products p ON oi.product_id = p.product_id
+        WHERE p.username = @username
+        GROUP BY p.product_name
+        ORDER BY unitsSold DESC;
+      `);
+    await pool.close();
+
+    const productNames = result.recordset.map((r) => r.productName);
+    const unitsSold = result.recordset.map((r) => Number(r.unitsSold));
+
+    res.json({ productNames, unitsSold });
+  } catch (err) {
+    console.error("❌ /seller-top-products error:", err);
+    res.status(500).json({ error: "Server error", details: err.message });
+  }
+});
+
 // PUT /api/users/:username
 app.put("/api/users/:username", async (req, res) => {
   const { username } = req.params;
