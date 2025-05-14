@@ -415,18 +415,18 @@ app.post("/check-user", async (req, res) => {
 });
 
 app.post("/adduser", async (req, res) => {
-  const { username, user_ID, role, postal_code, phone_no } = req.body;
+  const { username, user_ID, role, postal_code, phone_no, interests } = req.body;
 
   try {
     const pool = await connectDB();
     // Check if the user already exists
 
-    await pool.request().input("username", username).input("user_ID", user_ID)
+    await pool.request().input("username", username).input("user_ID", user_ID).input("interests", interests)
       .query(`
         INSERT INTO dbo.users 
-        (username, user_ID)
+        (username, user_ID, interests)
         VALUES 
-        (@username, @user_ID)
+        (@username, @user_ID, @interests)
       `);
 
     await pool.close();
@@ -592,18 +592,20 @@ app.get("/getuser/:username", async (req, res) => {
 // PUT /api/users/:username
 app.put("/api/users/:username", async (req, res) => {
   const { username } = req.params;
-  const { postal_code, phone_no } = req.body;
+  const { postal_code, phone_no, interests } = req.body;
 
   try {
     const pool = await connectDB();
     await pool
       .request()
-      .input("postal_code", postal_code)
-      .input("phone_no", phone_no)
+      .input("postal_code", postal_code ?? 0)
+      .input("phone_no", phone_no ?? null)
+      .input("interests", interests ?? "")
       .input("username", username).query(`
         UPDATE dbo.users
         SET postal_code = @postal_code,
-            phone_no = @phone_no
+            phone_no = @phone_no,
+            interests = @interests
         WHERE username = @username
       `);
     await pool.close();
