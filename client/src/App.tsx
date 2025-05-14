@@ -19,7 +19,8 @@ import BuyerOrders from "./Pages/BuyerOrders";
 import PaymentPage from "./Pages/PaymentPage";
 import SearchPage from "./Pages/SearchPage";
 import { SearchProvider } from "./components/SearchPageComp1/SearchContext";
-
+import SellerLayout from "./layouts/SellerLayout";
+import Footer from "./components/HomePageComp/Footer";
 import EditProductPage from "./Pages/EditProductPage";
 import AddProductPage from "./Pages/AddProductPage";
 import UserReports from "./Pages/UserReports";
@@ -45,12 +46,14 @@ function App() {
           {/* Protected routes with MainLayout */}
 
           {/* Pages with MainLayout (includes NavBar & Footer) */}
-          <Route path="/SellerHome" element={<SellerHome />} />
-          <Route path="/SellerStats" element={<StatsPage />} />
-          <Route path="/SellerOrders" element={<SellerOrdersPage />} />
-          <Route path="/SellerProfile" element={<SellerHome />} />
-          <Route path="/EditProductPage/:id" element={<EditProductPage />} />
-          <Route path="/AddProductPage" element={<AddProductPage />} />
+          <Route element={<SellerLayout />}>
+            <Route path="/SellerHome" element={<SellerHome />} />
+            <Route path="/SellerStats" element={<StatsPage />} />
+            <Route path="/SellerOrders" element={<SellerOrdersPage />} />
+            <Route path="/SellerProfile" element={<SellerHome />} />
+            <Route path="/EditProductPage/:id" element={<EditProductPage />} />
+            <Route path="/AddProductPage" element={<AddProductPage />} />
+          </Route>
 
           {/* For Pages with NavBar and Footer */}
           <Route element={<MainLayout />}>

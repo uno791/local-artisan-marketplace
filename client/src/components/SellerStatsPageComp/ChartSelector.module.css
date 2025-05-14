@@ -1,0 +1,60 @@
+/* src/components/SellerStatsPageComp/ChartSelector.module.css */
+
+.selectorContainer {
+  width: 100%;
+  padding: 0 24px;
+  box-sizing: border-box;
+}
+
+.controls {
+  display: flex;
+  gap: 12px;
+  align-items: center;    /* vertical center all children */
+  margin: 1.5rem 0;
+}
+
+/* SELECT / DROPDOWN */
+.select {
+  display: inline-flex;
+  align-items: center;
+  padding: 8px 16px;
+  background: #3f2d10;
+  color: white;
+  border: none;
+  border-radius: 4px;
+  font-size: 0.95rem;
+  font-weight: bold;
+  cursor: pointer;
+  height: 40px;
+}
+
+/* BUTTONS */
+.button {
+  padding: 8px 16px;
+  background: #3f2d10;
+  color: white;
+  border: none;
+  border-radius: 4px;
+  font-size: 0.95rem;
+  font-weight: bold;
+  cursor: pointer;
+  height: 40px;
+  transition: opacity 0.2s;
+}
+.button:hover {
+  opacity: 0.85;
+}
+
+/* WRAPS THE CHART */
+.chartWrapper {
+  width: 100%;
+  max-width: 900px;       /* never exceed this */
+  height: 70vh;           /* adjust as you like */
+  margin: 0 auto;         /* center on page */
+  padding: 24px;
+  background: #fff;
+  border-radius: 12px;
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.08);
+  box-sizing: border-box;
+  overflow: hidden;
+}
