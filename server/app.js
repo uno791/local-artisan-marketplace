@@ -209,6 +209,59 @@ app.get("/product/:id", async (req, res) => {
   }
 });
 
+// Backend route: Add to app.js
+
+app.post("/recommend-by-tags", async (req, res) => {
+  const { tags, excludeProductIds = [], limitPerTag = 4 } = req.body;
+
+  if (!tags || !Array.isArray(tags)) {
+    return res.status(400).json({ error: "Tags must be an array." });
+  }
+
+  try {
+    const pool = await connectDB();
+    const recommendedProducts = [];
+    const seenProductIds = new Set(excludeProductIds);
+
+    for (const tag of tags) {
+      const result = await pool
+        .request()
+        .input("tag", tag)
+        .query(`
+          SELECT TOP (${limitPerTag * 2})
+            p.product_id,
+            p.product_name,
+            p.price,
+            p.image_url,
+            a.username
+          FROM dbo.products p
+          JOIN dbo.artisans a ON p.username = a.username
+          LEFT JOIN dbo.link_main_categories lmc ON p.product_id = lmc.product_id
+          LEFT JOIN dbo.main_categories mc ON lmc.category_id = mc.category_id
+          LEFT JOIN dbo.link_minor_categories lmnc ON p.product_id = lmnc.product_id
+          LEFT JOIN dbo.minor_categories mnc ON lmnc.minor_category_id = mnc.minor_category_id
+          WHERE mc.category_name = @tag OR mnc.minor_category_name = @tag
+          ORDER BY NEWID();
+        `);
+
+      for (const product of result.recordset) {
+        if (!seenProductIds.has(product.product_id)) {
+          recommendedProducts.push(product);
+          seenProductIds.add(product.product_id);
+        }
+        if (recommendedProducts.length >= limitPerTag * tags.length) break;
+      }
+    }
+
+    await pool.close();
+    res.json(recommendedProducts.slice(0, limitPerTag * tags.length));
+  } catch (err) {
+    console.error("❌ Failed to fetch recommendations:", err);
+    res.status(500).json({ error: "Recommendation fetch failed.", details: err.message });
+  }
+});
+
+
 app.get("/sales-data", async (req, res) => {
   try {
     const pool = await connectDB();
