@@ -11,7 +11,7 @@ interface CartItem {
   product_name: string;
   price: number;
   image_url: string;
-  stock_quantity: number;
+  stock: number;
   seller_username: string;
 }
 
@@ -124,7 +124,10 @@ function CartItemsList({ onTotalChange }: Props) {
               handleQuantityChange(item.product_id, newQty);
             }}
           >
-            {Array.from({ length: 10 }, (_, i) => i + 1).map((qty) => (
+            {Array.from(
+              { length: Math.min(item.stock, 10) },
+              (_, i) => i + 1
+            ).map((qty) => (
               <option key={qty} value={qty}>
                 {qty}
               </option>

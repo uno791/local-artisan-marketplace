@@ -226,10 +226,7 @@ app.post("/recommend-by-tags", async (req, res) => {
     const seenProductIds = new Set(excludeProductIds);
 
     for (const tag of tags) {
-      const result = await pool
-        .request()
-        .input("tag", tag)
-        .query(`
+      const result = await pool.request().input("tag", tag).query(`
           SELECT TOP (${limitPerTag * 2})
             p.product_id,
             p.product_name,
@@ -259,10 +256,11 @@ app.post("/recommend-by-tags", async (req, res) => {
     res.json(recommendedProducts.slice(0, limitPerTag * tags.length));
   } catch (err) {
     console.error("❌ Failed to fetch recommendations:", err);
-    res.status(500).json({ error: "Recommendation fetch failed.", details: err.message });
+    res
+      .status(500)
+      .json({ error: "Recommendation fetch failed.", details: err.message });
   }
 });
-
 
 app.get("/sales-data", async (req, res) => {
   try {
@@ -403,18 +401,23 @@ app.post("/add-to-cart", async (req, res) => {
 
 app.get("/cart/:username", async (req, res) => {
   const { username } = req.params;
-
   try {
     const pool = await connectDB();
     const result = await pool.request().input("username", username).query(`
-        SELECT ci.product_id, ci.quantity, ci.added_at,
-               p.product_name, p.price, p.image_url, p.stock_quantity, p.username AS seller_username
+        SELECT
+          ci.product_id,
+          ci.quantity,
+          ci.added_at,
+          p.product_name,
+          p.price,
+          p.image_url,
+          p.stock_quantity AS stock,
+          p.username        AS seller_username
         FROM dbo.cart_items ci
-        JOIN dbo.products p ON ci.product_id = p.product_id
+        JOIN dbo.products    p ON ci.product_id = p.product_id
         WHERE ci.username = @username
       `);
     await pool.close();
-
     res.json(result.recordset);
   } catch (err) {
     console.error("❌ Failed to fetch cart items:", err);
