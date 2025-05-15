@@ -1204,3 +1204,59 @@ app.get("/orders/:username", async (req, res) => {
 app.listen(PORT, () => {
   console.log("🚀 Server Listening on PORT:", PORT);
 });
+
+
+//Report Stuff
+app.get("/reasons", async (req, res) => {
+  try {
+    const pool = await connectDB();
+    const result = await pool.request().query(
+      "SELECT reason_id, reason FROM dbo.reasons ORDER BY reason_id"
+    );
+    await pool.close();
+    res.json(result.recordset);
+  } catch (err) {
+    console.error("❌ Failed to fetch reasons:", err);
+    res.status(500).json({ error: "Failed to fetch reasons", details: err.message });
+  }
+});
+
+app.post("/user_reports", async (req, res) => {
+  const {
+    reporterby_username,
+    seller_username,
+    product_id,
+    reason_id,
+    details,
+    evidence_base64,
+  } = req.body;
+
+  if (!reporterby_username || !reason_id) {
+    return res.status(400).json({ error: "Missing required fields" });
+  }
+
+  try {
+    const pool = await connectDB();
+    await pool
+      .request()
+      .input("reporterby_username", reporterby_username)
+      .input("seller_username", seller_username || null)
+      .input("product_id", product_id ? Number(product_id) : null)
+      .input("reason_id", Number(reason_id))
+      .input("details", details || null)
+      .input("evidence_url", evidence_base64 || null)
+      .query(`
+        INSERT INTO dbo.user_reports
+          (reporterby_username, seller_username, product_id, reason_id, details, evidence_url)
+        VALUES
+          (@reporterby_username, @seller_username, @product_id, @reason_id, @details, @evidence_url)
+      `);
+
+    await pool.close();
+    res.status(201).json({ message: "Report submitted successfully" });
+  } catch (err) {
+    console.error("❌ Failed to insert user report:", err);
+    res.status(500).json({ error: "Failed to submit report", details: err.message });
+  }
+});
+

@@ -10,6 +10,8 @@ import SidebarInfo from "../components/ProductPageComp/SideBarInfo";
 import ReportProduct from "../components/ProductPageComp/ReportProduct";
 import { baseURL } from "../config";
 
+import { useUser } from "../Users/UserContext"; // <-- added import for user context
+
 interface Product {
   product_id: number;
   product_name: string;
@@ -28,11 +30,15 @@ interface Artisan {
   bio: string;
 }
 
+// ...rest of your imports and code remain unchanged
+
 function ProductPage() {
   const { id } = useParams();
   const [product, setProduct] = useState<Product | null>(null);
   const [artisan, setArtisan] = useState<Artisan | null>(null);
   const [showReportModal, setShowReportModal] = useState(false);
+
+  const { user } = useUser(); // get logged-in user info
 
   useEffect(() => {
     axios
@@ -90,8 +96,13 @@ function ProductPage() {
         </aside>
       </section>
 
-      {showReportModal && (
-        <ReportProduct onClose={() => setShowReportModal(false)} />
+      {showReportModal && product && user && user.username && (
+        <ReportProduct
+          productId={product.product_id}
+          sellerUsername={product.username}
+          reporterUsername={user.username}
+          onClose={() => setShowReportModal(false)}
+        />
       )}
     </main>
   );
