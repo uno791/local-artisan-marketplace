@@ -219,8 +219,165 @@ app.post("/apply-preferences", async (req, res) => {
   }
 });
 
+app.post("/track-click-main", async (req, res) => {
+  const { username, productId } = req.body;
+
+  if (!username || !productId) {
+    return res.status(400).json({ error: "Missing username or productId." });
+  }
+
+  try {
+    const pool = await connectDB();
+    const now = new Date();
+
+    // 🔍 Fetch only MAIN tags for this product
+    const tagQuery = await pool.request()
+      .input("productId", productId)
+      .query(`
+        SELECT category_id AS tag_id FROM link_main_categories
+        WHERE product_id = @productId
+      `);
+
+    if (tagQuery.recordset.length === 0) {
+      console.warn(`⚠️ BO: No MAIN tags found for productId ${productId}`);
+    }
+
+    for (const row of tagQuery.recordset) {
+      const tagId = row.tag_id;
+      const table = "main_tag_scores";
+      const column = "category_id";
+
+      console.log(`⏺️ Attempting main tag_id = ${tagId} for user ${username}`);
+
+      try {
+        const exists = await pool.request()
+          .input("username", username)
+          .input(column, tagId)
+          .query(`
+            SELECT 1 FROM ${table}
+            WHERE username = @username AND ${column} = @${column}
+          `);
+
+        if (exists.recordset.length > 0) {
+          await pool.request()
+            .input("username", username)
+            .input(column, tagId)
+            .input("now", now)
+            .query(`
+              UPDATE ${table}
+              SET click_count = click_count + 1, last_clicked = @now
+              WHERE username = @username AND ${column} = @${column}
+            `);
+
+          console.log(`✅ Updated MAIN tag ${tagId} for ${username}`);
+        } else {
+          await pool.request()
+            .input("username", username)
+            .input(column, tagId)
+            .input("click_count", 1)
+            .input("last_clicked", now)
+            .input("created_at", now)
+            .query(`
+              INSERT INTO ${table} (username, ${column}, click_count, last_clicked, created_at)
+              VALUES (@username, @${column}, @click_count, @last_clicked, @created_at)
+            `);
+
+          console.log(`➕ Inserted MAIN tag ${tagId} for ${username}`);
+        }
+      } catch (innerErr) {
+        console.error(`❌ Error updating MAIN tag ${tagId} for ${username}:`, innerErr.message);
+      }
+    }
+
+    res.status(200).json({ message: "Main tag clicks tracked successfully." });
+  } catch (err) {
+    console.error("🔥 BO: Error tracking MAIN click:", err);
+    res.status(500).json({ error: "Failed to track MAIN click." });
+  }
+});
+
+app.post("/track-click-minor", async (req, res) => {
+  const { username, productId } = req.body;
+
+  if (!username || !productId) {
+    return res.status(400).json({ error: "Missing username or productId." });
+  }
+
+  try {
+    const pool = await connectDB();
+    const now = new Date();
+
+    // 🔍 Fetch only MINOR tags for this product
+    const tagQuery = await pool.request()
+      .input("productId", productId)
+      .query(`
+        SELECT minor_category_id AS tag_id FROM link_minor_categories
+        WHERE product_id = @productId
+      `);
+
+    if (tagQuery.recordset.length === 0) {
+      console.warn(`⚠️ BO: No MINOR tags found for productId ${productId}`);
+    }
+
+    for (const row of tagQuery.recordset) {
+      const tagId = row.tag_id;
+      const table = "minor_tag_scores";
+      const column = "minor_category_id";
+
+      console.log(`⏺️ Attempting minor tag_id = ${tagId} for user ${username}`);
+
+      try {
+        const exists = await pool.request()
+          .input("username", username)
+          .input(column, tagId)
+          .query(`
+            SELECT 1 FROM ${table}
+            WHERE username = @username AND ${column} = @${column}
+          `);
+
+        if (exists.recordset.length > 0) {
+          await pool.request()
+            .input("username", username)
+            .input(column, tagId)
+            .input("now", now)
+            .query(`
+              UPDATE ${table}
+              SET click_count = click_count + 1, last_clicked = @now
+              WHERE username = @username AND ${column} = @${column}
+            `);
+
+          console.log(`✅ Updated MINOR tag ${tagId} for ${username}`);
+        } else {
+          await pool.request()
+            .input("username", username)
+            .input(column, tagId)
+            .input("click_count", 1)
+            .input("last_clicked", now)
+            .input("created_at", now)
+            .query(`
+              INSERT INTO ${table} (username, ${column}, click_count, last_clicked, created_at)
+              VALUES (@username, @${column}, @click_count, @last_clicked, @created_at)
+            `);
+
+          console.log(`➕ Inserted MINOR tag ${tagId} for ${username}`);
+        }
+      } catch (innerErr) {
+        console.error(`❌ Error updating MINOR tag ${tagId} for ${username}:`, innerErr.message);
+      }
+    }
+
+    res.status(200).json({ message: "Minor tag clicks tracked successfully." });
+  } catch (err) {
+    console.error("🔥 BO: Error tracking MINOR click:", err);
+    res.status(500).json({ error: "Failed to track MINOR click." });
+  }
+});
+
+
+
+
 //Enclosed error check
-app.post("/track-click", async (req, res) => {
+/*app.post("/track-click", async (req, res) => {
   const { username, productId } = req.body;
 
   if (!username || !productId) {
@@ -302,7 +459,7 @@ app.post("/track-click", async (req, res) => {
     console.error("🔥 BO: Error tracking click:", err);
     res.status(500).json({ error: "Failed to track click." });
   }
-});
+});*/
 
 
 // BO: Backend route to track product clicks (fixed minor_tag_scores)

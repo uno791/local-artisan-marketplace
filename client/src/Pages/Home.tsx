@@ -43,7 +43,11 @@ function Home() {
   const handleProductClick = async (productId: number) => {
     if (!user?.username) return;
     try {
-      await axios.post(`${baseURL}/track-click`, {
+      await axios.post(`${baseURL}/track-click-main`, {
+        username: user.username,
+        productId,
+      });
+      await axios.post(`${baseURL}/track-click-minor`, {
         username: user.username,
         productId,
       });
