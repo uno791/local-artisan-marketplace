@@ -1,5 +1,5 @@
 import React, { useEffect, useRef, useState } from "react";
-import { useParams } from "react-router-dom";
+import { useParams, useNavigate } from "react-router-dom";
 import styles from "../components/EditProductPageComp/EditProductPage.module.css";
 import EditTagsButton from "../components/EditProductPageComp/EditTagsButton";
 import ImageEditor from "../components/EditProductPageComp/ImageEditor";
@@ -12,43 +12,41 @@ import TypeOfArtSelector from "../components/EditProductPageComp/TypeOfArtSelect
 import DeliveryOptionSelector from "../components/EditProductPageComp/DeliveryOptionSelector";
 import NavBar from "../components/SellerHomeComp/NavBar";
 import { baseURL } from "../config";
-import { useNavigate } from "react-router-dom";
-
-
 
 const EditProductPage: React.FC = () => {
   const { id } = useParams();
-  const TAG_LIMIT = 5; 
-  const [ProdName, setProdName] = useState<string>("");
-  const [Details, setDetails] = useState<string>("");
-  const [Price, setPrice] = useState<number>(0);
-  const [Stock, setStock] = useState<number>(1);
-  const [Width, setWidth] = useState<number>(0);
-  const [Height, setHeight] = useState<number>(0);
-  const [Weight, setWeight] = useState<number>(0);
-  const [DelMethod, setDelMethod] = useState<number>(1);
-  const [MajorCategory, setMajorCategory] = useState<string>("");
+  const navigate = useNavigate();
+
+  const [ProdName, setProdName] = useState("");
+  const [Details, setDetails] = useState("");
+  const [Price, setPrice] = useState(0);
+  const [Stock, setStock] = useState(1);
+  const [Width, setWidth] = useState(0);
+  const [Height, setHeight] = useState(0);
+  const [Weight, setWeight] = useState(0);
+  const [DelMethod, setDelMethod] = useState(1);
+  const [MajorCategory, setMajorCategory] = useState("");
   const [Tags, setTags] = useState<string[]>([]);
+  const [ProductImage, setProductImage] = useState("");
   const [submitted, setSubmitted] = useState(false);
   const [missingFields, setMissingFields] = useState<string[]>([]);
   const [noChanges, setNoChanges] = useState(false);
-  
-  const navigate = useNavigate();
 
   const originalDataRef = useRef<any>(null);
-  const getDeliveryLabel = (value: number) => {
-  if (value === 3) return "Delivery & Pickup";
-  if (value === 1) return "Delivery Only";
-  if (value === 2) return "Pickup Only";
-  return "None";
-};
 
+  const getDeliveryLabel = (value: number) => {
+    if (value === 3) return "Delivery & Pickup";
+    if (value === 1) return "Delivery Only";
+    if (value === 2) return "Pickup Only";
+    return "None";
+  };
 
   useEffect(() => {
     const fetchProduct = async () => {
       try {
         const res = await fetch(`${baseURL}/product/${id}`);
         const data = await res.json();
+
         setProdName(data.product_name || "");
         setDetails(data.details || "");
         setPrice(Number(data.price) || 0);
@@ -58,6 +56,7 @@ const EditProductPage: React.FC = () => {
         setWeight(Number(data.weight) || 0);
         setMajorCategory(data.category_name || "");
         setTags(data.tags || []);
+        setProductImage(data.product_image || data.image_url || "");
 
         originalDataRef.current = {
           product_name: data.product_name || "",
@@ -69,11 +68,13 @@ const EditProductPage: React.FC = () => {
           weight: Number(data.weight) || 0,
           typeOfArt: data.category_name || "",
           tags: data.tags || [],
+          product_image: data.product_image || data.image_url || "",
         };
       } catch (err) {
-        console.error("Failed to load product:", err);
+        console.error("❌ Failed to load product:", err);
       }
     };
+
     fetchProduct();
   }, [id]);
 
@@ -89,7 +90,6 @@ const EditProductPage: React.FC = () => {
     if (!Weight) missing.push("Weight");
     if (!MajorCategory.trim()) missing.push("Major Category");
     if (DelMethod === 0) missing.push("Delivery Method");
-
 
     if (missing.length > 0) {
       setMissingFields(missing);
@@ -107,6 +107,7 @@ const EditProductPage: React.FC = () => {
       details: Details,
       tags: Tags,
       typeOfArt: MajorCategory,
+      product_image: ProductImage,
     };
 
     const original = originalDataRef.current;
@@ -120,7 +121,8 @@ const EditProductPage: React.FC = () => {
       original.height === payload.height &&
       original.weight === payload.weight &&
       original.typeOfArt === payload.typeOfArt &&
-      JSON.stringify(original.tags) === JSON.stringify(payload.tags);
+      JSON.stringify(original.tags) === JSON.stringify(payload.tags) &&
+      original.product_image === payload.product_image;
 
     if (isUnchanged) {
       setNoChanges(true);
@@ -141,19 +143,26 @@ const EditProductPage: React.FC = () => {
         alert("Update failed: " + (data.error || "Unknown error"));
       }
     } catch (err) {
-      console.error("Update error:", err);
+      console.error("❌ Update error:", err);
       alert("Could not connect to backend.");
     }
   };
 
   return (
-    <section className={styles.container}>
+    <main className={styles.container}>
       <NavBar />
-      <h1 className={styles.pageTitle}>edit product</h1>
+      <header>
+        <h1 className={styles.pageTitle}>Edit Product</h1>
+      </header>
+
       <section className={styles.formContainer}>
         <section className={styles.leftColumn}>
           <ProductNameInput ProdName={ProdName} setProdName={setProdName} />
-          <ImageEditor />
+          <ImageEditor
+            productId={id}
+            initialImage={ProductImage}
+            setImage={setProductImage}
+          />
           <PriceInput Price={Price} setPrice={setPrice} />
           <StockInput stock={Stock} setStock={setStock} />
         </section>
@@ -178,83 +187,63 @@ const EditProductPage: React.FC = () => {
               setTypeOfArt={setMajorCategory}
             />
             <EditTagsButton
-              tagLimit={TAG_LIMIT}
+              tagLimit={5}
               initialTags={Tags}
               onConfirm={(selectedTags) => setTags(selectedTags)}
             />
           </section>
 
           <button className={styles.confirmButton} onClick={handleConfirm}>
-            confirm edits
+            Confirm Edits
           </button>
 
           {submitted && (
             <section className={styles.popupOverlay}>
-              <section className={styles.popup}>
+              <article className={styles.popup}>
                 <h2>Updated Product Info</h2>
-                <p>
-                  <strong>Name:</strong> {ProdName}
-                </p>
-                <p>
-                  <strong>Details:</strong> {Details}
-                </p>
-                <p>
-                  <strong>Price:</strong> R{Price.toFixed(2)}
-                </p>
-                <p>
-                  <strong>Stock:</strong> {Stock}
-                </p>
-                <p>
-                  <strong>Width:</strong> {Width} cm
-                </p>
-                <p>
-                  <strong>Height:</strong> {Height} cm
-                </p>
-                <p>
-                  <strong>Weight:</strong> {Weight} kg
-                </p>
-                <p>
-                  <strong>Delivery Method:</strong> {getDeliveryLabel(DelMethod)}
-                </p>
-
-                <p>
-                  <strong>Major Category:</strong> {MajorCategory}
-                </p>
-                <p>
-                  <strong>Tags:</strong> {Tags.join(", ")}
-                </p>
+                <dl>
+                  <dt>Name:</dt><dd className={styles.value}>{ProdName}</dd>
+                  <dt>Details:</dt><dd className={styles.value}>{Details}</dd>
+                  <dt>Price:</dt><dd className={styles.value}>R{Price.toFixed(2)}</dd>
+                  <dt>Stock:</dt><dd className={styles.value}>{Stock}</dd>
+                  <dt>Width:</dt><dd className={styles.value}>{Width} cm</dd>
+                  <dt>Height:</dt><dd className={styles.value}>{Height} cm</dd>
+                  <dt>Weight:</dt><dd className={styles.value}>{Weight} kg</dd>
+                  <dt>Delivery Method:</dt><dd className={styles.value}>{getDeliveryLabel(DelMethod)}</dd>
+                  <dt>Major Category:</dt><dd className={styles.value}>{MajorCategory}</dd>
+                  <dt>Tags:</dt><dd className={styles.value}>{Tags.join(", ")}</dd>
+                </dl>
                 <button onClick={() => navigate("/SellerHome")}>Close</button>
-
-              </section>
+              </article>
             </section>
           )}
 
           {missingFields.length > 0 && (
             <section className={styles.popupOverlay}>
-              <section className={styles.popup}>
+              <article className={styles.popup}>
                 <h2>Please Fill Out All Required Fields</h2>
                 <ul>
-                  {missingFields.map((field, idx) => (
-                    <li key={idx}>{field}</li>
+                  {missingFields.map((field, index) => (
+                    <li key={index}>{field}</li>
                   ))}
                 </ul>
                 <button onClick={() => setMissingFields([])}>Close</button>
-              </section>
+              </article>
             </section>
           )}
 
           {noChanges && (
             <section className={styles.popupOverlay}>
-              <section className={styles.popup}>
+              <article className={styles.popup}>
                 <h2>No Changes Made</h2>
                 <p>You haven't made any changes to the product.</p>
                 <button onClick={() => setNoChanges(false)}>Close</button>
-              </section>
+              </article>
             </section>
           )}
         </section>
       </section>
-    </section>
+    </main>
   );
 };
 

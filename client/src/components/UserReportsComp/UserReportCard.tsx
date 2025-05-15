@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import axios from "axios";
 import styles from "./UserReportCard.module.css";
+import { baseURL } from "../../config"; // ✅ adjust path if needed
 
 type UserReportCardProps = {
   status: number;
@@ -49,7 +50,7 @@ const UserReportCard: React.FC<UserReportCardProps> = ({
   const updateStatus = async (newStatus: number) => {
     setUpdating(true);
     try {
-      await axios.put("http://localhost:3000/update-report-status", {
+      await axios.put(`${baseURL}/update-report-status`, {
         reporterby_username: reporter,
         product_id: productId,
         status: newStatus,
@@ -70,7 +71,7 @@ const UserReportCard: React.FC<UserReportCardProps> = ({
 
   const handleDeleteProduct = async () => {
     try {
-      await axios.delete(`http://localhost:3000/delete-product/${productId}`);
+      await axios.delete(`${baseURL}/delete-product/${productId}`);
       await updateStatus(3);
       setActionCompleted(true);
     } catch (err) {
@@ -81,7 +82,7 @@ const UserReportCard: React.FC<UserReportCardProps> = ({
 
   const handleKeepProduct = async () => {
     try {
-      await axios.post(`http://localhost:3000/mark-product-kept`, {
+      await axios.post(`${baseURL}/mark-product-kept`, {
         product_id: productId,
       });
       await updateStatus(3);

@@ -1263,38 +1263,24 @@ app.put("/update-report-status", async (req, res) => {
 
 app.post("/mark-product-kept", async (req, res) => {
   const { product_id } = req.body;
-  try {
-    const pool = await connectDB();
-    await pool.request().input("product_id", product_id).query(`
-      UPDATE dbo.user_reports
-      SET status = 2
-      WHERE product_id = @product_id
-    `);
-    await pool.close();
-    res.json({ message: "Product marked as kept." });
-  } catch (err) {
-    res.status(500).json({ error: "Update failed", details: err.message });
-  }
-});
-
-app.post("/mark-product-kept", async (req, res) => {
-  const { product_id } = req.body;
 
   try {
     const pool = await connectDB();
 
-    // 1. Delete the report
-    await pool.request().input("product_id", product_id).query(`
-      DELETE FROM dbo.user_reports WHERE product_id = @product_id
-    `);
-
-    // 2. (Optional) Delete reviews if that's also your requirement
+    // 1. Delete reviews if necessary
     await pool.request().input("product_id", product_id).query(`
       DELETE FROM dbo.reviews WHERE product_id = @product_id
     `);
 
+    // 2. Mark report as complete
+    await pool.request().input("product_id", product_id).query(`
+      UPDATE dbo.user_reports
+      SET status = 3
+      WHERE product_id = @product_id
+    `);
+
     await pool.close();
-    res.json({ message: "Product kept and report removed." });
+    res.json({ message: "✅ Product marked as kept and report completed." });
   } catch (err) {
     res.status(500).json({ error: "Update failed", details: err.message });
   }

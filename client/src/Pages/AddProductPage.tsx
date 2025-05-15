@@ -1,7 +1,9 @@
+// src/pages/AddProductPage.tsx
+
 import React from "react";
 import styles from "../components/EditProductPageComp/EditProductPage.module.css";
 import AddTagsButton from "../components/AddProductPageComp/AddTagsButton";
-import ImageEditor from "../components/AddProductPageComp/ImageAdder";
+import ImageAdder from "../components/AddProductPageComp/ImageAdder";
 import PriceInput from "../components/AddProductPageComp/PriceInput";
 import ProductDetailsInput from "../components/AddProductPageComp/ProductDetailsInput";
 import ProductNameInput from "../components/AddProductPageComp/ProductNameInput";
@@ -14,25 +16,24 @@ import { useUser } from "../Users/UserContext";
 import { baseURL } from "../config";
 import { useNavigate } from "react-router-dom";
 
-
 const AddProductPage: React.FC = () => {
-  const [ProdName, setProdName] = React.useState<string>("");
-  const [Details, setDetails] = React.useState<string>("");
-  const [Price, setPrice] = React.useState<number>(0);
-  const [Stock, setStock] = React.useState<number>(1);
-  const [Width, setWidth] = React.useState<string>("");
-  const [Height, setHeight] = React.useState<string>("");
-  const [Weight, setWeight] = React.useState<string>("");
-  const [DelMethod, setDelMethod] = React.useState<number>(1); // Bitmask: 1 = Delivery
-  const [MajorCategory, setMajorCategory] = React.useState<string>("");
+  const [ProdName, setProdName] = React.useState("");
+  const [Details, setDetails] = React.useState("");
+  const [Price, setPrice] = React.useState(0);
+  const [Stock, setStock] = React.useState(1);
+  const [Width, setWidth] = React.useState("");
+  const [Height, setHeight] = React.useState("");
+  const [Weight, setWeight] = React.useState("");
+  const [DelMethod, setDelMethod] = React.useState(1);
+  const [MajorCategory, setMajorCategory] = React.useState("");
   const [Tags, setTags] = React.useState<string[]>([]);
+  const [ProductImage, setProductImage] = React.useState("");
   const [submitted, setSubmitted] = React.useState(false);
   const [missingFields, setMissingFields] = React.useState<string[]>([]);
 
   const { user } = useUser();
   const [username] = React.useState(user?.username || "");
   const navigate = useNavigate();
-
 
   const getDeliveryLabel = (value: number) => {
     if (value === 3) return "Delivery & Pickup";
@@ -59,25 +60,20 @@ const AddProductPage: React.FC = () => {
       return;
     }
 
-    if (!username) {
-      alert("Username not set. Please log in again.");
-      return;
-    }
-
     const payload = {
       username,
       product_name: ProdName,
       description: Details,
       price: Price,
       stock_quantity: Stock,
-      image_url: "",
+      image_url: ProductImage,
       width: parseInt(Width),
       height: parseInt(Height),
       weight: parseInt(Weight),
       details: Details,
       tags: Tags,
       typeOfArt: MajorCategory,
-      delivery_method: DelMethod, // ✅ include delivery method
+      delivery_method: DelMethod,
     };
 
     try {
@@ -89,7 +85,6 @@ const AddProductPage: React.FC = () => {
 
       const data = await response.json();
       if (response.ok) {
-        console.log("✅ Product submitted:", data);
         setSubmitted(true);
       } else {
         alert("Failed to add product: " + (data.error || "Unknown error"));
@@ -101,13 +96,16 @@ const AddProductPage: React.FC = () => {
   };
 
   return (
-    <section className={styles.container}>
+    <main className={styles.container}>
       <NavBar />
-      <h1 className={styles.pageTitle}>add product</h1>
+      <header>
+        <h1 className={styles.pageTitle}>Add Product</h1>
+      </header>
+
       <section className={styles.formContainer}>
         <section className={styles.leftColumn}>
           <ProductNameInput ProdName={ProdName} setProdName={setProdName} />
-          <ImageEditor />
+          <ImageAdder setImage={setProductImage} currentImage={ProductImage} />
           <PriceInput Price={Price} setPrice={setPrice} />
           <StockInput stock={Stock} setStock={setStock} />
         </section>
@@ -126,6 +124,7 @@ const AddProductPage: React.FC = () => {
             DelMethod={DelMethod}
             setDelMethod={setDelMethod}
           />
+
           <section className={styles.row}>
             <TypeOfArtSelector
               TypeOfArt={MajorCategory}
@@ -138,12 +137,12 @@ const AddProductPage: React.FC = () => {
           </section>
 
           <button className={styles.confirmButton} onClick={handleConfirm}>
-            confirm addition of new products
+            Confirm Addition of New Product
           </button>
 
           {submitted && (
             <section className={styles.popupOverlay}>
-              <section className={styles.popup}>
+              <article className={styles.popup}>
                 <h2>Submitted Product Info</h2>
                 <p><strong>Name:</strong> {ProdName}</p>
                 <p><strong>Details:</strong> {Details}</p>
@@ -155,15 +154,14 @@ const AddProductPage: React.FC = () => {
                 <p><strong>Delivery Method:</strong> {getDeliveryLabel(DelMethod)}</p>
                 <p><strong>Major Category:</strong> {MajorCategory}</p>
                 <p><strong>Tags:</strong> {Tags.join(", ")}</p>
-                <button onClick={() => navigate("/Sellerhome")}>Close</button>
-
-              </section>
+                <button onClick={() => navigate("/SellerHome")}>Close</button>
+              </article>
             </section>
           )}
 
           {missingFields.length > 0 && (
             <section className={styles.popupOverlay}>
-              <section className={styles.popup}>
+              <article className={styles.popup}>
                 <h2>Please Fill Out All Required Fields</h2>
                 <ul>
                   {missingFields.map((field, index) => (
@@ -171,12 +169,12 @@ const AddProductPage: React.FC = () => {
                   ))}
                 </ul>
                 <button onClick={() => setMissingFields([])}>Close</button>
-              </section>
+              </article>
             </section>
           )}
         </section>
       </section>
-    </section>
+    </main>
   );
 };
 
