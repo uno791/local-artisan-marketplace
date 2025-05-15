@@ -5,26 +5,26 @@
   font-size: 1.15rem;
   width: 100vw;
   min-height: 100vh;
-  padding-top: 140px; 
+  padding-top: 140px;
   margin: 0 auto;
-  box-sizing: border-box;
-  background-color: inherit; 
+  background-color: inherit;
   display: flex;
   justify-content: center;
   align-items: flex-start;
 }
 
 .profile-content {
-  width: 100%;
   max-width: 640px;
-  margin: 0 auto; 
+  width: 100%;
+  margin: 0 auto;
+  text-align: center;
+  color: #3e2b18;
   display: flex;
   flex-direction: column;
   align-items: center;
-  text-align: center;
-  color: #3e2b18;
 }
 
+/* Profile Image Section */
 .profile-img-section {
   position: relative;
   width: 180px;
@@ -45,21 +45,23 @@
   bottom: 6px;
   right: 6px;
   background-color: #3e2b18;
-  transition: transform 0.2s ease;
   color: white;
   font-size: 14px;
   padding: 5px 12px;
   border: none;
   border-radius: 9999px;
   cursor: pointer;
+  transition: transform 0.2s ease;
 }
-.edit-img-btn:hover{
+
+.edit-img-btn:hover {
   transform: scale(1.05);
 }
 
+/* Profile Info Section */
 .profile-info {
-  margin-bottom: 2.5rem;
   width: 100%;
+  margin-bottom: 2.5rem;
 }
 
 .info-row {
@@ -70,48 +72,50 @@
   margin-bottom: 1.25rem;
 }
 
-.label {
-  font-weight: 600;
-  font-size: 1.35rem;
-}
-
+.label,
 .value {
   font-size: 1.35rem;
 }
 
+.label {
+  font-weight: 600;
+}
+
+/* Contact & Edit */
 .contact-section {
   margin-top: 1.5rem;
 }
 
 .contact-details {
-  text-align: left;
-  margin-top: 0.75rem;
-  margin-bottom: 0.75rem;
   font-size: 1.2rem;
+  text-align: left;
+  margin: 0.75rem 0;
 }
 
 .edit-btn {
   background-color: #3e2b18;
   color: white;
   padding: 8px 20px;
-  border: none;
   font-weight: 600;
-  transition: transform 0.2s ease;
+  border: none;
   border-radius: 9999px;
   font-size: 1rem;
   cursor: pointer;
+  transition: transform 0.2s ease;
 }
-.edit-btn:hover{
+
+.edit-btn:hover {
   transform: scale(1.05);
 }
 
 .info-edit-btn {
   margin-top: 1.5rem;
-  display: block;
   margin-left: auto;
   margin-right: auto;
+  display: block;
 }
 
+/* Action Buttons */
 .action-buttons {
   display: flex;
   flex-wrap: wrap;
@@ -120,27 +124,27 @@
   width: 100%;
   margin-top: 2rem;
 }
-.action-btn:hover{
-  transform: scale(1.05);
-}
+
 .action-btn {
   background-color: #3e2b18;
   color: white;
   font-weight: 600;
   font-size: 1.15rem;
   padding: 14px 30px;
-  transition: transform 0.2s ease;
   border: none;
   border-radius: 9999px;
   cursor: pointer;
+  transition: transform 0.2s ease;
 }
 
+.action-btn:hover {
+  transform: scale(1.05);
+}
+
+/* Modal */
 .modal-backdrop {
   position: fixed;
-  top: 0;
-  left: 0;
-  right: 0;
-  bottom: 0;
+  inset: 0;
   background: rgba(0, 0, 0, 0.3);
   display: flex;
   justify-content: center;
@@ -149,7 +153,7 @@
 }
 
 .modal {
-  background-color: #fef7ed; /* light beige */
+  background-color: #fef7ed;
   padding: 2rem;
   border-radius: 12px;
   max-width: 400px;
@@ -228,7 +232,7 @@
   cursor: pointer;
 }
 
-/* Fix invisible flag + calling code in PhoneInput */
+/* PhoneInput Fix */
 .modal .PhoneInput {
   display: flex;
   align-items: center;
@@ -261,6 +265,7 @@
   box-sizing: border-box;
 }
 
+/* Validation Styling */
 .input-error {
   border-color: red;
 }
@@ -268,6 +273,41 @@
 .error-text {
   color: red;
   font-size: 0.85rem;
-  margin-top: 2px;
-  margin-bottom: 8px;
+  margin: 2px 0 8px;
+}
+
+/* Logout */
+.logoutSection {
+  margin-top: 2rem;
+  text-align: center;
+}
+
+.logoutButton {
+  background-color: #e53935;
+  color: white;
+  border: none;
+  padding: 0.75rem 1.5rem;
+  border-radius: 4px;
+  font-weight: bold;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+  font-size: 1rem;
+  position: relative;
+}
+
+.logoutButton:hover {
+  background-color: #c62828;
+}
+
+.arrow-wrapper {
+  display: inline-block;
+  margin-left: 0.5rem;
+}
+
+.arrow {
+  border: solid white;
+  border-width: 0 2px 2px 0;
+  display: inline-block;
+  padding: 4px;
+  transform: rotate(-45deg);
 }

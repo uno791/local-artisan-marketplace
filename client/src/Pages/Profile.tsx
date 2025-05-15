@@ -15,17 +15,15 @@ import { baseURL } from "../config";
 
 function Profile() {
   const navigate = useNavigate();
-
   const fileInputRef = useRef<HTMLInputElement>(null);
   const { user } = useUser();
+
   const [image, setImage] = useState<string>(profileImg);
   const [username, setUsername] = useState(user?.username || "");
   const [postalCode, setPostalCode] = useState("-");
   const [phone, setPhone] = useState("");
   const [showModal, setShowModal] = useState(false);
-  const [sellerStatus, setSellerStatus] = useState<
-    "none" | "pending" | "approved"
-  >("none");
+  const [sellerStatus, setSellerStatus] = useState<"none" | "pending" | "approved">("none");
 
   useEffect(() => {
     async function fetchUserInfo() {
@@ -39,18 +37,14 @@ function Profile() {
         setPhone(data.phone_no || "");
 
         if (data.user_pfp) {
-          setImage(data.user_pfp); // Display saved base64 image
+          setImage(data.user_pfp);
         } else {
-          setImage(profileImg); // Fallback default image
+          setImage(profileImg);
         }
 
-        const artisanRes = await axios.get(
-          `${baseURL}/artisan/${user.username}`
-        );
+        const artisanRes = await axios.get(`${baseURL}/artisan/${user.username}`);
         if (artisanRes.data) {
-          setSellerStatus(
-            artisanRes.data.verified === 1 ? "approved" : "pending"
-          );
+          setSellerStatus(artisanRes.data.verified === 1 ? "approved" : "pending");
         } else {
           setSellerStatus("none");
         }
@@ -73,7 +67,7 @@ function Profile() {
 
       reader.onload = async () => {
         const base64 = reader.result as string;
-        setImage(base64); // Show instantly
+        setImage(base64);
 
         try {
           await axios.put(`${baseURL}/api/user-profile-image`, {
@@ -98,6 +92,11 @@ function Profile() {
     setShowModal(false);
   }
 
+  function handleLogout() {
+    localStorage.clear();
+    navigate("/");
+  }
+
   return (
     <main className={styles.profile}>
       <article className={styles["profile-content"]}>
@@ -119,6 +118,15 @@ function Profile() {
           onBecomeSeller={goToSellerSignup}
           sellerStatus={sellerStatus}
         />
+
+        <section className={styles.logoutSection}>
+          <button className={styles.logoutButton} onClick={handleLogout}>
+            Log Out
+            <span className={styles["arrow-wrapper"]}>
+              <span className={styles.arrow}></span>
+            </span>
+          </button>
+        </section>
       </article>
 
       {showModal && (
