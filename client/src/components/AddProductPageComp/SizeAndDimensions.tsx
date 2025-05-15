@@ -31,47 +31,47 @@ const SizeAndDimensions: React.FC<Props> = ({
     <section className={styles.container}>
       <strong>Enter size and dimensions:</strong>
       <section className={styles.group}>
-        <label htmlFor="width" className={styles.label}>
-          Width (cm):
-        </label>
-        <input
-          id="width"
-          name="width"
-          type="text"
-          inputMode="decimal"
-          pattern="^\d*\.?\d{0,2}$"
-          className={styles.input}
-          value={Width}
-          onChange={(e) => handleDecimalInput(e.target.value, setWidth)}
-        />
+        <div className={styles.fieldGroup}>
+          <label htmlFor="width" className={styles.label}>Width (cm):</label>
+          <input
+            id="width"
+            name="width"
+            type="text"
+            inputMode="decimal"
+            pattern="^\d*\.?\d{0,2}$"
+            className={styles.input}
+            value={Width}
+            onChange={(e) => handleDecimalInput(e.target.value, setWidth)}
+          />
+        </div>
 
-        <label htmlFor="height" className={styles.label}>
-          Height (cm):
-        </label>
-        <input
-          id="height"
-          name="height"
-          type="text"
-          inputMode="decimal"
-          pattern="^\d*\.?\d{0,2}$"
-          className={styles.input}
-          value={Height}
-          onChange={(e) => handleDecimalInput(e.target.value, setHeight)}
-        />
+        <div className={styles.fieldGroup}>
+          <label htmlFor="height" className={styles.label}>Height (cm):</label>
+          <input
+            id="height"
+            name="height"
+            type="text"
+            inputMode="decimal"
+            pattern="^\d*\.?\d{0,2}$"
+            className={styles.input}
+            value={Height}
+            onChange={(e) => handleDecimalInput(e.target.value, setHeight)}
+          />
+        </div>
 
-        <label htmlFor="weight" className={styles.label}>
-          Weight (kg):
-        </label>
-        <input
-          id="weight"
-          name="weight"
-          type="text"
-          inputMode="decimal"
-          pattern="^\d*\.?\d{0,2}$"
-          className={styles.input}
-          value={Weight}
-          onChange={(e) => handleDecimalInput(e.target.value, setWeight)}
-        />
+        <div className={styles.fieldGroup}>
+          <label htmlFor="weight" className={styles.label}>Weight (kg):</label>
+          <input
+            id="weight"
+            name="weight"
+            type="text"
+            inputMode="decimal"
+            pattern="^\d*\.?\d{0,2}$"
+            className={styles.input}
+            value={Weight}
+            onChange={(e) => handleDecimalInput(e.target.value, setWeight)}
+          />
+        </div>
       </section>
     </section>
   );
