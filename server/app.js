@@ -161,6 +161,335 @@ app.get("/seller-dashboard", async (req, res) => {
   }
 });
 
+app.post("/apply-preferences", async (req, res) => {
+  const { username, selectedCategories } = req.body;
+
+  if (!username || !Array.isArray(selectedCategories)) {
+    return res.status(400).json({ error: "Missing or invalid data." });
+  }
+
+  try {
+    const pool = await connectDB();
+
+    for (const tagName of selectedCategories) {
+      // Find category_id for this main category name
+      const tagResult = await pool
+        .request()
+        .input("tagName", tagName)
+        .query(
+          "SELECT category_id FROM main_categories WHERE category_name = @tagName"
+        );
+
+      if (tagResult.recordset.length === 0) continue;
+
+      const categoryId = tagResult.recordset[0].category_id;
+
+      // Compute explicit score (selection_score * decay)
+      const selectionScore = 1;
+      const decayRate = 0.9; // Per day
+      const explicitScore = selectionScore * 1; // At creation time, 0 days decay
+
+      // Insert or update main_tag_scores
+      await pool.request()
+        .input("username", username)
+        .input("category_id", categoryId)
+        .input("selection_score", selectionScore)
+        .input("explicit_score", explicitScore)
+        .input("created_at", new Date())
+        .query(`
+          MERGE main_tag_scores AS target
+          USING (SELECT @username AS username, @category_id AS category_id) AS source
+          ON target.username = source.username AND target.category_id = source.category_id
+          WHEN MATCHED THEN
+            UPDATE SET
+              selection_score = @selection_score,
+              explicit_score = @explicit_score,
+              created_at = @created_at
+          WHEN NOT MATCHED THEN
+            INSERT (username, category_id, selection_score, explicit_score, created_at)
+            VALUES (@username, @category_id, @selection_score, @explicit_score, @created_at);
+        `);
+    }
+
+    pool.close();
+    res.status(200).json({ message: "Preferences applied successfully." });
+  } catch (err) {
+    console.error("BO: Error applying preferences:", err);
+    res.status(500).json({ error: "Failed to apply preferences." });
+  }
+});
+
+//Enclosed error check
+app.post("/track-click", async (req, res) => {
+  const { username, productId } = req.body;
+
+  if (!username || !productId) {
+    return res.status(400).json({ error: "Missing username or productId." });
+  }
+
+  try {
+    const pool = await connectDB();
+    const now = new Date();
+
+    // 🔍 Fetch associated main + minor tags
+    const tagQuery = await pool.request()
+      .input("productId", productId)
+      .query(`
+        SELECT category_id AS tag_id, 'main' AS tag_type FROM link_main_categories WHERE product_id = @productId
+        UNION
+        SELECT minor_category_id AS tag_id, 'minor' AS tag_type FROM link_minor_categories WHERE product_id = @productId
+      `);
+
+    if (tagQuery.recordset.length === 0) {
+      console.warn(`⚠️ BO: No tags found for productId ${productId}`);
+    }
+
+    for (const row of tagQuery.recordset) {
+      const tagId = row.tag_id;
+      const tagType = row.tag_type;
+
+      const table = tagType === "main" ? "main_tag_scores" : "minor_tag_scores";
+      const column = tagType === "main" ? "category_id" : "minor_category_id";
+
+      console.log(`⏺️ Attempting ${tagType} tag_id = ${tagId} for user ${username}`);
+
+      try {
+        // Check if the row exists
+        const exists = await pool.request()
+          .input("username", username)
+          .input(column, tagId)
+          .query(`
+            SELECT 1 FROM ${table}
+            WHERE username = @username AND ${column} = @${column}
+          `);
+
+        if (exists.recordset.length > 0) {
+          // ✅ Update click count and last_clicked
+          await pool.request()
+            .input("username", username)
+            .input(column, tagId)
+            .input("now", now)
+            .query(`
+              UPDATE ${table}
+              SET click_count = click_count + 1, last_clicked = @now
+              WHERE username = @username AND ${column} = @${column}
+            `);
+
+          console.log(`✅ Updated ${tagType} tag ${tagId} for ${username}`);
+        } else {
+          // ➕ Insert new row
+          await pool.request()
+            .input("username", username)
+            .input(column, tagId)
+            .input("click_count", 1)
+            .input("last_clicked", now)
+            .input("created_at", now)
+            .query(`
+              INSERT INTO ${table} (username, ${column}, click_count, last_clicked, created_at)
+              VALUES (@username, @${column}, @click_count, @last_clicked, @created_at)
+            `);
+
+          console.log(`➕ Inserted new ${tagType} tag ${tagId} for ${username}`);
+        }
+      } catch (innerErr) {
+        console.error(`❌ Error updating ${tagType} tag ${tagId} for ${username}:`, innerErr.message);
+      }
+    }
+
+    res.status(200).json({ message: "Click recorded and tag scores updated." });
+
+  } catch (err) {
+    console.error("🔥 BO: Error tracking click:", err);
+    res.status(500).json({ error: "Failed to track click." });
+  }
+});
+
+
+// BO: Backend route to track product clicks (fixed minor_tag_scores)
+/*app.post("/track-click", async (req, res) => {
+  const { username, productId } = req.body;
+
+  if (!username || !productId) {
+    return res.status(400).json({ error: "Missing username or productId." });
+  }
+
+  try {
+    const pool = await connectDB();
+    const now = new Date();
+
+    // 🔍 Fetch associated main + minor tags
+    const tagQuery = await pool.request()
+      .input("productId", productId)
+      .query(`
+        SELECT category_id AS tag_id, 'main' AS tag_type FROM link_main_categories WHERE product_id = @productId
+        UNION
+        SELECT minor_category_id AS tag_id, 'minor' AS tag_type FROM link_minor_categories WHERE product_id = @productId
+      `);
+
+    if (tagQuery.recordset.length === 0) {
+      console.warn(`BO: No tags found for productId ${productId}`);
+    }
+
+    for (const row of tagQuery.recordset) {
+      const tagId = row.tag_id;
+      const tagType = row.tag_type;
+
+      const table = tagType === "main" ? "main_tag_scores" : "minor_tag_scores";
+      const column = tagType === "main" ? "category_id" : "minor_category_id";
+
+      console.log(`📌 Tracking ${tagType} tag: ${tagId} for user ${username}`);
+
+      // Check if the row exists
+      const exists = await pool.request()
+        .input("username", username)
+        .input(column, tagId)
+        .query(`
+          SELECT 1 FROM ${table}
+          WHERE username = @username AND ${column} = @${column}
+        `);
+
+      if (exists.recordset.length > 0) {
+        // ✅ Update click count and last_clicked
+        await pool.request()
+          .input("username", username)
+          .input(column, tagId)
+          .input("now", now)
+          .query(`
+            UPDATE ${table}
+            SET click_count = click_count + 1, last_clicked = @now
+            WHERE username = @username AND ${column} = @${column}
+          `);
+
+        console.log(`✅ Updated ${tagType} tag ${tagId} for ${username}`);
+      } else {
+        // ➕ Insert new row
+        await pool.request()
+          .input("username", username)
+          .input(column, tagId)
+          .input("click_count", 1)
+          .input("last_clicked", now)
+          .input("created_at", now)
+          .query(`
+            INSERT INTO ${table} (username, ${column}, click_count, last_clicked, created_at)
+            VALUES (@username, @${column}, @click_count, @last_clicked, @created_at)
+          `);
+
+        console.log(`➕ Inserted new ${tagType} tag ${tagId} for ${username}`);
+      }
+    }
+
+    res.status(200).json({ message: "Click recorded and tag scores updated." });
+
+  } catch (err) {
+    console.error("BO: Error tracking click:", err);
+    res.status(500).json({ error: "Failed to track click." });
+  }
+});*/
+
+app.get("/homepage-recommendations", async (req, res) => {
+  const { username } = req.query;
+
+  if (!username) {
+    return res.status(400).json({ error: "Missing username." });
+  }
+
+  try {
+    console.log("📥 Getting homepage recommendations for:", username); // BO
+
+    const pool = await connectDB();
+    const now = new Date();
+
+    const mainTags = await pool.request()
+      .input("username", username)
+      .query(`
+        SELECT category_id, click_count, last_clicked, selection_score, created_at
+        FROM main_tag_scores
+        WHERE username = @username
+      `);
+
+    const minorTags = await pool.request()
+      .input("username", username)
+      .query(`
+        SELECT minor_category_id AS category_id, click_count, last_clicked
+        FROM minor_tag_scores
+        WHERE username = @username
+      `);
+
+    console.log("📊 main_tag_scores:", mainTags.recordset); // BO
+    console.log("📊 minor_tag_scores:", minorTags.recordset); // BO
+
+    // Helper: compute decay score
+    function getDaysSince(date) {
+      return Math.floor((now - new Date(date)) / (1000 * 60 * 60 * 24));
+    }
+
+    const scoredMinor = minorTags.recordset.map(row => {
+      if (!row.last_clicked) return null; // Skip if never clicked
+      const days = getDaysSince(row.last_clicked);
+      const clickScore = row.click_count * Math.pow(0.8, days);
+      return { category_id: row.category_id, finalScore: clickScore };
+    }).filter(row => row && row.finalScore > 0); // Remove nulls and zeros
+
+    const scoredMain = mainTags.recordset.map(row => {
+      const clickScore = row.last_clicked
+        ? row.click_count * Math.pow(0.8, getDaysSince(row.last_clicked))
+        : 0;
+
+      const explicitScore = row.created_at
+        ? row.selection_score * Math.pow(0.9, getDaysSince(row.created_at))
+        : 0;
+
+      const finalScore = 0.9 * clickScore + 0.1 * explicitScore;
+      return { category_id: row.category_id, finalScore };
+    }).filter(row => row.finalScore > 0);
+
+    // Sort both lists descending
+    scoredMinor.sort((a, b) => b.finalScore - a.finalScore);
+    scoredMain.sort((a, b) => b.finalScore - a.finalScore);
+
+    const seenProducts = new Set();
+    const result = [];
+
+    async function addProductsByCategory(tag, isMinor) {
+      const tagCol = isMinor ? "minor_category_id" : "category_id";
+      const linkTable = isMinor ? "link_minor_categories" : "link_main_categories";
+
+      const products = await pool.request()
+        .input("tag", tag.category_id)
+        .query(`
+          SELECT p.* FROM products p
+          JOIN ${linkTable} l ON l.product_id = p.product_id
+          WHERE l.${tagCol} = @tag
+        `);
+
+      const filtered = products.recordset.filter(p => !seenProducts.has(p.product_id));
+      const selected = filtered.sort(() => 0.5 - Math.random()).slice(0, 10);
+
+      selected.forEach(p => seenProducts.add(p.product_id));
+      result.push(...selected);
+    }
+
+    let mIndex = 0, MIndex = 0;
+    while ((mIndex < scoredMinor.length || MIndex < scoredMain.length) && result.length < 60) {
+      // 2 minor tags
+      for (let i = 0; i < 2 && mIndex < scoredMinor.length; i++, mIndex++) {
+        await addProductsByCategory(scoredMinor[mIndex], true);
+      }
+      // 1 main tag
+      if (MIndex < scoredMain.length) {
+        await addProductsByCategory(scoredMain[MIndex], false);
+        MIndex++;
+      }
+    }
+
+    pool.close();
+    res.status(200).json(result);
+  } catch (err) {
+    console.error("BO: Error generating homepage recommendations:", err);
+    res.status(500).json({ error: "Failed to generate recommendations." });
+  }
+});
+
 // GET all main categories
 app.get("/main-categories", async (req, res) => {
   try {
