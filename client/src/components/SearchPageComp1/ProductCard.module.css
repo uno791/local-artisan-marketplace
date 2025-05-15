@@ -8,7 +8,7 @@
   border-radius: 8px;
   overflow: hidden;
   text-decoration: none;
-  color: inherit;
+  color: #3e2b18;
   transition: transform 0.2s, box-shadow 0.2s;
 }
 .card:hover {
