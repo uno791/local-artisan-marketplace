@@ -1357,9 +1357,10 @@ app.get("/seller-orders/:username", async (req, res) => {
     const result = await pool.request().input("username", username).query(`
       SELECT 
         o.order_id,
-        o.status,
         o.created_at,
+        oi.product_id,
         oi.quantity,
+        oi.status,
         p.product_name,
         p.price
       FROM dbo.orders o
@@ -1370,7 +1371,6 @@ app.get("/seller-orders/:username", async (req, res) => {
     `);
 
     await pool.close();
-
     res.json(result.recordset);
   } catch (err) {
     console.error("❌ Failed to fetch seller orders:", err);
@@ -1379,10 +1379,12 @@ app.get("/seller-orders/:username", async (req, res) => {
 });
 
 app.put("/update-order-status", async (req, res) => {
-  const { order_id, status } = req.body;
+  const { order_id, product_id, status } = req.body;
 
-  if (!order_id || !status) {
-    return res.status(400).json({ error: "Missing order_id or status" });
+  if (!order_id || !product_id || !status) {
+    return res
+      .status(400)
+      .json({ error: "Missing order_id, product_id, or status" });
   }
 
   try {
@@ -1390,15 +1392,17 @@ app.put("/update-order-status", async (req, res) => {
     await pool
       .request()
       .input("order_id", order_id)
-      .input("status", status)
-      .query(
-        `UPDATE dbo.orders SET status = @status WHERE order_id = @order_id`
-      );
+      .input("product_id", product_id)
+      .input("status", status).query(`
+        UPDATE dbo.order_items
+        SET status = @status
+        WHERE order_id = @order_id AND product_id = @product_id
+      `);
     await pool.close();
 
-    res.json({ message: "Order status updated" });
+    res.json({ message: "Order item status updated" });
   } catch (err) {
-    console.error("❌ Failed to update order status:", err);
+    console.error("❌ Failed to update order item status:", err);
     res.status(500).json({ error: "Update failed", details: err.message });
   }
 });

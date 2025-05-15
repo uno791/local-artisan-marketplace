@@ -8,6 +8,7 @@ type OrderStatus = "Payment Received" | "Shipped" | "Delivered";
 
 interface Order {
   order_id: number;
+  product_id: number;
   name: string;
   price: string;
   quantity: number;
@@ -20,6 +21,7 @@ const SellerOrders: React.FC = () => {
   const [orders, setOrders] = useState<Order[]>([]);
   const [pendingStatus, setPendingStatus] = useState<{
     orderId: number;
+    productId: number;
     newStatus: OrderStatus;
   } | null>(null);
 
@@ -31,6 +33,7 @@ const SellerOrders: React.FC = () => {
       .then((res) => {
         const formattedOrders = res.data.map((order: any) => ({
           order_id: order.order_id,
+          product_id: order.product_id,
           name: order.product_name,
           price: `R${parseFloat(order.price).toFixed(2)}`,
           quantity: order.quantity,
@@ -42,8 +45,12 @@ const SellerOrders: React.FC = () => {
       .catch((err) => console.error("❌ Failed to load orders:", err));
   }, [user?.username]);
 
-  const handleStatusChange = (order_id: number, newStatus: OrderStatus) => {
-    setPendingStatus({ orderId: order_id, newStatus });
+  const handleStatusChange = (
+    order_id: number,
+    product_id: number,
+    newStatus: OrderStatus
+  ) => {
+    setPendingStatus({ orderId: order_id, productId: product_id, newStatus });
   };
 
   const confirmStatusChange = async () => {
@@ -52,12 +59,14 @@ const SellerOrders: React.FC = () => {
     try {
       await axios.put(`${baseURL}/update-order-status`, {
         order_id: pendingStatus.orderId,
+        product_id: pendingStatus.productId,
         status: pendingStatus.newStatus,
       });
 
       setOrders((prevOrders) =>
         prevOrders.map((order) =>
-          order.order_id === pendingStatus.orderId
+          order.order_id === pendingStatus.orderId &&
+          order.product_id === pendingStatus.productId
             ? { ...order, status: pendingStatus.newStatus }
             : order
         )
@@ -66,7 +75,7 @@ const SellerOrders: React.FC = () => {
       console.error("❌ Failed to update status:", err);
       alert("Failed to update order status.");
     } finally {
-      setPendingStatus(null); // Close modal
+      setPendingStatus(null);
     }
   };
 
@@ -74,7 +83,10 @@ const SellerOrders: React.FC = () => {
   const previousOrders = orders.filter((o) => o.status === "Delivered");
 
   const renderOrderCard = (order: Order) => (
-    <div key={order.order_id} className={styles.orderCard}>
+    <div
+      key={`${order.order_id}-${order.product_id}`}
+      className={styles.orderCard}
+    >
       <div>
         {order.name} - {order.price}
       </div>
@@ -84,7 +96,11 @@ const SellerOrders: React.FC = () => {
         <select
           value={order.status}
           onChange={(e) =>
-            handleStatusChange(order.order_id, e.target.value as OrderStatus)
+            handleStatusChange(
+              order.order_id,
+              order.product_id,
+              e.target.value as OrderStatus
+            )
           }
         >
           <option value="Payment Received">Payment Received</option>
@@ -117,6 +133,7 @@ const SellerOrders: React.FC = () => {
       ) : (
         previousOrders.map(renderOrderCard)
       )}
+
       {pendingStatus && (
         <div className={styles.modalBackdrop}>
           <div className={styles.modal}>
