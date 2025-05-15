@@ -1204,3 +1204,157 @@ app.get("/orders/:username", async (req, res) => {
 app.listen(PORT, () => {
   console.log("🚀 Server Listening on PORT:", PORT);
 });
+
+app.get("/user-reports", async (req, res) => {
+  try {
+    const pool = await connectDB();
+    const result = await pool.request().query(`
+      SELECT 
+        ur.reporterby_username,
+        ur.seller_username,
+        ur.product_id,
+        p.product_name,
+        ur.details,
+        ur.evidence_url,
+        ur.created_at,
+        ur.status,
+        r.reason
+      FROM dbo.user_reports ur
+      JOIN dbo.products p ON ur.product_id = p.product_id
+      LEFT JOIN dbo.reasons r ON ur.reason_id = r.reason_id
+      WHERE ur.status < 3
+      ORDER BY ur.created_at DESC
+    `);
+    await pool.close();
+    res.json(result.recordset);
+  } catch (err) {
+    console.error("❌ Failed to fetch user reports:", err);
+    res.status(500).json({ error: "DB query failed", details: err.message });
+  }
+});
+
+
+
+app.put("/update-report-status", async (req, res) => {
+  const { reporterby_username, product_id, status } = req.body;
+
+  if (!reporterby_username || !product_id || !status) {
+    return res.status(400).json({ error: "Missing required fields" });
+  }
+
+  try {
+    const pool = await connectDB();
+    await pool
+      .request()
+      .input("reporterby_username", reporterby_username)
+      .input("product_id", product_id)
+      .input("status", status)
+      .query(`
+        UPDATE dbo.user_reports
+        SET status = @status
+        WHERE reporterby_username = @reporterby_username AND product_id = @product_id
+      `);
+    await pool.close();
+
+    res.json({ message: "Status updated successfully" });
+  } catch (err) {
+    console.error("❌ Failed to update report status:", err);
+    res.status(500).json({ error: "Server error", details: err.message });
+  }
+});
+
+app.post("/mark-product-kept", async (req, res) => {
+  const { product_id } = req.body;
+  try {
+    const pool = await connectDB();
+    await pool.request().input("product_id", product_id).query(`
+      UPDATE dbo.user_reports
+      SET status = 2
+      WHERE product_id = @product_id
+    `);
+    await pool.close();
+    res.json({ message: "Product marked as kept." });
+  } catch (err) {
+    res.status(500).json({ error: "Update failed", details: err.message });
+  }
+});
+
+
+
+
+app.post("/mark-product-kept", async (req, res) => {
+  const { product_id } = req.body;
+
+  try {
+    const pool = await connectDB();
+
+    // 1. Delete the report
+    await pool.request().input("product_id", product_id).query(`
+      DELETE FROM dbo.user_reports WHERE product_id = @product_id
+    `);
+
+    // 2. (Optional) Delete reviews if that's also your requirement
+    await pool.request().input("product_id", product_id).query(`
+      DELETE FROM dbo.reviews WHERE product_id = @product_id
+    `);
+
+    await pool.close();
+    res.json({ message: "Product kept and report removed." });
+  } catch (err) {
+    res.status(500).json({ error: "Update failed", details: err.message });
+  }
+});
+
+app.delete("/delete-product/:id", async (req, res) => {
+  const { id } = req.params;
+
+  if (!id) {
+    return res.status(400).json({ error: "Missing product ID" });
+  }
+
+  try {
+    const pool = await connectDB();
+
+    console.log("🧹 Deleting product and dependencies:", id);
+
+    // 1. Delete from order_items
+    await pool.request().input("id", id).query(`
+      DELETE FROM dbo.order_items WHERE product_id = @id
+    `);
+
+    // 2. Delete from link_minor_categories
+    await pool.request().input("id", id).query(`
+      DELETE FROM dbo.link_minor_categories WHERE product_id = @id
+    `);
+
+    // 3. Delete from link_main_categories
+    await pool.request().input("id", id).query(`
+      DELETE FROM dbo.link_main_categories WHERE product_id = @id
+    `);
+
+    // 4. Delete reviews
+    await pool.request().input("id", id).query(`
+      DELETE FROM dbo.reviews WHERE product_id = @id
+    `);
+
+    // 5. Delete user_reports
+    await pool.request().input("id", id).query(`
+      DELETE FROM dbo.user_reports WHERE product_id = @id
+    `);
+
+    // 6. Finally delete product
+    await pool.request().input("id", id).query(`
+      DELETE FROM dbo.products WHERE product_id = @id
+    `);
+
+    await pool.close();
+    res.json({ message: "✅ Product and related records deleted." });
+  } catch (err) {
+    console.error("❌ Product deletion error:", err);
+    res.status(500).json({ error: "Delete failed", details: err.message });
+  }
+});
+
+
+
+
