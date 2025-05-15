@@ -12,6 +12,9 @@
   color: black;
 }
 
+
+
+
 h2 {
   font-size: 2rem;
   color: #3e2c14;
@@ -30,7 +33,7 @@ h2 {
   box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
   display: flex;
   justify-content: center;
-  gap: 20px;
+  gap: 5px;
   width: 1000px;
   max-width: 100%;
   margin-left: 5px;
@@ -62,6 +65,36 @@ h2 {
 .delivered {
   color: #28a745;
 }
+.statusDot {
+  width: 12px;
+  height: 12px;
+  border-radius: 50%;
+  background-color: gray; /* fallback color */
+  flex: 0 0 auto !important;    /* stop stretching */
+  min-width: unset !important; /* cancel parent min-width */
+  max-width: unset;
+  display: inline-block;
+  margin-left: 4px;
+  margin-left: auto;
+  align-self: center;
+}
+
+
+
+
+/* Color variants */
+.paymentreceivedDot {
+  background-color: #007bff; /* Blue */
+}
+
+.shippedDot {
+  background-color: #f1c40f; /* Yellow */
+}
+
+.deliveredDot {
+  background-color: #28a745; /* Green */
+}
+
 
 .orderCard .status {
   font-weight: bold;
@@ -99,4 +132,138 @@ h2 {
     flex: 1 1 100%;
     min-width: unset;
   }
+}
+.statusWrapper {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 1.1rem;
+  color: #333;
+  min-width: 160px;
+  white-space: nowrap;
+}
+
+
+.statusWrapper select {
+  font-size: 0.8rem;
+  padding: 6px 12px;
+  border-radius: 4px;
+  border: 1px solid #ccc;
+  background-color: #fff;
+  color: #333;
+  appearance: auto;
+  width: 100%;
+}
+.modalBackdrop {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background-color: rgba(0, 0, 0, 0.4);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 1000;
+}
+
+.modal {
+  position: relative;
+  background-color: #fff8f0;
+  padding: 2rem;
+  border-radius: 10px;
+  box-shadow: 0 0 20px rgba(255, 102, 0, 0.6);
+  animation: flamePulse 1.5s infinite ease-in-out;
+  max-width: 400px;
+  width: 80%;
+  text-align: center;
+  z-index: 1001;
+  border: 2px solid #ff6a00;
+  .modal::before {
+  content: "";
+  position: absolute;
+  top: -8px;
+  left: -8px;
+  right: -8px;
+  bottom: -8px;
+  background: radial-gradient(circle, rgba(255,140,0,0.6), transparent 70%);
+  border-radius: 14px;
+  z-index: -1;
+  animation: flicker 1.3s infinite alternate;
+  pointer-events: none;
+}
+
+}
+@keyframes flicker {
+  0% {
+    opacity: 0.8;
+    transform: scale(1);
+  }
+  50% {
+    opacity: 0.5;
+    transform: scale(1.03);
+  }
+  100% {
+    opacity: 0.9;
+    transform: scale(1);
+  }
+}
+
+@keyframes flamePulse {
+  0% {
+    box-shadow: 0 0 20px rgba(255, 102, 0, 0.6),
+                0 0 40px rgba(255, 153, 0, 0.4),
+                0 0 60px rgba(255, 204, 0, 0.3);
+  }
+  50% {
+    box-shadow: 0 0 30px rgba(255, 140, 0, 0.8),
+                0 0 50px rgba(255, 102, 0, 0.5),
+                0 0 80px rgba(255, 51, 0, 0.4);
+  }
+  100% {
+    box-shadow: 0 0 20px rgba(255, 102, 0, 0.6),
+                0 0 40px rgba(255, 153, 0, 0.4),
+                0 0 60px rgba(255, 204, 0, 0.3);
+  }
+}
+
+
+.modalActions {
+  margin-top: 1.5rem;
+  display: flex;
+  justify-content: space-around;
+  gap: 10px;
+}
+
+.modalActions button {
+  padding: 0.5rem 1rem;
+  font-size: 1rem;
+  border-radius: 6px;
+  border: none;
+  cursor: pointer;
+}
+
+.modalActions button:first-child {
+  background: black;
+  color: white;
+  font-weight: bold;
+  animation: rainbowText 2s linear infinite;
+  background-clip: text;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  border: 2px solid #28a745;
+}
+@keyframes rainbowText {
+  0% {
+    filter: hue-rotate(0deg);
+  }
+  100% {
+    filter: hue-rotate(360deg);
+  }
+}
+
+
+.modalActions button:last-child {
+  background-color: #ccc;
+  color: black;
 }

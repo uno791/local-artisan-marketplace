@@ -1355,6 +1355,57 @@ app.delete("/delete-product/:id", async (req, res) => {
   }
 });
 
+app.get("/seller-orders/:username", async (req, res) => {
+  const { username } = req.params;
+
+  try {
+    const pool = await connectDB();
+    const result = await pool.request().input("username", username).query(`
+      SELECT 
+        o.order_id,
+        o.status,
+        o.created_at,
+        oi.quantity,
+        p.product_name,
+        p.price
+      FROM dbo.orders o
+      JOIN dbo.order_items oi ON o.order_id = oi.order_id
+      JOIN dbo.products p ON oi.product_id = p.product_id
+      WHERE p.username = @username
+      ORDER BY o.created_at DESC
+    `);
+
+    await pool.close();
+
+    res.json(result.recordset);
+  } catch (err) {
+    console.error("❌ Failed to fetch seller orders:", err);
+    res.status(500).json({ error: "DB query failed", details: err.message });
+  }
+});
+
+app.put("/update-order-status", async (req, res) => {
+  const { order_id, status } = req.body;
+
+  if (!order_id || !status) {
+    return res.status(400).json({ error: "Missing order_id or status" });
+  }
+
+  try {
+    const pool = await connectDB();
+    await pool
+      .request()
+      .input("order_id", order_id)
+      .input("status", status)
+      .query(`UPDATE dbo.orders SET status = @status WHERE order_id = @order_id`);
+    await pool.close();
+
+    res.json({ message: "Order status updated" });
+  } catch (err) {
+    console.error("❌ Failed to update order status:", err);
+    res.status(500).json({ error: "Update failed", details: err.message });
+  }
+});
 
 
 

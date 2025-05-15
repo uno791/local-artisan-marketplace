@@ -1,9 +1,13 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import styles from "./SellerOrders.module.css";
+import axios from "axios";
+import { useUser } from "../../Users/UserContext";
+import { baseURL } from "../../config";
 
 type OrderStatus = "Payment Received" | "Shipped" | "Delivered";
 
 interface Order {
+  order_id: number;
   name: string;
   price: string;
   quantity: number;
@@ -11,83 +15,122 @@ interface Order {
   date: string;
 }
 
-const currentOrders: Order[] = [
-  {
-    name: "Sexy Bag",
-    price: "R90",
-    quantity: 2,
-    status: "Payment Received",
-    date: "2024-01-15",
-  },
-  {
-    name: "Sexy Bottle",
-    price: "R90",
-    quantity: 1,
-    status: "Shipped",
-    date: "2024-01-14",
-  },
-];
-
-const previousOrders: Order[] = [
-  {
-    name: "Sexy Bag",
-    price: "R90",
-    quantity: 3,
-    status: "Delivered",
-    date: "2024-01-10",
-  },
-  {
-    name: "Sexy Bottle",
-    price: "R90",
-    quantity: 1,
-    status: "Delivered",
-    date: "2024-01-09",
-  },
-  {
-    name: "Sexy Bag",
-    price: "R90",
-    quantity: 2,
-    status: "Delivered",
-    date: "2024-01-07",
-  },
-];
-
 const SellerOrders: React.FC = () => {
+  const { user } = useUser();
+  const [orders, setOrders] = useState<Order[]>([]);
+  const [pendingStatus, setPendingStatus] = useState<{
+    orderId: number;
+    newStatus: OrderStatus;
+  } | null>(null);
+
+  useEffect(() => {
+    if (!user?.username) return;
+
+    axios
+      .get(`${baseURL}/seller-orders/${user.username}`)
+      .then((res) => {
+        const formattedOrders = res.data.map((order: any) => ({
+          order_id: order.order_id,
+          name: order.product_name,
+          price: `R${parseFloat(order.price).toFixed(2)}`,
+          quantity: order.quantity,
+          status: order.status,
+          date: new Date(order.created_at).toISOString().split("T")[0],
+        }));
+        setOrders(formattedOrders);
+      })
+      .catch((err) => console.error("❌ Failed to load orders:", err));
+  }, [user?.username]);
+
+  const handleStatusChange = (order_id: number, newStatus: OrderStatus) => {
+    setPendingStatus({ orderId: order_id, newStatus });
+  };
+
+  const confirmStatusChange = async () => {
+    if (!pendingStatus) return;
+
+    try {
+      await axios.put(`${baseURL}/update-order-status`, {
+        order_id: pendingStatus.orderId,
+        status: pendingStatus.newStatus,
+      });
+
+      setOrders((prevOrders) =>
+        prevOrders.map((order) =>
+          order.order_id === pendingStatus.orderId
+            ? { ...order, status: pendingStatus.newStatus }
+            : order
+        )
+      );
+    } catch (err) {
+      console.error("❌ Failed to update status:", err);
+      alert("Failed to update order status.");
+    } finally {
+      setPendingStatus(null); // Close modal
+    }
+  };
+
+  const currentOrders = orders.filter((o) => o.status !== "Delivered");
+  const previousOrders = orders.filter((o) => o.status === "Delivered");
+
+  const renderOrderCard = (order: Order) => (
+    <div key={order.order_id} className={styles.orderCard}>
+      <div>
+        {order.name} - {order.price}
+      </div>
+      <div>Qty: {order.quantity}</div>
+      <div className={styles.statusWrapper}>
+        <span>Status:</span>
+        <select
+          value={order.status}
+          onChange={(e) =>
+            handleStatusChange(order.order_id, e.target.value as OrderStatus)
+          }
+        >
+          <option value="Payment Received">Payment Received</option>
+          <option value="Shipped">Shipped</option>
+          <option value="Delivered">Delivered</option>
+        </select>
+      </div>
+      <div>Date: {order.date}</div>
+
+      <div
+        className={`${styles.statusDot} ${
+          styles[order.status.toLowerCase().replace(/\s/g, "") + "Dot"]
+        }`}
+      />
+    </div>
+  );
+
   return (
     <div className={styles.container}>
       <h2>Current Orders</h2>
-      {currentOrders.map((order, index) => (
-        <div key={index} className={styles.orderCard}>
-          <div>
-            {order.name} - {order.price}
-          </div>
-          <div>Qty: {order.quantity}</div>
-          <div>
-            Status:{" "}
-            <span className={styles[order.status.toLowerCase()]}>
-              {order.status}
-            </span>
-          </div>
-          <div>Date: {order.date}</div>
-        </div>
-      ))}
+      {currentOrders.length === 0 ? (
+        <p>No current orders.</p>
+      ) : (
+        currentOrders.map(renderOrderCard)
+      )}
 
       <h2>Previous Orders</h2>
-      {previousOrders.map((order, index) => (
-        <div key={index} className={styles.orderCard}>
-          <div>
-            {order.name} - {order.price}
+      {previousOrders.length === 0 ? (
+        <p>No previous orders.</p>
+      ) : (
+        previousOrders.map(renderOrderCard)
+      )}
+      {pendingStatus && (
+        <div className={styles.modalBackdrop}>
+          <div className={styles.modal}>
+            <p>
+              Are you sure you want to change status to{" "}
+              <strong>{pendingStatus.newStatus}</strong>?
+            </p>
+            <div className={styles.modalActions}>
+              <button onClick={confirmStatusChange}>Confirm</button>
+              <button onClick={() => setPendingStatus(null)}>Cancel</button>
+            </div>
           </div>
-          <div>Qty: {order.quantity}</div>
-          <div>
-            Status:{" "}
-            <span className={styles[order.status.toLowerCase()]}>
-              {order.status}
-            </span>
-          </div>
-          <div>Date: {order.date}</div>
         </div>
-      ))}
+      )}
     </div>
   );
 };
