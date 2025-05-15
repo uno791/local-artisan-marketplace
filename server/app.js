@@ -1139,9 +1139,9 @@ app.post("/checkout", async (req, res) => {
       .request()
       .input("buyer_username", username)
       .input("total_amount", totalAmount).query(`
-        INSERT INTO dbo.orders (buyer_username, created_at, total_amount, status)
+        INSERT INTO dbo.orders (buyer_username, created_at, total_amount)
         OUTPUT INSERTED.order_id
-        VALUES (@buyer_username, GETDATE(), @total_amount, 'Payment Received')
+        VALUES (@buyer_username, GETDATE(), @total_amount)
       `);
 
     const orderId = orderResult.recordset[0].order_id;
@@ -1183,7 +1183,7 @@ app.get("/orders/:username", async (req, res) => {
   try {
     const pool = await connectDB();
     const result = await pool.request().input("username", username).query(`
-        SELECT o.order_id, o.status, o.created_at,
+        SELECT o.order_id, oi.status, o.created_at,
                oi.quantity, p.product_name, p.price, p.image_url
         FROM dbo.orders o
         JOIN dbo.order_items oi ON o.order_id = oi.order_id
@@ -1233,8 +1233,6 @@ app.get("/user-reports", async (req, res) => {
   }
 });
 
-
-
 app.put("/update-report-status", async (req, res) => {
   const { reporterby_username, product_id, status } = req.body;
 
@@ -1248,8 +1246,7 @@ app.put("/update-report-status", async (req, res) => {
       .request()
       .input("reporterby_username", reporterby_username)
       .input("product_id", product_id)
-      .input("status", status)
-      .query(`
+      .input("status", status).query(`
         UPDATE dbo.user_reports
         SET status = @status
         WHERE reporterby_username = @reporterby_username AND product_id = @product_id
@@ -1278,9 +1275,6 @@ app.post("/mark-product-kept", async (req, res) => {
     res.status(500).json({ error: "Update failed", details: err.message });
   }
 });
-
-
-
 
 app.post("/mark-product-kept", async (req, res) => {
   const { product_id } = req.body;
@@ -1397,7 +1391,9 @@ app.put("/update-order-status", async (req, res) => {
       .request()
       .input("order_id", order_id)
       .input("status", status)
-      .query(`UPDATE dbo.orders SET status = @status WHERE order_id = @order_id`);
+      .query(
+        `UPDATE dbo.orders SET status = @status WHERE order_id = @order_id`
+      );
     await pool.close();
 
     res.json({ message: "Order status updated" });
@@ -1406,6 +1402,3 @@ app.put("/update-order-status", async (req, res) => {
     res.status(500).json({ error: "Update failed", details: err.message });
   }
 });
-
-
-
