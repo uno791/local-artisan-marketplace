@@ -232,7 +232,12 @@ app.get("/product/:id", async (req, res) => {
     await pool.close();
 
     // 3. Return everything
-    res.json({ ...product, tags });
+   res.json({ 
+  ...product, 
+  tags, 
+  product_image: product.image_url // ✅ This is the key line
+});
+
   } catch (err) {
     console.error("❌ Failed to fetch product:", err);
     res.status(500).json({ error: "DB query failed", details: err.message });
@@ -977,12 +982,13 @@ app.put("/editproduct/:id", async (req, res) => {
     details,
     typeOfArt,
     tags,
+    product_image, // ✅ New field
   } = req.body;
 
   try {
     const pool = await connectDB();
 
-    // Step 1: Update main product fields
+    // Step 1: Update product including image
     await pool
       .request()
       .input("id", id)
@@ -993,7 +999,9 @@ app.put("/editproduct/:id", async (req, res) => {
       .input("width", width)
       .input("height", height)
       .input("weight", weight)
-      .input("details", details).query(`
+      .input("details", details)
+      .input("product_image", product_image) // ✅ New line
+      .query(`
         UPDATE dbo.products
         SET 
           product_name = @product_name,
@@ -1003,7 +1011,8 @@ app.put("/editproduct/:id", async (req, res) => {
           width = @width,
           height = @height,
           weight = @weight,
-          details = @details
+          details = @details,
+          image_url = @product_image -- ✅ Store base64
         WHERE product_id = @id
       `);
 
@@ -1018,49 +1027,39 @@ app.put("/editproduct/:id", async (req, res) => {
     if (categoryResult.recordset.length > 0) {
       const categoryId = categoryResult.recordset[0].category_id;
 
-      // Remove old links
       await pool
         .request()
         .input("product_id", id)
-        .query(
-          `DELETE FROM dbo.link_main_categories WHERE product_id = @product_id`
-        );
+        .query(`DELETE FROM dbo.link_main_categories WHERE product_id = @product_id`);
 
-      // Add new one
       await pool
         .request()
         .input("product_id", id)
         .input("category_id", categoryId)
-        .query(
-          `INSERT INTO dbo.link_main_categories (product_id, category_id) VALUES (@product_id, @category_id)`
-        );
+        .query(`
+          INSERT INTO dbo.link_main_categories (product_id, category_id)
+          VALUES (@product_id, @category_id)
+        `);
     }
 
-    // Step 3: Update tags (minor categories)
+    // Step 3: Update tags
     await pool
       .request()
       .input("product_id", id)
-      .query(
-        `DELETE FROM dbo.link_minor_categories WHERE product_id = @product_id`
-      );
+      .query(`DELETE FROM dbo.link_minor_categories WHERE product_id = @product_id`);
 
     for (const tag of tags) {
       let tagId;
-
       const tagLookup = await pool
         .request()
         .input("minor_category_name", tag)
-        .query(
-          `SELECT minor_category_id FROM dbo.minor_categories WHERE minor_category_name = @minor_category_name`
-        );
+        .query(`SELECT minor_category_id FROM dbo.minor_categories WHERE minor_category_name = @minor_category_name`);
 
       if (tagLookup.recordset.length === 0) {
         const insertTag = await pool
           .request()
           .input("minor_category_name", tag)
-          .query(
-            `INSERT INTO dbo.minor_categories (minor_category_name) OUTPUT INSERTED.minor_category_id VALUES (@minor_category_name)`
-          );
+          .query(`INSERT INTO dbo.minor_categories (minor_category_name) OUTPUT INSERTED.minor_category_id VALUES (@minor_category_name)`);
         tagId = insertTag.recordset[0].minor_category_id;
       } else {
         tagId = tagLookup.recordset[0].minor_category_id;
@@ -1070,9 +1069,10 @@ app.put("/editproduct/:id", async (req, res) => {
         .request()
         .input("product_id", id)
         .input("minor_category_id", tagId)
-        .query(
-          `INSERT INTO dbo.link_minor_categories (product_id, minor_category_id) VALUES (@product_id, @minor_category_id)`
-        );
+        .query(`
+          INSERT INTO dbo.link_minor_categories (product_id, minor_category_id)
+          VALUES (@product_id, @minor_category_id)
+        `);
     }
 
     await pool.close();
@@ -1082,6 +1082,7 @@ app.put("/editproduct/:id", async (req, res) => {
     res.status(500).json({ error: "Update failed", details: err.message });
   }
 });
+
 
 app.put("/api/user-profile-image", async (req, res) => {
   const { username, user_pfp } = req.body;
