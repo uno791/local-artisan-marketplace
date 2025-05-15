@@ -74,3 +74,22 @@
   .signup-form button:hover{
     transform: scale(1.05);
   }
+
+  .input-error {
+  border-color: red;
+}
+
+.error-text {
+  color: red;
+  font-size: 0.85rem;
+  margin-top: 4px;
+  margin-bottom: 8px;
+}
+
+.banner-preview {
+  margin-top: 10px;
+  max-width: 100%;
+  height: auto;
+  border: 1px solid #ccc;
+  border-radius: 6px;
+}
