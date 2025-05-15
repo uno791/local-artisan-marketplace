@@ -232,12 +232,11 @@ app.get("/product/:id", async (req, res) => {
     await pool.close();
 
     // 3. Return everything
-   res.json({ 
-  ...product, 
-  tags, 
-  product_image: product.image_url // ✅ This is the key line
-});
-
+    res.json({
+      ...product,
+      tags,
+      product_image: product.image_url, // ✅ This is the key line
+    });
   } catch (err) {
     console.error("❌ Failed to fetch product:", err);
     res.status(500).json({ error: "DB query failed", details: err.message });
@@ -536,52 +535,76 @@ app.post("/adduser", async (req, res) => {
 
 app.get("/products/search", async (req, res) => {
   const q = String(req.query.query || "");
-  const sort = req.query.sort;
+  const sort = String(req.query.sort || "new");
 
-  let orderBy;
+  // 1) decide how to sort inside the CTE (p. alias allowed)
+  // 2) decide how to sort in the outer SELECT (columns only)
+  let cteOrderBy, outerOrderBy;
   switch (sort) {
     case "priceAsc":
-      orderBy = "p.price ASC, p.product_id ASC";
+      cteOrderBy = "p.price ASC, p.product_id ASC";
+      outerOrderBy = "price ASC, product_id ASC";
       break;
     case "priceDesc":
-      orderBy = "p.price DESC, p.product_id ASC";
+      cteOrderBy = "p.price DESC, p.product_id ASC";
+      outerOrderBy = "price DESC, product_id ASC";
       break;
-    default:
-      // "new"
-      orderBy = "p.created_at DESC, p.product_id ASC";
+    default: // "new"
+      cteOrderBy = "p.created_at DESC, p.product_id ASC";
+      outerOrderBy = "created_at DESC, product_id ASC";
   }
 
   try {
     const pool = await connectDB();
     const request = pool.request().input("q", q);
+
     const sql = `
+      WITH RankedProducts AS (
+        SELECT
+          p.product_id,
+          p.product_name,
+          p.description,
+          p.price,
+          p.image_url,
+          a.username        AS username,
+          p.created_at,
+          ROW_NUMBER() OVER (
+            PARTITION BY p.product_id
+            ORDER BY ${cteOrderBy}
+          ) AS rn
+        FROM dbo.products p
+        JOIN dbo.artisans a
+          ON p.username = a.username
+        LEFT JOIN dbo.link_main_categories lmc
+          ON p.product_id = lmc.product_id
+        LEFT JOIN dbo.main_categories mc
+          ON lmc.category_id = mc.category_id
+        LEFT JOIN dbo.link_minor_categories lmnc
+          ON p.product_id = lmnc.product_id
+        LEFT JOIN dbo.minor_categories mnc
+          ON lmnc.minor_category_id = mnc.minor_category_id
+        WHERE
+          p.product_name           LIKE '%' + @q + '%'
+          OR a.username            LIKE '%' + @q + '%'
+          OR mc.category_name      LIKE '%' + @q + '%'
+          OR mnc.minor_category_name LIKE '%' + @q + '%'
+      )
       SELECT
-        p.product_id,
-        p.product_name,
-        p.description,
-        p.price,
-        p.image_url,
-        a.username,         
-        p.created_at
-      FROM dbo.products p
-      JOIN dbo.artisans a ON p.username = a.username
-      LEFT JOIN dbo.link_main_categories lmc
-        ON p.product_id = lmc.product_id
-      LEFT JOIN dbo.main_categories mc
-        ON lmc.category_id = mc.category_id
-      LEFT JOIN dbo.link_minor_categories lmnc
-        ON p.product_id = lmnc.product_id
-      LEFT JOIN dbo.minor_categories mnc
-        ON lmnc.minor_category_id = mnc.minor_category_id
-      WHERE
-        p.product_name           LIKE '%' + @q + '%'
-        OR a.username            LIKE '%' + @q + '%'
-        OR mc.category_name      LIKE '%' + @q + '%'
-        OR mnc.minor_category_name LIKE '%' + @q + '%'
-      ORDER BY ${orderBy};
+        product_id,
+        product_name,
+        description,
+        price,
+        image_url,
+        username,
+        created_at
+      FROM RankedProducts
+      WHERE rn = 1
+      ORDER BY ${outerOrderBy};
     `;
+
     const result = await request.query(sql);
     await pool.close();
+
     res.json(result.recordset);
   } catch (err) {
     console.error("❌ Error in /products/search:", err);
@@ -1030,13 +1053,14 @@ app.put("/editproduct/:id", async (req, res) => {
       await pool
         .request()
         .input("product_id", id)
-        .query(`DELETE FROM dbo.link_main_categories WHERE product_id = @product_id`);
+        .query(
+          `DELETE FROM dbo.link_main_categories WHERE product_id = @product_id`
+        );
 
       await pool
         .request()
         .input("product_id", id)
-        .input("category_id", categoryId)
-        .query(`
+        .input("category_id", categoryId).query(`
           INSERT INTO dbo.link_main_categories (product_id, category_id)
           VALUES (@product_id, @category_id)
         `);
@@ -1046,20 +1070,26 @@ app.put("/editproduct/:id", async (req, res) => {
     await pool
       .request()
       .input("product_id", id)
-      .query(`DELETE FROM dbo.link_minor_categories WHERE product_id = @product_id`);
+      .query(
+        `DELETE FROM dbo.link_minor_categories WHERE product_id = @product_id`
+      );
 
     for (const tag of tags) {
       let tagId;
       const tagLookup = await pool
         .request()
         .input("minor_category_name", tag)
-        .query(`SELECT minor_category_id FROM dbo.minor_categories WHERE minor_category_name = @minor_category_name`);
+        .query(
+          `SELECT minor_category_id FROM dbo.minor_categories WHERE minor_category_name = @minor_category_name`
+        );
 
       if (tagLookup.recordset.length === 0) {
         const insertTag = await pool
           .request()
           .input("minor_category_name", tag)
-          .query(`INSERT INTO dbo.minor_categories (minor_category_name) OUTPUT INSERTED.minor_category_id VALUES (@minor_category_name)`);
+          .query(
+            `INSERT INTO dbo.minor_categories (minor_category_name) OUTPUT INSERTED.minor_category_id VALUES (@minor_category_name)`
+          );
         tagId = insertTag.recordset[0].minor_category_id;
       } else {
         tagId = tagLookup.recordset[0].minor_category_id;
@@ -1068,8 +1098,7 @@ app.put("/editproduct/:id", async (req, res) => {
       await pool
         .request()
         .input("product_id", id)
-        .input("minor_category_id", tagId)
-        .query(`
+        .input("minor_category_id", tagId).query(`
           INSERT INTO dbo.link_minor_categories (product_id, minor_category_id)
           VALUES (@product_id, @minor_category_id)
         `);
@@ -1082,7 +1111,6 @@ app.put("/editproduct/:id", async (req, res) => {
     res.status(500).json({ error: "Update failed", details: err.message });
   }
 });
-
 
 app.put("/api/user-profile-image", async (req, res) => {
   const { username, user_pfp } = req.body;
