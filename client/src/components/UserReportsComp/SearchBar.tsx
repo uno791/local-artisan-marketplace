@@ -16,7 +16,7 @@ const ReportSearchBar: React.FC<Props> = ({ value, onChange }) => {
         value={value}
         onChange={(e) => onChange(e.target.value)}
       />
-      <button className={styles.filterButton}>All Status</button>
+      
     </section>
   );
 };
