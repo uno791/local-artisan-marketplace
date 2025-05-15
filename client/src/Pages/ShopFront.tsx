@@ -15,6 +15,7 @@ interface Product {
   price: number;
   image_url: string;
   username: string;
+  category?: string;
 }
 
 interface Artisan {
@@ -22,6 +23,13 @@ interface Artisan {
   shop_pfp: string;
   bio: string;
   shop_address: string;
+  shop_banner: string;
+}
+
+function getImageSrc(base64: string | undefined): string {
+  if (!base64 || base64.trim() === "") return "";
+  if (base64.startsWith("data:")) return base64;
+  return `data:image/jpeg;base64,${base64}`;
 }
 
 function ShopFront() {
@@ -49,19 +57,12 @@ function ShopFront() {
 
   return (
     <main className={styles["shopfront-page"]}>
-      <section className={styles["report-shop-container"]}>
-        <button
-          onClick={() => setShowReportModal(true)}
-          className={styles["report-btn"]}
-        >
-          Report Shop
-        </button>
-      </section>
-
       <Header
-        logo={artisan?.shop_pfp}
+        logo={getImageSrc(artisan?.shop_pfp)}
         name={artisan?.shop_name || "Artisan Shop"}
         bio={artisan?.bio}
+        banner={getImageSrc(artisan?.shop_banner)}
+        onReportClick={() => setShowReportModal(true)}
       />
 
       <ProductGrid
@@ -70,8 +71,8 @@ function ShopFront() {
           title: p.product_name,
           artist: artisan?.shop_name || "Unknown",
           price: `R${p.price}`,
-          //category: "Custom",
-          image: p.image_url,
+          image: getImageSrc(p.image_url),
+          category: p.category || "",
         }))}
       />
 

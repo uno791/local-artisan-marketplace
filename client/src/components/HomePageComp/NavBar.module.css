@@ -1,5 +1,3 @@
-/* Base layout */
-
 .navbar {
   position: fixed;
   top: 0;
@@ -7,7 +5,7 @@
   right: 0;
   z-index: 1000;
   background-color: #efe2cc;
-  padding: 1.2rem 2rem;
+  padding: 0.4rem 1rem;
   border-bottom: 1px solid #ddd;
 }
 
@@ -17,35 +15,40 @@
   justify-content: space-between;
   max-width: 1200px;
   margin: 0 auto;
-  min-height: 80px;
+  min-height: 60px;
+  width: 100%;
 }
 
 .navbarLogo img {
-  height: 80px;
+  height: 50px;
 }
 
-/* Base styles for nav */
-
 .navbarLinks {
-  list-style: none;
-  padding: 0;
-  margin: 0;
   display: flex;
-  gap: 1rem;
+  flex-direction: row; 
+  gap: 0.5rem;
+  margin: 0;
+  padding: 0;
+  color: #efe2cc;
 }
 
 .navLink {
-  display: flex;
+  display: inline-flex;
+  justify-content: center;
   align-items: center;
-  padding: 1rem;
-  color: #3e2b18;
-  background: none;
-  border-radius: 0;
-  width: 100%;
+  width: 60px;
+  height: 45px;
+  border-radius: 6px;
+  position: relative;
+  z-index: 1;
+  overflow: hidden;
+  transform-origin: center left;
+  transition: width 0.2s ease-in;
   text-decoration: none;
+  color: #333;
   font-weight: 500;
+  background-color: #efe2cc;
 }
-
 .linkIcon {
   position: static;
   margin-right: 0.5rem;
