@@ -260,3 +260,14 @@
   color: black;
   box-sizing: border-box;
 }
+
+.input-error {
+  border-color: red;
+}
+
+.error-text {
+  color: red;
+  font-size: 0.85rem;
+  margin-top: 2px;
+  margin-bottom: 8px;
+}
