@@ -86,7 +86,7 @@ app.get("/allproducts", async (req, res) => {
         description,
         price,
         image_url,
-        username         AS artisan_username,
+        username,
         created_at
       FROM dbo.products
       ORDER BY ${orderBy};
@@ -556,7 +556,7 @@ app.get("/products/search", async (req, res) => {
         p.description,
         p.price,
         p.image_url,
-        a.username         AS artisan_username,
+        a.username,         
         p.created_at
       FROM dbo.products p
       JOIN dbo.artisans a ON p.username = a.username
