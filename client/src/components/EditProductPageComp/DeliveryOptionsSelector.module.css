@@ -10,10 +10,10 @@
   align-items: center;
   gap: 0.5rem;
   font-size: 1rem;
-  color: #999; /* default for unselected */
+  color: #090909; /* default for unselected */
 }
 
-.option:has(input[type="radio"]:checked) {
+.option:has(input[type="checkbox"]:checked) {
   color: #4c2f0c; /* selected radio text */
 }
 

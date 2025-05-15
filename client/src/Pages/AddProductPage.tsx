@@ -1,6 +1,6 @@
 import React from "react";
 import styles from "../components/EditProductPageComp/EditProductPage.module.css";
-import EditTagsButton from "../components/AddProductPageComp/AddTagsButton";
+import AddTagsButton from "../components/AddProductPageComp/AddTagsButton";
 import ImageEditor from "../components/AddProductPageComp/ImageAdder";
 import PriceInput from "../components/AddProductPageComp/PriceInput";
 import ProductDetailsInput from "../components/AddProductPageComp/ProductDetailsInput";
@@ -8,11 +8,12 @@ import ProductNameInput from "../components/AddProductPageComp/ProductNameInput"
 import SizeAndDimensions from "../components/AddProductPageComp/SizeAndDimensions";
 import StockInput from "../components/AddProductPageComp/StockInput";
 import TypeOfArtSelector from "../components/AddProductPageComp/TypeOfArtSelector";
-import DeliveryOptionSelector from "../components/AddProductPageComp/DeliveryOptionSelector";
+import DeliveryOptionSelector from "../components/EditProductPageComp/DeliveryOptionSelector";
 import NavBar from "../components/SellerHomeComp/NavBar";
-import AddTagsButton from "../components/AddProductPageComp/AddTagsButton";
 import { useUser } from "../Users/UserContext";
 import { baseURL } from "../config";
+import { useNavigate } from "react-router-dom";
+
 
 const AddProductPage: React.FC = () => {
   const [ProdName, setProdName] = React.useState<string>("");
@@ -22,14 +23,23 @@ const AddProductPage: React.FC = () => {
   const [Width, setWidth] = React.useState<string>("");
   const [Height, setHeight] = React.useState<string>("");
   const [Weight, setWeight] = React.useState<string>("");
-  const [DelMethod, setDelMethod] = React.useState<boolean>(true);
-  const [MajorCategory, setMajorCategory] = React.useState<string>(""); // renamed from TypeOfArt
+  const [DelMethod, setDelMethod] = React.useState<number>(1); // Bitmask: 1 = Delivery
+  const [MajorCategory, setMajorCategory] = React.useState<string>("");
   const [Tags, setTags] = React.useState<string[]>([]);
   const [submitted, setSubmitted] = React.useState(false);
   const [missingFields, setMissingFields] = React.useState<string[]>([]);
 
   const { user } = useUser();
   const [username] = React.useState(user?.username || "");
+  const navigate = useNavigate();
+
+
+  const getDeliveryLabel = (value: number) => {
+    if (value === 3) return "Delivery & Pickup";
+    if (value === 1) return "Delivery Only";
+    if (value === 2) return "Pickup Only";
+    return "None";
+  };
 
   const handleConfirm = async () => {
     const missing: string[] = [];
@@ -42,6 +52,7 @@ const AddProductPage: React.FC = () => {
     if (!Height.trim()) missing.push("Height");
     if (!Weight.trim()) missing.push("Weight");
     if (!MajorCategory.trim()) missing.push("Major Category");
+    if (DelMethod === 0) missing.push("Delivery Method");
 
     if (missing.length > 0) {
       setMissingFields(missing);
@@ -54,9 +65,9 @@ const AddProductPage: React.FC = () => {
     }
 
     const payload = {
-      username: username,
+      username,
       product_name: ProdName,
-      description: Details, // Description is now ONLY Details
+      description: Details,
       price: Price,
       stock_quantity: Stock,
       image_url: "",
@@ -66,6 +77,7 @@ const AddProductPage: React.FC = () => {
       details: Details,
       tags: Tags,
       typeOfArt: MajorCategory,
+      delivery_method: DelMethod, // ✅ include delivery method
     };
 
     try {
@@ -99,6 +111,7 @@ const AddProductPage: React.FC = () => {
           <PriceInput Price={Price} setPrice={setPrice} />
           <StockInput stock={Stock} setStock={setStock} />
         </section>
+
         <section className={styles.rightColumn}>
           <ProductDetailsInput Details={Details} setDetails={setDetails} />
           <SizeAndDimensions
@@ -119,9 +132,11 @@ const AddProductPage: React.FC = () => {
               setTypeOfArt={setMajorCategory}
             />
             <AddTagsButton
+              tagLimit={5}
               onConfirm={(selectedTags) => setTags(selectedTags)}
             />
           </section>
+
           <button className={styles.confirmButton} onClick={handleConfirm}>
             confirm addition of new products
           </button>
@@ -130,38 +145,18 @@ const AddProductPage: React.FC = () => {
             <section className={styles.popupOverlay}>
               <section className={styles.popup}>
                 <h2>Submitted Product Info</h2>
-                <p>
-                  <strong>Name:</strong> {ProdName}
-                </p>
-                <p>
-                  <strong>Details:</strong> {Details}
-                </p>
-                <p>
-                  <strong>Price:</strong> R{Price.toFixed(2)}
-                </p>
-                <p>
-                  <strong>Stock:</strong> {Stock}
-                </p>
-                <p>
-                  <strong>Width:</strong> {Width} cm
-                </p>
-                <p>
-                  <strong>Height:</strong> {Height} cm
-                </p>
-                <p>
-                  <strong>Weight:</strong> {Weight} kg
-                </p>
-                <p>
-                  <strong>Delivery Method:</strong>{" "}
-                  {DelMethod ? "Delivery" : "Pickup"}
-                </p>
-                <p>
-                  <strong>Major Category:</strong> {MajorCategory}
-                </p>
-                <p>
-                  <strong>Tags:</strong> {Tags.join(", ")}
-                </p>
-                <button onClick={() => setSubmitted(false)}>Close</button>
+                <p><strong>Name:</strong> {ProdName}</p>
+                <p><strong>Details:</strong> {Details}</p>
+                <p><strong>Price:</strong> R{Price.toFixed(2)}</p>
+                <p><strong>Stock:</strong> {Stock}</p>
+                <p><strong>Width:</strong> {Width} cm</p>
+                <p><strong>Height:</strong> {Height} cm</p>
+                <p><strong>Weight:</strong> {Weight} kg</p>
+                <p><strong>Delivery Method:</strong> {getDeliveryLabel(DelMethod)}</p>
+                <p><strong>Major Category:</strong> {MajorCategory}</p>
+                <p><strong>Tags:</strong> {Tags.join(", ")}</p>
+                <button onClick={() => navigate("/Sellerhome")}>Close</button>
+
               </section>
             </section>
           )}
