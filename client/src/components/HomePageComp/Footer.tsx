@@ -1,3 +1,4 @@
+import { Link } from "react-router-dom";
 import styles from "./Footer.module.css";
 import logo from "../../assets/localish-logo.png";
 
@@ -19,10 +20,10 @@ function Footer() {
 
         <aside className={styles.footerSection}>
           <h4 className={styles.footerHeading}>Quick Links</h4>
-          <p>Home</p>
-          <p>Shop</p>
-          <p>Profile</p>
-          <p>Cart</p>
+          <p><Link to="/Home">Home</Link></p>
+          <p><Link to="/Profile">Profile</Link></p>
+          <p><Link to="/Cart">Cart</Link></p>
+          <p><Link to="/orders">View Orders</Link></p>
         </aside>
       </section>
 
@@ -34,3 +35,4 @@ function Footer() {
 }
 
 export default Footer;
+

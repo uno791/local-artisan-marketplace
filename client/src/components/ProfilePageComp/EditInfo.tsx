@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import "react-phone-number-input/style.css";
-import PhoneInput from "react-phone-number-input";
+import PhoneInput, { isValidPhoneNumber } from "react-phone-number-input";
 import styles from "./Profile.module.css";
 import axios from "axios";
 import { baseURL } from "../../config";
@@ -18,6 +18,7 @@ type Props = {
 function EditInfo(props: Props) {
   const [renderKey, setRenderKey] = useState(0);
   const [loading, setLoading] = useState(false);
+  const [errors, setErrors] = useState<{ postalCode?: string; phone?: string }>({});
 
   useEffect(() => {
     const timeout = setTimeout(() => {
@@ -29,6 +30,23 @@ function EditInfo(props: Props) {
   async function handleSubmit(event: React.FormEvent) {
     event.preventDefault();
     setLoading(true);
+    setErrors({});
+
+    const newErrors: typeof errors = {};
+
+    if (!/^\d{4,10}$/.test(props.postalCode)) {
+      newErrors.postalCode = "Postal code must be 4-10 digits.";
+    }
+
+    if (!props.phone || !isValidPhoneNumber(props.phone)) {
+      newErrors.phone = "Enter a valid international phone number.";
+    }
+
+    if (Object.keys(newErrors).length > 0) {
+      setErrors(newErrors);
+      setLoading(false);
+      return;
+    }
 
     try {
       await axios.put(`${baseURL}/api/users/${props.username}`, {
@@ -64,7 +82,11 @@ function EditInfo(props: Props) {
           <input
             value={props.postalCode}
             onChange={(e) => props.setPostalCode(e.target.value)}
+            className={errors.postalCode ? styles["input-error"] : ""}
           />
+          {errors.postalCode && (
+            <p className={styles["error-text"]}>{errors.postalCode}</p>
+          )}
 
           <label>Phone Number</label>
           <PhoneInput
@@ -76,6 +98,9 @@ function EditInfo(props: Props) {
             countryCallingCodeEditable={false}
             onChange={(value) => props.setPhone(value || "")}
           />
+          {errors.phone && (
+            <p className={styles["error-text"]}>{errors.phone}</p>
+          )}
 
           <section className={styles["button-row"]}>
             <button
@@ -100,3 +125,4 @@ function EditInfo(props: Props) {
 }
 
 export default EditInfo;
+

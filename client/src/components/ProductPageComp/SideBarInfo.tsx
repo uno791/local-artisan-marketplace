@@ -12,7 +12,7 @@ function SidebarInfo({ username, shop_pfp, shop_name }: Artisan) {
   return (
     <aside className={styles["sidebar-info"]}>
       <ArtistInfo Uname={username} shop_pfp={shop_pfp} shop_name={shop_name} />
-      <ReviewList />
+       {/* <ReviewList /> */}
     </aside>
   );
 }
