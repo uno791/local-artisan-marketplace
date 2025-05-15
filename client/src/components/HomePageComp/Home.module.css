@@ -126,8 +126,38 @@
 
 
 @media (max-width: 600px) {
+  .home {
+    padding-top: 60px;
+  }
+
+  .homeHeader h1,
+  .allProducts h2 {
+    font-size: 28px;
+  }
+
   .allProductsGrid {
     grid-template-columns: repeat(2, 1fr);
+  }
+
+  .productCard img {
+    height: 140px; /* Shorter image */
+  }
+
+  .productCard figcaption {
+    padding: 0.5rem;
+    gap: 0.2rem;
+  }
+
+  .title {
+    font-size: 0.95rem;
+  }
+
+  .artist {
+    font-size: 0.85rem;
+  }
+
+  .price {
+    font-size: 0.95rem;
   }
 }
 
