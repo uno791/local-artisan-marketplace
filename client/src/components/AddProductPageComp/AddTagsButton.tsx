@@ -1,40 +1,33 @@
+// src/components/AddProductPageComp/AddTagsButton.tsx
+
 import React, { useState } from "react";
 import styles from "../EditProductPageComp/EditTagsButton.module.css";
 
 interface Props {
   onConfirm?: (tags: string[]) => void;
-  tagLimit?: number; // Optional: defaults to 5
+  tagLimit?: number;
+  initialTags?: string[];
 }
 
-const AddTagsButton: React.FC<Props> = ({ onConfirm, tagLimit = 5 }) => {
+const AddTagsButton: React.FC<Props> = ({ onConfirm, tagLimit = 5, initialTags = [] }) => {
   const [isPopupOpen, setIsPopupOpen] = useState(false);
   const [currentTag, setCurrentTag] = useState("");
-  const [tags, setTags] = useState<string[]>([]);
+  const [tags, setTags] = useState<string[]>(initialTags);
   const [error, setError] = useState("");
 
   const handleAddTag = () => {
     const trimmed = currentTag.trim();
-
     if (!trimmed) return;
-
-    if (tags.includes(trimmed)) {
-      setError("Tag already added.");
-      return;
-    }
-
-    if (tags.length >= tagLimit) {
-      setError(`You can only add up to ${tagLimit} tags.`);
-      return;
-    }
+    if (tags.includes(trimmed)) return setError("Tag already added.");
+    if (tags.length >= tagLimit) return setError(`Max ${tagLimit} tags allowed.`);
 
     setTags([...tags, trimmed]);
     setCurrentTag("");
     setError("");
   };
 
-  const handleRemoveTag = (tagToRemove: string) => {
-    setTags(tags.filter(tag => tag !== tagToRemove));
-    setError(""); // Clear error if applicable
+  const handleRemoveTag = (tag: string) => {
+    setTags(tags.filter(t => t !== tag));
   };
 
   const handleConfirm = () => {
@@ -49,13 +42,16 @@ const AddTagsButton: React.FC<Props> = ({ onConfirm, tagLimit = 5 }) => {
       </button>
 
       {isPopupOpen && (
-        <section className={styles.popupOverlay} role="dialog" aria-modal="true" aria-labelledby="tag-dialog-title">
+        <section
+          className={styles.popupOverlay}
+          role="dialog"
+          aria-modal="true"
+          aria-labelledby="tag-dialog-title"
+        >
           <section className={styles.popup}>
-            <header>
-              <h3 id="tag-dialog-title">Describe your artwork (max {tagLimit} tags)</h3>
-            </header>
+            <h3 id="tag-dialog-title">Describe your artwork (max {tagLimit})</h3>
 
-            <section className={styles.inputRow}>
+            <div className={styles.inputRow}>
               <input
                 type="text"
                 placeholder="Enter a tag"
@@ -71,32 +67,28 @@ const AddTagsButton: React.FC<Props> = ({ onConfirm, tagLimit = 5 }) => {
               >
                 Add
               </button>
-            </section>
+            </div>
 
             {error && <p className={styles.error}>{error}</p>}
 
-            <section>
-              <ul className={styles.tagList}>
-                {tags.map((tag, index) => (
-                  <li key={index} className={styles.tagItem}>
-                    {tag}
-                    <button
-                      className={styles.removeButton}
-                      aria-label={`Remove tag ${tag}`}
-                      onClick={() => handleRemoveTag(tag)}
-                    >
-                      ✕
-                    </button>
-                  </li>
-                ))}
-              </ul>
-            </section>
+            <ul className={styles.tagList}>
+              {tags.map((tag, index) => (
+                <li key={index} className={styles.tagItem}>
+                  {tag}
+                  <button
+                    aria-label={`remove-${tag}`}
+                    className={styles.removeButton}
+                    onClick={() => handleRemoveTag(tag)}
+                  >
+                    ✕
+                  </button>
+                </li>
+              ))}
+            </ul>
 
-            <footer>
-              <button className={styles.confirmButton} onClick={handleConfirm}>
-                Confirm
-              </button>
-            </footer>
+            <button className={styles.confirmButton} onClick={handleConfirm}>
+              Confirm
+            </button>
           </section>
         </section>
       )}

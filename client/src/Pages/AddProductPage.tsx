@@ -32,8 +32,8 @@ const AddProductPage: React.FC = () => {
   const [missingFields, setMissingFields] = React.useState<string[]>([]);
 
   const { user } = useUser();
-  const [username] = React.useState(user?.username || "");
   const navigate = useNavigate();
+  const username = user?.username || "";
 
   const getDeliveryLabel = (value: number) => {
     if (value === 3) return "Delivery & Pickup";
@@ -132,6 +132,7 @@ const AddProductPage: React.FC = () => {
             />
             <AddTagsButton
               tagLimit={5}
+              initialTags={Tags}
               onConfirm={(selectedTags) => setTags(selectedTags)}
             />
           </section>
@@ -154,7 +155,7 @@ const AddProductPage: React.FC = () => {
                 <p><strong>Delivery Method:</strong> {getDeliveryLabel(DelMethod)}</p>
                 <p><strong>Major Category:</strong> {MajorCategory}</p>
                 <p><strong>Tags:</strong> {Tags.join(", ")}</p>
-                <button onClick={() => navigate("/SellerHome")}>Close</button>
+                <button aria-label="close" onClick={() => navigate("/SellerHome")}>Close</button>
               </article>
             </section>
           )}
@@ -168,7 +169,7 @@ const AddProductPage: React.FC = () => {
                     <li key={index}>{field}</li>
                   ))}
                 </ul>
-                <button onClick={() => setMissingFields([])}>Close</button>
+                <button aria-label="close" onClick={() => setMissingFields([])}>Close</button>
               </article>
             </section>
           )}
