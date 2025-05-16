@@ -1,4 +1,5 @@
 .signUpButton {
+  position: relative;
   cursor: pointer;
   background-color: #3e2c14;
   border-radius: 30px;
@@ -11,11 +12,149 @@
   border: none;
   flex-wrap: nowrap;
   transition: background-color 0.3s ease;
+  overflow: hidden;
+  z-index: 1;
 }
 
 .signUpButton:hover {
   background-color: #000;
 }
+
+/* 🌿 Darker garden bloom */
+.signUpButton::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(circle at center, rgba(34, 139, 34, 0.3), transparent 70%);
+  opacity: 0;
+  transition: opacity 0.5s ease;
+  z-index: 0;
+}
+
+.signUpButton:hover::before {
+  opacity: 1;
+}
+
+/* 🌸 Flower corner SVGs */
+.signUpButton::after {
+  content: "";
+  position: absolute;
+  top: -10px;
+  left: -10px;
+  width: 100%;
+  height: 100%;
+  background-image: url('data:image/svg+xml;utf8,<svg width="100" height="100" viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg"><g fill="%23ffb6c1"><circle cx="20" cy="20" r="8"/><circle cx="30" cy="10" r="6"/><circle cx="10" cy="30" r="6"/></g></svg>'),
+    url('data:image/svg+xml;utf8,<svg width="100" height="100" viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg"><g fill="%23ffc0cb"><circle cx="80" cy="20" r="8"/><circle cx="70" cy="10" r="6"/><circle cx="90" cy="30" r="6"/></g></svg>');
+  background-repeat: no-repeat;
+  background-position: top left, top right;
+  background-size: 60px;
+  opacity: 0;
+  transition: opacity 0.5s ease;
+  pointer-events: none;
+  z-index: 1;
+}
+
+.signUpButton:hover::after {
+  opacity: 1;
+}
+
+/* 🌸 Petal animation */
+.petals {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+  overflow: hidden;
+  z-index: 2;
+}
+
+/* Base style */
+.petals span {
+  position: absolute;
+  background: radial-gradient(circle at 30% 30%, #ffb6c1 30%, #ff69b4 100%);
+  border-radius: 50% 50% 50% 0;
+  transform: rotate(45deg);
+  opacity: 0;
+}
+
+/* Show and animate on hover */
+.signUpButton:hover .petals span {
+  animation: petalFall 6s linear infinite;
+  opacity: 1;
+}
+
+/* Variants */
+.petals span:nth-child(1) {
+  width: 14px;
+  height: 18px;
+  left: 10%;
+  animation-delay: 0s;
+}
+.petals span:nth-child(2) {
+  width: 10px;
+  height: 14px;
+  left: 20%;
+  animation-delay: 0.6s;
+}
+.petals span:nth-child(3) {
+  width: 16px;
+  height: 22px;
+  left: 30%;
+  animation-delay: 1s;
+}
+.petals span:nth-child(4) {
+  width: 12px;
+  height: 16px;
+  left: 40%;
+  animation-delay: 1.4s;
+}
+.petals span:nth-child(5) {
+  width: 15px;
+  height: 20px;
+  left: 50%;
+  animation-delay: 1.8s;
+}
+.petals span:nth-child(6) {
+  width: 11px;
+  height: 13px;
+  left: 60%;
+  animation-delay: 2.2s;
+}
+.petals span:nth-child(7) {
+  width: 17px;
+  height: 21px;
+  left: 70%;
+  animation-delay: 2.6s;
+}
+.petals span:nth-child(8) {
+  width: 13px;
+  height: 15px;
+  left: 80%;
+  animation-delay: 3s;
+}
+.petals span:nth-child(9) {
+  width: 14px;
+  height: 18px;
+  left: 90%;
+  animation-delay: 3.5s;
+}
+
+@keyframes petalFall {
+  0% {
+    transform: translateY(-10px) rotate(45deg) scale(1);
+    opacity: 0;
+  }
+  10% {
+    opacity: 1;
+  }
+  100% {
+    transform: translateY(250px) rotate(135deg) scale(0.6);
+    opacity: 0;
+  }
+}
+
 .errorMessage {
   margin-top: 1rem;
   color: red;
@@ -27,6 +166,7 @@
   width: clamp(30px, 8vw, 85px);
   height: clamp(30px, 8vw, 81px);
   margin-right: 20px;
+  z-index: 3;
 }
 
 .buttonText {
@@ -34,6 +174,7 @@
   font-family: Kadwa, serif;
   font-size: clamp(1.5rem, 4vw, 3rem);
   font-weight: 700;
+  z-index: 3;
 }
 
 @media (width <= 991px) {
@@ -66,16 +207,16 @@
     font-size: clamp(1rem, 3vw, 1.5rem);
   }
 }
+
 @media (width <= 480px) {
   .signUpButton {
     flex-direction: column;
     align-items: center;
     text-align: center;
-    gap: 12px; 
+    gap: 12px;
   }
 
   .googleIcon {
     margin-right: 0;
   }
 }
-
