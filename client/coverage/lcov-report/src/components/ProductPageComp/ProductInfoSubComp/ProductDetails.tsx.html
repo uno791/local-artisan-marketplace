@@ -23,9 +23,9 @@
         <div class='clearfix'>
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">100% </span>
+                <span class="strong">0% </span>
                 <span class="quiet">Statements</span>
-                <span class='fraction'>3/3</span>
+                <span class='fraction'>0/1</span>
             </div>
         
             
@@ -37,16 +37,16 @@
         
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">100% </span>
+                <span class="strong">0% </span>
                 <span class="quiet">Functions</span>
-                <span class='fraction'>1/1</span>
+                <span class='fraction'>0/1</span>
             </div>
         
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">100% </span>
+                <span class="strong">0% </span>
                 <span class="quiet">Lines</span>
-                <span class='fraction'>3/3</span>
+                <span class='fraction'>0/1</span>
             </div>
         
             
@@ -61,7 +61,7 @@
             </div>
         </template>
     </div>
-    <div class='status-line high'></div>
+    <div class='status-line low'></div>
     <pre><table class="coverage">
 <tr><td class="line-count quiet"><a name='L1'></a><a href='#L1'>1</a>
 <a name='L2'></a><a href='#L2'>2</a>
@@ -91,21 +91,7 @@
 <a name='L26'></a><a href='#L26'>26</a>
 <a name='L27'></a><a href='#L27'>27</a>
 <a name='L28'></a><a href='#L28'>28</a>
-<a name='L29'></a><a href='#L29'>29</a>
-<a name='L30'></a><a href='#L30'>30</a>
-<a name='L31'></a><a href='#L31'>31</a>
-<a name='L32'></a><a href='#L32'>32</a>
-<a name='L33'></a><a href='#L33'>33</a>
-<a name='L34'></a><a href='#L34'>34</a>
-<a name='L35'></a><a href='#L35'>35</a>
-<a name='L36'></a><a href='#L36'>36</a></td><td class="line-coverage quiet"><span class="cline-any cline-yes">1x</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">1x</span>
+<a name='L29'></a><a href='#L29'>29</a></td><td class="line-coverage quiet"><span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -113,8 +99,8 @@
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -136,38 +122,31 @@
 <span class="cline-any cline-neutral">&nbsp;</span></td><td class="text"><pre class="prettyprint lang-js">import styles from "./ProductDetails.module.css";
 &nbsp;
 interface DetailsProps {
-  detail: string;
+  weight: number;
+  height: number;
+  width: number;
 }
 &nbsp;
-function ProductDetails({ detail }: DetailsProps) {
-  return (
+function <span class="fstat-no" title="function not covered" >ProductDetails(</span>{ weight, height, width }: DetailsProps) {
+<span class="cstat-no" title="statement not covered" >  return (</span>
     &lt;section className={styles["product-details"]}&gt;
       &lt;h2 className={styles["details-heading"]}&gt;Product Details&lt;/h2&gt;
-      &lt;p&gt;{detail}&lt;/p&gt;
-    &lt;/section&gt;
-  );
-}
-&nbsp;
-export default ProductDetails;
-&nbsp;
-/*import "./ProductDetails.css";
-&nbsp;
-function ProductDetails() {
-  return (
-    &lt;section className="product-details"&gt;
-      &lt;h2 className="details-heading"&gt;Product Details&lt;/h2&gt;
-      &lt;ul className="details-list"&gt;
-        &lt;li&gt;Medium: Acrylic on Canvas&lt;/li&gt;
-        &lt;li&gt;Year: 2024&lt;/li&gt;
-        &lt;li&gt;details&lt;/li&gt;
-        &lt;li&gt;details&lt;/li&gt;
-        &lt;li&gt;Ships from: Cape Town, Waterfront&lt;/li&gt;
+      &lt;ul&gt;
+        &lt;li&gt;
+          &lt;strong&gt;Width:&lt;/strong&gt; {width} cm
+        &lt;/li&gt;
+        &lt;li&gt;
+          &lt;strong&gt;Height:&lt;/strong&gt; {height} cm
+        &lt;/li&gt;
+        &lt;li&gt;
+          &lt;strong&gt;Weight:&lt;/strong&gt; {weight} g
+        &lt;/li&gt;
       &lt;/ul&gt;
     &lt;/section&gt;
   );
 }
 &nbsp;
-export default ProductDetails;*/
+export default ProductDetails;
 &nbsp;</pre></td></tr></table></pre>
 
                 <div class='push'></div><!-- for sticky footer -->
@@ -175,7 +154,7 @@ export default ProductDetails;*/
             <div class='footer quiet pad2 space-top1 center small'>
                 Code coverage generated by
                 <a href="https://istanbul.js.org/" target="_blank" rel="noopener noreferrer">istanbul</a>
-                at 2025-05-07T08:25:30.090Z
+                at 2025-05-16T13:19:52.023Z
             </div>
         <script src="../../../../prettify.js"></script>
         <script>
