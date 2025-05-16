@@ -1,3 +1,5 @@
+// src/pages/EditProductPage.tsx
+
 import React, { useEffect, useRef, useState } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 import styles from "../components/EditProductPageComp/EditProductPage.module.css";
@@ -111,7 +113,6 @@ const EditProductPage: React.FC = () => {
     };
 
     const original = originalDataRef.current;
-
     const isUnchanged =
       original.product_name === payload.product_name &&
       original.details === payload.description &&
@@ -223,9 +224,7 @@ const EditProductPage: React.FC = () => {
               <article className={styles.popup}>
                 <h2>Please Fill Out All Required Fields</h2>
                 <ul>
-                  {missingFields.map((field, index) => (
-                    <li key={index}>{field}</li>
-                  ))}
+                  {missingFields.map((field, i) => <li key={i}>{field}</li>)}
                 </ul>
                 <button onClick={() => setMissingFields([])}>Close</button>
               </article>

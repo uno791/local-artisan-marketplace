@@ -1,40 +1,44 @@
-import React from "react";
+import React, { useState } from "react";
 import styles from "../EditProductPageComp/PriceInput.module.css";
 
-interface props {
+interface PriceInputProps {
   Price: number;
-  setPrice: (price: number) => void;
+  setPrice: (val: number) => void;
 }
 
-const PriceInput: React.FC<props> = ({ Price, setPrice }) => {
-  const [inputValue, setInputValue] = React.useState<string>("");
-
-  React.useEffect(() => {
-    if (Price === 0 && inputValue === "") return;
-    setInputValue(Price.toString());
-  }, [Price]);
+const PriceInput: React.FC<PriceInputProps> = ({ Price, setPrice }) => {
+  const [showWarning, setShowWarning] = useState(false);
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const val = e.target.value;
-    if (/^\d*\.?\d{0,2}$/.test(val)) {
-      setInputValue(val);
-      setPrice(val === "" || val === "." ? 0 : Number(val));
+    const val = parseFloat(e.target.value);
+    if (val > 10000000000) {
+      setShowWarning(true);
+      return;
     }
+    setShowWarning(false);
+    setPrice(val);
   };
 
   return (
     <section className={styles.container}>
-      <label htmlFor="price-input"><strong>Price (Rands):</strong></label>
-      <input
-        id="price-input"
-        type="text"
-        inputMode="decimal"
-        className={styles.input}
-        value={inputValue}
-        onChange={handleChange}
-      />
+      <label htmlFor="price-input" className={styles.label}>
+        <strong>Price (Rands):</strong>
+      </label>
+      <div className={styles.inputRow}>
+        <input
+          id="price-input"
+          className={styles.input}
+          type="text"
+          inputMode="decimal"
+          value={Price}
+          onChange={handleChange}
+          aria-label="Price (Rands)"
+        />
+      </div>
+      {showWarning && (
+        <p className={styles.warning}>Max R10,000,000,000</p>
+      )}
     </section>
   );
 };
-
 export default PriceInput;

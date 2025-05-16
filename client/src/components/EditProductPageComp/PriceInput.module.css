@@ -23,4 +23,31 @@
     margin: 0;
   }
   
-  
+  .container {
+  margin: 1rem 0;
+}
+
+.label {
+  display: block;
+  font-weight: bold;
+  margin-bottom: 0.5rem;
+}
+
+.inputRow {
+  display: flex;
+  align-items: center;
+}
+
+.input {
+  width: 100%;
+  padding: 0.5rem;
+  font-size: 1rem;
+  border: 1px solid #ccc;
+  border-radius: 8px;
+}
+
+.warning {
+  color: red;
+  font-size: 0.875rem;
+  margin-top: 0.25rem;
+}

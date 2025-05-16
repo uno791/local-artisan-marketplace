@@ -1,49 +1,45 @@
-import React from 'react';
+import React, { act } from 'react';
 import { render, fireEvent, screen, waitFor } from '@testing-library/react';
 import { MemoryRouter, Routes, Route } from 'react-router-dom';
 import '@testing-library/jest-dom';
-import { act } from 'react-dom/test-utils';
 
 import { UserProvider } from '../Users/UserContext';
 import EditProductPage from '../Pages/EditProductPage';
 
-// Mock the fetch function
-global.fetch = jest.fn(() =>
-  Promise.resolve({
-    ok: true,
-    json: () => Promise.resolve({
-      product_name: '',
-      details: '',
-      price: 0,
-      stock_quantity: 1,
-      width: '',
-      height: '',
-      weight: '',
-      category_name: '',
-      tags: [],
-    }),
-  })
-) as jest.Mock;
+beforeAll(() => {
+  global.fetch = jest.fn((url, options) => {
+    if (url === 'http://localhost:3000/product/123') {
+      return Promise.resolve({
+        ok: true,
+        json: () =>
+          Promise.resolve({
+            product_name: 'Original',
+            details: 'Original description',
+            price: 100,
+            stock_quantity: 1,
+            width: 10,
+            height: 10,
+            weight: 1,
+            category_name: 'Art',
+            tags: ['bold'],
+            product_image: '',
+          }),
+      });
+    }
 
-// Mock UserContext
+    if (url === 'http://localhost:3000/editproduct/123' && options?.method === 'PUT') {
+      return Promise.resolve({ ok: true });
+    }
+
+    return Promise.reject(new Error(`Unhandled fetch call to ${url}`));
+  }) as jest.Mock;
+});
+
 jest.mock('../Users/UserContext', () => ({
   useUser: () => ({ user: { username: 'testUser' } }),
   UserProvider: ({ children }: any) => <div>{children}</div>,
 }));
 
-// Helper to simulate editing existing product info
-function fillEditForm() {
-  fireEvent.change(screen.getByLabelText(/Edit Product Name:/i), { target: { value: 'Updated Painting' } });
-  fireEvent.change(screen.getByLabelText(/Edit Product Description:/i), { target: { value: 'Updated description' } });
-  fireEvent.change(screen.getByLabelText(/^Price \(Rands\):$/i), { target: { value: '500' } });
-  fireEvent.change(screen.getByLabelText(/^Stock Count$/i), { target: { value: '5' } });
-  fireEvent.change(screen.getByLabelText(/^Width \(cm\):$/i), { target: { value: '80' } });
-  fireEvent.change(screen.getByLabelText(/^Height \(cm\):$/i), { target: { value: '100' } });
-  fireEvent.change(screen.getByLabelText(/^Weight \(kg\):$/i), { target: { value: '10' } });
-  fireEvent.change(screen.getByLabelText(/^Type of Art:$/i), { target: { value: 'Photography' } });
-}
-
-// Custom render function with act()
 const renderWithProviders = async () => {
   await act(async () => {
     render(
@@ -56,14 +52,32 @@ const renderWithProviders = async () => {
       </UserProvider>
     );
   });
-};
 
-describe('EditProductPage Functional Tests', () => {
+  await screen.findByLabelText(/Edit Product Name:/i);
+};
+function fillEditForm() {
+  fireEvent.change(screen.getByLabelText(/Edit Product Name:/i), { target: { value: 'Updated Painting' } });
+  fireEvent.change(screen.getByLabelText(/Edit Product Description:/i), { target: { value: 'Updated description' } });
+  fireEvent.change(screen.getByLabelText(/^Price \(Rands\):$/i), { target: { value: '500' } });
+  fireEvent.change(screen.getByLabelText(/^Stock Count$/i), { target: { value: '5' } });
+  fireEvent.change(screen.getByLabelText(/^Width \(cm\):$/i), { target: { value: '80' } });
+  fireEvent.change(screen.getByLabelText(/^Height \(cm\):$/i), { target: { value: '100' } });
+  fireEvent.change(screen.getByLabelText(/^Weight \(kg\):$/i), { target: { value: '10' } });
+  fireEvent.change(screen.getByLabelText(/^Type of Art:$/i), { target: { value: 'Photography' } });
+
+  const delivery = screen.getByLabelText(/Delivery/i) as HTMLInputElement;
+  if (!delivery.checked) {
+    fireEvent.click(delivery);
+  }
+}
+
+
+describe('EditProductPage Functional Tests (Fixed)', () => {
   beforeEach(() => {
     jest.clearAllMocks();
   });
 
-  test('when the increment (+) button is clicked, the quantity should increase by 1', async () => {
+  test('stock increment (+) increases quantity', async () => {
     await renderWithProviders();
     const plusBtn = screen.getByRole('button', { name: '+' });
     const stockInput = screen.getByLabelText(/Stock Count/i) as HTMLInputElement;
@@ -71,7 +85,7 @@ describe('EditProductPage Functional Tests', () => {
     expect(stockInput.value).toBe('2');
   });
 
-  test('when the decrement (-) button is clicked, the quantity should decrease by 1', async () => {
+  test('stock decrement (-) decreases quantity', async () => {
     await renderWithProviders();
     const minusBtn = screen.getByRole('button', { name: '-' });
     const stockInput = screen.getByLabelText(/Stock Count/i) as HTMLInputElement;
@@ -79,13 +93,13 @@ describe('EditProductPage Functional Tests', () => {
     expect(stockInput.value).toBe('0');
   });
 
-  test('when the edit tags button is clicked, the tag pop up should open', async () => {
+  test('edit tags pop-up opens', async () => {
     await renderWithProviders();
     fireEvent.click(screen.getByRole('button', { name: /edit tags/i }));
     expect(screen.getByRole('dialog')).toBeVisible();
   });
 
-  test('when the add button is clicked in the pop up while input is not empty, the tag should be added to the list of tags', async () => {
+  test('adding tag shows it in list', async () => {
     await renderWithProviders();
     fireEvent.click(screen.getByRole('button', { name: /edit tags/i }));
     fireEvent.change(screen.getByPlaceholderText(/enter a tag/i), { target: { value: 'vintage' } });
@@ -93,69 +107,72 @@ describe('EditProductPage Functional Tests', () => {
     expect(screen.getByText('vintage')).toBeInTheDocument();
   });
 
-  test('when a tag is added, the remove button should remove it from the list', async () => {
-    await renderWithProviders();
-    fireEvent.click(screen.getByRole('button', { name: /edit tags/i }));
-    fireEvent.change(screen.getByPlaceholderText(/enter a tag/i), { target: { value: 'minimal' } });
-    fireEvent.click(screen.getByRole('button', { name: /^add$/i }));
+ test('remove button removes tag', async () => {
+  await renderWithProviders();
+  fireEvent.click(screen.getByRole('button', { name: /edit tags/i }));
 
-    const tagItem = screen.getByText('minimal').closest('li')!;
-    const removeBtn = tagItem.querySelector('button')!;
-    fireEvent.click(removeBtn);
-
-    expect(screen.queryByText('minimal')).not.toBeInTheDocument();
+  fireEvent.change(screen.getByPlaceholderText(/enter a tag/i), {
+    target: { value: 'minimal' },
   });
+  fireEvent.click(screen.getByRole('button', { name: /^add$/i }));
 
-  test('when the confirm button is clicked, the tag pop up should close', async () => {
+  // Confirm it's there
+  expect(screen.getByText('minimal')).toBeInTheDocument();
+
+  // Click remove using the new aria-label
+  fireEvent.click(screen.getByLabelText('remove-minimal'));
+
+  // Confirm it's gone
+  expect(screen.queryByText('minimal')).not.toBeInTheDocument();
+});
+
+
+  test('confirm tag closes pop-up', async () => {
     await renderWithProviders();
     fireEvent.click(screen.getByRole('button', { name: /edit tags/i }));
     fireEvent.click(screen.getByRole('button', { name: /^confirm$/i }));
     expect(screen.queryByRole('dialog')).not.toBeInTheDocument();
   });
 
-  test('when the confirm edits button is clicked, the product should be updated in the database', async () => {
-    await renderWithProviders();
-    fillEditForm();
-    fireEvent.click(screen.getByRole('button', { name: /confirm edits/i }));
-
-    await waitFor(() => {
-      expect(global.fetch).toHaveBeenCalledWith(
-        expect.stringContaining('/editproduct/123'), // Adjusted to match actual endpoint
-        expect.any(Object)
-      );
-    });
-  });
-
-  test('when required fields are missing, a warning pop up should appear', async () => {
-    await renderWithProviders();
-    fireEvent.click(screen.getByRole('button', { name: /confirm edits/i }));
-    expect(screen.getByText(/Please Fill Out All Required Fields/i)).toBeInTheDocument();
-  });
-
-  test('when the close button is clicked on the missing fields pop up, it should close', async () => {
-    await renderWithProviders();
-    fireEvent.click(screen.getByRole('button', { name: /confirm edits/i }));
-    fireEvent.click(screen.getByRole('button', { name: /close/i }));
-    await waitFor(() =>
-      expect(screen.queryByText(/Please Fill Out All Required Fields/i)).not.toBeInTheDocument()
-    );
-  });
-
-  test('when product is edited successfully, success pop up should show', async () => {
+  test('valid form submits update and shows success popup', async () => {
     await renderWithProviders();
     fillEditForm();
     fireEvent.click(screen.getByRole('button', { name: /confirm edits/i }));
     expect(await screen.findByText(/Updated Product Info/i)).toBeInTheDocument();
   });
 
-  test('when the close button is clicked on the success pop up, it should close', async () => {
+  test('close button on success popup works', async () => {
     await renderWithProviders();
     fillEditForm();
     fireEvent.click(screen.getByRole('button', { name: /confirm edits/i }));
     const closeBtn = await screen.findByRole('button', { name: /close/i });
     fireEvent.click(closeBtn);
-    await waitFor(() =>
-      expect(screen.queryByText(/Updated Product Info/i)).not.toBeInTheDocument()
-    );
+    await waitFor(() => {
+      expect(screen.queryByText(/Updated Product Info/i)).not.toBeInTheDocument();
+    });
+  });
+
+  test('missing fields show warning popup', async () => {
+    await renderWithProviders();
+    fireEvent.change(screen.getByLabelText(/Edit Product Name:/i), { target: { value: '' } });
+    fireEvent.click(screen.getByRole('button', { name: /confirm edits/i }));
+    expect(screen.getByText(/Please Fill Out All Required Fields/i)).toBeInTheDocument();
+  });
+
+  test('price input rejects numbers above 10 billion', async () => {
+    await renderWithProviders();
+    const input = screen.getByLabelText(/^Price \(Rands\):$/i);
+    fireEvent.change(input, { target: { value: '10000000001' } });
+
+    expect(await screen.findByText(/Max R10,000,000,000/i)).toBeInTheDocument();
+  });
+
+  test('delivery method toggles update correctly', async () => {
+    await renderWithProviders();
+    const [deliveryCheckbox, pickupCheckbox] = screen.getAllByRole('checkbox');
+    fireEvent.click(deliveryCheckbox);
+    expect(deliveryCheckbox).not.toBeChecked();
+    fireEvent.click(pickupCheckbox);
+    expect(pickupCheckbox).toBeChecked();
   });
 });

@@ -89,6 +89,7 @@ const EditTagsButton: React.FC<Props> = ({
                 <li key={index} className={styles.tagItem}>
                   {tag}
                   <button
+                    aria-label={`remove-${tag}`}
                     className={styles.removeButton}
                     onClick={() => handleRemoveTag(tag)}
                   >
