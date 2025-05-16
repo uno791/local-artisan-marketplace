@@ -861,7 +861,7 @@ app.put("/api/users/:username", async (req, res) => {
 });
 // POST /api/artisans
 app.post("/createartisan", async (req, res) => {
-  const { username, shop_name, bio, shop_address, shop_pfp } = req.body;
+  const { username, shop_name, bio, shop_address, shop_pfp, shop_banner } = req.body;
 
   try {
     const pool = await connectDB();
@@ -871,9 +871,11 @@ app.post("/createartisan", async (req, res) => {
       .input("shop_name", shop_name)
       .input("bio", bio)
       .input("shop_address", shop_address)
-      .input("shop_pfp", shop_pfp).query(`
-        INSERT INTO dbo.artisans (username, shop_name, bio, shop_address, shop_pfp, join_date)
-        VALUES (@username, @shop_name, @bio, @shop_address, @shop_pfp, GETDATE())
+      .input("shop_pfp", shop_pfp)
+      .input("shop_banner", shop_banner)
+      .query(`
+        INSERT INTO dbo.artisans (username, shop_name, bio, shop_address, shop_pfp, shop_banner, join_date)
+        VALUES (@username, @shop_name, @bio, @shop_address, @shop_pfp, @shop_banner, GETDATE())
       `);
     await pool.close();
     res.status(201).json({ message: "Artisan created successfully" });
@@ -882,6 +884,7 @@ app.post("/createartisan", async (req, res) => {
     res.status(500).json({ error: "Failed to create artisan" });
   }
 });
+
 
 app.post("/addproduct", async (req, res) => {
   const {
