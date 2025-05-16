@@ -55,33 +55,35 @@
   
   .location {
     font-size: 1rem;
-    color: #000000;
+    color: #3e2b18;
   }
   
 .grid {
   display: grid;
+ 
   grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-  gap: 1rem; /* reduce spacing between cards */
+  gap: 3rem;
   width: 100%;
   justify-items: center;
   padding: 0;
-  margin: 0;
+  margin: 3rem 0 0 0; /* 👈 Add top margin */
 }
 
-
-  
-  .card {
+.card {
   width: 100%;
-  max-width: 300px;
-  background-color: #e7d7c0;
-  border-radius: 8px;
+  max-width: 270px;
+  min-width: 270px;
+  background-color: #f5e8d8;
+  border-radius: 18px;
   box-shadow: 0 0 4px rgba(0, 0, 0, 0.1);
   overflow: hidden;
   display: flex;
   flex-direction: column;
   transition: transform 0.2s ease;
-
+  /* Add these 👇 */
+  height: 390px;   /* Or whatever consistent height fits your image + info */
 }
+
 
   
   
@@ -278,6 +280,33 @@
   margin-top: 0.5rem;
   margin-bottom: 1rem;
   font-family: 'Montserrat', sans-serif;
+}
+.overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(255, 255, 255, 0.2);
+  z-index: 0;
+}
+
+.cardImageWrapper {
+  width: 100%;
+  height: 200px;
+  overflow: hidden;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: #e0e0e0;
+  /* (optional: add border-radius for rounded images) */
+}
+
+.cardImage {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
 }
 /* .overlay {
   position: absolute;
