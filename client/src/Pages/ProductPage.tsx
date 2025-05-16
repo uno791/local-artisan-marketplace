@@ -1,7 +1,6 @@
 import { useParams } from "react-router-dom";
 import { useEffect, useState } from "react";
 import axios from "axios";
-
 import styles from "../components/ProductPageComp/ProductPage.module.css";
 import BackButton from "../components/ProductPageComp/BackButton";
 import ProductImage from "../components/ProductPageComp/ProductImage";
@@ -19,6 +18,9 @@ interface Product {
   image_url: string;
   username: string;
   details: string;
+  weight: number;
+  height: number;
+  width: number;
 }
 
 interface Artisan {
@@ -98,34 +100,3 @@ function ProductPage() {
 }
 
 export default ProductPage;
-
-
-/*import "./ProductPage.css";
-import BackButton from "../components/BackButton";
-import ProductImage from "../components/ProductImage";
-import ProductInfo from "../components/ProductInfo";
-import SidebarInfo from "../components/SideBarInfo";
-
-function ProductPage() {
-  return (
-    <main className="product-page">
-      <BackButton />
-
-      <section className="product-main">
-        <section className="product-left">
-          <ProductImage />
-        </section>
-
-        <section className="product-middle">
-          <ProductInfo />
-        </section>
-
-        <aside className="product-right">
-          <SidebarInfo />
-        </aside>
-      </section>
-    </main>
-  );
-}
-
-export default ProductPage;*/
