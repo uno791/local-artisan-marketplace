@@ -43,27 +43,25 @@ const ChartSelector: React.FC = () => {
       .get(`${baseURL}${endpoint}`, { params: { username } })
       .then((res) => {
         if (chartKey === "salesTrends") {
-          if (chartKey === "salesTrends") {
-            const monthNames = [
-              "Jan",
-              "Feb",
-              "Mar",
-              "Apr",
-              "May",
-              "Jun",
-              "Jul",
-              "Aug",
-              "Sep",
-              "Oct",
-              "Nov",
-              "Dec",
-            ];
-            const convertedMonths = res.data.months.map(
-              (m: number) => monthNames[m - 1]
-            );
-            setMonths(convertedMonths);
-            setSalesData(res.data.data);
-          }
+          const monthNames = [
+            "Jan",
+            "Feb",
+            "Mar",
+            "Apr",
+            "May",
+            "Jun",
+            "Jul",
+            "Aug",
+            "Sep",
+            "Oct",
+            "Nov",
+            "Dec",
+          ];
+          const convertedMonths = res.data.months.map(
+            (m: number) => monthNames[m - 1]
+          );
+          setMonths(convertedMonths);
+          setSalesData(res.data.data);
         } else if (chartKey === "inventoryStatus") {
           setProducts(res.data.products);
           setStockData(res.data.data);
@@ -119,8 +117,8 @@ const ChartSelector: React.FC = () => {
   };
 
   return (
-    <div className={styles.selectorContainer}>
-      <div className={styles.controls}>
+    <section className={styles.selectorContainer}>
+      <header className={styles.controls}>
         <select
           className={styles.select}
           value={chartKey}
@@ -136,9 +134,9 @@ const ChartSelector: React.FC = () => {
         <button onClick={exportCSV} className={styles.button}>
           Export as CSV
         </button>
-      </div>
+      </header>
 
-      <div ref={chartRef} className={styles.chartWrapper}>
+      <main ref={chartRef} className={styles.chartWrapper}>
         {chartKey === "salesTrends" && (
           <SalesTrendsChart months={months} data={salesData} />
         )}
@@ -148,8 +146,8 @@ const ChartSelector: React.FC = () => {
         {chartKey === "topProducts" && (
           <TopProductsPieChart products={products} data={unitsSold} />
         )}
-      </div>
-    </div>
+      </main>
+    </section>
   );
 };
 

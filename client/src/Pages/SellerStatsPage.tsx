@@ -29,22 +29,22 @@ const StatsPage: React.FC = () => {
   const fmt = (n: number) => "R" + n.toLocaleString();
 
   return (
-    <div className={styles.container}>
+    <main className={styles.container}>
       <NavBar />
 
-      <div className={styles.statsHeader}>
-        <div className={styles.card}>
+      <header className={styles.statsHeader}>
+        <section className={styles.card}>
           <p>Monthly Sales</p>
           <h3>{fmt(monthlyRevenue)}</h3>
-        </div>
-        <div className={styles.card}>
+        </section>
+        <section className={styles.card}>
           <p>Total Revenue</p>
           <h3>{fmt(totalRevenue)}</h3>
-        </div>
-      </div>
+        </section>
+      </header>
 
       <ChartSelector />
-    </div>
+    </main>
   );
 };
 

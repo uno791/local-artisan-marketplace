@@ -9,7 +9,7 @@ type Props = {
 
 function FilterBar({ selectedCategory, onSelectCategory, categories }: Props) {
   return (
-    <div className={styles.filterBar}>
+    <nav className={styles.filterBar}>
       {categories.map((cat) => (
         <button
           key={cat}
@@ -21,7 +21,7 @@ function FilterBar({ selectedCategory, onSelectCategory, categories }: Props) {
           {cat}
         </button>
       ))}
-    </div>
+    </nav>
   );
 }
 
