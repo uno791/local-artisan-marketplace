@@ -37,9 +37,11 @@ test("loads and displays main categories", async () => {
   await act(async () => {
     render(
       <UserProvider>
-        <MemoryRouter initialEntries={["/SearchPage"]}>
-          <SearchPage />
-        </MemoryRouter>
+        <SearchProvider>
+          <MemoryRouter initialEntries={["/SearchPage"]}>
+            <SearchPage />
+          </MemoryRouter>
+        </SearchProvider>
       </UserProvider>
     );
   });
@@ -54,9 +56,11 @@ test("shows no categories if category fetch fails", async () => {
   await act(async () => {
     render(
       <UserProvider>
-        <MemoryRouter initialEntries={["/SearchPage"]}>
-          <SearchPage />
-        </MemoryRouter>
+        <SearchProvider>
+          <MemoryRouter initialEntries={["/SearchPage"]}>
+            <SearchPage />
+          </MemoryRouter>
+        </SearchProvider>
       </UserProvider>
     );
   });
@@ -78,9 +82,11 @@ test("logs an error if category or tag fetch fails", async () => {
   await act(async () => {
     render(
       <UserProvider>
-        <MemoryRouter initialEntries={["/SearchPage"]}>
-          <SearchPage />
-        </MemoryRouter>
+        <SearchProvider>
+          <MemoryRouter initialEntries={["/SearchPage"]}>
+            <SearchPage />
+          </MemoryRouter>
+        </SearchProvider>
       </UserProvider>
     );
   });
@@ -220,9 +226,11 @@ test("sort buttons are rendered and clickable", async () => {
   await act(async () => {
     render(
       <UserProvider>
-        <MemoryRouter initialEntries={["/SearchPage"]}>
-          <SearchPage />
-        </MemoryRouter>
+        <SearchProvider>
+          <MemoryRouter initialEntries={["/SearchPage"]}>
+            <SearchPage />
+          </MemoryRouter>
+        </SearchProvider>
       </UserProvider>
     );
   });
@@ -349,5 +357,141 @@ test("pressing Enter in the search input submits the query", async () => {
 
   await waitFor(() => {
     expect(input).toHaveValue("scarf");
+  });
+});
+
+test("clicking a product on Search page triggers click tracking", async () => {
+  // Mock GET requests
+  mockedAxios.get.mockImplementation((url) => {
+    if (url.includes("/main-categories")) {
+      return Promise.resolve({ data: [] });
+    }
+    if (url.includes("/minor-categories")) {
+      return Promise.resolve({ data: [] });
+    }
+    if (url.includes("/allproducts")) {
+      return Promise.resolve({
+        data: [
+          {
+            product_id: 1,
+            product_name: "Clay Mug",
+            price: 120,
+            image_url: "https://example.com/mug.jpg",
+            username: "crafty_joe",
+          },
+        ],
+      });
+    }
+    return Promise.reject(new Error("Unhandled GET: " + url));
+  });
+
+  // Mock POST click tracking
+  mockedAxios.post.mockResolvedValue({});
+
+  render(
+    <UserProvider>
+      <SearchProvider>
+        <MemoryRouter initialEntries={["/SearchPage"]}>
+          <SearchPage />
+        </MemoryRouter>
+      </SearchProvider>
+    </UserProvider>
+  );
+
+  const productLink = await screen.findByText("Clay Mug");
+
+  fireEvent.click(productLink);
+
+  await waitFor(() => {
+    expect(mockedAxios.post).toHaveBeenCalledWith(
+      expect.stringContaining("/track-click-main"),
+      expect.objectContaining({ username: "testuser", productId: 1 })
+    );
+    expect(mockedAxios.post).toHaveBeenCalledWith(
+      expect.stringContaining("/track-click-minor"),
+      expect.objectContaining({ username: "testuser", productId: 1 })
+    );
+  });
+});
+
+test("clicking sort buttons triggers correct sort requests", async () => {
+  const getSpy = jest.spyOn(mockedAxios, "get");
+
+  mockedAxios.get.mockImplementation((url) => {
+    if (url.includes("/main-categories")) {
+      return Promise.resolve({ data: [] });
+    }
+    if (url.includes("/minor-categories")) {
+      return Promise.resolve({ data: [] });
+    }
+    if (url.includes("/allproducts")) {
+      return Promise.resolve({ data: [] });
+    }
+    if (url.includes("/products/search")) {
+      return Promise.resolve({ data: [] });
+    }
+    return Promise.reject(new Error("Unhandled request: " + url));
+  });
+
+  await act(async () => {
+    render(
+      <UserProvider>
+        <SearchProvider>
+          <MemoryRouter initialEntries={["/SearchPage"]}>
+            <SearchPage />
+          </MemoryRouter>
+        </SearchProvider>
+      </UserProvider>
+    );
+  });
+
+  fireEvent.click(screen.getByRole("button", { name: /price ↓/i }));
+  fireEvent.click(screen.getByRole("button", { name: /price ↑/i }));
+  fireEvent.click(screen.getByRole("button", { name: /new/i }));
+
+  await waitFor(() => {
+    expect(getSpy).toHaveBeenCalledWith(
+      expect.stringContaining("sort=priceAsc")
+    );
+    expect(getSpy).toHaveBeenCalledWith(
+      expect.stringContaining("sort=priceDesc")
+    );
+    expect(getSpy).toHaveBeenCalledWith(expect.stringContaining("sort=new"));
+  });
+
+  getSpy.mockRestore();
+});
+
+test("search input retains value after sorting", async () => {
+  mockedAxios.get.mockImplementation((url) => {
+    if (url.includes("/main-categories")) return Promise.resolve({ data: [] });
+    if (url.includes("/minor-categories")) return Promise.resolve({ data: [] });
+    if (url.includes("/allproducts")) return Promise.resolve({ data: [] });
+    if (url.includes("/products/search")) return Promise.resolve({ data: [] });
+    return Promise.reject(new Error("Unhandled: " + url));
+  });
+
+  await act(async () => {
+    render(
+      <UserProvider>
+        <SearchProvider>
+          <MemoryRouter initialEntries={["/SearchPage"]}>
+            <SearchPage />
+          </MemoryRouter>
+        </SearchProvider>
+      </UserProvider>
+    );
+  });
+
+  const input = screen.getByPlaceholderText(/search by name/i);
+  fireEvent.change(input, { target: { value: "Jewelry" } });
+  fireEvent.submit(screen.getByRole("search"));
+
+  // Click sort button
+  fireEvent.click(screen.getByRole("button", { name: /price ↑/i }));
+
+  // Input should still retain value
+  await waitFor(() => {
+    expect(input).toHaveValue("Jewelry");
   });
 });

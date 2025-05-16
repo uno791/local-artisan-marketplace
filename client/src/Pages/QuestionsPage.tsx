@@ -82,6 +82,17 @@ function QuestionsPage() {
 
       setUser(updatedUser);
 
+      // BO: Send preferences to scoring system
+      try {
+        await axios.post(`${baseURL}/apply-preferences`, {
+          username: userName,
+          selectedCategories: selectedArtForms,
+        });
+      } catch (err) {
+        console.error("BO: Failed to apply preferences to scoring table:", err);
+      }
+      // BO: End
+
       // on Success
       setSubmitted(true);
       setMessage(res.data.message);

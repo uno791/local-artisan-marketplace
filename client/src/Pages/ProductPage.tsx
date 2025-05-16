@@ -18,9 +18,8 @@ interface Product {
   image_url: string;
   username: string;
   details: string;
-  weight: number;
-  height: number;
-  width: number;
+  category_name: string;
+  tags: string[];
 }
 
 interface Artisan {
@@ -88,6 +87,8 @@ function ProductPage() {
             username={product.username}
             shop_pfp={artisan?.shop_pfp || ""}
             shop_name={artisan?.shop_name || ""}
+            mainCategory={product.category_name}
+            minorTags={product.tags}
           />
         </aside>
       </section>
@@ -100,3 +101,33 @@ function ProductPage() {
 }
 
 export default ProductPage;
+
+/*import "./ProductPage.css";
+import BackButton from "../components/BackButton";
+import ProductImage from "../components/ProductImage";
+import ProductInfo from "../components/ProductInfo";
+import SidebarInfo from "../components/SideBarInfo";
+
+function ProductPage() {
+  return (
+    <main className="product-page">
+      <BackButton />
+
+      <section className="product-main">
+        <section className="product-left">
+          <ProductImage />
+        </section>
+
+        <section className="product-middle">
+          <ProductInfo />
+        </section>
+
+        <aside className="product-right">
+          <SidebarInfo />
+        </aside>
+      </section>
+    </main>
+  );
+}
+
+export default ProductPage;*/

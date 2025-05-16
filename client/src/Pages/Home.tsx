@@ -4,6 +4,8 @@ import { Link } from "react-router-dom";
 import axios from "axios";
 import { baseURL } from "../config";
 import { Logo } from "../components/HomePageComp/Localish-ProductImage";
+// BO: Import user context
+import { useUser } from "../Users/UserContext";
 
 interface Product {
   username: string;
@@ -17,26 +19,54 @@ interface Product {
 function Home() {
   const [gridProducts, setProducts] = useState<Product[]>([]);
 
+  // BO: Access username from context
+  const { user } = useUser();
+
+  // BO: Fetch recommended products when username is ready
   useEffect(() => {
+    if (!user?.username) return;
+
     axios
-      .get(`${baseURL}/allproducts`)
+      .get(`${baseURL}/homepage-recommendations`, {
+        params: { username: user.username },
+      })
       .then((res) => {
-        console.log("🔍 res.data = ", res.data);
+        console.log("🔍 Recommended products = ", res.data);
         setProducts(res.data);
       })
-      .catch((err) => console.error("❌ Error loading products:", err));
-  }, []);
+      .catch((err) =>
+        console.error("❌ Error loading recommended products:", err)
+      );
+  }, [user?.username]);
+
+  // BO: Track product click
+  const handleProductClick = async (productId: number) => {
+    if (!user?.username) return;
+    try {
+      await axios.post(`${baseURL}/track-click-main`, {
+        username: user.username,
+        productId,
+      });
+      await axios.post(`${baseURL}/track-click-minor`, {
+        username: user.username,
+        productId,
+      });
+    } catch (err) {
+      console.error("BO: Failed to track click:", err);
+    }
+  };
 
   return (
     <main className={styles.home}>
       <section className={styles.allProducts}>
-        <h2>All Products</h2>
+        <h2>For you</h2>
         <ul className={styles.allProductsGrid}>
           {gridProducts.map((product, index) => (
             <li key={index} className={styles.productCard}>
               <Link
                 to={`/Product/${product.product_id}`}
                 style={{ textDecoration: "none", color: "inherit" }}
+                onClick={() => handleProductClick(product.product_id)} // BO: Track clicks
               >
                 <article>
                   <figure>

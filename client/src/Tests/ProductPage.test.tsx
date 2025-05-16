@@ -92,101 +92,232 @@ test("Home button navigates to the Home page", async () => {
   expect(await screen.findByText("All Products")).toBeInTheDocument();
 });
 
-/*import { render, fireEvent, screen } from "@testing-library/react";
-import { MemoryRouter, Route, Routes } from "react-router-dom";
-import ProductPage from "../Pages/ProductPage";
-import Home from "../Pages/Home";
-import axios from "axios";
-jest.mock("axios");
-const mockedAxios = axios as jest.Mocked<typeof axios>;
+test("successfully adds product to cart", async () => {
+  mockedAxios.get.mockImplementation((url) => {
+    if (url.includes("/product/1")) {
+      return Promise.resolve({
+        data: {
+          product_id: 1,
+          product_name: "Mock Product",
+          description: "A great product",
+          price: 100,
+          stock_quantity: 5,
+          image_url: "http://example.com/product.jpg",
+          username: "seller123",
+          details: "Handmade from local materials",
+          category_name: "Paintings",
+          tags: ["Abstract", "Canvas"],
+        },
+      });
+    }
 
-mockedAxios.get.mockResolvedValueOnce({
-    data: {
-      product_id: 1,
-      product_name: "Mock Product",
-      description: "A great product",
-      price: 100,
-      stock_quantity: 10,
-      image_url: "http://example.com/product.jpg",
-      username: "seller123",
-      details: "Handmade from local materials",
-    },
+    if (url.includes("/artisan/seller123")) {
+      return Promise.resolve({
+        data: {
+          shop_name: "Art by Seller",
+          bio: "We love handmade items",
+          shop_address: "123 Main St",
+          shop_pfp: "http://example.com/profile.jpg",
+        },
+      });
+    }
+
+    return Promise.reject(new Error("Unhandled GET: " + url));
   });
 
-test("Home button navigates to the Home page", () => {
-  render(
-    <MemoryRouter initialEntries={["/Product/1"]}>
-      <Routes>
-        <Route path="/Product/:id" element={<ProductPage />} />
-        <Route path="/Home" element={<Home />} />
-      </Routes>
-    </MemoryRouter>
-  );
+  mockedAxios.post.mockImplementation((url, body) => {
+    if (url.includes("/add-to-cart")) {
+      return Promise.resolve({
+        data: {
+          message: "Item added to cart",
+        },
+      });
+    }
+    return Promise.reject(new Error("Unhandled POST: " + url));
+  });
 
-  const homeButton = screen.getByRole("button", { name: /home/i });
-  fireEvent.click(homeButton);
+  await act(async () => {
+    render(
+      <UserProvider>
+        <MemoryRouter initialEntries={["/Product/1"]}>
+          <Routes>
+            <Route path="/Product/:id" element={<ProductPage />} />
+          </Routes>
+        </MemoryRouter>
+      </UserProvider>
+    );
+  });
 
-  expect(screen.getByText("All Products")).toBeInTheDocument();
-});*/
+  const button = await screen.findByRole("button", { name: /add to cart/i });
+  fireEvent.click(button);
 
-/*import { render, screen, waitFor } from "@testing-library/react";
-import { BrowserRouter } from "react-router-dom";
-import axios from "axios";
-import ProductPage from "../Pages/ProductPage";
+  const successMessage = await screen.findByText(/item added to cart/i);
+  expect(successMessage).toBeInTheDocument();
+});
 
-jest.mock("axios");
-const mockedAxios = axios as jest.Mocked<typeof axios>;
+test("shows error if product is out of stock", async () => {
+  mockedAxios.get.mockImplementation((url) => {
+    if (url.includes("/product/1")) {
+      return Promise.resolve({
+        data: {
+          product_id: 1,
+          product_name: "Mock Product",
+          description: "A great product",
+          price: 100,
+          stock_quantity: 0, // Out of stock
+          image_url: "http://example.com/product.jpg",
+          username: "seller123",
+          details: "Handmade from local materials",
+          category_name: "Paintings",
+          tags: ["Abstract", "Canvas"],
+        },
+      });
+    }
 
-describe("ProductPage", () => {
-    const mockProduct = {
-        product_id: 1,
-        product_name: "Test Product",
-        description: "This is a test product.",
-        price: 100,
-        stock_quantity: 10,
-        image_url: "test-image-url",
-        username: "testuser",
-        details: "Test details",
-    };
+    if (url.includes("/artisan/seller123")) {
+      return Promise.resolve({
+        data: {
+          shop_name: "Art by Seller",
+          bio: "We love handmade items",
+          shop_address: "123 Main St",
+          shop_pfp: "http://example.com/profile.jpg",
+        },
+      });
+    }
 
-    it("renders loading state initially", () => {
-        render(
-            <BrowserRouter>
-                <ProductPage />
-            </BrowserRouter>
-        );
-        expect(screen.getByText(/loading product.../i)).toBeInTheDocument();
-    });
+    return Promise.reject(new Error("Unhandled GET: " + url));
+  });
 
-    it("renders product details after fetching data", async () => {
-        mockedAxios.get.mockResolvedValueOnce({ data: mockProduct });
+  await act(async () => {
+    render(
+      <UserProvider>
+        <MemoryRouter initialEntries={["/Product/1"]}>
+          <Routes>
+            <Route path="/Product/:id" element={<ProductPage />} />
+          </Routes>
+        </MemoryRouter>
+      </UserProvider>
+    );
+  });
 
-        render(
-            <BrowserRouter>
-                <ProductPage />
-            </BrowserRouter>
-        );
+  const button = await screen.findByRole("button", { name: /add to cart/i });
+  fireEvent.click(button);
 
-        await waitFor(() => {
-            expect(screen.getByText(mockProduct.product_name)).toBeInTheDocument();
-            expect(screen.getByText(mockProduct.description)).toBeInTheDocument();
-            expect(screen.getByText(`$${mockProduct.price}`)).toBeInTheDocument();
-            expect(screen.getByText(mockProduct.details)).toBeInTheDocument();
-            expect(screen.getByText(mockProduct.username)).toBeInTheDocument();
-        });
-    });
+  const errorMessage = await screen.findByText(/out of stock/i);
+  expect(errorMessage).toBeInTheDocument();
+});
 
-    it("handles API errors gracefully", async () => {
-        mockedAxios.get.mockRejectedValueOnce(new Error("API Error"));
+test("shows success message when cart quantity is incremented", async () => {
+  mockedAxios.get.mockImplementation((url) => {
+    if (url.includes("/product/1")) {
+      return Promise.resolve({
+        data: {
+          product_id: 1,
+          product_name: "Mock Product",
+          description: "A great product",
+          price: 100,
+          stock_quantity: 10,
+          image_url: "http://example.com/product.jpg",
+          username: "seller123",
+          details: "Handmade from local materials",
+          category_name: "Paintings",
+          tags: ["Abstract", "Canvas"],
+        },
+      });
+    }
 
-        render(
-            <BrowserRouter>
-                <ProductPage />
-            </BrowserRouter>
-        );
+    if (url.includes("/artisan/seller123")) {
+      return Promise.resolve({
+        data: {
+          shop_name: "Art by Seller",
+          bio: "We love handmade items",
+          shop_address: "123 Main St",
+          shop_pfp: "http://example.com/profile.jpg",
+        },
+      });
+    }
 
-        await waitFor(() => {
-            expect(screen.getByText(/loading product.../i)).toBeInTheDocument();
-        });
-    });
-});*/
+    return Promise.reject(new Error("Unhandled GET: " + url));
+  });
+
+  mockedAxios.post.mockImplementation((url) => {
+    if (url.includes("/add-to-cart")) {
+      return Promise.resolve({
+        data: {
+          message: "Cart updated: quantity increased by 1",
+        },
+      });
+    }
+
+    return Promise.reject(new Error("Unhandled POST: " + url));
+  });
+
+  await act(async () => {
+    render(
+      <UserProvider>
+        <MemoryRouter initialEntries={["/Product/1"]}>
+          <Routes>
+            <Route path="/Product/:id" element={<ProductPage />} />
+          </Routes>
+        </MemoryRouter>
+      </UserProvider>
+    );
+  });
+
+  const button = await screen.findByRole("button", { name: /add to cart/i });
+  fireEvent.click(button);
+
+  const message = await screen.findByText(/quantity increased by 1/i);
+  expect(message).toBeInTheDocument();
+});
+test("shows error message when cart quantity cannot be incremented", async () => {
+  mockedAxios.get.mockImplementation((url) => {
+    if (url.includes("/product/1")) {
+      return Promise.resolve({
+        data: {
+          product_id: 1,
+          product_name: "Mock Product",
+          description: "A great product",
+          price: 100,
+          stock_quantity: 0, // Out of stock
+          image_url: "http://example.com/product.jpg",
+          username: "seller123",
+          details: "Handmade from local materials",
+          category_name: "Paintings",
+          tags: ["Abstract", "Canvas"],
+        },
+      });
+    }
+
+    if (url.includes("/artisan/seller123")) {
+      return Promise.resolve({
+        data: {
+          shop_name: "Art by Seller",
+          bio: "We love handmade items",
+          shop_address: "123 Main St",
+          shop_pfp: "http://example.com/profile.jpg",
+        },
+      });
+    }
+
+    return Promise.reject(new Error("Unhandled GET: " + url));
+  });
+
+  await act(async () => {
+    render(
+      <UserProvider>
+        <MemoryRouter initialEntries={["/Product/1"]}>
+          <Routes>
+            <Route path="/Product/:id" element={<ProductPage />} />
+          </Routes>
+        </MemoryRouter>
+      </UserProvider>
+    );
+  });
+
+  const button = await screen.findByRole("button", { name: /add to cart/i });
+  fireEvent.click(button);
+
+  const errorMessage = await screen.findByText(/out of stock/i);
+  expect(errorMessage).toBeInTheDocument();
+});
