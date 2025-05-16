@@ -18,6 +18,9 @@ interface Product {
   image_url: string;
   username: string;
   details: string;
+  width: number;
+  height: number;
+  weight: number;
   category_name: string;
   tags: string[];
 }
