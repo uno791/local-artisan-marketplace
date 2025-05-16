@@ -9,10 +9,7 @@ import { getYocoKey } from "../utils/getYocoKey";
 
 function Cart() {
   const [total, setTotal] = useState<number>(0);
-
-  //const publicKey = import.meta.env.VITE_YOCO_PUBLIC_KEY;
-  
-const publicKey = getYocoKey();
+  const publicKey = getYocoKey();
   const { user } = useUser();
 
   const handleProceedToPayment = () => {
@@ -21,10 +18,7 @@ const publicKey = getYocoKey();
       return;
     }
 
-    const totalWithDelivery = total + 2; // Add R2.00 delivery fee
-    console.log("Proceeding to payment for user:", user);
-    console.log("Total (cart): R" + total.toFixed(2));
-    console.log("Total with delivery: R" + totalWithDelivery.toFixed(2));
+    const totalWithDelivery = total + 2;
 
     const yoco = new (window as any).YocoSDK({
       publicKey: publicKey,
@@ -36,14 +30,10 @@ const publicKey = getYocoKey();
       name: "Localish",
       description: "Cart Checkout (incl. R2 delivery)",
       callback: async function (result: any) {
-        console.log("Yoco callback triggered", result);
-
         if (result.error) {
           console.error("Payment failed:", result.error.message);
           return;
         }
-
-        console.log("Sending token to backend:", result.id);
 
         try {
           const response = await axios.post(`${baseURL}/checkout`, {
@@ -51,13 +41,12 @@ const publicKey = getYocoKey();
             token: result.id,
           });
 
-          console.log("Checkout response:", response.data);
-
-          // Navigate to BuyerOrders
           window.location.href = "/orders";
         } catch (err: any) {
           console.error("❌ Failed to complete checkout:", err);
-          alert("Checkout failed: " + (err?.response?.data?.error || err.message));
+          alert(
+            "Checkout failed: " + (err?.response?.data?.error || err.message)
+          );
         }
       },
     });
@@ -79,7 +68,14 @@ const publicKey = getYocoKey();
             <p className={styles.totalText}>
               Total: <strong>R{total.toFixed(2)}</strong> <br />
               Delivery: <strong>R2.00</strong> <br />
-              <span style={{ borderTop: "1px solid #ccc", display: "block", marginTop: "4px", paddingTop: "4px" }}>
+              <span
+                style={{
+                  borderTop: "1px solid #ccc",
+                  display: "block",
+                  marginTop: "4px",
+                  paddingTop: "4px",
+                }}
+              >
                 Grand Total: <strong>R{(total + 2).toFixed(2)}</strong>
               </span>
             </p>
@@ -87,7 +83,10 @@ const publicKey = getYocoKey();
               className={styles.proceedButton}
               onClick={handleProceedToPayment}
             >
-              Proceed to Payment
+              Pay
+              <svg className={styles.svgIcon} viewBox="0 0 576 512">
+                <path d="M512 80c8.8 0 16 7.2 16 16v32H48V96c0-8.8 7.2-16 16-16H512zm16 144V416c0 8.8-7.2 16-16 16H64c-8.8 0-16-7.2-16-16V224H528zM64 32C28.7 32 0 60.7 0 96V416c0 35.3 28.7 64 64 64H512c35.3 0 64-28.7 64-64V96c0-35.3-28.7-64-64-64H64zm56 304c-13.3 0-24 10.7-24 24s10.7 24 24 24h48c13.3 0 24-10.7 24-24s-10.7-24-24-24H120zm128 0c-13.3 0-24 10.7-24 24s10.7 24 24 24H360c13.3 0 24-10.7 24-24s-10.7-24-24-24H248z" />
+              </svg>
             </button>
           </section>
         </section>
@@ -101,32 +100,3 @@ const publicKey = getYocoKey();
 }
 
 export default Cart;
-
-
-/*import styles from "../components/CartPageComp/Cart.module.css";
-import CartItemsList from "../components/CartPageComp/CartItemsList";
-
-function Cart() {
-  return (
-    <main className={styles.cartPage}>
-      <section className={styles.cartContentWrapper}>
-        <header className={styles.cartHeader}>
-          <h1>
-            <strong>Cart Items</strong>
-          </h1>
-        </header>
-
-        <CartItemsList />
-
-        <section className={styles.cartSummary}>
-          <p className={styles.totalText}>
-            Total: <strong>R270</strong>
-          </p>
-          <button className={styles.proceedButton}>Proceed to Payment</button>
-        </section>
-      </section>
-    </main>
-  );
-}
-
-export default Cart;*/

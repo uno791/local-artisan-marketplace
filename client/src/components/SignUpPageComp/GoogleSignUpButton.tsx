@@ -76,6 +76,19 @@ export function GoogleSignUpButton() {
           className={styles.googleIcon}
         />
         <span className={styles.buttonText}>Sign Up with Google</span>
+
+        {/* 🌸 Falling petals */}
+        <div className={styles.petals}>
+          <span></span>
+          <span></span>
+          <span></span>
+          <span></span>
+          <span></span>
+          <span></span>
+          <span></span>
+          <span></span>
+          <span></span>
+        </div>
       </button>
 
       {errorMessage && (
