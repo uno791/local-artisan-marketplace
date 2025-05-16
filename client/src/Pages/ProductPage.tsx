@@ -19,6 +19,8 @@ interface Product {
   image_url: string;
   username: string;
   details: string;
+  category_name: string;
+  tags: string[];
 }
 
 interface Artisan {
@@ -86,6 +88,8 @@ function ProductPage() {
             username={product.username}
             shop_pfp={artisan?.shop_pfp || ""}
             shop_name={artisan?.shop_name || ""}
+            mainCategory={product.category_name}
+            minorTags={product.tags}
           />
         </aside>
       </section>
@@ -98,7 +102,6 @@ function ProductPage() {
 }
 
 export default ProductPage;
-
 
 /*import "./ProductPage.css";
 import BackButton from "../components/BackButton";
