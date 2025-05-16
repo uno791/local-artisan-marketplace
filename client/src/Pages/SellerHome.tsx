@@ -61,8 +61,8 @@ function SellerHome() {
   return (
     <>
       {artisan && <Header artisan={artisan} />}
-      <div className={styles.pageContent}>
-        <div className={styles.topBar}>
+      <main className={styles.pageContent}>
+        <section className={styles.topBar}>
           <Link to={"/AddProductPage"}>
             <button className={styles.addProductBtn}>Add New Product</button>
           </Link>
@@ -71,13 +71,13 @@ function SellerHome() {
             onSelectCategory={setCategory}
             categories={categories}
           />
-        </div>
-        <div className={styles.grid}>
+        </section>
+        <section className={styles.grid}>
           {filteredProducts.map((product) => (
             <ProductCard key={product.id} product={product} />
           ))}
-        </div>
-      </div>
+        </section>
+      </main>
     </>
   );
 }

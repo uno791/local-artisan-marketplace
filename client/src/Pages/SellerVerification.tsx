@@ -51,11 +51,11 @@ const SellerVerification: React.FC = () => {
   };
 
   return (
-    <div className={styles.wrapper}>
+    <main className={styles.wrapper}>
       <AdminSidebar />
-      <div className={styles.container}>
+      <section className={styles.container}>
         <h1 data-testid="seller-verification-title">Seller Verification</h1>
-        <div className={styles.cards}>
+        <section className={styles.cards}>
           {sellers
             .filter((s) => s.verified <= 3)
             .map((seller) => (
@@ -67,9 +67,9 @@ const SellerVerification: React.FC = () => {
                 onReject={() => updateSellerStatus(seller.username, 3)}
               />
             ))}
-        </div>
-      </div>
-    </div>
+        </section>
+      </section>
+    </main>
   );
 };
 

@@ -53,9 +53,9 @@ const InventoryStatusChart: React.FC<Props> = ({ products, data }) => {
   };
 
   return (
-    <div className={styles.chartInner}>
+    <section className={styles.chartInner}>
       <Bar options={options} data={chartData} />
-    </div>
+    </section>
   );
 };
 

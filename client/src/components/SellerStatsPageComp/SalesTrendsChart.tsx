@@ -58,9 +58,9 @@ const SalesTrendsChart: React.FC<Props> = ({ months, data }) => {
   };
 
   return (
-    <div className={styles.chartInner}>
+    <section className={styles.chartInner}>
       <Line options={options} data={chartData} />
-    </div>
+    </section>
   );
 };
 

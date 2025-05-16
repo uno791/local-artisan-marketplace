@@ -19,21 +19,22 @@ function Header({ artisan }: { artisan: Artisan }) {
           : `url("/fallback-banner.jpg")`,
       }}
     >
-      <div className={styles.overlay}></div>
+      <aside className={styles.overlay}></aside>
       <NavBar />
-      <div className={styles.logoContainer}>
+      <figure className={styles.logoContainer}>
         <img
-          // this shoud put either pfp or puts the defualt pfp from kamal
           src={artisan.shop_pfp || "/profile.png"}
           alt="Shop logo"
           className={styles.logoImage}
         />
-        <div className={styles.shopDetails}>
-          <p className={styles.shopName}>{artisan.shop_name}</p>
-          <p className={styles.sellerName}>{artisan.shop_address}</p>
+        <figcaption className={styles.shopDetails}>
+          <h1 className={styles.shopName}>{artisan.shop_name}</h1>
+          <address className={styles.sellerName}>
+            {artisan.shop_address}
+          </address>
           <p className={styles.bio}>{artisan.bio}</p>
-        </div>
-      </div>
+        </figcaption>
+      </figure>
     </header>
   );
 }

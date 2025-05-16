@@ -4,10 +4,10 @@ import NavBar from "../components/SellerHomeComp/NavBar";
 
 const SellerOrdersPage: React.FC = () => {
   return (
-    <div>
+    <main>
       <NavBar />
       <SellerOrders />
-    </div>
+    </main>
   );
 };
 

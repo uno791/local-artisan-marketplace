@@ -119,7 +119,7 @@ const SellerOrders: React.FC = () => {
   );
 
   return (
-    <div className={styles.container}>
+    <main className={styles.container}>
       <h2>Current Orders</h2>
       {currentOrders.length === 0 ? (
         <p>No current orders.</p>
@@ -135,20 +135,25 @@ const SellerOrders: React.FC = () => {
       )}
 
       {pendingStatus && (
-        <div className={styles.modalBackdrop}>
-          <div className={styles.modal}>
-            <p>
+        <aside className={styles.modalBackdrop}>
+          <section
+            className={styles.modal}
+            role="dialog"
+            aria-modal="true"
+            aria-labelledby="status-change-confirmation"
+          >
+            <p id="status-change-confirmation">
               Are you sure you want to change status to{" "}
               <strong>{pendingStatus.newStatus}</strong>?
             </p>
-            <div className={styles.modalActions}>
+            <footer className={styles.modalActions}>
               <button onClick={confirmStatusChange}>Confirm</button>
               <button onClick={() => setPendingStatus(null)}>Cancel</button>
-            </div>
-          </div>
-        </div>
+            </footer>
+          </section>
+        </aside>
       )}
-    </div>
+    </main>
   );
 };
 

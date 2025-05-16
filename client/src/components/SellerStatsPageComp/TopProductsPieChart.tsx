@@ -48,9 +48,9 @@ const TopProductsPieChart: React.FC<Props> = ({ products, data }) => {
   };
 
   return (
-    <div className={styles.chartInner}>
+    <section className={styles.chartInner}>
       <Pie data={chartData} options={options} />
-    </div>
+    </section>
   );
 };
 
