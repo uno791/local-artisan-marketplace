@@ -3,7 +3,7 @@ import styles from "./QuestionsPage.module.css";
 
 interface ArtFormButtonProps {
   label: string;
-  isSelected?: boolean; // optional, if you plan to add highlight logic later
+  isSelected?: boolean;
   onClick: () => void;
 }
 
@@ -16,6 +16,7 @@ const ArtFormButton: React.FC<ArtFormButtonProps> = ({
     <button
       className={`${styles.artFormButton} ${isSelected ? styles.selected : ""}`}
       onClick={onClick}
+      aria-pressed={isSelected} // ✅ fixed here
     >
       {label}
     </button>
