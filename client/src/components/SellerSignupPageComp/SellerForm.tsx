@@ -15,7 +15,9 @@ function SellerForm() {
   const [shopAddress, setShopAddress] = useState("");
   const [shopLogoFile, setShopLogoFile] = useState<File | null>(null);
   const [shopBannerFile, setShopBannerFile] = useState<File | null>(null);
-  const [shopBannerPreview, setShopBannerPreview] = useState<string | null>(null);
+  const [shopBannerPreview, setShopBannerPreview] = useState<string | null>(
+    null
+  );
   const [email, setEmail] = useState("");
 
   const [errors, setErrors] = useState<{
@@ -28,6 +30,14 @@ function SellerForm() {
   function validateEmail(value: string) {
     return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(value);
   }
+  function fileToBase64(file: File): Promise<string> {
+    return new Promise((resolve, reject) => {
+      const reader = new FileReader();
+      reader.onloadend = () => resolve(reader.result as string);
+      reader.onerror = reject;
+      reader.readAsDataURL(file);
+    });
+  }
 
   async function handleSubmit(e: React.FormEvent) {
     e.preventDefault();
@@ -39,9 +49,12 @@ function SellerForm() {
     const newErrors: typeof errors = {};
 
     if (!shopName.trim()) newErrors.shopName = "Shop name is required.";
-    if (!shopDescription.trim()) newErrors.shopDescription = "Description is required.";
-    if (!shopAddress.trim()) newErrors.shopAddress = "Shop address is required.";
-    if (!email.trim() || !validateEmail(email)) newErrors.email = "Enter a valid email address.";
+    if (!shopDescription.trim())
+      newErrors.shopDescription = "Description is required.";
+    if (!shopAddress.trim())
+      newErrors.shopAddress = "Shop address is required.";
+    if (!email.trim() || !validateEmail(email))
+      newErrors.email = "Enter a valid email address.";
 
     if (Object.keys(newErrors).length > 0) {
       setErrors(newErrors);
@@ -49,22 +62,20 @@ function SellerForm() {
     }
 
     try {
-      const formData = new FormData();
-      formData.append("username", user.username);
-      formData.append("shop_name", shopName);
-      formData.append("bio", shopDescription);
-      formData.append("shop_address", shopAddress);
-      if (shopLogoFile) formData.append("shop_logo", shopLogoFile);
-      if (shopBannerFile) formData.append("shop_banner", shopBannerFile);
-      formData.append("email", email);
+      const shop_pfp_base64 = shopLogoFile
+        ? await fileToBase64(shopLogoFile)
+        : "";
+      const shop_banner_base64 = shopBannerFile
+        ? await fileToBase64(shopBannerFile)
+        : "";
 
       await axios.post(`${baseURL}/createartisan`, {
         username: user.username,
         shop_name: shopName,
         bio: shopDescription,
         shop_address: shopAddress,
-        shop_pfp: shopLogoFile ? shopLogoFile.name : "",
-        // optionally: include banner handling if backend supports it
+        shop_pfp: shop_pfp_base64,
+        shop_banner: shop_banner_base64,
       });
 
       alert("Seller account created!");
@@ -99,7 +110,9 @@ function SellerForm() {
         onChange={(e) => setShopName(e.target.value)}
         className={errors.shopName ? styles["input-error"] : ""}
       />
-      {errors.shopName && <p className={styles["error-text"]}>{errors.shopName}</p>}
+      {errors.shopName && (
+        <p className={styles["error-text"]}>{errors.shopName}</p>
+      )}
 
       <label>Shop Logo</label>
       <input
@@ -109,11 +122,7 @@ function SellerForm() {
       />
 
       <label>Shopfront Banner Image</label>
-      <input
-        type="file"
-        accept="image/*"
-        onChange={handleBannerChange}
-      />
+      <input type="file" accept="image/*" onChange={handleBannerChange} />
       {shopBannerPreview && (
         <img
           src={shopBannerPreview}
@@ -168,4 +177,3 @@ function SellerForm() {
 }
 
 export default SellerForm;
-

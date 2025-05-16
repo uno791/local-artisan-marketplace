@@ -3,13 +3,13 @@ import { NavLink } from "react-router-dom";
 // import logo from "../../assets/localish-logo.png";
 // import {Logo} from "../WelcomePageComp/Logo";
 
-import { FaHome, FaChartBar, FaBoxOpen, FaUser } from "react-icons/fa";
+import { FaHome, FaChartBar, FaBoxOpen, FaSignOutAlt } from "react-icons/fa";
 
 const navItems = [
   { name: "Home", path: "/SellerHome", icon: <FaHome /> },
   { name: "Stats", path: "/SellerStats", icon: <FaChartBar /> },
   { name: "Orders", path: "/SellerOrders", icon: <FaBoxOpen /> },
-  { name: "Profile", path: "/SellerProfile", icon: <FaUser /> },
+  { name: "Return", path: "/Profile", icon: <FaSignOutAlt /> },
 ];
 
 function NavBar() {
@@ -17,10 +17,10 @@ function NavBar() {
     <header className={styles.navbar}>
       <nav className={styles.navbarInner}>
         <a href="/Home" className={styles.navbarLogo}>
-        <img
-        src="https://cdn.builder.io/api/v1/image/assets/TEMP/3ce563473ae3143012b658856f2516018aeee3a0"
-        alt="Localish logo"
-      />
+          <img
+            src="https://cdn.builder.io/api/v1/image/assets/TEMP/3ce563473ae3143012b658856f2516018aeee3a0"
+            alt="Localish logo"
+          />
         </a>
         <ul className={styles.navbarLinks}>
           {navItems.map((item) => (

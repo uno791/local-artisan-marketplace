@@ -3,7 +3,6 @@ import Heading from "./ProductInfoSubComp/Heading";
 import Price from "./ProductInfoSubComp/Price";
 import Bio from "./ProductInfoSubComp/Bio";
 import DeliveryOption from "./ProductInfoSubComp/DeliveryOption";
-import ProductDetails from "./ProductInfoSubComp/ProductDetails";
 import AddToCart from "./ProductInfoSubComp/AddToCart";
 
 interface ProductInfoProps {
@@ -19,6 +18,9 @@ interface ProductInfoProps {
     stock_quantity: number;
     image_url: string;
     username: string;
+    width: number;
+    height: number;
+    weight: number;
   };
 }
 
@@ -35,33 +37,26 @@ function ProductInfo({
       <Price price={price} />
       <Bio description={description} />
       <DeliveryOption />
-      <ProductDetails detail={details} />
+
+      {/* ✅ Product Dimensions (merged into Product Details section) */}
+      <div className={styles["product-details"]}>
+        <h3>Product Details</h3>
+        <ul>
+          <li>
+            <strong>Width:</strong> {product.width} cm
+          </li>
+          <li>
+            <strong>Height:</strong> {product.height} cm
+          </li>
+          <li>
+            <strong>Weight:</strong> {product.weight} kg
+          </li>
+        </ul>
+      </div>
+
       <AddToCart product={product} />
     </section>
   );
 }
 
 export default ProductInfo;
-
-/*import "./ProductInfo.css";
-import Heading from "./ProductInfoSubComp/Heading";
-import Price from "./ProductInfoSubComp/Price";
-import Bio from "./ProductInfoSubComp/Bio";
-import DeliveryOption from "./ProductInfoSubComp/DeliveryOption";
-import ProductDetails from "./ProductInfoSubComp/ProductDetails";
-import AddToCart from "./ProductInfoSubComp/AddToCart";
-
-function ProductInfo() {
-  return (
-    <section className="product-info">
-      <Heading />
-      <Price />
-      <Bio />
-      <DeliveryOption />
-      <ProductDetails />
-      <AddToCart />
-    </section>
-  );
-}
-
-export default ProductInfo;*/

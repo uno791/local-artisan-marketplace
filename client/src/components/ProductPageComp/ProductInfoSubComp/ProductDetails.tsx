@@ -1,35 +1,28 @@
 import styles from "./ProductDetails.module.css";
 
 interface DetailsProps {
-  detail: string;
+  weight: number;
+  height: number;
+  width: number;
 }
 
-function ProductDetails({ detail }: DetailsProps) {
+function ProductDetails({ weight, height, width }: DetailsProps) {
   return (
     <section className={styles["product-details"]}>
       <h2 className={styles["details-heading"]}>Product Details</h2>
-      <p>{detail}</p>
-    </section>
-  );
-}
-
-export default ProductDetails;
-
-/*import "./ProductDetails.css";
-
-function ProductDetails() {
-  return (
-    <section className="product-details">
-      <h2 className="details-heading">Product Details</h2>
-      <ul className="details-list">
-        <li>Medium: Acrylic on Canvas</li>
-        <li>Year: 2024</li>
-        <li>details</li>
-        <li>details</li>
-        <li>Ships from: Cape Town, Waterfront</li>
+      <ul>
+        <li>
+          <strong>Width:</strong> {width} cm
+        </li>
+        <li>
+          <strong>Height:</strong> {height} cm
+        </li>
+        <li>
+          <strong>Weight:</strong> {weight} g
+        </li>
       </ul>
     </section>
   );
 }
 
-export default ProductDetails;*/
+export default ProductDetails;
