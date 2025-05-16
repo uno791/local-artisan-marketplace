@@ -76,4 +76,14 @@
     font-weight: 500;
   }
   
-  
+  @media (max-width: 768px) {
+  .cartPage,
+  .cartContentWrapper,
+  .cartHeader,
+  .cartSummary,
+  .youMayAlsoLikeWrapper {
+    width: 100%;
+    box-sizing: border-box;
+    overflow-x: hidden;
+  }
+}

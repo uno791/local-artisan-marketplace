@@ -90,6 +90,53 @@
   font-weight: 500;
 }
 
+@media (max-width: 768px) {
+  .cartItemsArea {
+    width: 100%;
+    padding: 8px;
+    gap: 12px;
+  }
 
+  .cartItemCard {
+    flex-direction: column;
+    align-items: flex-start;
+    width: 100%;
+    padding: 12px;
+    gap: 8px;
+    border-width: 1px;
+    box-sizing: border-box;
+  }
 
+  .productImage {
+    width: 100%;
+    height: auto;
+    max-height: 160px;
+    object-fit: cover;
+    border-radius: 6px;
+  }
 
+  .productName,
+  .productPrice {
+    font-size: 1rem;
+    margin: 2px 0;
+    line-height: 1.4;
+    width: 100%;
+    word-break: break-word;
+  }
+
+  .quantityDropdown {
+    width: 100%;
+    font-size: 1rem;
+    padding: 8px;
+    margin-top: 4px;
+  }
+
+  .removeButton {
+    width: 100%;
+    padding: 10px;
+    font-size: 1rem;
+    background-color: #b00000;
+    margin-top: 6px;
+    text-align: center;
+  }
+}
