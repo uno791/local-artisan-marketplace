@@ -36,11 +36,12 @@ const UserReports: React.FC = () => {
           date: r.created_at?.split("T")[0] ?? "",
           reporter: r.reporterby_username,
           seller: r.seller_username ?? "Unknown Seller",
-          product: r.product_name ?? "Unknown Product",
+          product: r.product_name || r.product || "Unknown Product",
           reason: r.reason ?? "Other",
           details: r.details ?? "",
           evidenceUrl: r.evidence_url ?? "",
-          productId: r.product_id,
+          productId: r.product_id || r.productId,
+
         }));
         setReports(formattedReports);
       } catch (err) {

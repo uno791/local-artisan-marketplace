@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import axios from "axios";
 import styles from "./UserReportCard.module.css";
-import { baseURL } from "../../config"; // ✅ adjust path if needed
+import { baseURL } from "../../config";
 
 type UserReportCardProps = {
   status: number;
@@ -107,7 +107,13 @@ const UserReportCard: React.FC<UserReportCardProps> = ({
 
       <article className={styles.card}>
         <header className={styles.header}>
-          <h2 className={styles.title}>{product}</h2>
+          <h2
+  className={styles.title}
+  role="heading"
+>
+  {product && product.trim() !== "" ? product : "Unknown Product"}
+</h2>
+
           <p className={styles.statusInfo}>
             <span className={`${styles.status} ${styles[label]}`}>
               ● {label.charAt(0).toUpperCase() + label.slice(1)}
