@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<coverage generated="1747401592367" clover="3.2.0">
-  <project timestamp="1747401592367" name="All files">
-    <metrics statements="1269" coveredstatements="46" conditionals="511" coveredconditionals="11" methods="417" coveredmethods="17" elements="2197" coveredelements="74" complexity="0" loc="1269" ncloc="1269" packages="29" files="122" classes="122"/>
+<coverage generated="1747402439552" clover="3.2.0">
+  <project timestamp="1747402439552" name="All files">
+    <metrics statements="1267" coveredstatements="30" conditionals="511" coveredconditionals="3" methods="417" coveredmethods="8" elements="2195" coveredelements="41" complexity="0" loc="1267" ncloc="1267" packages="29" files="122" classes="122"/>
     <package name="src">
       <metrics statements="11" coveredstatements="0" conditionals="1" coveredconditionals="0" methods="4" coveredmethods="0"/>
       <file name="App.tsx" path="C:\Users\sunay\OneDrive\Desktop\SDPROJECT\local-artisan-marketplace\client\src\App.tsx">
@@ -26,7 +26,7 @@
       </file>
     </package>
     <package name="src.Pages">
-      <metrics statements="433" coveredstatements="6" conditionals="218" coveredconditionals="0" methods="120" coveredmethods="1"/>
+      <metrics statements="437" coveredstatements="22" conditionals="218" coveredconditionals="2" methods="120" coveredmethods="5"/>
       <file name="AddProductPage.tsx" path="C:\Users\sunay\OneDrive\Desktop\SDPROJECT\local-artisan-marketplace\client\src\Pages\AddProductPage.tsx">
         <metrics statements="50" coveredstatements="0" conditionals="27" coveredconditionals="0" methods="7" coveredmethods="0"/>
         <line num="19" count="0" type="stmt"/>
@@ -409,34 +409,38 @@
         <line num="77" count="0" type="stmt"/>
       </file>
       <file name="SellerOrdersPage.tsx" path="C:\Users\sunay\OneDrive\Desktop\SDPROJECT\local-artisan-marketplace\client\src\Pages\SellerOrdersPage.tsx">
-        <metrics statements="6" coveredstatements="6" conditionals="0" coveredconditionals="0" methods="1" coveredmethods="1"/>
-        <line num="1" count="1" type="stmt"/>
-        <line num="2" count="1" type="stmt"/>
-        <line num="3" count="1" type="stmt"/>
-        <line num="5" count="1" type="stmt"/>
-        <line num="6" count="5" type="stmt"/>
-        <line num="14" count="1" type="stmt"/>
+        <metrics statements="2" coveredstatements="0" conditionals="0" coveredconditionals="0" methods="1" coveredmethods="0"/>
+        <line num="5" count="0" type="stmt"/>
+        <line num="6" count="0" type="stmt"/>
       </file>
       <file name="SellerSignup.tsx" path="C:\Users\sunay\OneDrive\Desktop\SDPROJECT\local-artisan-marketplace\client\src\Pages\SellerSignup.tsx">
         <metrics statements="1" coveredstatements="0" conditionals="0" coveredconditionals="0" methods="1" coveredmethods="0"/>
         <line num="5" count="0" type="stmt"/>
       </file>
       <file name="SellerStatsPage.tsx" path="C:\Users\sunay\OneDrive\Desktop\SDPROJECT\local-artisan-marketplace\client\src\Pages\SellerStatsPage.tsx">
-        <metrics statements="14" coveredstatements="0" conditionals="5" coveredconditionals="0" methods="5" coveredmethods="0"/>
-        <line num="10" count="0" type="stmt"/>
-        <line num="11" count="0" type="stmt"/>
-        <line num="12" count="0" type="cond" truecount="0" falsecount="2"/>
-        <line num="14" count="0" type="stmt"/>
-        <line num="15" count="0" type="stmt"/>
-        <line num="16" count="0" type="stmt"/>
-        <line num="17" count="0" type="cond" truecount="0" falsecount="1"/>
-        <line num="18" count="0" type="stmt"/>
-        <line num="21" count="0" type="stmt"/>
-        <line num="22" count="0" type="stmt"/>
-        <line num="23" count="0" type="cond" truecount="0" falsecount="2"/>
-        <line num="24" count="0" type="stmt"/>
-        <line num="29" count="0" type="stmt"/>
-        <line num="31" count="0" type="stmt"/>
+        <metrics statements="22" coveredstatements="22" conditionals="5" coveredconditionals="2" methods="5" coveredmethods="5"/>
+        <line num="1" count="1" type="stmt"/>
+        <line num="2" count="1" type="stmt"/>
+        <line num="3" count="1" type="stmt"/>
+        <line num="4" count="1" type="stmt"/>
+        <line num="6" count="1" type="stmt"/>
+        <line num="7" count="1" type="stmt"/>
+        <line num="8" count="1" type="stmt"/>
+        <line num="10" count="1" type="stmt"/>
+        <line num="11" count="3" type="stmt"/>
+        <line num="12" count="3" type="cond" truecount="1" falsecount="1"/>
+        <line num="14" count="3" type="stmt"/>
+        <line num="15" count="3" type="stmt"/>
+        <line num="16" count="3" type="stmt"/>
+        <line num="17" count="2" type="cond" truecount="0" falsecount="1"/>
+        <line num="18" count="2" type="stmt"/>
+        <line num="21" count="1" type="stmt"/>
+        <line num="22" count="1" type="stmt"/>
+        <line num="23" count="1" type="cond" truecount="1" falsecount="1"/>
+        <line num="24" count="12" type="stmt"/>
+        <line num="29" count="6" type="stmt"/>
+        <line num="31" count="3" type="stmt"/>
+        <line num="51" count="1" type="stmt"/>
       </file>
       <file name="SellerVerification.tsx" path="C:\Users\sunay\OneDrive\Desktop\SDPROJECT\local-artisan-marketplace\client\src\Pages\SellerVerification.tsx">
         <metrics statements="31" coveredstatements="0" conditionals="4" coveredconditionals="0" methods="13" coveredmethods="0"/>
@@ -1355,9 +1359,9 @@
         <line num="2" count="1" type="stmt"/>
         <line num="6" count="1" type="stmt"/>
         <line num="8" count="1" type="stmt"/>
-        <line num="16" count="5" type="stmt"/>
-        <line num="27" count="20" type="stmt"/>
-        <line num="31" count="20" type="cond" truecount="1" falsecount="1"/>
+        <line num="16" count="3" type="stmt"/>
+        <line num="27" count="12" type="stmt"/>
+        <line num="31" count="12" type="cond" truecount="1" falsecount="1"/>
         <line num="47" count="1" type="stmt"/>
       </file>
       <file name="Product.ts" path="C:\Users\sunay\OneDrive\Desktop\SDPROJECT\local-artisan-marketplace\client\src\components\SellerHomeComp\Product.ts">
@@ -1370,44 +1374,38 @@
       </file>
     </package>
     <package name="src.components.SellerOrders">
-      <metrics statements="35" coveredstatements="32" conditionals="12" coveredconditionals="10" methods="14" coveredmethods="13"/>
+      <metrics statements="29" coveredstatements="0" conditionals="12" coveredconditionals="0" methods="14" coveredmethods="0"/>
       <file name="SellerOrders.tsx" path="C:\Users\sunay\OneDrive\Desktop\SDPROJECT\local-artisan-marketplace\client\src\components\SellerOrders\SellerOrders.tsx">
-        <metrics statements="35" coveredstatements="32" conditionals="12" coveredconditionals="10" methods="14" coveredmethods="13"/>
-        <line num="1" count="1" type="stmt"/>
-        <line num="2" count="1" type="stmt"/>
-        <line num="3" count="1" type="stmt"/>
-        <line num="4" count="1" type="stmt"/>
-        <line num="5" count="1" type="stmt"/>
-        <line num="19" count="1" type="stmt"/>
-        <line num="20" count="12" type="stmt"/>
-        <line num="21" count="12" type="stmt"/>
-        <line num="22" count="12" type="stmt"/>
-        <line num="28" count="12" type="stmt"/>
-        <line num="29" count="5" type="cond" truecount="0" falsecount="1"/>
-        <line num="31" count="5" type="stmt"/>
-        <line num="34" count="7" type="stmt"/>
-        <line num="43" count="4" type="stmt"/>
-        <line num="45" count="1" type="stmt"/>
-        <line num="48" count="12" type="stmt"/>
-        <line num="53" count="2" type="stmt"/>
-        <line num="56" count="12" type="stmt"/>
-        <line num="57" count="1" type="cond" truecount="0" falsecount="1"/>
-        <line num="59" count="1" type="stmt"/>
-        <line num="60" count="1" type="stmt"/>
-        <line num="66" count="1" type="stmt"/>
-        <line num="67" count="1" type="stmt"/>
-        <line num="68" count="2" type="cond" truecount="4" falsecount="0"/>
+        <metrics statements="29" coveredstatements="0" conditionals="12" coveredconditionals="0" methods="14" coveredmethods="0"/>
+        <line num="19" count="0" type="stmt"/>
+        <line num="20" count="0" type="stmt"/>
+        <line num="21" count="0" type="stmt"/>
+        <line num="22" count="0" type="stmt"/>
+        <line num="28" count="0" type="stmt"/>
+        <line num="29" count="0" type="cond" truecount="0" falsecount="1"/>
+        <line num="31" count="0" type="stmt"/>
+        <line num="34" count="0" type="stmt"/>
+        <line num="43" count="0" type="stmt"/>
+        <line num="45" count="0" type="stmt"/>
+        <line num="48" count="0" type="stmt"/>
+        <line num="53" count="0" type="stmt"/>
+        <line num="56" count="0" type="stmt"/>
+        <line num="57" count="0" type="cond" truecount="0" falsecount="1"/>
+        <line num="59" count="0" type="stmt"/>
+        <line num="60" count="0" type="stmt"/>
+        <line num="66" count="0" type="stmt"/>
+        <line num="67" count="0" type="stmt"/>
+        <line num="68" count="0" type="cond" truecount="0" falsecount="4"/>
         <line num="75" count="0" type="stmt"/>
         <line num="76" count="0" type="stmt"/>
-        <line num="78" count="1" type="stmt"/>
-        <line num="82" count="13" type="stmt"/>
-        <line num="83" count="13" type="stmt"/>
-        <line num="85" count="12" type="stmt"/>
-        <line num="86" count="13" type="stmt"/>
-        <line num="99" count="2" type="stmt"/>
-        <line num="121" count="12" type="stmt"/>
+        <line num="78" count="0" type="stmt"/>
+        <line num="82" count="0" type="stmt"/>
+        <line num="83" count="0" type="stmt"/>
+        <line num="85" count="0" type="stmt"/>
+        <line num="86" count="0" type="stmt"/>
+        <line num="99" count="0" type="stmt"/>
+        <line num="121" count="0" type="stmt"/>
         <line num="146" count="0" type="stmt"/>
-        <line num="155" count="1" type="stmt"/>
       </file>
     </package>
     <package name="src.components.SellerSignupPageComp">
