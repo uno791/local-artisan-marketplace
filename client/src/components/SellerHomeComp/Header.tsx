@@ -1,5 +1,9 @@
+import { useRef } from "react";
 import styles from "./Header.module.css";
 import NavBar from "./NavBar";
+import { baseURL } from "../../config";
+import { useUser } from "../../Users/UserContext";
+
 interface Artisan {
   shop_name: string;
   bio: string;
@@ -9,7 +13,46 @@ interface Artisan {
 }
 
 function Header({ artisan }: { artisan: Artisan }) {
-  //console.log("Banner in header:", artisan.shop_banner);
+  const { user } = useUser();
+  const bannerInputRef = useRef<HTMLInputElement>(null);
+  const pfpInputRef = useRef<HTMLInputElement>(null);
+
+  const handleFileChange = async (
+    event: React.ChangeEvent<HTMLInputElement>,
+    field: "shop_pfp" | "shop_banner"
+  ) => {
+    const file = event.target.files?.[0];
+    if (!file || !user?.username) return;
+
+    const reader = new FileReader();
+    reader.onload = async () => {
+      const base64 = reader.result as string;
+
+      try {
+        const res = await fetch(`${baseURL}/update-artisan-image`, {
+          method: "PUT",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({
+            username: user.username,
+            field,
+            image: base64,
+          }),
+        });
+
+        if (!res.ok) {
+          const data = await res.json();
+          alert("❌ Failed to update: " + data.error);
+        } else {
+          location.reload();
+        }
+      } catch (err) {
+        console.error("Upload error:", err);
+        alert("Could not connect to server.");
+      }
+    };
+    reader.readAsDataURL(file);
+  };
+
   return (
     <header
       className={styles.header}
@@ -21,6 +64,35 @@ function Header({ artisan }: { artisan: Artisan }) {
     >
       <aside className={styles.overlay}></aside>
       <NavBar />
+
+      <button
+        className={styles.pfpEditBtn}
+        onClick={() => pfpInputRef.current?.click()}
+      >
+        Edit Profile Picture
+      </button>
+      <input
+        type="file"
+        accept="image/*"
+        ref={pfpInputRef}
+        onChange={(e) => handleFileChange(e, "shop_pfp")}
+        style={{ display: "none" }}
+      />
+
+      <button
+        className={styles.bannerEditBtn}
+        onClick={() => bannerInputRef.current?.click()}
+      >
+        Edit Shop Banner
+      </button>
+      <input
+        type="file"
+        accept="image/*"
+        ref={bannerInputRef}
+        onChange={(e) => handleFileChange(e, "shop_banner")}
+        style={{ display: "none" }}
+      />
+
       <figure className={styles.logoContainer}>
         <img
           src={artisan.shop_pfp || "/profile.png"}
@@ -38,4 +110,5 @@ function Header({ artisan }: { artisan: Artisan }) {
     </header>
   );
 }
+
 export default Header;

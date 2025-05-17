@@ -1,18 +1,44 @@
 .header {
   width: 100%;
-  padding-top: 110px; 
-  min-height: 220px; 
+  padding-top: 110px;
+  min-height: 220px;
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: flex-start;
-  gap: 1rem; 
+  gap: 1rem;
   color: #3e2c14;
   background-size: cover;
   background-position: center;
   background-repeat: no-repeat;
   position: relative;
   z-index: 999;
+  box-sizing: border-box;
+}
+
+button {
+  margin-top: 0.5rem;
+  padding: 6px 12px;
+  background-color: #3e2c14;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  font-weight: bold;
+  color: #efe2cc;
+}
+
+.pfpEditBtn {
+  position: absolute;
+  top: 87px;
+  right: 175px;
+  z-index: 10;
+}
+
+.bannerEditBtn {
+  position: absolute;
+  top: 87px;
+  right: 16px;
+  z-index: 10;
 }
 
 .overlay {
@@ -29,10 +55,12 @@
   display: flex;
   flex-direction: column;
   align-items: center;
-  gap: 1rem; 
+  gap: 1rem;
   padding: 0.5rem 1.5rem;
   border-radius: 12px;
   z-index: 1;
+  width: 100%;
+  box-sizing: border-box;
 }
 
 .navWrapper {
@@ -40,15 +68,19 @@
   justify-content: space-between;
   align-items: center;
   padding: 1.2rem 2rem;
+  flex-wrap: wrap;
 }
 
 .logoImage {
   height: 100px;
+  max-width: 100%;
 }
 
 .shopDetails {
   text-align: center;
   margin-top: 0.5rem;
+  word-wrap: break-word;
+  max-width: 90%;
 }
 
 .shopName {
@@ -65,15 +97,23 @@
 .bio {
   font-size: 0.65rem;
   color: #5f4a2d;
+  padding: 0 1rem;
 }
 
-/* Mobile responsiveness */
+/* ✅ Responsive breakpoints */
 @media (max-width: 768px) {
-  .navWrapper {
-    flex-direction: column;
-    align-items: center;
-    gap: 0.5rem;
-    padding: 1rem;
+  .pfpEditBtn {
+    top: 70px;
+    right: 120px;
+    font-size: 0.7rem;
+    padding: 4px 8px;
+  }
+
+  .bannerEditBtn {
+    top: 70px;
+    right: 10px;
+    font-size: 0.7rem;
+    padding: 4px 8px;
   }
 
   .logoImage {
@@ -82,26 +122,39 @@
 
   .shopName {
     font-size: 1rem;
-    text-align: center;
   }
 
   .sellerName {
     font-size: 0.85rem;
-    text-align: center;
   }
 
   .bio {
     font-size: 0.75rem;
-    text-align: center;
     padding: 0 1rem;
-  }
-
-  .logoContainer {
-    padding: 0.5rem 1rem;
   }
 
   .header {
     padding-top: 90px;
     min-height: 180px;
+  }
+}
+
+@media (max-width: 375px) {
+  .pfpEditBtn {
+    right: 100px;
+    top: 60px;
+  }
+
+  .bannerEditBtn {
+    right: 10px;
+    top: 60px;
+  }
+
+  .shopName {
+    font-size: 0.9rem;
+  }
+
+  .bio {
+    font-size: 0.65rem;
   }
 }

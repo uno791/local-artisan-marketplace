@@ -1896,3 +1896,31 @@ app.put("/update-order-status", async (req, res) => {
     res.status(500).json({ error: "Update failed", details: err.message });
   }
 });
+
+app.put("/update-artisan-image", async (req, res) => {
+  const { username, field, image } = req.body;
+
+  if (!username || !field || !image) {
+    return res.status(400).json({ error: "Missing data" });
+  }
+
+  const allowedFields = ["shop_pfp", "shop_banner"];
+  if (!allowedFields.includes(field)) {
+    return res.status(400).json({ error: "Invalid field" });
+  }
+
+  try {
+    const pool = await connectDB();
+    await pool
+      .request()
+      .input("username", username)
+      .input("image", image)
+      .query(`UPDATE dbo.artisans SET ${field} = @image WHERE username = @username`);
+    await pool.close();
+    res.json({ message: "✅ Image updated successfully" });
+  } catch (err) {
+    console.error("❌ Failed to update artisan image:", err);
+    res.status(500).json({ error: "Update failed", details: err.message });
+  }
+});
+
