@@ -11,12 +11,13 @@ import { GoogleOAuthProvider } from "@react-oauth/google";
 import LoginPage from "../Pages/LoginPage";
 import SignUpPage from "../Pages/SignUpPage";
 import axios from "axios";
-jest.mock("axios"); // <-- this tells Jest to mock it
-import { UserProvider } from "../Users/UserContext"; // adjust path if necessary
+jest.mock("axios");
+import { UserProvider } from "../Users/UserContext";
 import AdminDashboard from "../Pages/AdminDashboard";
 import Home from "../Pages/Home";
 
-const mockedAxios = axios as jest.Mocked<typeof axios>; // <-- this gives you typed mocking methods
+const mockedAxios = axios as jest.Mocked<typeof axios>;
+
 const renderWithProviders = (ui: React.ReactNode) => {
   return render(
     <GoogleOAuthProvider clientId="test-client-id">
@@ -28,7 +29,6 @@ const renderWithProviders = (ui: React.ReactNode) => {
 };
 
 const mockLogin = jest.fn();
-
 let loginCallback: any = null;
 
 jest.mock("@react-oauth/google", () => ({
@@ -63,19 +63,15 @@ test("Click Sign Up button and check if it prompts a sign up page", () => {
 });
 
 test('If successful login screen displays "Successfully logged in!" pop up', async () => {
-  // ✅ MOCK 1: Google OAuth userinfo API
   mockedAxios.get.mockResolvedValueOnce({
     data: {
       sub: "1234567890",
       name: "Test User",
-      given_name: "Test",
-      family_name: "User",
       email: "test@example.com",
       picture: "https://example.com/avatar.jpg",
     },
   });
 
-  // ✅ MOCK 2: Backend response for role 0 (normal user)
   mockedAxios.post.mockResolvedValueOnce({
     data: {
       exists: true,
@@ -85,17 +81,12 @@ test('If successful login screen displays "Successfully logged in!" pop up', asy
   });
 
   renderWithProviders(<LoginPage />);
-  const loginButton = screen.getByRole("button", {
-    name: /Log-in with Google/i,
-  });
-  fireEvent.click(loginButton);
+  fireEvent.click(screen.getByRole("button", { name: /Log-in with Google/i }));
 
-  // ✅ Trigger simulated login success callback
   act(() => {
     loginCallback({ credential: "mock-token", access_token: "test-token" });
   });
 
-  // ✅ Match the exact message that your LoginPage checks for
   await waitFor(() => {
     expect(screen.getByText("Successfully logged in!")).toBeInTheDocument();
   });
@@ -113,10 +104,7 @@ test("If user clicks on the close button, the pop up should disappear", async ()
   });
 
   renderWithProviders(<LoginPage />);
-  const loginButton = screen.getByRole("button", {
-    name: /Log-in with Google/i,
-  });
-  fireEvent.click(loginButton);
+  fireEvent.click(screen.getByRole("button", { name: /Log-in with Google/i }));
 
   act(() => {
     loginCallback({ credential: "mock-token" });
@@ -128,8 +116,7 @@ test("If user clicks on the close button, the pop up should disappear", async ()
     ).toBeInTheDocument();
   });
 
-  const closeButton = screen.getByRole("button", { name: /close/i });
-  fireEvent.click(closeButton);
+  fireEvent.click(screen.getByRole("button", { name: /close/i }));
 
   await waitFor(() => {
     expect(
@@ -138,18 +125,67 @@ test("If user clicks on the close button, the pop up should disappear", async ()
   });
 });
 
-test("If admin login is successful and close is clicked, user is taken to the admin dashboard", async () => {
-  // Mock Google user info response
+// test("If admin login is successful and close is clicked, user is taken to the admin dashboard", async () => {
+//   mockedAxios.get.mockResolvedValueOnce({
+//     data: {
+//       sub: "admin-id",
+//       name: "Admin User",
+//       email: "admin@example.com",
+//       picture: "https://example.com/admin.jpg",
+//     },
+//   });
+
+//   mockedAxios.post.mockResolvedValueOnce({
+//     data: {
+//       exists: true,
+//       role: 1,
+//     },
+//   });
+
+//   render(
+//     <GoogleOAuthProvider clientId="test-client-id">
+//       <UserProvider>
+//         <MemoryRouter initialEntries={["/"]}>
+//           <Routes>
+//             <Route path="/" element={<LoginPage />} />
+//             <Route path="/AdminDashboard" element={<AdminDashboard />} />
+//           </Routes>
+//         </MemoryRouter>
+//       </UserProvider>
+//     </GoogleOAuthProvider>
+//   );
+
+//   const loginButton = screen.getByRole("button", {
+//     name: /Log-in with Google/i,
+//   });
+//   fireEvent.click(loginButton);
+
+//   act(() => {
+//     loginCallback({ credential: "mock-token", access_token: "admin-token" });
+//   });
+
+//   await waitFor(() => {
+//     expect(screen.getByText("Welcome back, Admin!")).toBeInTheDocument();
+//   });
+
+//   const closeButton = screen.getByRole("button", { name: /close/i });
+//   fireEvent.click(closeButton);
+
+//   await waitFor(() => {
+//     expect(screen.getByText("Admin Dashboard")).toBeInTheDocument();
+//   });
+// });
+
+test('If successful login screen displays "Welcome back, Admin!" pop up', async () => {
   mockedAxios.get.mockResolvedValueOnce({
     data: {
-      sub: "admin-id",
+      sub: "1234567890",
       name: "Admin User",
       email: "admin@example.com",
-      picture: "https://example.com/admin.jpg",
+      picture: "https://example.com/avatar.jpg",
     },
   });
 
-  // Mock backend check — admin user
   mockedAxios.post.mockResolvedValueOnce({
     data: {
       exists: true,
@@ -157,123 +193,19 @@ test("If admin login is successful and close is clicked, user is taken to the ad
     },
   });
 
-  render(
-    <GoogleOAuthProvider clientId="test-client-id">
-      <UserProvider>
-        <MemoryRouter initialEntries={["/"]}>
-          <Routes>
-            <Route path="/" element={<LoginPage />} />
-            {/* <Route path="/AdminDashboard" element={<h1>Admin Dashboard</h1>} /> */}
-            <Route path="/AdminDashboard" element={<AdminDashboard />} />
-          </Routes>
-        </MemoryRouter>
-      </UserProvider>
-    </GoogleOAuthProvider>
-  );
-
-  // Simulate clicking the login button
-  const loginButton = screen.getByRole("button", {
-    name: /Log-in with Google/i,
-  });
-  fireEvent.click(loginButton);
-
-  // Simulate Google callback
-  act(() => {
-    loginCallback({ credential: "mock-token", access_token: "admin-token" });
-  });
-
-  // Wait for the success popup to appear
-  await waitFor(() => {
-    expect(screen.getByText("Welcome back, Admin!")).toBeInTheDocument();
-  });
-
-  // Click the "Close" button in the popup (wrapped in <Link to="/AdminDashboard">)
-  const closeButton = screen.getByRole("button", { name: /close/i });
-  fireEvent.click(closeButton);
-
-  // Now we should be redirected to the Admin Dashboard
-  await waitFor(() => {
-    expect(screen.getByText("Admin Dashboard")).toBeInTheDocument();
-  });
-});
-
-test('If successful login screen displays "Welcome back, Admin!" pop up', async () => {
-  // ✅ MOCK 1: Google OAuth userinfo API
-  mockedAxios.get.mockResolvedValueOnce({
-    data: {
-      sub: "1234567890",
-      name: "Admin User",
-      given_name: "Admin",
-      family_name: "User",
-      email: "admin@example.com",
-      picture: "https://example.com/avatar.jpg",
-    },
-  });
-
-  // ✅ MOCK 2: Backend response for role 1 (admin)
-  mockedAxios.post.mockResolvedValueOnce({
-    data: {
-      exists: true,
-      role: 1, // ✅ ADMIN
-    },
-  });
-
   renderWithProviders(<LoginPage />);
-  const loginButton = screen.getByRole("button", {
-    name: /Log-in with Google/i,
-  });
-  fireEvent.click(loginButton);
+  fireEvent.click(screen.getByRole("button", { name: /Log-in with Google/i }));
 
-  // ✅ Trigger simulated login success callback
   act(() => {
     loginCallback({ credential: "mock-token", access_token: "test-token" });
   });
 
-  // ✅ Match the exact message for admins
   await waitFor(() => {
     expect(screen.getByText("Welcome back, Admin!")).toBeInTheDocument();
   });
 });
 
-// test('If user login is unsuccessful, it should show a pop-up saying "You are not registered in our system."', async () => {
-//   // ✅ Mock Google OAuth userinfo
-//   mockedAxios.get.mockResolvedValueOnce({
-//     data: {
-//       sub: "ghost-user",
-//       name: "Ghost User",
-//       email: "ghost@example.com",
-//       picture: "https://example.com/ghost.jpg",
-//     },
-//   });
-
-//   // ✅ Mock backend check — user does NOT exist
-//   mockedAxios.post.mockResolvedValueOnce({
-//     data: {
-//       exists: false, // 🚨 triggers error message
-//     },
-//   });
-
-//   renderWithProviders(<LoginPage />);
-//   const loginButton = screen.getByRole("button", {
-//     name: /Log-in with Google/i,
-//   });
-//   fireEvent.click(loginButton);
-
-//   // Trigger fake Google login callback
-//   act(() => {
-//     loginCallback({ credential: "mock-token", access_token: "ghost-token" });
-//   });
-
-//   // Assert the expected error message is shown
-//   await waitFor(() => {
-//     expect(
-//       screen.getByText("You are not registered in our system.")
-//     ).toBeInTheDocument();
-//   });
-// });
-
 // test("If users log in is succesful it should take you to the home page", async () => {
-//   // Mock Google user info response
 //   mockedAxios.get.mockResolvedValueOnce({
 //     data: {
 //       sub: "user-id",
@@ -283,7 +215,6 @@ test('If successful login screen displays "Welcome back, Admin!" pop up', async 
 //     },
 //   });
 
-//   // Mock backend check — admin user
 //   mockedAxios.post.mockResolvedValueOnce({
 //     data: {
 //       exists: true,
@@ -304,28 +235,218 @@ test('If successful login screen displays "Welcome back, Admin!" pop up', async 
 //     </GoogleOAuthProvider>
 //   );
 
-//   // Simulate clicking the login button
-//   const loginButton = screen.getByRole("button", {
+//   fireEvent.click(screen.getByRole("button", {
 //     name: /Log-in with Google/i,
-//   });
-//   fireEvent.click(loginButton);
+//   }));
 
-//   // Simulate Google callback
 //   act(() => {
 //     loginCallback({ credential: "mock-token", access_token: "admin-token" });
 //   });
 
-//   // Wait for the success popup to appear
 //   await waitFor(() => {
 //     expect(screen.getByText("Successfully logged in!")).toBeInTheDocument();
 //   });
 
-//   // Click the "Close" button in the popup (wrapped in <Link to="/AdminDashboard">)
 //   const closeButton = screen.getByRole("button", { name: /close/i });
 //   fireEvent.click(closeButton);
 
-//   // Now we should be redirected to the Admin Dashboard
 //   await waitFor(() => {
 //     expect(screen.getByText("Top 10 Products")).toBeInTheDocument();
 //   });
 // });
+
+test('Admin login shows "Are you a robot?" prompt', async () => {
+  mockedAxios.get.mockResolvedValueOnce({
+    data: {
+      sub: "admin-id",
+      name: "Admin User",
+      email: "admin@example.com",
+      picture: "https://example.com/admin.jpg",
+    },
+  });
+
+  mockedAxios.post.mockResolvedValueOnce({
+    data: {
+      exists: true,
+      role: 1,
+    },
+  });
+
+  renderWithProviders(<LoginPage />);
+  fireEvent.click(screen.getByRole("button", { name: /Log-in with Google/i }));
+
+  act(() => {
+    loginCallback({ credential: "mock-token", access_token: "admin-token" });
+  });
+
+  // Wait for success popup
+  await waitFor(() => {
+    expect(screen.getByText("Welcome back, Admin!")).toBeInTheDocument();
+  });
+
+  // Click the close button to reveal prank modal
+  fireEvent.click(screen.getByRole("button", { name: /close/i }));
+
+  // Now prank modal should be visible
+  await waitFor(() => {
+    expect(screen.getByTestId("robot-check")).toBeInTheDocument();
+  });
+});
+
+
+test('Clicking "Yes" on robot check takes you to Admin Dashboard', async () => {
+  mockedAxios.get.mockResolvedValueOnce({
+    data: {
+      sub: "admin-id",
+      name: "Admin User",
+      email: "admin@example.com",
+      picture: "https://example.com/admin.jpg",
+    },
+  });
+
+  mockedAxios.post.mockResolvedValueOnce({
+    data: {
+      exists: true,
+      role: 1,
+    },
+  });
+
+  render(
+    <GoogleOAuthProvider clientId="test-client-id">
+      <UserProvider>
+        <MemoryRouter initialEntries={["/"]}>
+          <Routes>
+            <Route path="/" element={<LoginPage />} />
+            <Route path="/AdminDashboard" element={<AdminDashboard />} />
+          </Routes>
+        </MemoryRouter>
+      </UserProvider>
+    </GoogleOAuthProvider>
+  );
+
+  // Click login button
+  fireEvent.click(screen.getByRole("button", { name: /Log-in with Google/i }));
+
+  // Simulate login success
+  act(() => {
+    loginCallback({ credential: "mock-token", access_token: "admin-token" });
+  });
+
+  // ✅ Wait for admin success message
+  await waitFor(() => {
+    expect(screen.getByText("Welcome back, Admin!")).toBeInTheDocument();
+  });
+
+  // ✅ Click Close to trigger prank modal
+  fireEvent.click(screen.getByRole("button", { name: /close/i }));
+
+  // ✅ Wait for prank modal
+  await waitFor(() => {
+    expect(screen.getByTestId("robot-check")).toBeInTheDocument();
+  });
+
+  // ✅ Click Yes to navigate
+  fireEvent.click(screen.getByRole("button", { name: /yes/i }));
+
+  // ✅ Check if dashboard is rendered
+  await waitFor(() => {
+    expect(screen.getByText(/admin dashboard/i)).toBeInTheDocument();
+  });
+});
+
+
+test('User login shows "Are you a robot?" prompt', async () => {
+  mockedAxios.get.mockResolvedValueOnce({
+    data: {
+      sub: "user-id",
+      name: "Test User",
+      email: "user@example.com",
+      picture: "https://example.com/user.jpg",
+    },
+  });
+
+  mockedAxios.post.mockResolvedValueOnce({
+    data: {
+      exists: true,
+      role: 0,
+    },
+  });
+
+  renderWithProviders(<LoginPage />);
+  fireEvent.click(screen.getByRole("button", { name: /Log-in with Google/i }));
+
+  act(() => {
+    loginCallback({ credential: "mock-token", access_token: "user-token" });
+  });
+
+  // Wait for success message to appear
+  await waitFor(() => {
+    expect(screen.getByText("Successfully logged in!")).toBeInTheDocument();
+  });
+
+  // Click the "Close" button to trigger prank modal
+  fireEvent.click(screen.getByRole("button", { name: /close/i }));
+
+  // Now check for prank modal
+  await waitFor(() => {
+    expect(screen.getByTestId("robot-check")).toBeInTheDocument();
+  });
+
+  // Check the Yes and No buttons exist
+  expect(screen.getByRole("button", { name: /yes/i })).toBeInTheDocument();
+  expect(screen.getByRole("button", { name: /no/i })).toBeInTheDocument();
+});
+
+test('Clicking "Yes" on robot check as user takes you to Home page', async () => {
+  mockedAxios.get.mockResolvedValueOnce({
+    data: {
+      sub: "user-id",
+      name: "Test User",
+      email: "user@example.com",
+      picture: "https://example.com/user.jpg",
+    },
+  });
+
+  mockedAxios.post.mockResolvedValueOnce({
+    data: {
+      exists: true,
+      role: 0,
+    },
+  });
+
+  render(
+    <GoogleOAuthProvider clientId="test-client-id">
+      <UserProvider>
+        <MemoryRouter initialEntries={["/"]}>
+          <Routes>
+            <Route path="/" element={<LoginPage />} />
+            <Route path="/Home" element={<Home />} />
+          </Routes>
+        </MemoryRouter>
+      </UserProvider>
+    </GoogleOAuthProvider>
+  );
+
+  fireEvent.click(screen.getByRole("button", { name: /Log-in with Google/i }));
+
+  act(() => {
+    loginCallback({ credential: "mock-token", access_token: "user-token" });
+  });
+
+  await waitFor(() => {
+    expect(screen.getByText("Successfully logged in!")).toBeInTheDocument();
+  });
+
+  fireEvent.click(screen.getByRole("button", { name: /close/i }));
+
+  await waitFor(() => {
+    expect(screen.getByTestId("robot-check")).toBeInTheDocument();
+  });
+
+  fireEvent.click(screen.getByRole("button", { name: /yes/i }));
+
+  // ✅ Fix: Look for real text from Home.tsx
+  await waitFor(() => {
+    expect(screen.getByText(/for you/i)).toBeInTheDocument();
+  });
+});

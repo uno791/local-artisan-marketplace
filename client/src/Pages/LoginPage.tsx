@@ -62,13 +62,12 @@ export default function LoginPage() {
         )}
       </section>
 
-      {/* Prank Modal */}
+      {/* ✅ Prank Modal with test ID */}
       {showPrankModal && (
-        <div className={styles.prankOverlay}>
+        <div className={styles.prankOverlay} data-testid="robot-check">
           <div className={styles.prankBox}>
             <p>Are you a robot?</p>
 
-            {/* Yes: Stays in place, goes to next page */}
             <button
               className={styles.yesButton}
               onClick={() => navigate(prankTarget)}
@@ -82,7 +81,6 @@ export default function LoginPage() {
               Yes
             </button>
 
-            {/* No: Moves on click */}
             <button
               className={styles.noButton}
               onClick={moveNoButton}
