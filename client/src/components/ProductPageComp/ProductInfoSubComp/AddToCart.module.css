@@ -9,7 +9,7 @@
     font-weight: 600;
     padding: 14px 20px;
     border: none;
-    border-radius: 4px;
+    border-radius: 20px;
     cursor: pointer;
     width: 100%;
     transition: background-color 0.2s ease;
@@ -17,6 +17,7 @@
   
   .add-to-cart-button:hover {
     background-color: #2f241f;
+    transform: scale(1.1);
   }
   
   .cart-error {
