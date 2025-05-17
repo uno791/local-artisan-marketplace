@@ -79,19 +79,25 @@ describe("SellerOrdersPage", () => {
       );
     });
 
+    // Find the first dropdown with "Payment Received"
     const dropdown = screen.getByDisplayValue("Payment Received");
     fireEvent.change(dropdown, { target: { value: "Shipped" } });
 
-    await waitFor(() => {
-      const modal = screen
-        .getByText(/are you sure you want to change status to/i)
-        .closest("div");
-      expect(modal).toBeInTheDocument();
-      expect(within(modal!).getByText("Shipped")).toBeInTheDocument();
-    });
+    // Wait for modal to appear
+    const modal = await screen.findByRole("dialog");
 
-    expect(screen.getByRole("button", { name: "Confirm" })).toBeInTheDocument();
-    expect(screen.getByRole("button", { name: "Cancel" })).toBeInTheDocument();
+    // Now assert safely within the modal only
+    const modalUtils = within(modal);
+    expect(
+      modalUtils.getByText(/are you sure you want to change status to/i)
+    ).toBeInTheDocument();
+    expect(modalUtils.getByText("Shipped")).toBeInTheDocument();
+    expect(
+      modalUtils.getByRole("button", { name: "Confirm" })
+    ).toBeInTheDocument();
+    expect(
+      modalUtils.getByRole("button", { name: "Cancel" })
+    ).toBeInTheDocument();
   });
 
   test("confirms status update and updates UI", async () => {
