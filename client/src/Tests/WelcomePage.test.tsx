@@ -1,54 +1,76 @@
 import { render, fireEvent, screen } from "@testing-library/react";
 import { MemoryRouter, Routes, Route } from "react-router-dom";
 import { GoogleOAuthProvider } from "@react-oauth/google";
-import { UserProvider } from "../Users/UserContext"; // adjust the path as needed
-
+import { UserProvider } from "../Users/UserContext";
 
 import WelcomePage from "../Pages/WelcomePage";
 import SignUpPage from "../Pages/SignUpPage";
 import LoginPage from "../Pages/LoginPage";
 
-test("when sign-up button is clicked, go to signup screen", () => {
-  render(
-    <GoogleOAuthProvider clientId="test-client-id">
-      <UserProvider>
-        <MemoryRouter initialEntries={["/"]}>
-          <Routes>
-            <Route path="/" element={<WelcomePage />} />
-            <Route path="/SignUpPage" element={<SignUpPage />} />
-          </Routes>
-        </MemoryRouter>
-      </UserProvider>
-    </GoogleOAuthProvider>
-  );
-  
+describe("WelcomePage navigation", () => {
+  test("when navbar sign-up button is clicked, go to signup screen", () => {
+    render(
+      <GoogleOAuthProvider clientId="test-client-id">
+        <UserProvider>
+          <MemoryRouter initialEntries={["/"]}>
+            <Routes>
+              <Route path="/" element={<WelcomePage />} />
+              <Route path="/SignUpPage" element={<SignUpPage />} />
+            </Routes>
+          </MemoryRouter>
+        </UserProvider>
+      </GoogleOAuthProvider>
+    );
 
-  fireEvent.click(screen.getByRole("button", { name: /sign up/i }));
+    const navSignUpButton = screen.getByTestId("navbar-signup");
+    fireEvent.click(navSignUpButton);
 
-  // Flexible match to handle mixed accessible text like "Google logo Sign Up with Google"
-  expect(
-    screen.getByRole("button", { name: /sign up with google/i })
-  ).toBeInTheDocument();
-});
+    expect(
+      screen.getByRole("heading", { name: /welcome!/i })
+    ).toBeInTheDocument();
+  });
 
-test("when login button is clicked, go to login screen", () => {
-  render(
-    <GoogleOAuthProvider clientId="test-client-id">
-      <UserProvider>
-        <MemoryRouter initialEntries={["/"]}>
-          <Routes>
-            <Route path="/" element={<WelcomePage />} />
-            <Route path="/LoginPage" element={<LoginPage />} />
-          </Routes>
-        </MemoryRouter>
-      </UserProvider>
-    </GoogleOAuthProvider>
-  );
-  
-  fireEvent.click(screen.getByRole("button", { name: /log in/i }));
+  test("when CTA sign-up button is clicked, go to signup screen", () => {
+    render(
+      <GoogleOAuthProvider clientId="test-client-id">
+        <UserProvider>
+          <MemoryRouter initialEntries={["/"]}>
+            <Routes>
+              <Route path="/" element={<WelcomePage />} />
+              <Route path="/SignUpPage" element={<SignUpPage />} />
+            </Routes>
+          </MemoryRouter>
+        </UserProvider>
+      </GoogleOAuthProvider>
+    );
 
-  // Flexible match to handle possible "Google icon Log-in with Google"
-  expect(
-    screen.getByRole("button", { name: /log-?in with google/i })
-  ).toBeInTheDocument();
+    const ctaButton = screen.getByTestId("cta-signup");
+    fireEvent.click(ctaButton);
+
+    expect(
+      screen.getByRole("heading", { name: /welcome!/i })
+    ).toBeInTheDocument();
+  });
+
+  test("when login button is clicked, go to login screen", () => {
+    render(
+      <GoogleOAuthProvider clientId="test-client-id">
+        <UserProvider>
+          <MemoryRouter initialEntries={["/"]}>
+            <Routes>
+              <Route path="/" element={<WelcomePage />} />
+              <Route path="/LoginPage" element={<LoginPage />} />
+            </Routes>
+          </MemoryRouter>
+        </UserProvider>
+      </GoogleOAuthProvider>
+    );
+
+    const loginButton = screen.getByRole("button", { name: /log in/i });
+    fireEvent.click(loginButton);
+
+    expect(
+      screen.getByRole("heading", { name: /welcome back!/i })
+    ).toBeInTheDocument();
+  });
 });

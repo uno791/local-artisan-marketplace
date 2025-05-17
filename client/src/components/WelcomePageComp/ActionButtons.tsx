@@ -8,7 +8,7 @@ export function ActionButtons() {
     // matthew, use an aria-label to make the section have aa name which will be shown to the page reader thing for semantic
     <section className={styles.buttonContainer} aria-label="Action Buttons">
       <Link to="/SignUpPage">
-        <button className={styles.signUpButton}>
+        <button className={styles.signUpButton} data-testid="navbar-signup">
           Sign Up
           <span className={styles["arrow-wrapper"]}>
             <span className={styles.arrow}></span>
