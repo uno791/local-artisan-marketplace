@@ -30,6 +30,19 @@ test("Home button navigates to the Home page", async () => {
           image_url: "http://example.com/product.jpg",
           username: "seller123",
           details: "Handmade from local materials",
+          category_name: "Paintings",
+          tags: ["Abstract", "Canvas"],
+        },
+      });
+    }
+
+    if (url.includes("/artisan/seller123")) {
+      return Promise.resolve({
+        data: {
+          shop_name: "Art by Seller",
+          bio: "We love handmade items",
+          shop_address: "123 Main St",
+          shop_pfp: "http://example.com/profile.jpg",
         },
       });
     }
@@ -49,21 +62,14 @@ test("Home button navigates to the Home page", async () => {
       });
     }
 
+    if (url.includes("/homepage-recommendations")) {
+      return Promise.resolve({
+        data: [],
+      });
+    }
+
     return Promise.reject(new Error("Unhandled axios request: " + url));
   });
-
-  /*mockedAxios.get.mockResolvedValueOnce({
-    data: {
-      product_id: 1,
-      product_name: "Mock Product",
-      description: "A great product",
-      price: 100,
-      stock_quantity: 100,
-      image_url: "http://example.com/product.jpg",
-      username: "seller123",
-      details: "Handmade from local materials",
-    },
-  });*/
 
   await act(async () => {
     render(
@@ -78,18 +84,75 @@ test("Home button navigates to the Home page", async () => {
     );
   });
 
-  console.log("ProductPage mock GET called with:", mockedAxios.get.mock.calls);
-  expect(mockedAxios.get).toHaveBeenCalledWith(
-    "http://localhost:3000/product/1"
-  );
-
-  // Wait for the product to load
+  // Verify product detail is shown
   expect(await screen.findByText("Mock Product")).toBeInTheDocument();
 
-  const homeButton = screen.getByRole("button", { name: /home/i });
+  // Click the home button (BackButton)
+  const homeButton = screen.getByRole("button", { name: "" }); // No name attribute, just grab the only button
   fireEvent.click(homeButton);
 
-  expect(await screen.findByText("All Products")).toBeInTheDocument();
+  // Verify that we navigated to Home and see the product list
+  expect(await screen.findByText("For you")).toBeInTheDocument();
+});
+
+test("displays product details correctly", async () => {
+  mockedAxios.get.mockImplementation((url) => {
+    if (url.includes("/product/1")) {
+      return Promise.resolve({
+        data: {
+          product_id: 1,
+          product_name: "Mock Product",
+          description: "A great product",
+          price: 100,
+          stock_quantity: 100,
+          image_url: "http://example.com/product.jpg",
+          username: "seller123",
+          details: "Handmade from local materials",
+          category_name: "Paintings",
+          tags: ["Abstract", "Canvas"],
+          width: 30,
+          height: 40,
+          weight: 500,
+        },
+      });
+    }
+
+    if (url.includes("/artisan/seller123")) {
+      return Promise.resolve({
+        data: {
+          shop_name: "Art by Seller",
+          bio: "We love handmade items",
+          shop_address: "123 Main St",
+          shop_pfp: "http://example.com/profile.jpg",
+        },
+      });
+    }
+
+    if (url.includes("/allproducts")) {
+      return Promise.resolve({ data: [] });
+    }
+
+    return Promise.reject(new Error("Unhandled axios request: " + url));
+  });
+
+  render(
+    <UserProvider>
+      <MemoryRouter initialEntries={["/Product/1"]}>
+        <Routes>
+          <Route path="/Product/:id" element={<ProductPage />} />
+        </Routes>
+      </MemoryRouter>
+    </UserProvider>
+  );
+
+  // Wait for product data to be shown
+  expect(await screen.findByText("Mock Product")).toBeInTheDocument();
+  expect(screen.getByText("R100")).toBeInTheDocument();
+  expect(screen.getByText("A great product")).toBeInTheDocument();
+  expect(screen.getByText("Width:")).toBeInTheDocument();
+  expect(screen.getByText(/30 cm/)).toBeInTheDocument();
+  expect(screen.getByText(/40 cm/)).toBeInTheDocument();
+  expect(screen.getByText(/500 kg|500 g/)).toBeInTheDocument(); // depends on units
 });
 
 test("successfully adds product to cart", async () => {

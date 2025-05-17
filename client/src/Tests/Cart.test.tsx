@@ -367,7 +367,7 @@ test("initiates Yoco payment and sends token to backend", async () => {
 
   // Click the payment button
   const proceedButton = await screen.findByRole("button", {
-    name: /proceed to payment/i,
+    name: /pay/i,
   });
 
   fireEvent.click(proceedButton);
