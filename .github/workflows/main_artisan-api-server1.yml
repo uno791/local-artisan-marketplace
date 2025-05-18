@@ -1,72 +1,67 @@
-name: Build and deploy Node.js app to Azure Web App - artisan-api-server1
+name: Deploy API App Service (after tests)
 
 on:
-  push:
-    branches:
-      - main
-  workflow_dispatch:
+  workflow_run:
+    workflows: ["Run Tests and Upload Coverage"]
+    types: [completed]
 
 jobs:
   build:
+    if: github.event.workflow_run.conclusion == 'success' &&
+      github.event.workflow_run.head_branch   == 'main'
     runs-on: ubuntu-latest
-    permissions:
-      contents: read
 
     steps:
-      - name: Checkout code
+      - name: Checkout commit that passed tests
         uses: actions/checkout@v4
+        with:
+          ref: ${{ github.event.workflow_run.head_sha }}
 
-      - name: Set up Node.js
+      - name: Set up Node
         uses: actions/setup-node@v3
         with:
-          node-version: "22.x"
+          node-version: 18
 
-      - name: Install dependencies & run optional build/test
+      - name: Install & build server
         working-directory: server
         run: |
-          npm install
-          npm run build --if-present
-          npm run test || echo "No tests configured"
+          npm ci
+          npm run build         # remove if you have no build step
+          zip -r ../server.zip .
 
-      - name: Zip build output
-        run: |
-          cd server
-          zip -r ../release.zip .
-
-      - name: Upload artifact
+      - name: Upload artefact
         uses: actions/upload-artifact@v4
         with:
-          name: node-app
-          path: release.zip
+          name: api-release
+          path: server.zip
 
   deploy:
-    runs-on: ubuntu-latest
     needs: build
+    runs-on: ubuntu-latest
     environment:
-      name: "Production"
-      url: ${{ steps.deploy-to-webapp.outputs.webapp-url }}
+      name: production
+
     permissions:
       id-token: write
       contents: read
 
     steps:
-      - name: Download artifact
+      - name: Download artefact
         uses: actions/download-artifact@v4
         with:
-          name: node-app
+          name: api-release
 
-      - name: Unzip artifact
-        run: unzip release.zip
+      - name: Unzip artefact
+        run: unzip server.zip
 
-      - name: Azure login
+      - name: Azure login (OIDC)
         uses: azure/login@v2
         with:
           client-id: ${{ secrets.AZUREAPPSERVICE_CLIENTID_334AA9FF7E8E4FB9BC043DDC768BB897 }}
           tenant-id: ${{ secrets.AZUREAPPSERVICE_TENANTID_C5B9662CFB964D0186E0D4BCF83307AB }}
           subscription-id: ${{ secrets.AZUREAPPSERVICE_SUBSCRIPTIONID_674A6760FA0C4B3D849AA2215344EE0A }}
 
-      - name: Deploy to Azure Web App
-        id: deploy-to-webapp
+      - name: Deploy to App Service
         uses: azure/webapps-deploy@v3
         with:
           app-name: "artisan-api-server1"
