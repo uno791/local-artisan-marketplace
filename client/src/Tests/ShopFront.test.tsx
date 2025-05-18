@@ -79,16 +79,7 @@ describe('ShopFront Page', () => {
     expect(screen.queryByText('Wooden Sculpture')).not.toBeInTheDocument();
   });
 
-  test('opens report modal when "Report Shop" is clicked', async () => {
-    await setup();
 
-    const reportBtn = screen.getByRole('button', { name: /report shop/i });
-    fireEvent.click(reportBtn);
-
-    await waitFor(() => {
-      expect(screen.getByRole('heading', { name: /report shop/i })).toBeInTheDocument();
-    });
-  });
 
   test('displays default values when artisan data is missing', async () => {
     mockedAxios.get

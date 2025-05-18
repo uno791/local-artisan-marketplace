@@ -4,7 +4,7 @@ import axios from "axios";
 
 import Header from "../components/ShopFrontComp/Header";
 import ProductGrid from "../components/ShopFrontComp/ProductGrid";
-import ReportShop from "../components/ShopFrontComp/ReportShop";
+// Removed ReportShop import
 import styles from "../components/ShopFrontComp/ShopFront.module.css";
 
 import { baseURL } from "../config";
@@ -36,7 +36,7 @@ function ShopFront() {
   const { username } = useParams();
   const [artisan, setArtisan] = useState<Artisan | null>(null);
   const [products, setProducts] = useState<Product[]>([]);
-  const [showReportModal, setShowReportModal] = useState(false);
+  // Removed showReportModal state
 
   useEffect(() => {
     axios
@@ -62,7 +62,7 @@ function ShopFront() {
         name={artisan?.shop_name || "Artisan Shop"}
         bio={artisan?.bio}
         banner={getImageSrc(artisan?.shop_banner)}
-        onReportClick={() => setShowReportModal(true)}
+        // Removed onReportClick prop
       />
 
       <ProductGrid
@@ -76,9 +76,7 @@ function ShopFront() {
         }))}
       />
 
-      {showReportModal && (
-        <ReportShop onClose={() => setShowReportModal(false)} />
-      )}
+      {/* Removed ReportShop modal rendering */}
     </main>
   );
 }
