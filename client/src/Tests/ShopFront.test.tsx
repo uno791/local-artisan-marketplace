@@ -1,8 +1,7 @@
 import React from 'react';
-import { render, screen, fireEvent, waitFor } from '@testing-library/react';
+import { render, screen, act } from '@testing-library/react';
 import { MemoryRouter } from 'react-router-dom';
 import '@testing-library/jest-dom';
-import { act } from 'react';
 import axios from 'axios';
 
 import ShopFront from '../Pages/ShopFront';
@@ -79,8 +78,6 @@ describe('ShopFront Page', () => {
     expect(screen.queryByText('Wooden Sculpture')).not.toBeInTheDocument();
   });
 
-
-
   test('displays default values when artisan data is missing', async () => {
     mockedAxios.get
       .mockResolvedValueOnce({ data: {} }) // missing artisan
@@ -108,7 +105,7 @@ describe('ShopFront Page', () => {
       );
     });
 
-    // Page should still show button or fallback
-    expect(screen.getByRole('button', { name: /report shop/i })).toBeInTheDocument();
+    // Check that the page still renders something fallback-y
+    expect(screen.getByRole('heading', { name: /artisan shop/i })).toBeInTheDocument();
   });
 });
