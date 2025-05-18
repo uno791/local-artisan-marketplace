@@ -1,0 +1,122 @@
+import React from "react";
+import { render, screen, fireEvent, waitFor } from "@testing-library/react";
+import { MemoryRouter } from "react-router-dom";
+import SellerSignup from "../Pages/SellerSignup";
+import axios from "axios";
+import "@testing-library/jest-dom";
+
+// Mock useUser from context
+jest.mock("../Users/UserContext", () => ({
+  useUser: () => ({ user: { username: "testuser" } }),
+  UserProvider: ({ children }: any) => <div>{children}</div>,
+}));
+
+// Mock useNavigate from react-router-dom
+const mockNavigate = jest.fn();
+jest.mock("react-router-dom", () => ({
+  ...jest.requireActual("react-router-dom"),
+  useNavigate: () => mockNavigate,
+}));
+
+// Mock axios
+jest.mock("axios");
+const mockedAxios = axios as jest.Mocked<typeof axios>;
+
+describe("SellerSignup page", () => {
+  beforeEach(() => {
+    jest.clearAllMocks();
+  });
+
+  test("renders form inputs", () => {
+    render(
+      <MemoryRouter>
+        <SellerSignup />
+      </MemoryRouter>
+    );
+
+    expect(screen.getByPlaceholderText("Enter your shop name")).toBeInTheDocument();
+    expect(screen.getByPlaceholderText("Describe your shop")).toBeInTheDocument();
+    expect(screen.getByPlaceholderText("Enter your email")).toBeInTheDocument();
+    expect(screen.getByPlaceholderText("Enter your shop location")).toBeInTheDocument();
+    expect(screen.getByRole("button", { name: /create seller account/i })).toBeInTheDocument();
+  });
+
+  test("shows validation errors on empty submit", async () => {
+    render(
+      <MemoryRouter>
+        <SellerSignup />
+      </MemoryRouter>
+    );
+
+    fireEvent.click(screen.getByRole("button", { name: /create seller account/i }));
+
+    expect(await screen.findByText("Shop name is required.")).toBeInTheDocument();
+    expect(screen.getByText("Description is required.")).toBeInTheDocument();
+    expect(screen.getByText("Shop address is required.")).toBeInTheDocument();
+    expect(screen.getByText("Enter a valid email address.")).toBeInTheDocument();
+  });
+
+  test("submits form successfully", async () => {
+    mockedAxios.post.mockResolvedValueOnce({ status: 200 });
+
+    render(
+      <MemoryRouter>
+        <SellerSignup />
+      </MemoryRouter>
+    );
+
+    fireEvent.change(screen.getByPlaceholderText("Enter your shop name"), {
+      target: { value: "Test Shop" },
+    });
+    fireEvent.change(screen.getByPlaceholderText("Describe your shop"), {
+      target: { value: "Nice handmade items" },
+    });
+    fireEvent.change(screen.getByPlaceholderText("Enter your email"), {
+      target: { value: "test@example.com" },
+    });
+    fireEvent.change(screen.getByPlaceholderText("Enter your shop location"), {
+      target: { value: "Cape Town" },
+    });
+
+    window.alert = jest.fn();
+
+    fireEvent.click(screen.getByRole("button", { name: /create seller account/i }));
+
+    await waitFor(() => {
+      expect(mockedAxios.post).toHaveBeenCalled();
+      expect(window.alert).toHaveBeenCalledWith("Seller account created!");
+      expect(mockNavigate).toHaveBeenCalledWith("/profile");
+    });
+  });
+
+  test("handles API failure", async () => {
+    mockedAxios.post.mockRejectedValueOnce(new Error("Request failed"));
+
+    render(
+      <MemoryRouter>
+        <SellerSignup />
+      </MemoryRouter>
+    );
+
+    fireEvent.change(screen.getByPlaceholderText("Enter your shop name"), {
+      target: { value: "Test Shop" },
+    });
+    fireEvent.change(screen.getByPlaceholderText("Describe your shop"), {
+      target: { value: "Nice handmade items" },
+    });
+    fireEvent.change(screen.getByPlaceholderText("Enter your email"), {
+      target: { value: "test@example.com" },
+    });
+    fireEvent.change(screen.getByPlaceholderText("Enter your shop location"), {
+      target: { value: "Cape Town" },
+    });
+
+    window.alert = jest.fn();
+
+    fireEvent.click(screen.getByRole("button", { name: /create seller account/i }));
+
+    await waitFor(() => {
+      expect(window.alert).toHaveBeenCalledWith("Failed to create seller account.");
+    });
+  });
+});
