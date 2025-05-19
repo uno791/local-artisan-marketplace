@@ -8,6 +8,7 @@ import ProductInfo from "../components/ProductPageComp/ProductInfo";
 import SidebarInfo from "../components/ProductPageComp/SideBarInfo";
 import ReportProduct from "../components/ProductPageComp/ReportProduct";
 import { baseURL } from "../config";
+import { useUser } from "../Users/UserContext";
 
 interface Product {
   product_id: number;
@@ -33,12 +34,14 @@ interface Artisan {
 }
 
 function ProductPage() {
-  const { id } = useParams();
+  const { id } = useParams<{ id: string }>();
   const [product, setProduct] = useState<Product | null>(null);
   const [artisan, setArtisan] = useState<Artisan | null>(null);
   const [showReportModal, setShowReportModal] = useState(false);
+  const { user } = useUser(); // get the currently logged-in user
 
   useEffect(() => {
+    if (!id) return;
     axios
       .get(`${baseURL}/product/${id}`)
       .then((res) => {
@@ -96,14 +99,20 @@ function ProductPage() {
         </aside>
       </section>
 
-      {showReportModal && (
-        <ReportProduct onClose={() => setShowReportModal(false)} />
+      {showReportModal && user?.username && (
+        <ReportProduct
+          productId={product.product_id}
+          sellerUsername={product.username}
+          reporterUsername={user.username}
+          onClose={() => setShowReportModal(false)}
+        />
       )}
     </main>
   );
 }
 
 export default ProductPage;
+
 
 /*import "./ProductPage.css";
 import BackButton from "../components/BackButton";
