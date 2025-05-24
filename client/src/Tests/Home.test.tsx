@@ -1,11 +1,10 @@
-import { render, screen, waitFor } from "@testing-library/react";
+import { render, screen, waitFor, fireEvent } from "@testing-library/react";
 import { MemoryRouter, Route, Routes } from "react-router-dom";
 import axios from "axios";
 import { act } from "@testing-library/react";
 import Home from "../Pages/Home";
-import { UserProvider } from "../Users/UserContext"; // adjust if needed
-import { fireEvent } from "@testing-library/react";
 import ProductPage from "../Pages/ProductPage";
+import { UserProvider } from "../Users/UserContext";
 
 jest.mock("axios");
 const mockedAxios = axios as jest.Mocked<typeof axios>;
@@ -17,26 +16,78 @@ jest.mock("../Users/UserContext", () => ({
   }),
 }));
 
+beforeEach(() => {
+  mockedAxios.get.mockImplementation((url) => {
+    if (url.includes("/getuser/testuser")) {
+      return Promise.resolve({
+        data: {
+          username: "testuser",
+          seller_status: "none",
+          shop_name: "Test Shop",
+          shop_pfp: "",
+          bio: "Test bio",
+          shop_address: "123 Test Street",
+        },
+      });
+    }
+
+    if (url.includes("/homepage-recommendations")) {
+      return Promise.resolve({
+        data: [
+          {
+            product_id: 1,
+            product_name: "Mock Product",
+            price: 100,
+            image_url: "http://example.com/product.jpg",
+            username: "seller1",
+          },
+        ],
+      });
+    }
+
+    return Promise.reject(new Error("Unhandled GET request: " + url));
+  });
+
+  mockedAxios.post.mockResolvedValue({});
+});
+
 test("renders Home page with products from API", async () => {
-  mockedAxios.get.mockResolvedValueOnce({
-    data: [
-      {
-        product_id: 1,
-        product_name: "Mock Product",
-        description: "Mock Description",
-        price: 100,
-        image_url: "http://example.com/product.jpg",
-        username: "seller1",
-      },
-      {
-        product_id: 2,
-        product_name: "Second Product",
-        description: "Another Description",
-        price: 200,
-        image_url: "http://example.com/product2.jpg",
-        username: "seller2",
-      },
-    ],
+  mockedAxios.get.mockImplementation((url) => {
+    if (url.includes("/getuser/testuser")) {
+      return Promise.resolve({
+        data: {
+          username: "testuser",
+          seller_status: "none",
+          shop_name: "Test Shop",
+          shop_pfp: "",
+          bio: "Test bio",
+          shop_address: "123 Test Street",
+        },
+      });
+    }
+
+    if (url.includes("/homepage-recommendations")) {
+      return Promise.resolve({
+        data: [
+          {
+            product_id: 1,
+            product_name: "Mock Product",
+            price: 100,
+            image_url: "http://example.com/product.jpg",
+            username: "seller1",
+          },
+          {
+            product_id: 2,
+            product_name: "Second Product",
+            price: 200,
+            image_url: "http://example.com/product2.jpg",
+            username: "seller2",
+          },
+        ],
+      });
+    }
+
+    return Promise.reject(new Error("Unhandled GET request: " + url));
   });
 
   render(
@@ -57,6 +108,15 @@ test("renders Home page with products from API", async () => {
 
 test("fetches and renders homepage AI recommended products", async () => {
   mockedAxios.get.mockImplementation((url) => {
+    if (url.includes("/getuser/testuser")) {
+      return Promise.resolve({
+        data: {
+          username: "testuser",
+          seller_status: "none",
+        },
+      });
+    }
+
     if (url.includes("/homepage-recommendations")) {
       return Promise.resolve({
         data: [
@@ -86,21 +146,32 @@ test("fetches and renders homepage AI recommended products", async () => {
 });
 
 test("handles product click tracking for main and minor tags", async () => {
-  mockedAxios.get.mockResolvedValueOnce({
-    data: [
-      {
-        product_id: 1,
-        product_name: "Mock Product",
-        description: "Mock Description",
-        price: 100,
-        image_url: "http://example.com/product.jpg",
-        username: "seller1",
-      },
-    ],
-  });
+  mockedAxios.get.mockImplementation((url) => {
+    if (url.includes("/getuser/testuser")) {
+      return Promise.resolve({
+        data: {
+          username: "testuser",
+          seller_status: "none",
+        },
+      });
+    }
 
-  // Mock both POST requests
-  mockedAxios.post.mockResolvedValue({});
+    if (url.includes("/homepage-recommendations")) {
+      return Promise.resolve({
+        data: [
+          {
+            product_id: 1,
+            product_name: "Mock Product",
+            price: 100,
+            image_url: "http://example.com/product.jpg",
+            username: "seller1",
+          },
+        ],
+      });
+    }
+
+    return Promise.reject(new Error("Unhandled GET request: " + url));
+  });
 
   render(
     <UserProvider>
@@ -113,10 +184,12 @@ test("handles product click tracking for main and minor tags", async () => {
   );
 
   const productLink = await screen.findByText("Mock Product");
-  productLink.click();
+
+  await act(async () => {
+    fireEvent.click(productLink);
+  });
 
   await waitFor(() => {
-    // Assert call to track-click-main
     expect(mockedAxios.post).toHaveBeenCalledWith(
       expect.stringContaining("/track-click-main"),
       expect.objectContaining({
@@ -125,7 +198,6 @@ test("handles product click tracking for main and minor tags", async () => {
       })
     );
 
-    // Assert call to track-click-minor
     expect(mockedAxios.post).toHaveBeenCalledWith(
       expect.stringContaining("/track-click-minor"),
       expect.objectContaining({
@@ -156,17 +228,31 @@ test("handles error when fetching products", async () => {
 });
 
 test('renders "For you" heading on Home page', async () => {
-  mockedAxios.get.mockResolvedValueOnce({
-    data: [
-      {
-        product_id: 5,
-        product_name: "Item A",
-        description: "Nice thing",
-        price: 150,
-        image_url: "http://example.com/item.jpg",
-        username: "artistA",
-      },
-    ],
+  mockedAxios.get.mockImplementation((url) => {
+    if (url.includes("/homepage-recommendations")) {
+      return Promise.resolve({
+        data: [
+          {
+            product_id: 5,
+            product_name: "Item A",
+            price: 150,
+            image_url: "http://example.com/item.jpg",
+            username: "artistA",
+          },
+        ],
+      });
+    }
+
+    if (url.includes("/getuser/testuser")) {
+      return Promise.resolve({
+        data: {
+          username: "testuser",
+          seller_status: "none",
+        },
+      });
+    }
+
+    return Promise.reject(new Error("Unhandled GET request: " + url));
   });
 
   render(
@@ -184,6 +270,15 @@ test('renders "For you" heading on Home page', async () => {
 
 test("clicking a product navigates to ProductPage and displays details", async () => {
   mockedAxios.get.mockImplementation((url) => {
+    if (url.includes("/getuser/testuser")) {
+      return Promise.resolve({
+        data: {
+          username: "testuser",
+          seller_status: "none",
+        },
+      });
+    }
+
     if (url.includes("/homepage-recommendations")) {
       return Promise.resolve({
         data: [
@@ -210,7 +305,7 @@ test("clicking a product navigates to ProductPage and displays details", async (
           image_url: "http://example.com/clicked.jpg",
           username: "click_seller",
           details: "Details here",
-          category_name: "Art", // ✅ Correct field name for mainCategory
+          category_name: "Art",
         },
       });
     }
