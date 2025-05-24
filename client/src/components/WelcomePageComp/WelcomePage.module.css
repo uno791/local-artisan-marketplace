@@ -371,7 +371,7 @@
   word-break: break-word;
   white-space: normal;
 
-  /* ✅ Prevent horizontal growth */
+  
   max-width: 100%;
 }
 
@@ -411,7 +411,7 @@
   line-height: 1.4;
   color: #5a4a1f;
 
-  /* ✅ Prevent horizontal overflow */
+  
   overflow-x: hidden;
   overflow-y: auto;
   max-height: 200px;
