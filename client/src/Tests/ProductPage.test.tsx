@@ -87,7 +87,8 @@ test("Home button navigates to the Home page", async () => {
   expect(await screen.findByText("Mock Product")).toBeInTheDocument();
 
   // Click the home button (BackButton)
-  const homeButton = screen.getByRole("button", { name: "" }); // No name attribute, just grab the only button
+  const homeButton = screen.getByRole("button", { name: /home/i });
+
   fireEvent.click(homeButton);
 
   // Verify that we navigated to Home and see the product list
