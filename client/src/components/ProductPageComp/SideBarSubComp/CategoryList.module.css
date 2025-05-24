@@ -1,40 +1,37 @@
-/* CategoryList.module.css */
-
-/* “review-box” → container: scrollable box with same look-and-feel */
 .container {
-  max-height: 340px;              /* match your old reviews max height */
-  overflow-y: auto;               /* vertical scroll if tags overflow */
-  background-color: #F6EBD9;      /* same soft background */
-  border-radius: 8px;             /* rounded corners */
-  padding: 16px;                  /* consistent inner spacing */
-  box-shadow: 0 0 6px rgba(0, 0, 0, 0.1); /* gentle drop shadow */
+  max-height: 340px;              
+  overflow-y: auto;              
+  background-color: #F6EBD9;     
+  border-radius: 8px;             
+  padding: 16px;                  
+  box-shadow: 0 0 6px rgba(0, 0, 0, 0.1); 
+  flex-wrap: wrap;
+  box-sizing: border-box;
+
 }
 
-/* header spacing matches old “review-heading” margin */
 .header {
   margin-bottom: 12px;
 }
 
 .heading {
-  font-size: 18px;  /* same as .review-heading */
+  font-size: 18px;  
   font-weight: bold;
 }
 
-/* content groups the two sections with a gap like .review-list gap */
 .content {
   display: flex;
   flex-direction: column;
   gap: 16px;
 }
 
-/* main and minor both stack their label + value/list */
 .main,
 .minor {
   display: flex;
   flex-direction: column;
 }
 
-/* label styling echoes the card titles */
+
 .mainLabel,
 .minorLabel {
   font-size: 16px;
@@ -42,13 +39,12 @@
   margin-bottom: 8px;
 }
 
-/* main category value text */
 .mainValue {
   font-size: 14px;
-  color: #333;  /* same text color as .review-text */
+  color: #333; 
 }
 
-/* list reset + flex column + small gaps */
+
 .tagList {
   list-style: none;
   padding: 0;
@@ -58,64 +54,19 @@
   gap: 8px;
 }
 
-/* each tag item: simple text styling to keep it clean */
+
 .tagItem {
   font-size: 14px;
   color: #333;
 }
 
-/*.review-box {
-    max-height: 340px;
-    overflow-y: auto;
-    background-color: #F6EBD9;
-    border-radius: 8px;
-    padding: 16px;
-    box-shadow: 0 0 6px rgba(0, 0, 0, 0.1);
-  }
-  
-  .review-heading {
-    font-size: 18px;
-    font-weight: bold;
-    margin-bottom: 12px;
-  }
-  
-  .review-list {
-    list-style: none;
-    padding: 0;
-    margin: 0;
+
+@media (max-width: 375px) {
+  .flex-responsive {
     display: flex;
     flex-direction: column;
-    gap: 16px;
+    gap: 12px;
+    align-items: center;
+    justify-content: center;
   }
-  
-  .review-card {
-    border: 1px solid black;
-    border-radius: 6px;
-    padding: 12px;
-    background-color: #F6EBD9;
-  }
-  
-  .review-stars {
-    color: #f5c518;
-    margin-bottom: 4px;
-  }
-  
-  .review-title {
-    font-weight: bold;
-    margin-bottom: 6px;
-    display: block;
-  }
-  
-  .review-text {
-    font-size: 14px;
-    margin-bottom: 8px;
-    color: #333;
-  }
-  
-  .review-footer {
-    font-size: 12px;
-    color: #777;
-    display: flex;
-    justify-content: space-between;
-  }*/
-  
+}

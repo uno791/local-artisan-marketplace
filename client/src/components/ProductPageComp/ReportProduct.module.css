@@ -105,3 +105,16 @@
   margin-bottom: 1rem;
   font-family: 'Montserrat', sans-serif;
 }
+
+
+/* Responsive Flex Utility */
+
+@media (max-width: 375px) {
+  .flex-responsive {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    align-items: center;
+    justify-content: center;
+  }
+}

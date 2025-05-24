@@ -2,9 +2,11 @@
     padding: 0;
     min-height: 100vh;
     width: 100%;
-overflow-x: hidden;
-
+    overflow-x: hidden;
+    flex-wrap: wrap;
     background-color: #F6EBD9;
+    box-sizing: border-box;
+
 }
   
 .product-main {
@@ -56,8 +58,38 @@ overflow-x: hidden;
     font-size: 1rem;
     transition: transform 0.2s ease;
   }
-  
-  
+  @media (min-width: 601px) {
+  .report-button-container {
+    position: absolute;
+    top: 1rem;
+    right: 7rem;
+    z-index: 5;
+  }
+}
+
+  @media (max-width: 600px) {
+  .product-page {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+
+  /* Make report button flow in a flex row with back-button */
+  .report-button-container {
+    position: static;
+    display: flex;
+    flex-direction: row;
+    gap: 12px;
+    justify-content: center;
+    flex-wrap: wrap;
+    margin-top: 1rem;
+    margin-bottom: 1rem;
+    width: 100%;
+  }
+}
+
+
+
   .report-btn:hover {
     transform: scale(1.05);
   }
@@ -65,3 +97,15 @@ overflow-x: hidden;
 
 
   
+
+/* Responsive Flex Utility */
+
+@media (max-width: 375px) {
+  .flex-responsive {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    align-items: center;
+    justify-content: center;
+  }
+}
