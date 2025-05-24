@@ -31,7 +31,6 @@ test("Home button navigates to the Home page", async () => {
           username: "seller123",
           details: "Handmade from local materials",
           category_name: "Paintings",
-          tags: ["Abstract", "Canvas"],
         },
       });
     }
