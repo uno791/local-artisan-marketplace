@@ -5,9 +5,11 @@ import styles from "./SellerSignup.module.css";
 import { useUser } from "../../Users/UserContext";
 import { baseURL } from "../../config";
 import { Link } from "react-router-dom";
+import { useProfile } from "../../Users/ProfileContext";
 
 function SellerForm() {
   const { user } = useUser();
+  const { refreshProfile } = useProfile();
   const navigate = useNavigate();
 
   const [shopName, setShopName] = useState("");
@@ -79,7 +81,8 @@ function SellerForm() {
         shop_banner: shop_banner_base64,
       });
 
-      setShowSuccess(true); 
+      await refreshProfile();
+      setShowSuccess(true);
       setTimeout(() => {
         setShowSuccess(false);
         navigate("/profile");
@@ -177,9 +180,9 @@ function SellerForm() {
         )}
 
         <p className={styles["instruction-text"]}>
-          Please email us a scanned version of your South African ID or passport.
-          Place your username and shop name in the subject of the email for it to
-          be reviewed.
+          Please email us a scanned version of your South African ID or
+          passport. Place your username and shop name in the subject of the
+          email for it to be reviewed.
         </p>
         <button type="submit">Create Seller Account</button>
         <Link to="/Profile" className={styles["verification-link"]}></Link>

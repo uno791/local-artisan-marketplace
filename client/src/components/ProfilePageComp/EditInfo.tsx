@@ -1,3 +1,4 @@
+// src/components/ProfilePageComp/EditInfo.tsx
 import { useEffect, useState } from "react";
 import "react-phone-number-input/style.css";
 import PhoneInput, { isValidPhoneNumber } from "react-phone-number-input";
@@ -9,83 +10,80 @@ type Props = {
   username: string;
   postalCode: string;
   phone: string | undefined;
-  setUsername: (value: string) => void;
-  setPostalCode: (value: string) => void;
-  setPhone: (value: string) => void;
   onClose: () => void;
+  refreshProfile: () => Promise<void>;
 };
 
-function EditInfo(props: Props) {
-  const [renderKey, setRenderKey] = useState(0);
+export default function EditInfo({
+  username,
+  postalCode,
+  phone,
+  onClose,
+  refreshProfile,
+}: Props) {
+  const [newPostalCode, setNewPostalCode] = useState(postalCode);
+  const [newPhone, setNewPhone] = useState(phone || "");
+  const [errors, setErrors] = useState<{ postalCode?: string; phone?: string }>(
+    {}
+  );
   const [loading, setLoading] = useState(false);
-  const [errors, setErrors] = useState<{ postalCode?: string; phone?: string }>({});
-  const [infoSaved, setInfoSaved] = useState(false); // NEW
+  const [infoSaved, setInfoSaved] = useState(false);
 
+  // hack for PhoneInput re-render bug
+  const [renderKey, setRenderKey] = useState(0);
   useEffect(() => {
-    const timeout = setTimeout(() => {
-      setRenderKey((prev) => prev + 1);
-    }, 0);
-    return () => clearTimeout(timeout);
+    const t = setTimeout(() => setRenderKey((k) => k + 1), 0);
+    return () => clearTimeout(t);
   }, []);
 
-  async function handleSubmit(event: React.FormEvent) {
-    event.preventDefault();
+  async function handleSubmit(e: React.FormEvent) {
+    e.preventDefault();
     setLoading(true);
     setErrors({});
 
-    const newErrors: typeof errors = {};
-
-    if (!/^\d{4,10}$/.test(props.postalCode)) {
-      newErrors.postalCode = "Postal code must be 4-10 digits.";
+    const errs: typeof errors = {};
+    if (!/^\d{4,10}$/.test(newPostalCode)) {
+      errs.postalCode = "Postal code must be 4–10 digits.";
     }
-
-    if (!props.phone || !isValidPhoneNumber(props.phone)) {
-      newErrors.phone = "Enter a valid international phone number.";
+    if (!newPhone || !isValidPhoneNumber(newPhone)) {
+      errs.phone = "Enter a valid international phone number.";
     }
-
-    if (Object.keys(newErrors).length > 0) {
-      setErrors(newErrors);
+    if (Object.keys(errs).length) {
+      setErrors(errs);
       setLoading(false);
       return;
     }
 
     try {
-      await axios.put(`${baseURL}/api/users/${props.username}`, {
-        postal_code: props.postalCode,
-        phone_no: props.phone,
+      await axios.put(`${baseURL}/api/users/${username}`, {
+        postal_code: newPostalCode,
+        phone_no: newPhone,
       });
 
-      setInfoSaved(true); // NEW
-      setTimeout(() => {
-        props.onClose();
-      }, 2000);
-    } catch (error) {
-      console.error(error);
-      // No alert
+      setInfoSaved(true);
+      await refreshProfile(); // ← only here
+
+      // keep the success message visible briefly
+      setTimeout(onClose, 1500);
+    } catch (err) {
+      console.error("❌ Error saving profile info:", err);
     } finally {
       setLoading(false);
     }
   }
 
   return (
-    <section className={styles["modal-backdrop"]}>
-      <section className={styles.modal}>
-        <header>
-          <h2>Edit Info</h2>
-        </header>
-
+    <div className={styles["modal-backdrop"]}>
+      <div className={styles.modal}>
+        <h2>Edit Info</h2>
         <form onSubmit={handleSubmit}>
           <label>Username</label>
-          <input
-            value={props.username}
-            onChange={(e) => props.setUsername(e.target.value)}
-            disabled
-          />
+          <input value={username} disabled />
 
           <label>Postal Code</label>
           <input
-            value={props.postalCode}
-            onChange={(e) => props.setPostalCode(e.target.value)}
+            value={newPostalCode}
+            onChange={(e) => setNewPostalCode(e.target.value)}
             className={errors.postalCode ? styles["input-error"] : ""}
           />
           {errors.postalCode && (
@@ -97,41 +95,41 @@ function EditInfo(props: Props) {
             key={renderKey}
             placeholder="Enter phone number"
             defaultCountry="ZA"
-            value={props.phone}
-            international={true}
+            value={newPhone}
+            international
             countryCallingCodeEditable={false}
-            onChange={(value) => props.setPhone(value || "")}
+            onChange={(v) => setNewPhone(v || "")}
           />
           {errors.phone && (
             <p className={styles["error-text"]}>{errors.phone}</p>
           )}
 
-          <section className={styles["button-row"]}>
+          <div className={styles["button-row"]}>
             <button
               type="submit"
               className={styles["apply-btn"]}
               disabled={loading}
             >
-              {loading ? "Saving..." : "Apply Changes"}
+              {loading ? "Saving…" : "Apply Changes"}
             </button>
             <button
               type="button"
-              onClick={props.onClose}
               className={styles["cancel-btn"]}
+              onClick={onClose}
             >
               Cancel
             </button>
-          </section>
+          </div>
 
           {infoSaved && (
-            <p style={{ marginTop: "1rem", color: "green", textAlign: "center" }}>
+            <p
+              style={{ color: "green", textAlign: "center", marginTop: "1rem" }}
+            >
               Info updated successfully.
             </p>
           )}
         </form>
-      </section>
-    </section>
+      </div>
+    </div>
   );
 }
-
-export default EditInfo;

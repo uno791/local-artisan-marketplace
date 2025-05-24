@@ -12,7 +12,7 @@ app.use(express.json());
 const PORT = process.env.PORT || 3000;
 
 app.get("/", (req, res) => {
-  res.send("✅ API is live and running!");
+  res.send("API is live and running!");
 });
 
 app.get("/status", (req, res) => {
@@ -43,7 +43,7 @@ app.get("/artisan/:username", async (req, res) => {
 
     res.json(result.recordset[0]);
   } catch (err) {
-    console.error("❌ Failed to fetch artisan:", err);
+    console.error("Failed to fetch artisan:", err);
     res
       .status(500)
       .json({ error: "Failed to fetch artisan", details: err.message });
@@ -58,7 +58,7 @@ app.get("/users", async (req, res) => {
 
     res.json(result.recordset);
   } catch (err) {
-    console.error("❌ Failed to fetch users:", err);
+    console.error("Failed to fetch users:", err);
     res.status(500).json({ error: "DB query failed", details: err.message });
   }
 });
@@ -95,7 +95,7 @@ app.get("/allproducts", async (req, res) => {
     await pool.close();
     res.json(result.recordset);
   } catch (err) {
-    console.error("❌ Failed to fetch products:", err);
+    console.error("Failed to fetch products:", err);
     res.status(500).json({ error: "DB query failed", details: err.message });
   }
 });
@@ -156,7 +156,7 @@ app.get("/seller-dashboard", async (req, res) => {
 
     res.json({ artisan, products });
   } catch (err) {
-    console.error("❌ Failed to fetch seller dashboard:", err);
+    console.error("Failed to fetch seller dashboard:", err);
     res.status(500).json({ error: "Server error", details: err.message });
   }
 });
@@ -237,7 +237,7 @@ app.post("/track-click-main", async (req, res) => {
       `);
 
     if (tagQuery.recordset.length === 0) {
-      console.warn(`⚠️ BO: No MAIN tags found for productId ${productId}`);
+      console.warn(`BO: No MAIN tags found for productId ${productId}`);
     }
 
     for (const row of tagQuery.recordset) {
@@ -245,7 +245,7 @@ app.post("/track-click-main", async (req, res) => {
       const table = "main_tag_scores";
       const column = "category_id";
 
-      console.log(`⏺️ Attempting main tag_id = ${tagId} for user ${username}`);
+      console.log(`Attempting main tag_id = ${tagId} for user ${username}`);
 
       try {
         const exists = await pool
@@ -267,7 +267,7 @@ app.post("/track-click-main", async (req, res) => {
               WHERE username = @username AND ${column} = @${column}
             `);
 
-          console.log(`✅ Updated MAIN tag ${tagId} for ${username}`);
+          console.log(`Updated MAIN tag ${tagId} for ${username}`);
         } else {
           await pool
             .request()
@@ -280,7 +280,7 @@ app.post("/track-click-main", async (req, res) => {
               VALUES (@username, @${column}, @click_count, @last_clicked, @created_at)
             `);
 
-          console.log(`➕ Inserted MAIN tag ${tagId} for ${username}`);
+          console.log(`Inserted MAIN tag ${tagId} for ${username}`);
         }
       } catch (innerErr) {
         console.error(
@@ -292,7 +292,7 @@ app.post("/track-click-main", async (req, res) => {
 
     res.status(200).json({ message: "Main tag clicks tracked successfully." });
   } catch (err) {
-    console.error("🔥 BO: Error tracking MAIN click:", err);
+    console.error("BO: Error tracking MAIN click:", err);
     res.status(500).json({ error: "Failed to track MAIN click." });
   }
 });
@@ -530,7 +530,7 @@ app.get("/homepage-recommendations", async (req, res) => {
   }
 
   try {
-    console.log("📥 Getting homepage recommendations for:", username); // BO
+    console.log("Getting homepage recommendations for:", username); // BO
 
     const pool = await connectDB();
     const now = new Date();
@@ -547,8 +547,8 @@ app.get("/homepage-recommendations", async (req, res) => {
         WHERE username = @username
       `);
 
-    console.log("📊 main_tag_scores:", mainTags.recordset); // BO
-    console.log("📊 minor_tag_scores:", minorTags.recordset); // BO
+    console.log("main_tag_scores:", mainTags.recordset); // BO
+    console.log("minor_tag_scores:", minorTags.recordset); // BO
 
     // Helper: compute decay score
     function getDaysSince(date) {
@@ -625,7 +625,7 @@ app.get("/homepage-recommendations", async (req, res) => {
       }
     }
 
-    pool.close();
+    await pool.close();
     res.status(200).json(result);
   } catch (err) {
     console.error("BO: Error generating homepage recommendations:", err);
@@ -643,15 +643,13 @@ app.get("/main-categories", async (req, res) => {
         "SELECT category_name FROM dbo.main_categories ORDER BY category_name"
       );
 
-
     // return as a simple array of strings
     res.json(result.recordset.map((r) => r.category_name));
   } catch (err) {
-    console.error("❌ Failed to fetch main categories:", err);
+    console.error("Failed to fetch main categories:", err);
     res.status(500).json({ error: "DB query failed", details: err.message });
   }
 });
-
 
 // GET all minor categories
 app.get("/minor-categories", async (req, res) => {
@@ -665,7 +663,7 @@ app.get("/minor-categories", async (req, res) => {
     await pool.close();
     res.json(result.recordset.map((r) => r.minor_category_name));
   } catch (err) {
-    console.error("❌ Failed to fetch minor categories:", err);
+    console.error("Failed to fetch minor categories:", err);
     res.status(500).json({ error: "DB query failed", details: err.message });
   }
 });
@@ -708,18 +706,15 @@ app.get("/product/:id", async (req, res) => {
     res.json({
       ...product,
       tags,
-      product_image: product.image_url, // ✅ This is the key line
+      product_image: product.image_url,
     });
   } catch (err) {
     console.error("❌ Failed to fetch product:", err);
     res.status(500).json({ error: "DB query failed", details: err.message });
   } finally {
-    
-    if (pool) await pool.close();// ✅ Always close pool connection to prevent leaks
+    if (pool) await pool.close();
   }
 });
-
-
 
 // Backend route: Add to app.js
 
@@ -765,7 +760,7 @@ app.post("/recommend-by-tags", async (req, res) => {
     await pool.close();
     res.json(recommendedProducts.slice(0, limitPerTag * tags.length));
   } catch (err) {
-    console.error("❌ Failed to fetch recommendations:", err);
+    console.error("Failed to fetch recommendations:", err);
     res
       .status(500)
       .json({ error: "Recommendation fetch failed.", details: err.message });
@@ -803,7 +798,7 @@ app.get("/penartisans", async (req, res) => {
 
     res.json(result.recordset);
   } catch (err) {
-    console.error("❌ Failed to fetch users:", err);
+    console.error("Failed to fetch users:", err);
     res.status(500).json({ error: "DB query failed", details: err.message });
   }
 });
@@ -899,7 +894,7 @@ app.post("/add-to-cart", async (req, res) => {
     await pool.close();
     return res.json({ message: "Item added to cart" });
   } catch (err) {
-    console.error("❌ Failed to add to cart:", err);
+    console.error("Failed to add to cart:", err);
     res.status(500).json({
       error: "Server error",
       message: err.message,
@@ -930,7 +925,7 @@ app.get("/cart/:username", async (req, res) => {
     await pool.close();
     res.json(result.recordset);
   } catch (err) {
-    console.error("❌ Failed to fetch cart items:", err);
+    console.error("Failed to fetch cart items:", err);
     res.status(500).json({ error: "DB query failed", details: err.message });
   }
 });
@@ -953,7 +948,7 @@ app.put("/upd-cart-item", async (req, res) => {
 
     res.json({ message: "Quantity updated successfully." });
   } catch (err) {
-    console.error("❌ Failed to update cart quantity:", err);
+    console.error("Failed to update cart quantity:", err);
     res
       .status(500)
       .json({ error: "Failed to update quantity", details: err.message });
@@ -977,7 +972,7 @@ app.post("/check-user", async (req, res) => {
       res.json({ exists: false });
     }
   } catch (err) {
-    console.error("❌ Failed to check user:", err);
+    console.error("Failed to check user:", err);
     res.status(500).json({ error: "DB query failed", details: err.message });
   }
 });
@@ -1002,9 +997,9 @@ app.post("/adduser", async (req, res) => {
       `);
 
     await pool.close();
-    res.json({ message: "✅ User added successfully" });
+    res.json({ message: "User added successfully" });
   } catch (err) {
-    console.error("❌ Failed to insert user:", err);
+    console.error("Failed to insert user:", err);
     res
       .status(500)
       .json({ error: "Database insert failed", details: err.message });
@@ -1085,7 +1080,7 @@ app.get("/products/search", async (req, res) => {
 
     res.json(result.recordset);
   } catch (err) {
-    console.error("❌ Error in /products/search:", err);
+    console.error("Error in /products/search:", err);
     res
       .status(500)
       .json({ error: "Error searching products", details: err.message });
@@ -1127,7 +1122,7 @@ app.delete("/deleteartisan/:username", async (req, res) => {
 
     res.json({ message: `Deleted artisan with username: ${username}` });
   } catch (err) {
-    console.error("❌ Failed to delete artisan:", err);
+    console.error("Failed to delete artisan:", err);
     res.status(500).json({ error: "DB deletion failed", details: err.message });
   }
 });
@@ -1148,7 +1143,7 @@ app.delete("/rem-cart-item", async (req, res) => {
 
     res.json({ message: "Item removed from cart." });
   } catch (err) {
-    console.error("❌ Failed to delete cart item:", err);
+    console.error("Failed to delete cart item:", err);
     res
       .status(500)
       .json({ error: "Failed to delete cart item", details: err.message });
@@ -1171,7 +1166,7 @@ app.put("/verifyartisan/:username", async (req, res) => {
 
     res.json({ message: `Verified artisan with username: ${username}` });
   } catch (err) {
-    console.error("❌ Failed to verify artisan:", err);
+    console.error("Failed to verify artisan:", err);
     res.status(500).json({ error: "DB update failed", details: err.message });
   }
 });
@@ -1280,7 +1275,7 @@ app.get("/seller-top-products", async (req, res) => {
 
     res.json({ productNames, unitsSold });
   } catch (err) {
-    console.error("❌ /seller-top-products error:", err);
+    console.error("/seller-top-products error:", err);
     res.status(500).json({ error: "Server error", details: err.message });
   }
 });
@@ -1307,7 +1302,7 @@ app.put("/api/users/:username", async (req, res) => {
     await pool.close();
     res.json({ message: "User info updated successfully" });
   } catch (err) {
-    console.error("❌ Error updating user info:", err);
+    console.error("Error updating user info:", err);
     res.status(500).json({ error: "Failed to update user info" });
   }
 });
@@ -1333,13 +1328,14 @@ app.put("/api/users/:username", async (req, res) => {
     await pool.close();
     res.json({ message: "User info updated successfully" });
   } catch (err) {
-    console.error("❌ Error updating user info:", err);
+    console.error("Error updating user info:", err);
     res.status(500).json({ error: "Failed to update user info" });
   }
 });
 // POST /api/artisans
 app.post("/createartisan", async (req, res) => {
-  const { username, shop_name, bio, shop_address, shop_pfp, shop_banner } = req.body;
+  const { username, shop_name, bio, shop_address, shop_pfp, shop_banner } =
+    req.body;
 
   try {
     const pool = await connectDB();
@@ -1350,19 +1346,17 @@ app.post("/createartisan", async (req, res) => {
       .input("bio", bio)
       .input("shop_address", shop_address)
       .input("shop_pfp", shop_pfp)
-      .input("shop_banner", shop_banner)
-      .query(`
+      .input("shop_banner", shop_banner).query(`
         INSERT INTO dbo.artisans (username, shop_name, bio, shop_address, shop_pfp, shop_banner, join_date)
         VALUES (@username, @shop_name, @bio, @shop_address, @shop_pfp, @shop_banner, GETDATE())
       `);
     await pool.close();
     res.status(201).json({ message: "Artisan created successfully" });
   } catch (err) {
-    console.error("❌ Error inserting artisan:", err);
+    console.error("Error inserting artisan:", err);
     res.status(500).json({ error: "Failed to create artisan" });
   }
 });
-
 
 app.post("/addproduct", async (req, res) => {
   const {
@@ -1428,7 +1422,7 @@ app.post("/addproduct", async (req, res) => {
           VALUES (@product_id, @category_id)
         `);
     } else {
-      console.warn(`⚠️ No matching main category for: ${typeOfArt}`);
+      console.warn(`No matching main category for: ${typeOfArt}`);
     }
 
     // Step 3: Handle and link tags (minor categories)
@@ -1465,9 +1459,9 @@ app.post("/addproduct", async (req, res) => {
     await pool.close();
     res
       .status(201)
-      .json({ message: "✅ Product and categories added successfully" });
+      .json({ message: "Product and categories added successfully" });
   } catch (err) {
-    console.error("❌ Error inserting product:", err);
+    console.error("Error inserting product:", err);
     res
       .status(500)
       .json({ error: "Failed to add product", details: err.message });
@@ -1486,7 +1480,7 @@ app.put("/editproduct/:id", async (req, res) => {
     details,
     typeOfArt,
     tags,
-    product_image, // ✅ New field
+    product_image,
   } = req.body;
 
   try {
@@ -1504,8 +1498,7 @@ app.put("/editproduct/:id", async (req, res) => {
       .input("height", height)
       .input("weight", weight)
       .input("details", details)
-      .input("product_image", product_image) // ✅ New line
-      .query(`
+      .input("product_image", product_image).query(`
         UPDATE dbo.products
         SET 
           product_name = @product_name,
@@ -1586,9 +1579,9 @@ app.put("/editproduct/:id", async (req, res) => {
     }
 
     await pool.close();
-    res.json({ message: "✅ Product updated successfully" });
+    res.json({ message: "Product updated successfully" });
   } catch (err) {
-    console.error("❌ Failed to update product:", err);
+    console.error("Failed to update product:", err);
     res.status(500).json({ error: "Update failed", details: err.message });
   }
 });
@@ -1610,9 +1603,9 @@ app.put("/api/user-profile-image", async (req, res) => {
       `);
     await pool.close();
 
-    res.json({ message: "✅ Profile image updated successfully" });
+    res.json({ message: "Profile image updated successfully" });
   } catch (err) {
-    console.error("❌ Failed to update user profile image:", err);
+    console.error("Failed to update user profile image:", err);
     res.status(500).json({ error: "DB update failed", details: err.message });
   }
 });
@@ -1683,7 +1676,7 @@ app.post("/checkout", async (req, res) => {
     await pool.close();
     res.status(200).json({ message: "Order placed", orderId });
   } catch (err) {
-    console.error("❌ Checkout failed:", err);
+    console.error("Checkout failed:", err);
     res.status(500).json({ error: "Checkout failed", details: err.message });
   }
 });
@@ -1705,7 +1698,7 @@ app.get("/orders/:username", async (req, res) => {
     await pool.close();
     res.json(result.recordset);
   } catch (err) {
-    console.error("❌ Failed to fetch orders:", err);
+    console.error("Failed to fetch orders:", err);
     res.status(500).json({ error: "Could not fetch orders" });
   }
 });
@@ -1738,7 +1731,7 @@ app.get("/user-reports", async (req, res) => {
     await pool.close();
     res.json(result.recordset);
   } catch (err) {
-    console.error("❌ Failed to fetch user reports:", err);
+    console.error("Failed to fetch user reports:", err);
     res.status(500).json({ error: "DB query failed", details: err.message });
   }
 });
@@ -1765,7 +1758,7 @@ app.put("/update-report-status", async (req, res) => {
 
     res.json({ message: "Status updated successfully" });
   } catch (err) {
-    console.error("❌ Failed to update report status:", err);
+    console.error("Failed to update report status:", err);
     res.status(500).json({ error: "Server error", details: err.message });
   }
 });
@@ -1789,7 +1782,7 @@ app.post("/mark-product-kept", async (req, res) => {
     `);
 
     await pool.close();
-    res.json({ message: "✅ Product marked as kept and report completed." });
+    res.json({ message: "Product marked as kept and report completed." });
   } catch (err) {
     res.status(500).json({ error: "Update failed", details: err.message });
   }
@@ -1843,13 +1836,12 @@ app.delete("/delete-product/:id", async (req, res) => {
     `);
 
     await pool.close();
-    res.json({ message: "✅ Product and related records deleted." });
+    res.json({ message: "Product and related records deleted." });
   } catch (err) {
-    console.error("❌ Product deletion error:", err);
+    console.error("Product deletion error:", err);
     res.status(500).json({ error: "Delete failed", details: err.message });
   }
 });
-
 
 app.get("/seller-orders/:username", async (req, res) => {
   const { username } = req.params;
@@ -1875,7 +1867,7 @@ app.get("/seller-orders/:username", async (req, res) => {
     await pool.close();
     res.json(result.recordset);
   } catch (err) {
-    console.error("❌ Failed to fetch seller orders:", err);
+    console.error("Failed to fetch seller orders:", err);
     res.status(500).json({ error: "DB query failed", details: err.message });
   }
 });
@@ -1904,7 +1896,7 @@ app.put("/update-order-status", async (req, res) => {
 
     res.json({ message: "Order item status updated" });
   } catch (err) {
-    console.error("❌ Failed to update order item status:", err);
+    console.error("Failed to update order item status:", err);
     res.status(500).json({ error: "Update failed", details: err.message });
   }
 });
@@ -1927,11 +1919,13 @@ app.put("/update-artisan-image", async (req, res) => {
       .request()
       .input("username", username)
       .input("image", image)
-      .query(`UPDATE dbo.artisans SET ${field} = @image WHERE username = @username`);
+      .query(
+        `UPDATE dbo.artisans SET ${field} = @image WHERE username = @username`
+      );
     await pool.close();
-    res.json({ message: "✅ Image updated successfully" });
+    res.json({ message: "Image updated successfully" });
   } catch (err) {
-    console.error("❌ Failed to update artisan image:", err);
+    console.error("Failed to update artisan image:", err);
     res.status(500).json({ error: "Update failed", details: err.message });
   }
 });
@@ -1940,14 +1934,16 @@ app.put("/update-artisan-image", async (req, res) => {
 app.get("/reasons", async (req, res) => {
   try {
     const pool = await connectDB();
-    const result = await pool.request().query(
-      "SELECT reason_id, reason FROM dbo.reasons ORDER BY reason_id"
-    );
+    const result = await pool
+      .request()
+      .query("SELECT reason_id, reason FROM dbo.reasons ORDER BY reason_id");
     await pool.close();
     res.json(result.recordset);
   } catch (err) {
-    console.error("❌ Failed to fetch reasons:", err);
-    res.status(500).json({ error: "Failed to fetch reasons", details: err.message });
+    console.error("Failed to fetch reasons:", err);
+    res
+      .status(500)
+      .json({ error: "Failed to fetch reasons", details: err.message });
   }
 });
 
@@ -1974,8 +1970,7 @@ app.post("/user_reports", async (req, res) => {
       .input("seller_username", seller_username || null)
       .input("product_id", product_id ? Number(product_id) : null)
       .input("reason_id", Number(reason_id))
-      .input("details", details || null)
-      .query(`
+      .input("details", details || null).query(`
         INSERT INTO dbo.user_reports
           (reporterby_username, seller_username, product_id, reason_id, details)
         VALUES
@@ -1985,8 +1980,9 @@ app.post("/user_reports", async (req, res) => {
     await pool.close();
     res.status(201).json({ message: "Report submitted successfully" });
   } catch (err) {
-    console.error("❌ Failed to insert user report:", err);
-    res.status(500).json({ error: "Failed to submit report", details: err.message });
+    console.error("Failed to insert user report:", err);
+    res
+      .status(500)
+      .json({ error: "Failed to submit report", details: err.message });
   }
 });
-
