@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from "react";
 import styles from "./EditTagsButton.module.css";
 
-// props for setting initial tags, max tag limit, and confirm callback
 interface Props {
   tagLimit?: number;
   initialTags?: string[];
@@ -18,7 +17,7 @@ const EditTagsButton: React.FC<Props> = ({
   const [tags, setTags] = useState<string[]>([]);
   const [error, setError] = useState("");
 
-  // when popup opens, load initial tags and reset input
+  // When popup is opened, sync tags with initialTags
   useEffect(() => {
     if (isPopupOpen) {
       setTags(initialTags);
@@ -27,7 +26,6 @@ const EditTagsButton: React.FC<Props> = ({
     }
   }, [isPopupOpen, initialTags]);
 
-  // add a tag if valid and within limits
   const handleAddTag = () => {
     const trimmed = currentTag.trim();
 
@@ -48,38 +46,26 @@ const EditTagsButton: React.FC<Props> = ({
     setError("");
   };
 
-  // remove a tag and clear any error
   const handleRemoveTag = (tagToRemove: string) => {
-    setTags(tags.filter((tag) => tag !== tagToRemove));
-    setError("");
+    setTags(tags.filter(tag => tag !== tagToRemove));
+    setError(""); // clear error if removing lets user add again
   };
 
-  // confirm tags and close popup
   const handleConfirm = () => {
     if (onConfirm) onConfirm(tags);
     setIsPopupOpen(false);
   };
 
   return (
-    // tag editor button and popup
     <section className={styles.container}>
       <button className={styles.button} onClick={() => setIsPopupOpen(true)}>
         Edit Tags
       </button>
 
-      {/* popup with input and tag list */}
       {isPopupOpen && (
-        <section
-          className={styles.popupOverlay}
-          role="dialog"
-          aria-modal="true"
-        >
+        <section className={styles.popupOverlay} role="dialog" aria-modal="true">
           <section className={styles.popup}>
-            <h3>
-              please use short words to describe your artwork (max {tagLimit})
-            </h3>
-
-            {/* input row for adding a tag */}
+            <h3>Please use short words to describe your artwork (Max {tagLimit})</h3>
             <div className={styles.inputRow}>
               <input
                 type="text"
@@ -97,11 +83,7 @@ const EditTagsButton: React.FC<Props> = ({
                 Add
               </button>
             </div>
-
-            {/* show error if any */}
             {error && <p className={styles.error}>{error}</p>}
-
-            {/* list of current tags with remove buttons */}
             <ul className={styles.tagList}>
               {tags.map((tag, index) => (
                 <li key={index} className={styles.tagItem}>
@@ -116,8 +98,6 @@ const EditTagsButton: React.FC<Props> = ({
                 </li>
               ))}
             </ul>
-
-            {/* confirm and close button */}
             <button className={styles.confirmButton} onClick={handleConfirm}>
               Confirm
             </button>

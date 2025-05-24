@@ -8,9 +8,7 @@ function Footer() {
       <section className={styles.footerContent}>
         <aside className={styles.footerBranding}>
           <img src={logo} alt="Localish logo" className={styles.footerLogo} />
-          <p className={styles.footerDescription}>
-            Please buy our artwork items🥹
-          </p>
+          <p className={styles.footerDescription}>Please buy our artwork items🥹</p>
         </aside>
 
         <aside className={styles.footerSection}>
@@ -22,18 +20,10 @@ function Footer() {
 
         <aside className={styles.footerSection}>
           <h4 className={styles.footerHeading}>Quick Links</h4>
-          <p>
-            <Link to="/Home">Home</Link>
-          </p>
-          <p>
-            <Link to="/Profile">Profile</Link>
-          </p>
-          <p>
-            <Link to="/Cart">Cart</Link>
-          </p>
-          <p>
-            <Link to="/orders">View Orders</Link>
-          </p>
+          <p><Link to="/Home">Home</Link></p>
+          <p><Link to="/Profile">Profile</Link></p>
+          <p><Link to="/Cart">Cart</Link></p>
+          <p><Link to="/orders">View Orders</Link></p>
         </aside>
       </section>
 
@@ -45,3 +35,4 @@ function Footer() {
 }
 
 export default Footer;
+

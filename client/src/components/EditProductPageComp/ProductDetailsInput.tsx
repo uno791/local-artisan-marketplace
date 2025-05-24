@@ -1,7 +1,6 @@
 import React from "react";
 import styles from "./ProductDetailsInput.module.css";
 
-// props for description text and setter function
 interface Props {
   Details: string;
   setDetails: (details: string) => void;
@@ -9,14 +8,10 @@ interface Props {
 
 const ProductDetailsInput: React.FC<Props> = ({ Details, setDetails }) => {
   return (
-    // container for the product description input
     <section className={styles.container}>
-      {/* label for the textarea */}
       <label htmlFor="productDescription">
-        <strong>Edit Product Description:</strong>
-      </label>
-
-      {/* multiline textarea for entering description */}
+  <strong>Edit Product Description:</strong>
+</label>
       <textarea
         id="productDescription"
         rows={6}

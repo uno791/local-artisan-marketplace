@@ -33,27 +33,20 @@ const UserReportCard: React.FC<UserReportCardProps> = ({
   evidenceUrl,
   productId,
 }) => {
-  // state for report status and UI flags
   const [status, setStatus] = useState<number>(initialStatus);
   const [showEvidence, setShowEvidence] = useState(false);
   const [updating, setUpdating] = useState(false);
-  const [popup, setPopup] = useState<{ type: "error"; message: string } | null>(
-    null
-  );
+  const [popup, setPopup] = useState<{ type: "error"; message: string } | null>(null);
   const [actionCompleted, setActionCompleted] = useState(false);
 
-  // get label string for current status
   const label = statusToLabel[status] ?? "unknown";
 
-  // show error popup
   const showPopup = (type: "error", message: string) => {
     setPopup({ type, message });
   };
 
-  // close popup
   const closePopup = () => setPopup(null);
 
-  // update report status on backend
   const updateStatus = async (newStatus: number) => {
     setUpdating(true);
     try {
@@ -64,32 +57,29 @@ const UserReportCard: React.FC<UserReportCardProps> = ({
       });
       setStatus(newStatus);
     } catch (err) {
-      console.error("failed to update status:", err);
-      showPopup("error", "failed to update status.");
+      console.error("Failed to update status:", err);
+      showPopup("error", "Failed to update status.");
     } finally {
       setUpdating(false);
     }
   };
 
-  // advance status (pending -> investigating -> decision)
   const handleStatusAdvance = () => {
     const nextStatus = status === 0 ? 1 : status === 1 ? 2 : status;
     if (nextStatus !== status) updateStatus(nextStatus);
   };
 
-  // delete product and mark report complete
   const handleDeleteProduct = async () => {
     try {
       await axios.delete(`${baseURL}/delete-product/${productId}`);
       await updateStatus(3);
       setActionCompleted(true);
     } catch (err) {
-      console.error("error deleting product:", err);
-      showPopup("error", "failed to delete product.");
+      console.error("Error deleting product:", err);
+      showPopup("error", "Failed to delete product.");
     }
   };
 
-  // keep product and mark report complete
   const handleKeepProduct = async () => {
     try {
       await axios.post(`${baseURL}/mark-product-kept`, {
@@ -98,29 +88,31 @@ const UserReportCard: React.FC<UserReportCardProps> = ({
       await updateStatus(3);
       setActionCompleted(true);
     } catch (err) {
-      console.error("error keeping product:", err);
-      showPopup("error", "failed to keep product.");
+      console.error("Error keeping product:", err);
+      showPopup("error", "Failed to keep product.");
     }
   };
 
   return (
     <>
-      {/* error popup */}
       {popup && (
         <aside className={styles.popupOverlay} role="alert">
           <section className={styles.popup}>
-            <h2>❌ error</h2>
+            <h2>❌ Error</h2>
             <p>{popup.message}</p>
-            <button onClick={closePopup}>close</button>
+            <button onClick={closePopup}>Close</button>
           </section>
         </aside>
       )}
 
       <article className={styles.card}>
         <header className={styles.header}>
-          <h2 className={styles.title} role="heading">
-            {product && product.trim() !== "" ? product : "unknown product"}
-          </h2>
+          <h2
+  className={styles.title}
+  role="heading"
+>
+  {product && product.trim() !== "" ? product : "Unknown Product"}
+</h2>
 
           <p className={styles.statusInfo}>
             <span className={`${styles.status} ${styles[label]}`}>
@@ -130,80 +122,65 @@ const UserReportCard: React.FC<UserReportCardProps> = ({
           </p>
         </header>
 
-        {/* report summary details */}
-        <section className={styles.detailsGrid} aria-label="report summary">
+        <section className={styles.detailsGrid} aria-label="Report Summary">
           <dl>
-            <dt>reported by</dt>
+            <dt>Reported By</dt>
             <dd>{reporter}</dd>
-            <dt>seller</dt>
+            <dt>Seller</dt>
             <dd>{seller}</dd>
-            <dt>reason</dt>
+            <dt>Reason</dt>
             <dd>{reason}</dd>
           </dl>
         </section>
 
-        {/* detailed report */}
-        <section className={styles.detailsSection} aria-label="details">
-          <h3>details</h3>
+        <section className={styles.detailsSection} aria-label="Details">
+          <h3>Details</h3>
           <p>{details}</p>
         </section>
 
-        {/* evidence image or fallback text */}
         {showEvidence && (
           <figure className={styles.evidenceSection}>
-            <figcaption>
-              <strong>evidence</strong>
-            </figcaption>
+            <figcaption><strong>Evidence</strong></figcaption>
             {evidenceUrl ? (
               <img
                 src={evidenceUrl}
-                alt="evidence provided by reporter"
+                alt="Evidence provided by reporter"
                 className={styles.evidenceImage}
               />
             ) : (
-              <p>no evidence given</p>
+              <p>No evidence given</p>
             )}
           </figure>
         )}
 
-        {/* action buttons if report not completed */}
         {!actionCompleted && (
-          <footer className={styles.buttonRow} aria-label="actions">
-            {/* advance investigation buttons */}
+          <footer className={styles.buttonRow} aria-label="Actions">
             {status < 2 && (
               <button
                 className={`${styles.investigate} ${styles[`status-${label}`]}`}
                 onClick={handleStatusAdvance}
                 disabled={updating}
               >
-                {status === 0 ? "investigate" : "finish investigating"}
+                {status === 0 ? "Investigate" : "Finish Investigating"}
               </button>
             )}
 
-            {/* decision buttons */}
             {status === 2 && (
               <>
-                <button
-                  className={styles.investigate}
-                  onClick={handleDeleteProduct}
-                >
-                  delete product
+                <button className={styles.investigate} onClick={handleDeleteProduct}>
+                  Delete Product
                 </button>
-                <button
-                  className={styles.viewDetails}
-                  onClick={handleKeepProduct}
-                >
-                  keep product
+                <button className={styles.viewDetails} onClick={handleKeepProduct}>
+                  Keep Product
                 </button>
               </>
             )}
 
-            {/* toggle evidence view */}
             <button
               className={styles.viewDetails}
               onClick={() => setShowEvidence(!showEvidence)}
             >
-              {showEvidence ? "hide evidence" : "view evidence"}
+              {showEvidence ? "Hide Evidence" : "View Evidence"}
             </button>
           </footer>
         )}

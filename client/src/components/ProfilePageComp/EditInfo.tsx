@@ -5,7 +5,6 @@ import styles from "./Profile.module.css";
 import axios from "axios";
 import { baseURL } from "../../config";
 
-// props for editable user info
 type Props = {
   username: string;
   postalCode: string;
@@ -19,11 +18,8 @@ type Props = {
 function EditInfo(props: Props) {
   const [renderKey, setRenderKey] = useState(0);
   const [loading, setLoading] = useState(false);
-  const [errors, setErrors] = useState<{ postalCode?: string; phone?: string }>(
-    {}
-  );
+  const [errors, setErrors] = useState<{ postalCode?: string; phone?: string }>({});
 
-  // force rerender of phone input to reset it on modal open
   useEffect(() => {
     const timeout = setTimeout(() => {
       setRenderKey((prev) => prev + 1);
@@ -31,7 +27,6 @@ function EditInfo(props: Props) {
     return () => clearTimeout(timeout);
   }, []);
 
-  // handle form submission
   async function handleSubmit(event: React.FormEvent) {
     event.preventDefault();
     setLoading(true);
@@ -39,17 +34,14 @@ function EditInfo(props: Props) {
 
     const newErrors: typeof errors = {};
 
-    // validate postal code
     if (!/^\d{4,10}$/.test(props.postalCode)) {
       newErrors.postalCode = "Postal code must be 4-10 digits.";
     }
 
-    // validate phone number format
     if (!props.phone || !isValidPhoneNumber(props.phone)) {
       newErrors.phone = "Enter a valid international phone number.";
     }
 
-    // if errors exist, show them and stop submit
     if (Object.keys(newErrors).length > 0) {
       setErrors(newErrors);
       setLoading(false);
@@ -57,15 +49,14 @@ function EditInfo(props: Props) {
     }
 
     try {
-      // update user info
       await axios.put(`${baseURL}/api/users/${props.username}`, {
         postal_code: props.postalCode,
         phone_no: props.phone,
       });
-
-      // close modal on success
+      alert("✅ Info updated successfully!");
       props.onClose();
     } catch (error) {
+      alert("❌ Failed to update user info.");
       console.error(error);
     } finally {
       setLoading(false);
@@ -73,20 +64,18 @@ function EditInfo(props: Props) {
   }
 
   return (
-    // modal backdrop
     <section className={styles["modal-backdrop"]}>
       <section className={styles.modal}>
         <header>
           <h2>Edit Info</h2>
         </header>
 
-        {/* editable info form */}
         <form onSubmit={handleSubmit}>
           <label>Username</label>
           <input
             value={props.username}
             onChange={(e) => props.setUsername(e.target.value)}
-            disabled // can't change username
+            disabled // i turned off
           />
 
           <label>Postal Code</label>
@@ -113,7 +102,6 @@ function EditInfo(props: Props) {
             <p className={styles["error-text"]}>{errors.phone}</p>
           )}
 
-          {/* form action buttons */}
           <section className={styles["button-row"]}>
             <button
               type="submit"
@@ -137,3 +125,4 @@ function EditInfo(props: Props) {
 }
 
 export default EditInfo;
+

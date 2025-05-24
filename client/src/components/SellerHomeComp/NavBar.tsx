@@ -1,8 +1,10 @@
 import styles from "./NavBar.module.css";
 import { NavLink } from "react-router-dom";
+// import logo from "../../assets/localish-logo.png";
+// import {Logo} from "../WelcomePageComp/Logo";
+
 import { FaHome, FaChartBar, FaBoxOpen, FaSignOutAlt } from "react-icons/fa";
 
-// define nav items for seller dashboard
 const navItems = [
   { name: "Home", path: "/SellerHome", icon: <FaHome /> },
   { name: "Stats", path: "/SellerStats", icon: <FaChartBar /> },
@@ -12,18 +14,14 @@ const navItems = [
 
 function NavBar() {
   return (
-    // header container for the nav
     <header className={styles.navbar}>
       <nav className={styles.navbarInner}>
-        {/* logo with link to landing page */}
         <a href="/Home" className={styles.navbarLogo}>
           <img
             src="https://cdn.builder.io/api/v1/image/assets/TEMP/3ce563473ae3143012b658856f2516018aeee3a0"
-            alt="localish logo"
+            alt="Localish logo"
           />
         </a>
-
-        {/* navigation links */}
         <ul className={styles.navbarLinks}>
           {navItems.map((item) => (
             <li key={item.name}>

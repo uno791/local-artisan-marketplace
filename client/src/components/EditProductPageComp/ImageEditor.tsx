@@ -3,26 +3,19 @@
 import React, { useRef } from "react";
 import styles from "./ImageEditor.module.css";
 
-// props include the image and function to update it
 interface ImageEditorProps {
   productId: string | undefined;
   initialImage: string;
   setImage: (img: string) => void;
 }
 
-const ImageEditor: React.FC<ImageEditorProps> = ({
-  initialImage,
-  setImage,
-}) => {
-  // ref to hidden file input
+const ImageEditor: React.FC<ImageEditorProps> = ({ initialImage, setImage }) => {
   const fileInputRef = useRef<HTMLInputElement>(null);
 
-  // opens native file picker
   const openFilePicker = () => {
     fileInputRef.current?.click();
   };
 
-  // reads selected file and converts to base64
   const handleImageChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     const file = event.target.files?.[0];
     if (!file) return;
@@ -36,7 +29,6 @@ const ImageEditor: React.FC<ImageEditorProps> = ({
   };
 
   return (
-    // image preview with button to change it
     <section className={styles.container}>
       <figure>
         <img
@@ -54,8 +46,6 @@ const ImageEditor: React.FC<ImageEditorProps> = ({
           </button>
         </figcaption>
       </figure>
-
-      {/* hidden file input triggered by button */}
       <input
         type="file"
         accept="image/*"

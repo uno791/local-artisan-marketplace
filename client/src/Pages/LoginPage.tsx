@@ -8,18 +8,11 @@ import { useNavigate } from "react-router-dom";
 
 export default function LoginPage() {
   const [errorMessage, setErrorMessage] = React.useState<string | null>(null);
-  const [successMessage, setSuccessMessage] = React.useState<string | null>(
-    null
-  );
-  const [prankTarget, setPrankTarget] = React.useState<
-    "/Home" | "/AdminDashboard"
-  >("/Home");
+  const [successMessage, setSuccessMessage] = React.useState<string | null>(null);
+  const [prankTarget, setPrankTarget] = React.useState<"/Home" | "/AdminDashboard">("/Home");
 
   const [showPrankModal, setShowPrankModal] = React.useState(false);
-  const [yesBtnStyle, setYesBtnStyle] = React.useState({
-    top: "50%",
-    left: "20%",
-  });
+  const [yesBtnStyle, setYesBtnStyle] = React.useState({ top: "50%", left: "20%" });
 
   const navigate = useNavigate();
 
@@ -48,22 +41,14 @@ export default function LoginPage() {
         <SignUpPrompt />
 
         {errorMessage && (
-          <section
-            className={styles.popupError}
-            style={{ zIndex: 1000 }}
-            aria-live="assertive"
-          >
+          <section className={styles.popupError} style={{ zIndex: 1000 }} aria-live="assertive">
             <p>{errorMessage}</p>
             <button onClick={() => setErrorMessage(null)}>Close</button>
           </section>
         )}
 
         {successMessage && (
-          <section
-            className={styles.popupSuccess}
-            style={{ zIndex: 1000 }}
-            aria-live="polite"
-          >
+          <section className={styles.popupSuccess} style={{ zIndex: 1000 }} aria-live="polite">
             <p>{successMessage}</p>
             <button
               onClick={() => {
@@ -112,3 +97,4 @@ export default function LoginPage() {
     </main>
   );
 }
+

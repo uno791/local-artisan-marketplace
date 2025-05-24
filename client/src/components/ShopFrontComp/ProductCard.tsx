@@ -11,14 +11,12 @@ type Props = {
 function ProductCard({ title, artist, price, category, image }: Props) {
   return (
     <section className={styles.card}>
-      {/* image section */}
       <section className={styles.cardImageWrapper}>
         {image ? (
           <img src={image} alt={title} className={styles.cardImage} />
         ) : null}
       </section>
 
-      {/* product info section */}
       <section className={styles.cardInfo}>
         <p className={styles.cardTitle}>{title}</p>
         <p className={styles.cardArtist}>{artist}</p>
@@ -30,3 +28,4 @@ function ProductCard({ title, artist, price, category, image }: Props) {
 }
 
 export default ProductCard;
+

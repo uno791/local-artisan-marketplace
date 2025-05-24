@@ -17,13 +17,12 @@ interface Product {
 }
 
 function Home() {
-  // state to hold recommended products for display
   const [gridProducts, setProducts] = useState<Product[]>([]);
 
-  // get current logged-in user from context
+  // BO: Access username from context
   const { user } = useUser();
 
-  // fetch recommended products when username is available or changes
+  // BO: Fetch recommended products when username is ready
   useEffect(() => {
     if (!user?.username) return;
 
@@ -40,7 +39,7 @@ function Home() {
       );
   }, [user?.username]);
 
-  // function to track clicks on products for analytics
+  // BO: Track product click
   const handleProductClick = async (productId: number) => {
     if (!user?.username) return;
     try {

@@ -9,7 +9,6 @@ interface SellerCardProps {
   onReject: () => void;
 }
 
-// text labels for seller verification statuses
 const statusText = ["Pending", "Reviewing", "Approved", "Rejected"];
 
 const SellerCard: React.FC<SellerCardProps> = ({
@@ -29,8 +28,8 @@ const SellerCard: React.FC<SellerCardProps> = ({
   } = seller;
 
   return (
-    <article className={styles.card}>
-      <section className={styles.content}>
+    <div className={styles.card}>
+      <div className={styles.content}>
         <img src={shop_pfp} alt="Shop Profile" className={styles.avatar} />
         <h3>{shop_name}</h3>
         <p>
@@ -44,29 +43,28 @@ const SellerCard: React.FC<SellerCardProps> = ({
           <strong>Date:</strong> {create_date}
         </p>
         <p data-testid="seller-status">
-          <strong>Status:</strong> {statusText[verified]}
-        </p>
+  <strong>Status:</strong> {statusText[verified]}
+</p>
 
-        {/* show start button if status is pending */}
+
         {verified === 0 && (
           <button className={styles.reviewBtn} onClick={onStartReview}>
             Start Review
           </button>
         )}
 
-        {/* show approve and reject options if status is reviewing */}
         {verified === 1 && (
-          <footer className={styles.actionGroup}>
+          <div className={styles.actionGroup}>
             <button className={styles.approveBtn} onClick={onApprove}>
               Approve
             </button>
             <button className={styles.rejectBtn} onClick={onReject}>
               Reject
             </button>
-          </footer>
+          </div>
         )}
-      </section>
-    </article>
+      </div>
+    </div>
   );
 };
 

@@ -5,7 +5,6 @@ import Bio from "./ProductInfoSubComp/Bio";
 import DeliveryOption from "./ProductInfoSubComp/DeliveryOption";
 import AddToCart from "./ProductInfoSubComp/AddToCart";
 
-// props include name, price, description, and full product object
 interface ProductInfoProps {
   name: string;
   price: number;
@@ -33,22 +32,14 @@ function ProductInfo({
   product,
 }: ProductInfoProps) {
   return (
-    // main container for product information
     <section className={styles["product-info"]}>
-      {/* product name */}
       <Heading name={name} />
-
-      {/* price display */}
       <Price price={price} />
-
-      {/* product description or bio */}
       <Bio description={description} />
-
-      {/* delivery or pickup selector */}
       <DeliveryOption />
 
-      {/* static product dimension info */}
-      <section className={styles["product-details"]}>
+      {/* ✅ Product Dimensions (merged into Product Details section) */}
+      <div className={styles["product-details"]}>
         <h3>Product Details</h3>
         <ul>
           <li>
@@ -61,9 +52,8 @@ function ProductInfo({
             <strong>Weight:</strong> {product.weight} kg
           </li>
         </ul>
-      </section>
+      </div>
 
-      {/* add to cart button */}
       <AddToCart product={product} />
     </section>
   );
