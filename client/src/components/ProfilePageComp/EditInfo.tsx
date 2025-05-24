@@ -5,7 +5,6 @@ import styles from "./Profile.module.css";
 import axios from "axios";
 import { baseURL } from "../../config";
 
-// props interface
 type Props = {
   username: string;
   postalCode: string;
@@ -16,13 +15,11 @@ type Props = {
   onClose: () => void;
 };
 
-// component definition
 function EditInfo(props: Props) {
   const [renderKey, setRenderKey] = useState(0);
   const [loading, setLoading] = useState(false);
-  const [errors, setErrors] = useState<{ postalCode?: string; phone?: string }>(
-    {}
-  );
+  const [errors, setErrors] = useState<{ postalCode?: string; phone?: string }>({});
+  const [infoSaved, setInfoSaved] = useState(false); // NEW
 
   useEffect(() => {
     const timeout = setTimeout(() => {
@@ -31,7 +28,6 @@ function EditInfo(props: Props) {
     return () => clearTimeout(timeout);
   }, []);
 
-  // handle form submit
   async function handleSubmit(event: React.FormEvent) {
     event.preventDefault();
     setLoading(true);
@@ -58,11 +54,14 @@ function EditInfo(props: Props) {
         postal_code: props.postalCode,
         phone_no: props.phone,
       });
-      alert("✅ Info updated successfully!");
-      props.onClose();
+
+      setInfoSaved(true); // NEW
+      setTimeout(() => {
+        props.onClose();
+      }, 2000);
     } catch (error) {
-      alert("❌ Failed to update user info.");
       console.error(error);
+      // No alert
     } finally {
       setLoading(false);
     }
@@ -123,6 +122,12 @@ function EditInfo(props: Props) {
               Cancel
             </button>
           </section>
+
+          {infoSaved && (
+            <p style={{ marginTop: "1rem", color: "green", textAlign: "center" }}>
+              Info updated successfully.
+            </p>
+          )}
         </form>
       </section>
     </section>

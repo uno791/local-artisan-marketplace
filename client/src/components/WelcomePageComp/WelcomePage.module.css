@@ -352,15 +352,23 @@
 
 .faqSection details {
   width: 100%;
+  max-width: 800px; /* or whatever width fits your layout */
+  margin: 0 auto 16px auto; /* center horizontally */
   background-color: #f6ebd9;
-  margin-bottom: 16px;
   border-radius: 12px;
   padding: 12px 20px;
   box-shadow: 0 2px 8px rgb(0 0 0 / 0.1);
   cursor: pointer;
   overflow: hidden;
   transition: background-color 0.3s ease;
+  box-sizing: border-box;
+  word-wrap: break-word; /* ensures long words don't overflow */
 }
+.faqSection details p {
+  word-break: break-word;
+}
+
+
 
 /* Hide default arrow */
 .faqSection summary {
