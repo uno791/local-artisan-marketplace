@@ -1,11 +1,11 @@
 import styles from "./ShopFront.module.css";
 
 type Props = {
-  logo?: string;
-  name: string;
-  bio?: string;
-  banner?: string;
-  onReportClick?: () => void;
+  logo?: string; // optional logo image url
+  name: string; // required shop name
+  bio?: string; // optional bio/description
+  banner?: string; // optional banner background image
+  onReportClick?: () => void; // optional report handler
 };
 
 function Header({ logo, name, bio, banner, onReportClick }: Props) {
