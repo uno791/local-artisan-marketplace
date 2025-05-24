@@ -1,13 +1,12 @@
-// import styles and modules
+// Home.tsx
 import styles from "../components/HomePageComp/Home.module.css";
 import { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import axios from "axios";
 import { baseURL } from "../config";
 import { Logo } from "../components/HomePageComp/Localish-ProductImage";
-import { useUser } from "../Users/UserContext"; // access current user
+import { useUser } from "../Users/UserContext";
 
-// product type definition
 interface Product {
   username: string;
   product_id: number;
@@ -17,15 +16,10 @@ interface Product {
   image_url: string;
 }
 
-// main component for homepage
 function Home() {
-  // store fetched products
   const [gridProducts, setProducts] = useState<Product[]>([]);
-
-  // get user from context
   const { user } = useUser();
 
-  // fetch personalized product recommendations
   useEffect(() => {
     if (!user?.username) return;
 
@@ -33,16 +27,37 @@ function Home() {
       .get(`${baseURL}/homepage-recommendations`, {
         params: { username: user.username },
       })
-      .then((res) => {
-        console.log("🔍 Recommended products = ", res.data);
-        setProducts(res.data);
-      })
-      .catch((err) =>
-        console.error("❌ Error loading recommended products:", err)
-      );
+      .then((res) => setProducts(res.data))
+      .catch((err) => console.error("❌ Error loading recommendations:", err));
+
+    const cacheKey = `profileData:${user.username}`;
+    if (!localStorage.getItem(cacheKey)) {
+      axios
+        .get(`${baseURL}/getuser/${user.username}`)
+        .then(async (res) => {
+          const data = res.data;
+          let sellerStatus: "none" | "pending" | "approved" = "none";
+          try {
+            const art = await axios.get(`${baseURL}/artisan/${user.username}`);
+            sellerStatus = art.data?.verified === 1 ? "approved" : "pending";
+          } catch {
+            sellerStatus = "none";
+          }
+
+          const profileData = {
+            postalCode: data.postal_code?.toString() || "-",
+            phone: data.phone_no || "",
+            image: data.user_pfp || null,
+            sellerStatus,
+          };
+          localStorage.setItem(cacheKey, JSON.stringify(profileData));
+        })
+        .catch((err) =>
+          console.error("❌ Failed to preload profile data:", err)
+        );
+    }
   }, [user?.username]);
 
-  // track clicks on products for analytics
   const handleProductClick = async (productId: number) => {
     if (!user?.username) return;
     try {
@@ -55,7 +70,7 @@ function Home() {
         productId,
       });
     } catch (err) {
-      console.error("BO: Failed to track click:", err);
+      console.error("❌ Failed to track click:", err);
     }
   };
 
@@ -64,24 +79,20 @@ function Home() {
       <section className={styles.allProducts}>
         <h2>For you</h2>
         <ul className={styles.allProductsGrid}>
-          {/* loop through products and render cards */}
-          {gridProducts.map((product, index) => (
-            <li key={index} className={styles.productCard}>
+          {gridProducts.map((p, i) => (
+            <li key={i} className={styles.productCard}>
               <Link
-                to={`/Product/${product.product_id}`}
+                to={`/Product/${p.product_id}`}
                 style={{ textDecoration: "none", color: "inherit" }}
-                onClick={() => handleProductClick(product.product_id)}
+                onClick={() => handleProductClick(p.product_id)}
               >
                 <article>
                   <figure>
-                    {/* product image */}
-                    <img src={product.image_url} alt="Product" />
-
-                    {/* product details */}
+                    <img src={p.image_url} alt={p.product_name} />
                     <figcaption>
-                      <p className={styles.title}>{product.product_name}</p>
-                      <p className={styles.artist}>{product.username}</p>
-                      <p className={styles.price}>{`R${product.price}`}</p>
+                      <p className={styles.title}>{p.product_name}</p>
+                      <p className={styles.artist}>{p.username}</p>
+                      <p className={styles.price}>{`R${p.price}`}</p>
                     </figcaption>
                   </figure>
                 </article>
