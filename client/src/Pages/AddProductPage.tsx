@@ -1,5 +1,3 @@
-// src/pages/AddProductPage.tsx
-
 import React from "react";
 import styles from "../components/EditProductPageComp/EditProductPage.module.css";
 import AddTagsButton from "../components/AddProductPageComp/AddTagsButton";
@@ -19,7 +17,7 @@ import { useNavigate } from "react-router-dom";
 const AddProductPage: React.FC = () => {
   const [ProdName, setProdName] = React.useState("");
   const [Details, setDetails] = React.useState("");
-  const [Price, setPrice] = React.useState(""); // updated to string
+  const [Price, setPrice] = React.useState("");
   const [Stock, setStock] = React.useState(1);
   const [Width, setWidth] = React.useState("");
   const [Height, setHeight] = React.useState("");
@@ -30,6 +28,7 @@ const AddProductPage: React.FC = () => {
   const [ProductImage, setProductImage] = React.useState("");
   const [submitted, setSubmitted] = React.useState(false);
   const [missingFields, setMissingFields] = React.useState<string[]>([]);
+  const [errorMessage, setErrorMessage] = React.useState("");
 
   const { user } = useUser();
   const navigate = useNavigate();
@@ -43,28 +42,29 @@ const AddProductPage: React.FC = () => {
   };
 
   const handleConfirm = async () => {
-  const missing: string[] = [];
+    const missing: string[] = [];
 
-  if (!ProdName.trim()) missing.push("Product Name");
-  if (!Details.trim()) missing.push("Product Details");
-  if (!ProductImage.trim()) missing.push("Product Image"); // ✅ New line
-  if (!Price.trim() || isNaN(Number(Price))) missing.push("Price");
-  if (!Stock || isNaN(Stock)) missing.push("Stock");
-  if (!Width.trim()) missing.push("Width");
-  if (!Height.trim()) missing.push("Height");
-  if (!Weight.trim()) missing.push("Weight");
-  if (!MajorCategory.trim()) missing.push("Major Category");
-  if (DelMethod === 0) missing.push("Delivery Method");
+    if (!ProdName.trim()) missing.push("Product Name");
+    if (!Details.trim()) missing.push("Product Details");
+    if (!ProductImage.trim()) missing.push("Product Image");
+    if (!Price.trim() || isNaN(Number(Price))) missing.push("Price");
+    if (!Stock || isNaN(Stock)) missing.push("Stock");
+    if (Width === "" || isNaN(Number(Width))) missing.push("Width");
+    if (Height === "" || isNaN(Number(Height))) missing.push("Height");
+    if (Weight === "" || isNaN(Number(Weight))) missing.push("Weight");
+    if (!MajorCategory.trim()) missing.push("Major Category");
+    if (DelMethod === 0) missing.push("Delivery Method");
 
-  if (missing.length > 0) {
-    setMissingFields(missing);
-    return;
-  }
+    if (missing.length > 0) {
+      setMissingFields(missing);
+      return;
+    }
+
     const payload = {
       username,
       product_name: ProdName,
       description: Details,
-      price: parseFloat(Price), // safely parsed
+      price: parseFloat(Price),
       stock_quantity: Stock,
       image_url: ProductImage,
       width: parseFloat(Width),
@@ -87,21 +87,17 @@ const AddProductPage: React.FC = () => {
       if (response.ok) {
         setSubmitted(true);
       } else {
-        alert("Failed to add product: " + (data.error || "Unknown error"));
+        setErrorMessage(data.error || "Unknown error");
       }
     } catch (err) {
       console.error("❌ Submit error:", err);
-      alert("Could not connect to backend.");
+      setErrorMessage("Could not connect to backend.");
     }
   };
 
   return (
     <main className={styles.container}>
       <NavBar />
-      <header>
-        <h1 className={styles.pageTitle}>Add Product</h1>
-      </header>
-
       <section className={styles.formContainer}>
         <section className={styles.leftColumn}>
           <ProductNameInput ProdName={ProdName} setProdName={setProdName} />
@@ -124,7 +120,6 @@ const AddProductPage: React.FC = () => {
             DelMethod={DelMethod}
             setDelMethod={setDelMethod}
           />
-
           <section className={styles.row}>
             <TypeOfArtSelector
               TypeOfArt={MajorCategory}
@@ -170,6 +165,16 @@ const AddProductPage: React.FC = () => {
                   ))}
                 </ul>
                 <button aria-label="close" onClick={() => setMissingFields([])}>Close</button>
+              </article>
+            </section>
+          )}
+
+          {errorMessage && (
+            <section className={styles.popupOverlay}>
+              <article className={styles.popup}>
+                <h2>Error</h2>
+                <p>{errorMessage}</p>
+                <button onClick={() => setErrorMessage("")}>Close</button>
               </article>
             </section>
           )}

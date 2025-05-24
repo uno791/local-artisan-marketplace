@@ -31,9 +31,17 @@ beforeAll(() => {
       return Promise.resolve({ ok: true });
     }
 
+    if (url === 'http://localhost:3000/main-categories') {
+      return Promise.resolve({
+        ok: true,
+        json: () => Promise.resolve(['Painting', 'Sculpture', 'Photography']),
+      });
+    }
+
     return Promise.reject(new Error(`Unhandled fetch call to ${url}`));
   }) as jest.Mock;
 });
+
 
 jest.mock('../Users/UserContext', () => ({
   useUser: () => ({ user: { username: 'testUser' } }),
@@ -79,7 +87,8 @@ describe('EditProductPage Functional Tests (Fixed)', () => {
 
   test('stock increment (+) increases quantity', async () => {
     await renderWithProviders();
-    const plusBtn = screen.getByRole('button', { name: '+' });
+   const plusBtn = screen.getByRole('button', { name: 'Increase stock' });
+
     const stockInput = screen.getByLabelText(/Stock Count/i) as HTMLInputElement;
     fireEvent.click(plusBtn);
     expect(stockInput.value).toBe('2');
@@ -87,7 +96,8 @@ describe('EditProductPage Functional Tests (Fixed)', () => {
 
   test('stock decrement (-) decreases quantity', async () => {
     await renderWithProviders();
-    const minusBtn = screen.getByRole('button', { name: '-' });
+    const minusBtn = screen.getByRole('button', { name: 'Decrease stock' });
+
     const stockInput = screen.getByLabelText(/Stock Count/i) as HTMLInputElement;
     fireEvent.click(minusBtn);
     expect(stockInput.value).toBe('0');

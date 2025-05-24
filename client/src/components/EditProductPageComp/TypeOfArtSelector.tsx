@@ -1,5 +1,6 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import styles from "./TypeOfArtSelector.module.css";
+import { baseURL } from "../../config";
 
 interface Props {
   TypeOfArt: string;
@@ -7,32 +8,41 @@ interface Props {
 }
 
 const TypeOfArtSelector: React.FC<Props> = ({ TypeOfArt, setTypeOfArt }) => {
+  const [categories, setCategories] = useState<string[]>([]);
+
+  useEffect(() => {
+    const fetchCategories = async () => {
+      try {
+        const res = await fetch(`${baseURL}/main-categories`);
+        const data = await res.json();
+        setCategories(data);
+      } catch (err) {
+        console.error("Failed to load main categories:", err);
+      }
+    };
+
+    fetchCategories();
+  }, []);
+
   return (
     <section className={styles.container}>
       <label htmlFor="typeOfArt">
-  <strong>Type of Art:</strong>
-</label>
+        <strong>Type of Art:</strong>
+      </label>
       <select
         id="typeOfArt"
         className={styles.select}
         value={TypeOfArt}
         onChange={(e) => setTypeOfArt(e.target.value)}
       >
-        <option value="" disabled hidden>None Selected</option>
-        <option value="Jewellery">Jewellery</option>
-        <option value="Home Decor">Home Decor</option>
-        <option value="Art">Art</option>
-        <option value="Pottery">Pottery</option>
-        <option value="Textiles">Textiles</option>
-        <option value="Woodwork">Woodwork</option>
-        <option value="Leather Goods">Leather Goods</option>
-        <option value="Macrame">Macrame</option>
-        <option value="Candles">Candles</option>
-        <option value="Stationery">Stationery</option>
-        <option value="Painting">Painting</option>
-        <option value="Photography">Photography</option>
-        <option value="Digital Art">Digital Art</option>
-        <option value="Sculpture">Sculpture</option>
+        <option value="" disabled hidden>
+          None Selected
+        </option>
+        {categories.map((cat) => (
+          <option key={cat} value={cat}>
+            {cat}
+          </option>
+        ))}
       </select>
     </section>
   );

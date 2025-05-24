@@ -45,6 +45,46 @@
   border-radius: 5px;
 }
 
+.deleteButton {
+  background-color: #c0392b;
+  color: #fff;
+}
+
+.deleteButton:hover {
+  background-color: #a93226;
+}
+
+.popupOverlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background: rgba(0, 0, 0, 0.4);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 999;
+}
+
+.popup {
+  background: white;
+  border-radius: 8px;
+  padding: 1.5rem;
+  width: 90%;
+  max-width: 400px;
+  text-align: center;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.25);
+}
+
+.popupButtons {
+  display: flex;
+  gap: 1rem;
+  justify-content: center;
+  margin-top: 1rem;
+  flex-wrap: wrap;
+}
+
 /* Mobile responsiveness */
 @media (max-width: 768px) {
   .card {
