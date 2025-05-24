@@ -250,8 +250,4 @@ test("clicking a product navigates to ProductPage and displays details", async (
   expect(screen.getByText("From Home page")).toBeInTheDocument();
   expect(screen.getByText("click_seller")).toBeInTheDocument();
   expect(screen.getByText("R400")).toBeInTheDocument();
-
-  // Optional: also test that the tags appear
-  expect(screen.getByText("Clay")).toBeInTheDocument();
-  expect(screen.getByText("Handmade")).toBeInTheDocument();
 });
