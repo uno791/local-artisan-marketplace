@@ -18,17 +18,20 @@ interface Product {
 
 function Home() {
   const [gridProducts, setProducts] = useState<Product[]>([]);
+  const [loading, setLoading] = useState(true);
   const { user } = useUser();
 
   useEffect(() => {
     if (!user?.username) return;
 
+    setLoading(true);
     axios
       .get(`${baseURL}/homepage-recommendations`, {
         params: { username: user.username },
       })
       .then((res) => setProducts(res.data))
-      .catch((err) => console.error("❌ Error loading recommendations:", err));
+      .catch((err) => console.error("❌ Error loading recommendations:", err))
+      .finally(() => setLoading(false));
 
     const cacheKey = `profileData:${user.username}`;
     if (!localStorage.getItem(cacheKey)) {
@@ -78,28 +81,42 @@ function Home() {
     <main className={styles.home}>
       <section className={styles.allProducts}>
         <h2>For you</h2>
-        <ul className={styles.allProductsGrid}>
-          {gridProducts.map((p, i) => (
-            <li key={i} className={styles.productCard}>
-              <Link
-                to={`/Product/${p.product_id}`}
-                style={{ textDecoration: "none", color: "inherit" }}
-                onClick={() => handleProductClick(p.product_id)}
-              >
-                <article>
-                  <figure>
-                    <img src={p.image_url} alt={p.product_name} />
-                    <figcaption>
-                      <p className={styles.title}>{p.product_name}</p>
-                      <p className={styles.artist}>{p.username}</p>
-                      <p className={styles.price}>{`R${p.price}`}</p>
-                    </figcaption>
-                  </figure>
-                </article>
-              </Link>
-            </li>
-          ))}
-        </ul>
+        {loading ? (
+          <div className={styles.hourglassBackground}>
+            <div className={styles.hourglassContainer}>
+              <div className={styles.hourglassCurves}></div>
+              <div className={styles.hourglassCapTop}></div>
+              <div className={styles.hourglassGlassTop}></div>
+              <div className={styles.hourglassSand}></div>
+              <div className={styles.hourglassSandStream}></div>
+              <div className={styles.hourglassCapBottom}></div>
+              <div className={styles.hourglassGlass}></div>
+            </div>
+          </div>
+        ) : (
+          <ul className={styles.allProductsGrid}>
+            {gridProducts.map((p, i) => (
+              <li key={i} className={styles.productCard}>
+                <Link
+                  to={`/Product/${p.product_id}`}
+                  style={{ textDecoration: "none", color: "inherit" }}
+                  onClick={() => handleProductClick(p.product_id)}
+                >
+                  <article>
+                    <figure>
+                      <img src={p.image_url} alt={p.product_name} />
+                      <figcaption>
+                        <p className={styles.title}>{p.product_name}</p>
+                        <p className={styles.artist}>{p.username}</p>
+                        <p className={styles.price}>{`R${p.price}`}</p>
+                      </figcaption>
+                    </figure>
+                  </article>
+                </Link>
+              </li>
+            ))}
+          </ul>
+        )}
       </section>
     </main>
   );
