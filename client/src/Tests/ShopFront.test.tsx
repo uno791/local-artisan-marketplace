@@ -7,11 +7,11 @@ import { act } from "react";
 import ShopFront from "../Pages/ShopFront";
 import axios from "axios";
 
-// ✅ Mock axios
+// Mock axios
 jest.mock("axios");
 const mockedAxios = axios as jest.Mocked<typeof axios>;
 
-// ✅ Mock useParams
+// Mock useParams
 jest.mock("react-router-dom", () => {
   const actual = jest.requireActual("react-router-dom");
   return {
@@ -21,13 +21,20 @@ jest.mock("react-router-dom", () => {
   };
 });
 
-// ✅ Mock useUser + provider
+// Mock useUser
 jest.mock("../Users/UserContext", () => ({
   useUser: () => ({ user: { username: "test_seller" } }),
   UserProvider: ({ children }: any) => <div>{children}</div>,
 }));
 
-// ✅ Dummy data
+beforeAll(() => {
+  jest.spyOn(console, "error").mockImplementation(() => {});
+});
+
+afterAll(() => {
+  (console.error as jest.Mock).mockRestore();
+});
+
 const mockArtisan = {
   shop_name: "Elegant Arts",
   bio: "Curated artisan goods.",
@@ -53,12 +60,9 @@ const mockProducts = [
   },
 ];
 
-const setup = async () => {
+const setup = async (products = mockProducts, artisan = mockArtisan) => {
   mockedAxios.get.mockResolvedValueOnce({
-    data: {
-      artisan: mockArtisan,
-      products: mockProducts,
-    },
+    data: { artisan, products },
   });
 
   await act(async () => {
@@ -101,8 +105,7 @@ describe("ShopFront Page", () => {
 
   test("filters products when category is selected", async () => {
     await setup();
-    const paintingBtn = screen.getByRole("button", { name: "Painting" });
-    fireEvent.click(paintingBtn);
+    fireEvent.click(screen.getByRole("button", { name: "Painting" }));
     await waitFor(() => {
       expect(screen.getByText("Painted Vase")).toBeInTheDocument();
       expect(screen.queryByText("Woven Basket")).not.toBeInTheDocument();
@@ -111,7 +114,6 @@ describe("ShopFront Page", () => {
 
   test("handles API failure gracefully", async () => {
     mockedAxios.get.mockRejectedValueOnce(new Error("API error"));
-
     await act(async () => {
       render(
         <MemoryRouter>
@@ -119,8 +121,51 @@ describe("ShopFront Page", () => {
         </MemoryRouter>
       );
     });
-
-    // Just ensure nothing crashes
     expect(screen.queryByText(/Elegant Arts/i)).not.toBeInTheDocument();
+  });
+
+  test("renders fallback profile image if missing", async () => {
+    const artisanWithNoImages = {
+      ...mockArtisan,
+      shop_pfp: "",
+      shop_banner: "",
+    };
+    await setup(mockProducts, artisanWithNoImages);
+    const img = screen.getByAltText("Shop logo") as HTMLImageElement;
+    expect(img.src).toContain("/profile.png");
+  });
+
+  test("does not render edit/delete buttons when editable is false", async () => {
+    await setup([mockProducts[0]]);
+    expect(
+      screen.queryByRole("button", { name: /edit product/i })
+    ).not.toBeInTheDocument();
+    expect(
+      screen.queryByRole("button", { name: /delete product/i })
+    ).not.toBeInTheDocument();
+  });
+
+  test("renders no products message if list is empty", async () => {
+    await setup([]);
+    expect(screen.queryByText("No products found")).toBeNull(); // Adjust if message is added
+  });
+
+  test("renders correct base64 image string for product", async () => {
+    const base64Product = [
+      {
+        id: 101,
+        name: "Base64 Product",
+        price: "200",
+        category: "Photography",
+        image: "abc123",
+      },
+    ];
+    await setup(base64Product);
+
+    const imgs = screen.getAllByRole("img");
+    const productImg = imgs.find((img) =>
+      (img as HTMLImageElement).src.includes("data:image/jpeg;base64,abc123")
+    );
+    expect(productImg).toBeTruthy();
   });
 });

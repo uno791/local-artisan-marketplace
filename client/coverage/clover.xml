@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<coverage generated="1748128203280" clover="3.2.0">
-  <project timestamp="1748128203280" name="All files">
-    <metrics statements="1414" coveredstatements="66" conditionals="563" coveredconditionals="22" methods="444" coveredmethods="17" elements="2421" coveredelements="105" complexity="0" loc="1414" ncloc="1414" packages="28" files="112" classes="112"/>
+<coverage generated="1748128818540" clover="3.2.0">
+  <project timestamp="1748128818541" name="All files">
+    <metrics statements="1414" coveredstatements="66" conditionals="563" coveredconditionals="24" methods="444" coveredmethods="17" elements="2421" coveredelements="107" complexity="0" loc="1414" ncloc="1414" packages="28" files="112" classes="112"/>
     <package name="src">
       <metrics statements="11" coveredstatements="0" conditionals="1" coveredconditionals="0" methods="4" coveredmethods="0"/>
       <file name="App.tsx" path="C:\Users\sunay\OneDrive\Desktop\SDPROJECT\local-artisan-marketplace-2\client\src\App.tsx">
@@ -499,28 +499,28 @@
         <line num="6" count="1" type="stmt"/>
         <line num="7" count="1" type="stmt"/>
         <line num="8" count="1" type="stmt"/>
-        <line num="27" count="9" type="cond" truecount="2" falsecount="1"/>
-        <line num="28" count="9" type="cond" truecount="0" falsecount="1"/>
-        <line num="29" count="9" type="stmt"/>
-        <line num="33" count="10" type="stmt"/>
-        <line num="34" count="10" type="stmt"/>
-        <line num="35" count="10" type="stmt"/>
-        <line num="36" count="10" type="stmt"/>
-        <line num="37" count="10" type="stmt"/>
-        <line num="39" count="10" type="stmt"/>
-        <line num="40" count="5" type="cond" truecount="0" falsecount="1"/>
-        <line num="42" count="5" type="stmt"/>
-        <line num="45" count="4" type="stmt"/>
-        <line num="46" count="4" type="stmt"/>
-        <line num="47" count="4" type="stmt"/>
-        <line num="49" count="4" type="stmt"/>
-        <line num="52" count="8" type="cond" truecount="1" falsecount="1"/>
-        <line num="57" count="4" type="stmt"/>
+        <line num="27" count="13" type="cond" truecount="2" falsecount="1"/>
+        <line num="28" count="13" type="cond" truecount="0" falsecount="1"/>
+        <line num="29" count="13" type="stmt"/>
+        <line num="33" count="18" type="stmt"/>
+        <line num="34" count="18" type="stmt"/>
+        <line num="35" count="18" type="stmt"/>
+        <line num="36" count="18" type="stmt"/>
+        <line num="37" count="18" type="stmt"/>
+        <line num="39" count="18" type="stmt"/>
+        <line num="40" count="9" type="cond" truecount="0" falsecount="1"/>
+        <line num="42" count="9" type="stmt"/>
+        <line num="45" count="8" type="stmt"/>
+        <line num="46" count="8" type="stmt"/>
+        <line num="47" count="8" type="stmt"/>
+        <line num="49" count="8" type="stmt"/>
+        <line num="52" count="12" type="cond" truecount="1" falsecount="1"/>
+        <line num="57" count="8" type="stmt"/>
         <line num="59" count="1" type="stmt"/>
-        <line num="63" count="10" type="cond" truecount="2" falsecount="0"/>
+        <line num="63" count="18" type="cond" truecount="2" falsecount="0"/>
         <line num="65" count="2" type="stmt"/>
-        <line num="67" count="10" type="stmt"/>
-        <line num="82" count="9" type="stmt"/>
+        <line num="67" count="18" type="stmt"/>
+        <line num="82" count="13" type="stmt"/>
         <line num="98" count="1" type="stmt"/>
       </file>
       <file name="SignUpPage.tsx" path="C:\Users\sunay\OneDrive\Desktop\SDPROJECT\local-artisan-marketplace-2\client\src\Pages\SignUpPage.tsx">
@@ -1067,15 +1067,15 @@
         <line num="3" count="1" type="stmt"/>
         <line num="4" count="1" type="stmt"/>
         <line num="14" count="1" type="stmt"/>
-        <line num="23" count="5" type="stmt"/>
-        <line num="26" count="5" type="stmt"/>
-        <line num="27" count="4" type="cond" truecount="1" falsecount="1"/>
-        <line num="30" count="5" type="stmt"/>
+        <line num="23" count="9" type="stmt"/>
+        <line num="26" count="9" type="stmt"/>
+        <line num="27" count="8" type="cond" truecount="1" falsecount="1"/>
+        <line num="30" count="9" type="stmt"/>
         <line num="44" count="0" type="stmt"/>
         <line num="52" count="0" type="stmt"/>
         <line num="63" count="0" type="stmt"/>
-        <line num="72" count="20" type="stmt"/>
-        <line num="76" count="20" type="cond" truecount="1" falsecount="1"/>
+        <line num="72" count="36" type="stmt"/>
+        <line num="76" count="36" type="cond" truecount="1" falsecount="1"/>
         <line num="80" count="0" type="stmt"/>
         <line num="93" count="1" type="stmt"/>
       </file>
@@ -1411,8 +1411,8 @@
         <metrics statements="6" coveredstatements="6" conditionals="2" coveredconditionals="2" methods="3" coveredmethods="3"/>
         <line num="1" count="1" type="stmt"/>
         <line num="2" count="1" type="stmt"/>
-        <line num="13" count="10" type="stmt"/>
-        <line num="16" count="20" type="stmt"/>
+        <line num="13" count="18" type="stmt"/>
+        <line num="16" count="32" type="stmt"/>
         <line num="21" count="1" type="stmt"/>
         <line num="30" count="1" type="stmt"/>
       </file>
@@ -1665,18 +1665,18 @@
       </file>
     </package>
     <package name="src.components.ShopFrontComp">
-      <metrics statements="45" coveredstatements="17" conditionals="19" coveredconditionals="6" methods="14" coveredmethods="2"/>
+      <metrics statements="45" coveredstatements="17" conditionals="19" coveredconditionals="8" methods="14" coveredmethods="2"/>
       <file name="Header.tsx" path="C:\Users\sunay\OneDrive\Desktop\SDPROJECT\local-artisan-marketplace-2\client\src\components\ShopFrontComp\Header.tsx">
-        <metrics statements="29" coveredstatements="11" conditionals="12" coveredconditionals="3" methods="7" coveredmethods="1"/>
+        <metrics statements="29" coveredstatements="11" conditionals="12" coveredconditionals="5" methods="7" coveredmethods="1"/>
         <line num="1" count="1" type="stmt"/>
         <line num="2" count="1" type="stmt"/>
         <line num="3" count="1" type="stmt"/>
         <line num="4" count="1" type="stmt"/>
         <line num="5" count="1" type="stmt"/>
-        <line num="21" count="5" type="stmt"/>
-        <line num="22" count="5" type="stmt"/>
-        <line num="23" count="5" type="stmt"/>
-        <line num="25" count="5" type="stmt"/>
+        <line num="21" count="9" type="stmt"/>
+        <line num="22" count="9" type="stmt"/>
+        <line num="23" count="9" type="stmt"/>
+        <line num="25" count="9" type="stmt"/>
         <line num="29" count="0" type="stmt"/>
         <line num="30" count="0" type="cond" truecount="0" falsecount="3"/>
         <line num="32" count="0" type="stmt"/>
@@ -1691,7 +1691,7 @@
         <line num="54" count="0" type="stmt"/>
         <line num="55" count="0" type="stmt"/>
         <line num="58" count="0" type="stmt"/>
-        <line num="61" count="5" type="stmt"/>
+        <line num="61" count="9" type="stmt"/>
         <line num="77" count="0" type="stmt"/>
         <line num="85" count="0" type="stmt"/>
         <line num="91" count="0" type="stmt"/>
@@ -1703,8 +1703,8 @@
         <line num="1" count="1" type="stmt"/>
         <line num="2" count="1" type="stmt"/>
         <line num="3" count="1" type="stmt"/>
-        <line num="20" count="9" type="stmt"/>
-        <line num="22" count="9" type="stmt"/>
+        <line num="20" count="13" type="stmt"/>
+        <line num="22" count="13" type="stmt"/>
         <line num="24" count="0" type="stmt"/>
         <line num="47" count="0" type="stmt"/>
         <line num="48" count="0" type="stmt"/>
