@@ -62,8 +62,10 @@ function Header({ artisan }: { artisan: Artisan }) {
           : `url("/fallback-banner.jpg")`,
       }}
     >
-      <aside className={styles.overlay}></aside>
-      <NavBar />
+      <aside className={styles.overlay} aria-hidden="true"></aside>
+      <nav>
+        <NavBar />
+      </nav>
 
       <button
         className={styles.pfpEditBtn}
@@ -94,16 +96,14 @@ function Header({ artisan }: { artisan: Artisan }) {
       />
 
       <figure className={styles.logoContainer}>
-        <img
-          src={artisan.shop_pfp || "/profile.png"}
-          alt="Shop logo"
-          className={styles.logoImage}
-        />
-        <figcaption className={styles.shopDetails}>
+        <figcaption className={styles.detailsCard}>
+          <img
+            src={artisan.shop_pfp || "/profile.png"}
+            alt="Shop logo"
+            className={styles.logoImage}
+          />
           <h1 className={styles.shopName}>{artisan.shop_name}</h1>
-          <address className={styles.sellerName}>
-            {artisan.shop_address}
-          </address>
+          <address className={styles.sellerName}>{artisan.shop_address}</address>
           <p className={styles.bio}>{artisan.bio}</p>
         </figcaption>
       </figure>

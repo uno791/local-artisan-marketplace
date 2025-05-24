@@ -51,53 +51,58 @@ button {
   z-index: 0;
 }
 
+/* Unified logo container */
 .logoContainer {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: 1rem;
-  padding: 0.5rem 1.5rem;
-  border-radius: 12px;
-  z-index: 1;
   width: 100%;
+  display: flex;
+  justify-content: center;
+  padding: 1rem;
   box-sizing: border-box;
 }
 
-.navWrapper {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  padding: 1.2rem 2rem;
-  flex-wrap: wrap;
-}
-
-.logoImage {
-  height: 100px;
-  max-width: 100%;
-}
-
-.shopDetails {
+/* Opaque centered info card */
+.detailsCard {
+  background: rgba(255, 255, 255, 0.85);
+  padding: 1.5rem;
+  border-radius: 10px;
+  max-width: 500px;
+  width: 100%;
   text-align: center;
-  margin-top: 0.5rem;
-  word-wrap: break-word;
-  max-width: 90%;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
 }
 
+/* Profile logo in the center of the card */
+.logoImage {
+  height: 80px;
+  width: auto;
+  margin-bottom: 1rem;
+  
+  object-fit: cover;
+  
+}
+
+/* Shop details styling */
 .shopName {
   font-size: 1.2rem;
   font-weight: bold;
   color: #3e2c14;
+  margin-bottom: 0.3rem;
 }
 
 .sellerName {
   font-size: 0.95rem;
   color: #5f4a2d;
+  margin-bottom: 0.3rem;
 }
 
 .bio {
-  font-size: 0.65rem;
+  font-size: 0.75rem;
   color: #5f4a2d;
-  padding: 0 1rem;
+  margin-top: 0.2rem;
 }
 
 /* ✅ Responsive breakpoints */
@@ -117,7 +122,7 @@ button {
   }
 
   .logoImage {
-    height: 80px;
+    height: 70px;
   }
 
   .shopName {
@@ -129,8 +134,7 @@ button {
   }
 
   .bio {
-    font-size: 0.75rem;
-    padding: 0 1rem;
+    font-size: 0.7rem;
   }
 
   .header {

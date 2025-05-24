@@ -31,6 +31,8 @@ function SellerHome() {
   const [category, setCategory] = useState("All");
   const [gridProducts, setProducts] = useState<Product[]>([]);
   const [categories, setCategories] = useState<string[]>(["All"]);
+  const [errorPopup, setErrorPopup] = useState("");
+
 
   useEffect(() => {
   if (!username) return;
@@ -57,14 +59,15 @@ function SellerHome() {
 
 
   const handleDelete = async (id: number) => {
-    try {
-      await axios.delete(`${baseURL}/delete-product/${id}`);
-      setProducts((prev) => prev.filter((p) => p.id !== id));
-    } catch (err) {
-      console.error("Failed to delete product:", err);
-      alert("Error deleting product");
-    }
-  };
+  try {
+    await axios.delete(`${baseURL}/delete-product/${id}`);
+    setProducts((prev) => prev.filter((p) => p.id !== id));
+  } catch (err) {
+    console.error("Failed to delete product:", err);
+    setErrorPopup("Something went wrong while deleting the product. Please try again.");
+  }
+};
+
 
   const filteredProducts =
     category === "All"
@@ -90,6 +93,17 @@ function SellerHome() {
             <ProductCard key={product.id} product={product} onDelete={handleDelete} />
           ))}
         </section>
+        {errorPopup && (
+  <section className={styles.popupOverlay}>
+    <article className={styles.popup}>
+      <h2>Error</h2>
+      <p>{errorPopup}</p>
+      <button onClick={() => setErrorPopup("")}>Close</button>
+    </article>
+  </section>
+)}
+
+
       </main>
     </>
   );

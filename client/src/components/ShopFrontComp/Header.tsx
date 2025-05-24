@@ -5,7 +5,7 @@ type Props = {
   name: string;
   bio?: string;
   banner?: string;
-  onReportClick?: () => void; // 🔧 Made optional
+  onReportClick?: () => void;
 };
 
 function Header({ logo, name, bio, banner, onReportClick }: Props) {
@@ -22,7 +22,7 @@ function Header({ logo, name, bio, banner, onReportClick }: Props) {
     >
       <div className={styles.overlay}></div>
 
-      {/* Report Button: only show if handler is provided */}
+      {/* Optional Report Button */}
       {onReportClick && (
         <button
           className={styles["report-btn-overlay"]}
@@ -32,9 +32,19 @@ function Header({ logo, name, bio, banner, onReportClick }: Props) {
         </button>
       )}
 
-      {logo && <img src={logo} alt="Shop Logo" className={styles.logo} />}
-      <h2 className={styles.shopName}>{name}</h2>
-      {bio && <p className={styles.bio}>{bio}</p>}
+      <figure className={styles.detailsCard}>
+        {logo && (
+          <img
+            src={logo}
+            alt="Shop Logo"
+            className={styles.logo}
+          />
+        )}
+        <figcaption>
+          <h2 className={styles.shopName}>{name}</h2>
+          {bio && <p className={styles.bio}>{bio}</p>}
+        </figcaption>
+      </figure>
     </header>
   );
 }
