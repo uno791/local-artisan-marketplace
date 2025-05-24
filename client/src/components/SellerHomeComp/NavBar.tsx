@@ -1,10 +1,8 @@
 import styles from "./NavBar.module.css";
 import { NavLink } from "react-router-dom";
-// import logo from "../../assets/localish-logo.png";
-// import {Logo} from "../WelcomePageComp/Logo";
-
 import { FaHome, FaChartBar, FaBoxOpen, FaSignOutAlt } from "react-icons/fa";
 
+// nav items configuration
 const navItems = [
   { name: "Home", path: "/SellerHome", icon: <FaHome /> },
   { name: "Stats", path: "/SellerStats", icon: <FaChartBar /> },
@@ -12,6 +10,7 @@ const navItems = [
   { name: "Return", path: "/Profile", icon: <FaSignOutAlt /> },
 ];
 
+// nav bar with icons for each seller action
 function NavBar() {
   return (
     <header className={styles.navbar}>

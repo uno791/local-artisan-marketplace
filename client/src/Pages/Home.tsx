@@ -1,12 +1,13 @@
+// import styles and modules
 import styles from "../components/HomePageComp/Home.module.css";
 import { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import axios from "axios";
 import { baseURL } from "../config";
 import { Logo } from "../components/HomePageComp/Localish-ProductImage";
-// BO: Import user context
-import { useUser } from "../Users/UserContext";
+import { useUser } from "../Users/UserContext"; // access current user
 
+// product type definition
 interface Product {
   username: string;
   product_id: number;
@@ -16,13 +17,15 @@ interface Product {
   image_url: string;
 }
 
+// main component for homepage
 function Home() {
+  // store fetched products
   const [gridProducts, setProducts] = useState<Product[]>([]);
 
-  // BO: Access username from context
+  // get user from context
   const { user } = useUser();
 
-  // BO: Fetch recommended products when username is ready
+  // fetch personalized product recommendations
   useEffect(() => {
     if (!user?.username) return;
 
@@ -39,7 +42,7 @@ function Home() {
       );
   }, [user?.username]);
 
-  // BO: Track product click
+  // track clicks on products for analytics
   const handleProductClick = async (productId: number) => {
     if (!user?.username) return;
     try {
@@ -61,17 +64,20 @@ function Home() {
       <section className={styles.allProducts}>
         <h2>For you</h2>
         <ul className={styles.allProductsGrid}>
+          {/* loop through products and render cards */}
           {gridProducts.map((product, index) => (
             <li key={index} className={styles.productCard}>
               <Link
                 to={`/Product/${product.product_id}`}
                 style={{ textDecoration: "none", color: "inherit" }}
-                onClick={() => handleProductClick(product.product_id)} // BO: Track clicks
+                onClick={() => handleProductClick(product.product_id)}
               >
                 <article>
                   <figure>
+                    {/* product image */}
                     <img src={product.image_url} alt="Product" />
 
+                    {/* product details */}
                     <figcaption>
                       <p className={styles.title}>{product.product_name}</p>
                       <p className={styles.artist}>{product.username}</p>

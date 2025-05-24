@@ -1,5 +1,6 @@
 import styles from "./SectionHeading.module.css";
 
+// component definition
 function SectionHeading() {
   return (
     <header className={styles.headingContainer}>

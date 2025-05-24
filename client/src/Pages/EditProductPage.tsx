@@ -13,10 +13,13 @@ import DeliveryOptionSelector from "../components/EditProductPageComp/DeliveryOp
 import NavBar from "../components/SellerHomeComp/NavBar";
 import { baseURL } from "../config";
 
+// main component
 const EditProductPage: React.FC = () => {
+  // get product id from url
   const { id } = useParams();
   const navigate = useNavigate();
 
+  // define state variables for product fields
   const [ProdName, setProdName] = useState("");
   const [Details, setDetails] = useState("");
   const [Price, setPrice] = useState(0);
@@ -33,8 +36,10 @@ const EditProductPage: React.FC = () => {
   const [noChanges, setNoChanges] = useState(false);
   const [errorMessage, setErrorMessage] = useState("");
 
+  // reference to store original product data
   const originalDataRef = useRef<any>(null);
 
+  // helper function to get readable label for delivery method
   const getDeliveryLabel = (value: number) => {
     if (value === 3) return "Delivery & Pickup";
     if (value === 1) return "Delivery Only";
@@ -42,12 +47,14 @@ const EditProductPage: React.FC = () => {
     return "None";
   };
 
+  // fetch product details on mount
   useEffect(() => {
     const fetchProduct = async () => {
       try {
         const res = await fetch(`${baseURL}/product/${id}`);
         const data = await res.json();
 
+        // populate state with fetched product data
         setProdName(data.product_name || "");
         setDetails(data.details || "");
         setPrice(Number(data.price) || 0);
@@ -59,6 +66,7 @@ const EditProductPage: React.FC = () => {
         setTags(data.tags || []);
         setProductImage(data.product_image || data.image_url || "");
 
+        // store original values for comparison
         originalDataRef.current = {
           product_name: data.product_name || "",
           details: data.details || "",
@@ -80,16 +88,21 @@ const EditProductPage: React.FC = () => {
     fetchProduct();
   }, [id]);
 
+  // handle submit/edit confirmation
   const handleConfirm = async () => {
     const missing: string[] = [];
 
+    // validate required fields
     if (!ProdName.trim()) missing.push("Product Name");
     if (!Details.trim()) missing.push("Product Details");
     if (!Price || isNaN(Price)) missing.push("Price");
     if (!Stock || isNaN(Stock)) missing.push("Stock");
-    if (Width === null || Width === undefined || isNaN(Width)) missing.push("Width");
-    if (Height === null || Height === undefined || isNaN(Height)) missing.push("Height");
-    if (Weight === null || Weight === undefined || isNaN(Weight)) missing.push("Weight");
+    if (Width === null || Width === undefined || isNaN(Width))
+      missing.push("Width");
+    if (Height === null || Height === undefined || isNaN(Height))
+      missing.push("Height");
+    if (Weight === null || Weight === undefined || isNaN(Weight))
+      missing.push("Weight");
     if (!MajorCategory.trim()) missing.push("Major Category");
     if (DelMethod === 0) missing.push("Delivery Method");
 
@@ -98,6 +111,7 @@ const EditProductPage: React.FC = () => {
       return;
     }
 
+    // construct payload
     const payload = {
       product_name: ProdName,
       description: Details,
@@ -112,6 +126,7 @@ const EditProductPage: React.FC = () => {
       product_image: ProductImage,
     };
 
+    // compare with original data
     const original = originalDataRef.current;
     const isUnchanged =
       original.product_name === payload.product_name &&
@@ -130,6 +145,7 @@ const EditProductPage: React.FC = () => {
       return;
     }
 
+    // send update to server
     try {
       const res = await fetch(`${baseURL}/editproduct/${id}`, {
         method: "PUT",
@@ -149,6 +165,7 @@ const EditProductPage: React.FC = () => {
     }
   };
 
+  // return JSX with product editing form
   return (
     <main className={styles.container}>
       <NavBar />
@@ -194,39 +211,56 @@ const EditProductPage: React.FC = () => {
             Confirm Edits
           </button>
 
+          {/* popup: success confirmation */}
           {submitted && (
             <section className={styles.popupOverlay}>
               <article className={styles.popup}>
                 <h2>Updated Product Info</h2>
                 <dl>
-                  <dt>Name:</dt><dd className={styles.value}>{ProdName}</dd>
-                  <dt>Details:</dt><dd className={styles.value}>{Details}</dd>
-                  <dt>Price:</dt><dd className={styles.value}>R{Price.toFixed(2)}</dd>
-                  <dt>Stock:</dt><dd className={styles.value}>{Stock}</dd>
-                  <dt>Width:</dt><dd className={styles.value}>{Width} cm</dd>
-                  <dt>Height:</dt><dd className={styles.value}>{Height} cm</dd>
-                  <dt>Weight:</dt><dd className={styles.value}>{Weight} kg</dd>
-                  <dt>Delivery Method:</dt><dd className={styles.value}>{getDeliveryLabel(DelMethod)}</dd>
-                  <dt>Major Category:</dt><dd className={styles.value}>{MajorCategory}</dd>
-                  <dt>Tags:</dt><dd className={styles.value}>{Tags.join(", ")}</dd>
+                  <dt>Name:</dt>
+                  <dd className={styles.value}>{ProdName}</dd>
+                  <dt>Details:</dt>
+                  <dd className={styles.value}>{Details}</dd>
+                  <dt>Price:</dt>
+                  <dd className={styles.value}>R{Price.toFixed(2)}</dd>
+                  <dt>Stock:</dt>
+                  <dd className={styles.value}>{Stock}</dd>
+                  <dt>Width:</dt>
+                  <dd className={styles.value}>{Width} cm</dd>
+                  <dt>Height:</dt>
+                  <dd className={styles.value}>{Height} cm</dd>
+                  <dt>Weight:</dt>
+                  <dd className={styles.value}>{Weight} kg</dd>
+                  <dt>Delivery Method:</dt>
+                  <dd className={styles.value}>
+                    {getDeliveryLabel(DelMethod)}
+                  </dd>
+                  <dt>Major Category:</dt>
+                  <dd className={styles.value}>{MajorCategory}</dd>
+                  <dt>Tags:</dt>
+                  <dd className={styles.value}>{Tags.join(", ")}</dd>
                 </dl>
                 <button onClick={() => navigate("/SellerHome")}>Close</button>
               </article>
             </section>
           )}
 
+          {/* popup: validation error */}
           {missingFields.length > 0 && (
             <section className={styles.popupOverlay}>
               <article className={styles.popup}>
                 <h2>Please Fill Out All Required Fields</h2>
                 <ul>
-                  {missingFields.map((field, i) => <li key={i}>{field}</li>)}
+                  {missingFields.map((field, i) => (
+                    <li key={i}>{field}</li>
+                  ))}
                 </ul>
                 <button onClick={() => setMissingFields([])}>Close</button>
               </article>
             </section>
           )}
 
+          {/* popup: no changes made */}
           {noChanges && (
             <section className={styles.popupOverlay}>
               <article className={styles.popup}>

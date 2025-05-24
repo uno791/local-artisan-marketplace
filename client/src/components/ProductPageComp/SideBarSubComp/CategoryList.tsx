@@ -1,9 +1,11 @@
 import styles from "./CategoryList.module.css";
 
+// props interface
 interface Props {
   mainCategory: string;
 }
 
+// component definition
 const CategoryList: React.FC<Props> = ({ mainCategory }) => {
   return (
     <aside className={styles.container} aria-label="Product categories">

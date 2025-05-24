@@ -1,15 +1,19 @@
 import React from "react";
 import styles from "../EditProductPageComp/ProductNameInput.module.css";
 
+// props interface
 interface Props {
   ProdName: string;
   setProdName: (name: string) => void;
 }
 
+// component definition
 const ProductNameInput: React.FC<Props> = ({ ProdName, setProdName }) => {
   return (
     <section className={styles.container}>
-      <label htmlFor="product-name"><strong>Enter Product Name:</strong></label>
+      <label htmlFor="product-name">
+        <strong>Enter Product Name:</strong>
+      </label>
       <input
         id="product-name"
         type="text"

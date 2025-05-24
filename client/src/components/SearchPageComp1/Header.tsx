@@ -1,22 +1,20 @@
-// src/components/SearchPageComp1/Header.tsx
 import React, { useState, useEffect } from "react";
 import styles from "./Header.module.css";
 import { useSearch } from "./SearchContext";
 import axios from "axios";
 import { baseURL } from "../../config";
 
+// component definition
 export default function Header() {
   const { query, setQuery, sort, setSort } = useSearch();
   const [local, setLocal] = useState(query);
   const [allTags, setAllTags] = useState<string[]>([]);
   const [filtered, setFiltered] = useState<string[]>([]);
 
-  // keep input in sync
   useEffect(() => {
     setLocal(query);
   }, [query]);
 
-  // load categories for suggestions
   useEffect(() => {
     async function loadTags() {
       try {
@@ -32,7 +30,6 @@ export default function Header() {
     loadTags();
   }, []);
 
-  // autocomplete filter
   const handleInput = (e: React.ChangeEvent<HTMLInputElement>) => {
     const v = e.target.value;
     setLocal(v);

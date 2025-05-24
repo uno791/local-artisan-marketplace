@@ -1,35 +1,44 @@
-// src/components/AddProductPageComp/AddTagsButton.tsx
-
 import React, { useState } from "react";
 import styles from "../EditProductPageComp/EditTagsButton.module.css";
 
+// props interface
 interface Props {
   onConfirm?: (tags: string[]) => void;
   tagLimit?: number;
   initialTags?: string[];
 }
 
-const AddTagsButton: React.FC<Props> = ({ onConfirm, tagLimit = 5, initialTags = [] }) => {
+// component definition
+const AddTagsButton: React.FC<Props> = ({
+  onConfirm,
+  tagLimit = 5,
+  initialTags = [],
+}) => {
+  // state values
   const [isPopupOpen, setIsPopupOpen] = useState(false);
   const [currentTag, setCurrentTag] = useState("");
   const [tags, setTags] = useState<string[]>(initialTags);
   const [error, setError] = useState("");
 
+  // add tag logic
   const handleAddTag = () => {
     const trimmed = currentTag.trim();
     if (!trimmed) return;
     if (tags.includes(trimmed)) return setError("Tag already added.");
-    if (tags.length >= tagLimit) return setError(`Max ${tagLimit} tags allowed.`);
+    if (tags.length >= tagLimit)
+      return setError(`Max ${tagLimit} tags allowed.`);
 
     setTags([...tags, trimmed]);
     setCurrentTag("");
     setError("");
   };
 
+  // remove tag logic
   const handleRemoveTag = (tag: string) => {
-    setTags(tags.filter(t => t !== tag));
+    setTags(tags.filter((t) => t !== tag));
   };
 
+  // confirm tag selection
   const handleConfirm = () => {
     if (onConfirm) onConfirm(tags);
     setIsPopupOpen(false);
@@ -49,7 +58,9 @@ const AddTagsButton: React.FC<Props> = ({ onConfirm, tagLimit = 5, initialTags =
           aria-labelledby="tag-dialog-title"
         >
           <section className={styles.popup}>
-            <h3 id="tag-dialog-title">Describe your artwork (max {tagLimit})</h3>
+            <h3 id="tag-dialog-title">
+              Describe your artwork (max {tagLimit})
+            </h3>
 
             <div className={styles.inputRow}>
               <input

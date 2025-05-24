@@ -6,10 +6,12 @@ import { useUser } from "../../Users/UserContext";
 import { baseURL } from "../../config";
 import { Link } from "react-router-dom";
 
+// form to collect and submit shop details
 function SellerForm() {
   const { user } = useUser();
   const navigate = useNavigate();
 
+  // input state
   const [shopName, setShopName] = useState("");
   const [shopDescription, setShopDescription] = useState("");
   const [shopAddress, setShopAddress] = useState("");
@@ -20,6 +22,7 @@ function SellerForm() {
   );
   const [email, setEmail] = useState("");
 
+  // error messages for form fields
   const [errors, setErrors] = useState<{
     shopName?: string;
     shopDescription?: string;
@@ -27,9 +30,12 @@ function SellerForm() {
     email?: string;
   }>({});
 
+  // simple email validation
   function validateEmail(value: string) {
     return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(value);
   }
+
+  // convert file to base64 string
   function fileToBase64(file: File): Promise<string> {
     return new Promise((resolve, reject) => {
       const reader = new FileReader();
@@ -39,6 +45,7 @@ function SellerForm() {
     });
   }
 
+  // submit handler to send form data to backend
   async function handleSubmit(e: React.FormEvent) {
     e.preventDefault();
     if (!user?.username) {
@@ -47,7 +54,6 @@ function SellerForm() {
     }
 
     const newErrors: typeof errors = {};
-
     if (!shopName.trim()) newErrors.shopName = "Shop name is required.";
     if (!shopDescription.trim())
       newErrors.shopDescription = "Description is required.";
@@ -86,6 +92,7 @@ function SellerForm() {
     }
   }
 
+  // preview banner image
   function handleBannerChange(e: React.ChangeEvent<HTMLInputElement>) {
     const file = e.target.files?.[0] || null;
     setShopBannerFile(file);
@@ -98,6 +105,7 @@ function SellerForm() {
     }
   }
 
+  // form UI
   return (
     <form className={styles["signup-form"]} onSubmit={handleSubmit}>
       <h1>Create Your Seller Account</h1>
@@ -170,6 +178,7 @@ function SellerForm() {
         Place your username and shop name in the subject of the email for it to
         be reviewed.
       </p>
+
       <button type="submit">Create Seller Account</button>
       <Link to="/Profile" className={styles["verification-link"]}></Link>
     </form>

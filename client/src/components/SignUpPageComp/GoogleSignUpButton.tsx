@@ -21,6 +21,7 @@ export function GoogleSignUpButton() {
   const navigate = useNavigate();
   const [errorMessage, setErrorMessage] = useState<string | null>(null);
 
+  // call google login and handle signup
   const login = useGoogleLogin({
     onSuccess: async (tokenResponse) => {
       try {
@@ -36,6 +37,7 @@ export function GoogleSignUpButton() {
         const userData = res.data;
         const user_ID = userData.sub;
 
+        // check if user already exists in backend
         const checkRes = await axios.post(`${baseURL}/check-userid`, {
           user_ID,
         });
@@ -45,6 +47,7 @@ export function GoogleSignUpButton() {
           return;
         }
 
+        // create new User instance and store in context
         const newUser = new User({
           id: userData.sub,
           name: userData.name,
@@ -77,7 +80,7 @@ export function GoogleSignUpButton() {
         />
         <span className={styles.buttonText}>Sign Up with Google</span>
 
-        {/* 🌸 Falling petals */}
+        {/* visual decoration */}
         <div className={styles.petals}>
           <span></span>
           <span></span>
@@ -91,6 +94,7 @@ export function GoogleSignUpButton() {
         </div>
       </button>
 
+      {/* display any errors */}
       {errorMessage && (
         <div className={styles.errorMessage}>
           <p>{errorMessage}</p>

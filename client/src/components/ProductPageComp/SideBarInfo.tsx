@@ -2,6 +2,7 @@ import ArtistInfo from "./SideBarSubComp/ArtistInfo";
 import styles from "./SideBarInfo.module.css";
 import CategoryList from "./SideBarSubComp/CategoryList";
 
+// props interface
 interface Artisan {
   username: string;
   shop_pfp: string;
@@ -10,6 +11,7 @@ interface Artisan {
   minorTags: string[];
 }
 
+// component definition
 function SidebarInfo({
   username,
   shop_pfp,

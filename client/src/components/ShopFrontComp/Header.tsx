@@ -1,11 +1,11 @@
 import styles from "./ShopFront.module.css";
 
 type Props = {
-  logo?: string;
-  name: string;
-  bio?: string;
-  banner?: string;
-  onReportClick?: () => void; // 🔧 Made optional
+  logo?: string; // optional logo image url
+  name: string; // required shop name
+  bio?: string; // optional bio/description
+  banner?: string; // optional banner background image
+  onReportClick?: () => void; // optional report handler
 };
 
 function Header({ logo, name, bio, banner, onReportClick }: Props) {
@@ -22,7 +22,7 @@ function Header({ logo, name, bio, banner, onReportClick }: Props) {
     >
       <div className={styles.overlay}></div>
 
-      {/* Report Button: only show if handler is provided */}
+      {/* display report button if a handler is provided */}
       {onReportClick && (
         <button
           className={styles["report-btn-overlay"]}
@@ -32,7 +32,10 @@ function Header({ logo, name, bio, banner, onReportClick }: Props) {
         </button>
       )}
 
+      {/* shop logo image */}
       {logo && <img src={logo} alt="Shop Logo" className={styles.logo} />}
+
+      {/* shop name and bio */}
       <h2 className={styles.shopName}>{name}</h2>
       {bio && <p className={styles.bio}>{bio}</p>}
     </header>

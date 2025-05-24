@@ -5,6 +5,7 @@ import styles from "./Profile.module.css";
 import axios from "axios";
 import { baseURL } from "../../config";
 
+// props interface
 type Props = {
   username: string;
   postalCode: string;
@@ -15,10 +16,13 @@ type Props = {
   onClose: () => void;
 };
 
+// component definition
 function EditInfo(props: Props) {
   const [renderKey, setRenderKey] = useState(0);
   const [loading, setLoading] = useState(false);
-  const [errors, setErrors] = useState<{ postalCode?: string; phone?: string }>({});
+  const [errors, setErrors] = useState<{ postalCode?: string; phone?: string }>(
+    {}
+  );
 
   useEffect(() => {
     const timeout = setTimeout(() => {
@@ -27,6 +31,7 @@ function EditInfo(props: Props) {
     return () => clearTimeout(timeout);
   }, []);
 
+  // handle form submit
   async function handleSubmit(event: React.FormEvent) {
     event.preventDefault();
     setLoading(true);
@@ -75,7 +80,7 @@ function EditInfo(props: Props) {
           <input
             value={props.username}
             onChange={(e) => props.setUsername(e.target.value)}
-            disabled // i turned off
+            disabled
           />
 
           <label>Postal Code</label>
@@ -125,4 +130,3 @@ function EditInfo(props: Props) {
 }
 
 export default EditInfo;
-

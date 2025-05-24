@@ -11,6 +11,7 @@ import {
   FaTimes,
 } from "react-icons/fa";
 
+// navigation items
 const navItems = [
   { name: "Home", path: "/Home", icon: <FaHome /> },
   { name: "Search", path: "/SearchPage", icon: <FaSearch /> },
@@ -18,10 +19,11 @@ const navItems = [
   { name: "Profile", path: "/Profile", icon: <FaUser /> },
 ];
 
+// component definition
 function NavBar() {
   const [menuOpen, setMenuOpen] = useState(false);
 
-  // Optional: prevent background scroll
+  // optional disable background scroll
   useEffect(() => {
     document.body.style.overflow = menuOpen ? "hidden" : "";
   }, [menuOpen]);
@@ -50,9 +52,7 @@ function NavBar() {
         )}
 
         <ul
-          className={`${styles.navbarLinks} ${
-            menuOpen ? styles.showMenu : ""
-          }`}
+          className={`${styles.navbarLinks} ${menuOpen ? styles.showMenu : ""}`}
         >
           {menuOpen && (
             <li className={styles.closeButtonWrapper}>

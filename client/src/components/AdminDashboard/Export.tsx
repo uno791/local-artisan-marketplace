@@ -3,15 +3,19 @@ import html2canvas from "html2canvas";
 import { jsPDF } from "jspdf";
 import type { ChartData } from "chart.js";
 
+// props interface
 interface ExportProps {
   chartRef: React.RefObject<HTMLDivElement | null>;
   data: ChartData<"line", number[], string>;
 }
 
+// component definition
 const Export: React.FC<ExportProps> = ({ chartRef, data }) => {
+  // extract data
   const labels = data.labels as string[];
   const values = data.datasets[0].data as number[];
 
+  // export to csv
   const exportCSV = () => {
     const header = "month,total\n";
     const rows = labels.map((m, i) => `${m},${values[i]}`).join("\n");
@@ -24,6 +28,7 @@ const Export: React.FC<ExportProps> = ({ chartRef, data }) => {
     URL.revokeObjectURL(url);
   };
 
+  // export to pdf
   const exportPDF = async () => {
     if (!chartRef.current) return;
     const canvas = await html2canvas(chartRef.current, { scale: 2 });
@@ -38,10 +43,10 @@ const Export: React.FC<ExportProps> = ({ chartRef, data }) => {
   };
 
   return (
-    <div style={{ marginTop: 16, display: "flex", gap: 10 }}>
+    <nav style={{ marginTop: 16, display: "flex", gap: 10 }}>
       <button onClick={exportCSV}>Export CSV</button>
       <button onClick={exportPDF}>Export as PDF</button>
-    </div>
+    </nav>
   );
 };
 

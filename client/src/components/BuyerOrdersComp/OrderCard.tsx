@@ -1,6 +1,7 @@
 import React from "react";
 import styles from "./BuyerOrders.module.css";
 
+// props interface
 interface OrderCardProps {
   imageUrl: string;
   name: string;
@@ -10,15 +11,12 @@ interface OrderCardProps {
   date: string;
 }
 
+// component definition
 function OrderCard(props: OrderCardProps) {
   return (
     <article className={styles.orderCard}>
       <figure className={styles.imageBox}>
-        <img
-          src={props.imageUrl}
-          alt={props.name}
-          className={styles.image}
-        />
+        <img src={props.imageUrl} alt={props.name} className={styles.image} />
       </figure>
 
       <p className={styles.name}>{props.name}</p>

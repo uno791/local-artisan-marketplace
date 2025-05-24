@@ -1,5 +1,6 @@
 import styles from "./Profile.module.css";
 
+// props interface
 type Props = {
   username: string;
   postalCode: string;
@@ -7,6 +8,7 @@ type Props = {
   onEdit: () => void;
 };
 
+// component definition
 function ProfileInfo(props: Props) {
   return (
     <section className={styles["profile-info"]}>
