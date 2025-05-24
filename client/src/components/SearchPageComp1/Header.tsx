@@ -91,14 +91,14 @@ export default function Header() {
           className={sort === "priceAsc" ? styles.active : ""}
           onClick={() => setSort("priceAsc")}
         >
-          Price ↓
+          Price ↑
         </button>
         <button
           type="button"
           className={sort === "priceDesc" ? styles.active : ""}
           onClick={() => setSort("priceDesc")}
         >
-          Price ↑
+          Price ↓
         </button>
       </nav>
     </header>
