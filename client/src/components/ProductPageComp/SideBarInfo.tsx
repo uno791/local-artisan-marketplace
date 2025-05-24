@@ -1,5 +1,4 @@
 import ArtistInfo from "./SideBarSubComp/ArtistInfo";
-import ReviewList from "./SideBarSubComp/CategoryList";
 import styles from "./SideBarInfo.module.css";
 import CategoryList from "./SideBarSubComp/CategoryList";
 
@@ -21,24 +20,9 @@ function SidebarInfo({
   return (
     <aside className={styles["sidebar-info"]}>
       <ArtistInfo Uname={username} shop_pfp={shop_pfp} shop_name={shop_name} />
-      <CategoryList mainCategory={mainCategory} minorTags={minorTags} />
+      <CategoryList mainCategory={mainCategory} />
     </aside>
   );
 }
 
 export default SidebarInfo;
-
-/*import ArtistInfo from "./SideBarComp/ArtistInfo";
-import ReviewList from "./SideBarComp/ReviewList";
-import "./SidebarInfo.css";
-
-function SidebarInfo() {
-  return (
-    <aside className="sidebar-info">
-      <ArtistInfo />
-      <ReviewList />
-    </aside>
-  );
-}
-
-export default SidebarInfo;*/
