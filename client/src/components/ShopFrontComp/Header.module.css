@@ -1,0 +1,88 @@
+.header {
+  width: 100vw;
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  padding: 2rem 1rem;
+  box-sizing: border-box;
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+}
+
+.overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(255, 255, 255, 0.2);
+  z-index: 0;
+}
+
+.logoContainer {
+  z-index: 1;
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  padding: 1rem;
+  box-sizing: border-box;
+}
+
+.detailsCard {
+  background: rgba(255, 255, 255, 0.85);
+  padding: 1.5rem;
+  border-radius: 12px;
+  max-width: 500px;
+  width: 100%;
+  text-align: center;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.logoImage {
+  width: 120px;
+  height: 120px;
+  object-fit: cover;
+  border-radius: 50%;
+  margin-bottom: 1rem;
+}
+
+.shopName {
+  font-size: 1.5rem;
+  font-weight: bold;
+  color: #3e2c14;
+  margin: 0.3rem 0;
+}
+
+.sellerName {
+  font-size: 1rem;
+  color: #5f4a2d;
+  margin-bottom: 0.3rem;
+}
+
+.bio {
+  font-size: 0.9rem;
+  color: #5f4a2d;
+  margin-bottom: 0;
+}
+
+@media (max-width: 768px) {
+  .logoImage {
+    width: 90px;
+    height: 90px;
+  }
+
+  .shopName {
+    font-size: 1.25rem;
+  }
+
+  .bio {
+    font-size: 0.85rem;
+  }
+}

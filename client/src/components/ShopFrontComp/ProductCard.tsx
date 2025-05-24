@@ -1,31 +1,91 @@
-import styles from "./ShopFront.module.css";
+import styles from "./ProductCard.module.css";
+import { Link } from "react-router-dom";
+import { useState } from "react";
 
-type Props = {
-  title: string; // product title
-  artist: string; // name of artisan
-  price: string; // product price (formatted)
-  category?: string; // optional category
-  image: string; // product image url
+type Product = {
+  id: number;
+  name: string;
+  price: string;
+  category: string;
+  image?: string;
 };
 
-function ProductCard({ title, artist, price, category, image }: Props) {
-  return (
-    <section className={styles.card}>
-      {/* image section */}
-      <section className={styles.cardImageWrapper}>
-        {image ? (
-          <img src={image} alt={title} className={styles.cardImage} />
-        ) : null}
-      </section>
+type Props = {
+  product: Product;
+  onDelete: (id: number) => void;
+  editable?: boolean;
+};
 
-      {/* product information */}
-      <section className={styles.cardInfo}>
-        <p className={styles.cardTitle}>{title}</p>
-        <p className={styles.cardArtist}>{artist}</p>
-        <p className={styles.cardPrice}>{price}</p>
-        {category && <p className={styles.cardCategory}>{category}</p>}
+function ProductCard({ product, onDelete, editable = true }: Props) {
+  const [showConfirm, setShowConfirm] = useState(false);
+
+  return (
+    <Link to={`/Product/${product.id}`} className={styles.cardLink}>
+      <section className={styles.card} onClick={(e) => e.stopPropagation()}>
+        <section className={styles.imageBox}>
+          {product.image ? (
+            <img src={product.image} alt={product.name} />
+          ) : (
+            <section className={styles.placeholder}>387 × 320</section>
+          )}
+        </section>
+
+        <section className={styles.info}>
+          <h3>{product.name}</h3>
+          <p>{product.price}</p>
+          <p className={styles.category}>{product.category}</p>
+
+          {editable && (
+            <>
+              <Link to={`/EditProductPage/${product.id}`}>
+                <button className={styles.button}>Edit Product</button>
+              </Link>
+              <div style={{ marginTop: "0.5rem" }}>
+                <button
+                  className={`${styles.button} ${styles.deleteButton}`}
+                  onClick={(e) => {
+                    e.preventDefault();
+                    e.stopPropagation();
+                    setShowConfirm(true);
+                  }}
+                >
+                  Delete Product
+                </button>
+              </div>
+            </>
+          )}
+        </section>
+
+        {showConfirm && (
+          <section className={styles.popupOverlay}>
+            <article className={styles.popup}>
+              <h3>Are you sure you want to delete this product?</h3>
+              <p><strong>{product.name}</strong></p>
+              <div className={styles.popupButtons}>
+                <button
+                  className={`${styles.button} ${styles.deleteButton}`}
+                  onClick={(e) => {
+                    e.preventDefault();
+                    onDelete(product.id);
+                  }}
+                >
+                  Yes, Delete
+                </button>
+                <button
+                  className={styles.button}
+                  onClick={(e) => {
+                    e.preventDefault();
+                    setShowConfirm(false);
+                  }}
+                >
+                  Cancel
+                </button>
+              </div>
+            </article>
+          </section>
+        )}
       </section>
-    </section>
+    </Link>
   );
 }
 
