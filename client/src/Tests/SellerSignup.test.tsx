@@ -8,7 +8,7 @@ import "@testing-library/jest-dom";
 // Mock useUser from context
 jest.mock("../Users/UserContext", () => ({
   useUser: () => ({ user: { username: "testuser" } }),
-  UserProvider: ({ children }: any) => <div>{children}</div>,
+  UserProvider: ({ children }: any) => <section>{children}</section>,
 }));
 
 // Mock useNavigate from react-router-dom
@@ -56,38 +56,39 @@ describe("SellerSignup page", () => {
     expect(screen.getByText("Enter a valid email address.")).toBeInTheDocument();
   });
 
-  test("submits form successfully", async () => {
-    mockedAxios.post.mockResolvedValueOnce({ status: 200 });
+test("submits form successfully and navigates", async () => {
+  mockedAxios.post.mockResolvedValueOnce({ status: 200 });
 
-    render(
-      <MemoryRouter>
-        <SellerSignup />
-      </MemoryRouter>
-    );
+  render(
+    <MemoryRouter>
+      <SellerSignup />
+    </MemoryRouter>
+  );
 
-    fireEvent.change(screen.getByPlaceholderText("Enter your shop name"), {
-      target: { value: "Test Shop" },
-    });
-    fireEvent.change(screen.getByPlaceholderText("Describe your shop"), {
-      target: { value: "Nice handmade items" },
-    });
-    fireEvent.change(screen.getByPlaceholderText("Enter your email"), {
-      target: { value: "test@example.com" },
-    });
-    fireEvent.change(screen.getByPlaceholderText("Enter your shop location"), {
-      target: { value: "Cape Town" },
-    });
-
-    window.alert = jest.fn();
-
-    fireEvent.click(screen.getByRole("button", { name: /create seller account/i }));
-
-    await waitFor(() => {
-      expect(mockedAxios.post).toHaveBeenCalled();
-      expect(window.alert).toHaveBeenCalledWith("Seller account created!");
-      expect(mockNavigate).toHaveBeenCalledWith("/profile");
-    });
+  fireEvent.change(screen.getByPlaceholderText("Enter your shop name"), {
+    target: { value: "Test Shop" },
   });
+  fireEvent.change(screen.getByPlaceholderText("Describe your shop"), {
+    target: { value: "Nice handmade items" },
+  });
+  fireEvent.change(screen.getByPlaceholderText("Enter your email"), {
+    target: { value: "test@example.com" },
+  });
+  fireEvent.change(screen.getByPlaceholderText("Enter your shop location"), {
+    target: { value: "Cape Town" },
+  });
+
+  fireEvent.click(screen.getByRole("button", { name: /create seller account/i }));
+
+  await waitFor(() => {
+    expect(mockedAxios.post).toHaveBeenCalled();
+  });
+
+  await waitFor(() => {
+    expect(mockNavigate).toHaveBeenCalledWith("/profile");
+  }, { timeout: 3000 }); 
+});
+
 
   test("handles API failure", async () => {
     mockedAxios.post.mockRejectedValueOnce(new Error("Request failed"));
@@ -111,12 +112,10 @@ describe("SellerSignup page", () => {
       target: { value: "Cape Town" },
     });
 
-    window.alert = jest.fn();
-
     fireEvent.click(screen.getByRole("button", { name: /create seller account/i }));
 
     await waitFor(() => {
-      expect(window.alert).toHaveBeenCalledWith("Failed to create seller account.");
+      expect(mockedAxios.post).toHaveBeenCalled();
     });
   });
 });

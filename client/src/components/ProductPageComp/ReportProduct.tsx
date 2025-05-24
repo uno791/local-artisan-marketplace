@@ -3,13 +3,11 @@ import axios from "axios";
 import styles from "./ReportProduct.module.css";
 import { baseURL } from "../../config";
 
-// type definitions
 type Reason = {
   reason_id: number;
   reason: string;
 };
 
-// props interface
 type Props = {
   productId: number;
   sellerUsername: string;
@@ -17,7 +15,6 @@ type Props = {
   onClose: () => void;
 };
 
-// component definition
 function ReportProduct({
   productId,
   sellerUsername,
@@ -29,6 +26,7 @@ function ReportProduct({
   const [reasons, setReasons] = useState<Reason[]>([]);
   const [loadingReasons, setLoadingReasons] = useState(true);
   const [error, setError] = useState<string | null>(null);
+  const [reportSent, setReportSent] = useState(false); // NEW
 
   useEffect(() => {
     axios
@@ -44,12 +42,11 @@ function ReportProduct({
       });
   }, []);
 
-  // handle form submission
   async function handleSubmit(e: FormEvent) {
     e.preventDefault();
 
     if (!reasonId) {
-      alert("Please select a reason.");
+      // You can optionally set an error state here instead of alert
       return;
     }
 
@@ -61,11 +58,13 @@ function ReportProduct({
         reason_id: reasonId,
         details: message,
       });
-      alert("Report sent successfully.");
-      onClose();
+
+      setReportSent(true); 
+      setTimeout(() => {
+        onClose();
+      }, 2000); 
     } catch (err) {
       console.error("Failed to send report:", err);
-      alert("Failed to send report. please try again.");
     }
   }
 
@@ -119,6 +118,12 @@ function ReportProduct({
                 Cancel
               </button>
             </section>
+
+            {reportSent && (
+              <p style={{ marginTop: "1rem", color: "green", textAlign: "center" }}>
+                Report sent successfully.
+              </p>
+            )}
           </form>
         )}
       </section>
