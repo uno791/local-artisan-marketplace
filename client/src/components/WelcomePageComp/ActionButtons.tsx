@@ -6,7 +6,8 @@ import { Link } from "react-router-dom";
 export function ActionButtons() {
   return (
     // matthew, use an aria-label to make the section have aa name which will be shown to the page reader thing for semantic
-    <section className={styles.buttonContainer} aria-label="Action Buttons">
+    <section className={styles.buttonContainer} aria-label="action buttons">
+      {/* link to signup page */}
       <Link to="/SignUpPage">
         <button className={styles.signUpButton} data-testid="navbar-signup">
           Sign Up
@@ -15,6 +16,7 @@ export function ActionButtons() {
           </span>
         </button>
       </Link>
+      {/* link to login page */}
       <Link to="/LogInPage">
         <button className={styles.loginButton}>
           Log In

@@ -4,7 +4,6 @@ import axios from "axios";
 
 import Header from "../components/ShopFrontComp/Header";
 import ProductGrid from "../components/ShopFrontComp/ProductGrid";
-// Removed ReportShop import
 import styles from "../components/ShopFrontComp/ShopFront.module.css";
 
 import { baseURL } from "../config";
@@ -26,6 +25,7 @@ interface Artisan {
   shop_banner: string;
 }
 
+// Helper to format base64 images correctly for img src
 function getImageSrc(base64: string | undefined): string {
   if (!base64 || base64.trim() === "") return "";
   if (base64.startsWith("data:")) return base64;
@@ -36,8 +36,8 @@ function ShopFront() {
   const { username } = useParams();
   const [artisan, setArtisan] = useState<Artisan | null>(null);
   const [products, setProducts] = useState<Product[]>([]);
-  // Removed showReportModal state
 
+  // Fetch artisan and their products on username change
   useEffect(() => {
     axios
       .get(`${baseURL}/artisan/${username}`)
@@ -47,6 +47,7 @@ function ShopFront() {
     axios
       .get(`${baseURL}/allproducts`)
       .then((res) => {
+        // Filter products for this artisan
         const artisanProducts = res.data.filter(
           (p: Product) => p.username === username
         );
@@ -62,7 +63,6 @@ function ShopFront() {
         name={artisan?.shop_name || "Artisan Shop"}
         bio={artisan?.bio}
         banner={getImageSrc(artisan?.shop_banner)}
-        // Removed onReportClick prop
       />
 
       <ProductGrid
@@ -75,8 +75,6 @@ function ShopFront() {
           category: p.category || "",
         }))}
       />
-
-      {/* Removed ReportShop modal rendering */}
     </main>
   );
 }

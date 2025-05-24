@@ -17,6 +17,7 @@ function Header({ artisan }: { artisan: Artisan }) {
   const bannerInputRef = useRef<HTMLInputElement>(null);
   const pfpInputRef = useRef<HTMLInputElement>(null);
 
+  // handle image upload for banner or profile picture
   const handleFileChange = async (
     event: React.ChangeEvent<HTMLInputElement>,
     field: "shop_pfp" | "shop_banner"
@@ -41,19 +42,21 @@ function Header({ artisan }: { artisan: Artisan }) {
 
         if (!res.ok) {
           const data = await res.json();
-          alert("❌ Failed to update: " + data.error);
+          alert("❌ failed to update: " + data.error);
         } else {
           location.reload();
         }
       } catch (err) {
-        console.error("Upload error:", err);
-        alert("Could not connect to server.");
+        console.error("upload error:", err);
+        alert("could not connect to server");
       }
     };
+
     reader.readAsDataURL(file);
   };
 
   return (
+    // header with banner and profile info
     <header
       className={styles.header}
       style={{
@@ -65,6 +68,7 @@ function Header({ artisan }: { artisan: Artisan }) {
       <aside className={styles.overlay}></aside>
       <NavBar />
 
+      {/* profile picture file input */}
       <button
         className={styles.pfpEditBtn}
         onClick={() => pfpInputRef.current?.click()}
@@ -79,6 +83,7 @@ function Header({ artisan }: { artisan: Artisan }) {
         style={{ display: "none" }}
       />
 
+      {/* banner image file input */}
       <button
         className={styles.bannerEditBtn}
         onClick={() => bannerInputRef.current?.click()}
@@ -93,10 +98,11 @@ function Header({ artisan }: { artisan: Artisan }) {
         style={{ display: "none" }}
       />
 
+      {/* shop profile picture and details */}
       <figure className={styles.logoContainer}>
         <img
           src={artisan.shop_pfp || "/profile.png"}
-          alt="Shop logo"
+          alt="shop logo"
           className={styles.logoImage}
         />
         <figcaption className={styles.shopDetails}>

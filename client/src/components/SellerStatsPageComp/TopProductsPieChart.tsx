@@ -10,6 +10,7 @@ import {
 import { Pie } from "react-chartjs-2";
 import styles from "./TopProductsPieChart.module.css";
 
+// register chart.js components used in pie chart
 ChartJS.register(ArcElement, Tooltip, Legend);
 
 interface Props {
@@ -18,11 +19,12 @@ interface Props {
 }
 
 const TopProductsPieChart: React.FC<Props> = ({ products, data }) => {
+  // setup chart data with product names and units sold
   const chartData: ChartData<"pie", number[], string> = {
     labels: products,
     datasets: [
       {
-        label: "Units Sold",
+        label: "units sold",
         data,
         backgroundColor: [
           "rgba(75,192,192,0.6)",
@@ -35,6 +37,7 @@ const TopProductsPieChart: React.FC<Props> = ({ products, data }) => {
     ],
   };
 
+  // pie chart config
   const options: ChartOptions<"pie"> = {
     responsive: true,
     maintainAspectRatio: false,
@@ -42,7 +45,7 @@ const TopProductsPieChart: React.FC<Props> = ({ products, data }) => {
       legend: { position: "top" },
       title: {
         display: true,
-        text: "Top 5 Products by Units Sold",
+        text: "top 5 products by units sold",
       },
     },
   };

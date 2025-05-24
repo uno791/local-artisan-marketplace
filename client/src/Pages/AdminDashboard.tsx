@@ -14,8 +14,11 @@ interface SalesRow {
 }
 
 export const AdminDashboard: React.FC = () => {
+  // ref for chart container
   const chartRef = useRef<HTMLDivElement>(null);
+  // sales data rows state
   const [salesRows, setSalesRows] = useState<SalesRow[]>([]);
+  // chartjs data state
   const [chartData, setChartData] = useState<
     ChartData<"line", number[], string>
   >({
@@ -23,6 +26,7 @@ export const AdminDashboard: React.FC = () => {
     datasets: [],
   });
 
+  // fetch sales data on mount
   useEffect(() => {
     fetch(`${baseURL}/sales-data`)
       .then((res) => res.json())
@@ -44,14 +48,17 @@ export const AdminDashboard: React.FC = () => {
           ],
         });
       })
-      .catch((err) => console.error("Failed to load sales data:", err));
+      .catch((err) => console.error("failed to load sales data:", err));
   }, []);
 
+  // calculate total and current month sales
   const totalSales = salesRows.reduce((sum, r) => sum + r.total, 0);
   const now = new Date();
   const currentMonth = now.getMonth() + 1;
   const currentRow = salesRows.find((r) => r.month === currentMonth);
   const monthlySales = currentRow?.total ?? 0;
+
+  // format currency with south africa locale
   const fmt = (n: number) =>
     "R" + n.toLocaleString("en-ZA", { minimumFractionDigits: 0 });
 
@@ -59,6 +66,7 @@ export const AdminDashboard: React.FC = () => {
     <div className={styles.wrapper}>
       <AdminSidebar />
       <div className={styles.container}>
+        {/* stats cards */}
         <div
           style={{
             display: "flex",
@@ -72,6 +80,7 @@ export const AdminDashboard: React.FC = () => {
           <StatsCard label="Monthly Sales" value={fmt(monthlySales)} />
         </div>
 
+        {/* graph and export */}
         <div style={{ width: "100%", marginTop: 20 }}>
           <GraphCard ref={chartRef} data={chartData} />
           {chartData.datasets.length > 0 && (

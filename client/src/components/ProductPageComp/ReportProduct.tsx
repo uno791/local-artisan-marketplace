@@ -3,11 +3,13 @@ import axios from "axios";
 import styles from "./ReportProduct.module.css";
 import { baseURL } from "../../config";
 
+// type for individual reason option
 type Reason = {
   reason_id: number;
   reason: string;
 };
 
+// component props
 type Props = {
   productId: number;
   sellerUsername: string;
@@ -21,12 +23,16 @@ function ReportProduct({
   reporterUsername,
   onClose,
 }: Props) {
+  // form state
   const [reasonId, setReasonId] = useState<number | "">("");
   const [message, setMessage] = useState("");
+
+  // fetched reasons for reporting
   const [reasons, setReasons] = useState<Reason[]>([]);
   const [loadingReasons, setLoadingReasons] = useState(true);
   const [error, setError] = useState<string | null>(null);
 
+  // fetch report reasons on mount
   useEffect(() => {
     axios
       .get(`${baseURL}/reasons`)
@@ -41,6 +47,7 @@ function ReportProduct({
       });
   }, []);
 
+  // handle form submit
   async function handleSubmit(e: FormEvent) {
     e.preventDefault();
 
@@ -57,24 +64,28 @@ function ReportProduct({
         reason_id: reasonId,
         details: message,
       });
-      alert("Report sent successfully.");
+
+      // on success close the modal
       onClose();
     } catch (err) {
       console.error("Failed to send report:", err);
-      alert("Failed to send report. Please try again.");
+      // optional: show error alert
     }
   }
 
   return (
+    // backdrop for modal
     <section className={styles["modal-backdrop"]}>
       <section className={styles.modal}>
         <h2>Report Product</h2>
 
+        {/* loading state */}
         {loadingReasons ? (
           <p>Loading reasons...</p>
         ) : error ? (
           <p style={{ color: "red" }}>{error}</p>
         ) : (
+          // form to submit a report
           <form onSubmit={handleSubmit}>
             <label htmlFor="reason">Reason</label>
             <select
@@ -94,6 +105,7 @@ function ReportProduct({
               ))}
             </select>
 
+            {/* textarea for user explanation */}
             <label htmlFor="report">Your Report</label>
             <textarea
               id="report"
@@ -103,6 +115,7 @@ function ReportProduct({
               rows={4}
             />
 
+            {/* action buttons */}
             <section className={styles["button-row"]}>
               <button type="submit" className={styles["apply-btn"]}>
                 Send
@@ -123,6 +136,3 @@ function ReportProduct({
 }
 
 export default ReportProduct;
-
-
-

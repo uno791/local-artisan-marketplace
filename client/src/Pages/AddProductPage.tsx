@@ -43,23 +43,23 @@ const AddProductPage: React.FC = () => {
   };
 
   const handleConfirm = async () => {
-  const missing: string[] = [];
+    const missing: string[] = [];
 
-  if (!ProdName.trim()) missing.push("Product Name");
-  if (!Details.trim()) missing.push("Product Details");
-  if (!ProductImage.trim()) missing.push("Product Image"); // ✅ New line
-  if (!Price.trim() || isNaN(Number(Price))) missing.push("Price");
-  if (!Stock || isNaN(Stock)) missing.push("Stock");
-  if (!Width.trim()) missing.push("Width");
-  if (!Height.trim()) missing.push("Height");
-  if (!Weight.trim()) missing.push("Weight");
-  if (!MajorCategory.trim()) missing.push("Major Category");
-  if (DelMethod === 0) missing.push("Delivery Method");
+    if (!ProdName.trim()) missing.push("Product Name");
+    if (!Details.trim()) missing.push("Product Details");
+    if (!ProductImage.trim()) missing.push("Product Image"); // ✅ New line
+    if (!Price.trim() || isNaN(Number(Price))) missing.push("Price");
+    if (!Stock || isNaN(Stock)) missing.push("Stock");
+    if (!Width.trim()) missing.push("Width");
+    if (!Height.trim()) missing.push("Height");
+    if (!Weight.trim()) missing.push("Weight");
+    if (!MajorCategory.trim()) missing.push("Major Category");
+    if (DelMethod === 0) missing.push("Delivery Method");
 
-  if (missing.length > 0) {
-    setMissingFields(missing);
-    return;
-  }
+    if (missing.length > 0) {
+      setMissingFields(missing);
+      return;
+    }
     const payload = {
       username,
       product_name: ProdName,
@@ -145,17 +145,43 @@ const AddProductPage: React.FC = () => {
             <section className={styles.popupOverlay}>
               <article className={styles.popup}>
                 <h2>Submitted Product Info</h2>
-                <p><strong>Name:</strong> {ProdName}</p>
-                <p><strong>Details:</strong> {Details}</p>
-                <p><strong>Price:</strong> R{parseFloat(Price).toFixed(2)}</p>
-                <p><strong>Stock:</strong> {Stock}</p>
-                <p><strong>Width:</strong> {Width} cm</p>
-                <p><strong>Height:</strong> {Height} cm</p>
-                <p><strong>Weight:</strong> {Weight} kg</p>
-                <p><strong>Delivery Method:</strong> {getDeliveryLabel(DelMethod)}</p>
-                <p><strong>Major Category:</strong> {MajorCategory}</p>
-                <p><strong>Tags:</strong> {Tags.join(", ")}</p>
-                <button aria-label="close" onClick={() => navigate("/SellerHome")}>Close</button>
+                <p>
+                  <strong>Name:</strong> {ProdName}
+                </p>
+                <p>
+                  <strong>Details:</strong> {Details}
+                </p>
+                <p>
+                  <strong>Price:</strong> R{parseFloat(Price).toFixed(2)}
+                </p>
+                <p>
+                  <strong>Stock:</strong> {Stock}
+                </p>
+                <p>
+                  <strong>Width:</strong> {Width} cm
+                </p>
+                <p>
+                  <strong>Height:</strong> {Height} cm
+                </p>
+                <p>
+                  <strong>Weight:</strong> {Weight} kg
+                </p>
+                <p>
+                  <strong>Delivery Method:</strong>{" "}
+                  {getDeliveryLabel(DelMethod)}
+                </p>
+                <p>
+                  <strong>Major Category:</strong> {MajorCategory}
+                </p>
+                <p>
+                  <strong>Tags:</strong> {Tags.join(", ")}
+                </p>
+                <button
+                  aria-label="close"
+                  onClick={() => navigate("/SellerHome")}
+                >
+                  Close
+                </button>
               </article>
             </section>
           )}
@@ -169,7 +195,9 @@ const AddProductPage: React.FC = () => {
                     <li key={index}>{field}</li>
                   ))}
                 </ul>
-                <button aria-label="close" onClick={() => setMissingFields([])}>Close</button>
+                <button aria-label="close" onClick={() => setMissingFields([])}>
+                  Close
+                </button>
               </article>
             </section>
           )}

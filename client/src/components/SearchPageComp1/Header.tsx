@@ -1,4 +1,5 @@
 // src/components/SearchPageComp1/Header.tsx
+
 import React, { useState, useEffect } from "react";
 import styles from "./Header.module.css";
 import { useSearch } from "./SearchContext";
@@ -11,12 +12,12 @@ export default function Header() {
   const [allTags, setAllTags] = useState<string[]>([]);
   const [filtered, setFiltered] = useState<string[]>([]);
 
-  // keep input in sync
+  // update local input when query changes externally
   useEffect(() => {
     setLocal(query);
   }, [query]);
 
-  // load categories for suggestions
+  // fetch category tags from backend for suggestions
   useEffect(() => {
     async function loadTags() {
       try {
@@ -32,7 +33,7 @@ export default function Header() {
     loadTags();
   }, []);
 
-  // autocomplete filter
+  // filter suggestions based on input
   const handleInput = (e: React.ChangeEvent<HTMLInputElement>) => {
     const v = e.target.value;
     setLocal(v);
@@ -44,19 +45,23 @@ export default function Header() {
     }
   };
 
+  // handle submit button click or enter key
   const handleSearch = (e: React.FormEvent) => {
     e.preventDefault();
     setQuery(local.trim());
     setFiltered([]);
   };
 
+  // set query directly from suggestion
   const handleSelect = (tag: string) => {
     setQuery(tag);
     setFiltered([]);
   };
 
   return (
+    // container for search bar and sort options
     <header className={styles.searchHeader} role="search">
+      {/* search input and suggestions */}
       <form className={styles.searchForm} onSubmit={handleSearch}>
         <input
           type="text"
@@ -65,6 +70,8 @@ export default function Header() {
           onChange={handleInput}
         />
         <button type="submit">Search</button>
+
+        {/* suggestion dropdown */}
         {filtered.length > 0 && (
           <ul className={styles.suggestions} role="listbox">
             {filtered.map((tag) => (
@@ -78,27 +85,28 @@ export default function Header() {
         )}
       </form>
 
+      {/* sort option buttons */}
       <nav className={styles.sortButtons} aria-label="Sort options">
         <button
           type="button"
           className={sort === "new" ? styles.active : ""}
           onClick={() => setSort("new")}
         >
-          New
+          new
         </button>
         <button
           type="button"
           className={sort === "priceAsc" ? styles.active : ""}
           onClick={() => setSort("priceAsc")}
         >
-          Price ↓
+          price ↓
         </button>
         <button
           type="button"
           className={sort === "priceDesc" ? styles.active : ""}
           onClick={() => setSort("priceDesc")}
         >
-          Price ↑
+          price ↑
         </button>
       </nav>
     </header>

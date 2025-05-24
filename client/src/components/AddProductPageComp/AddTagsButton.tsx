@@ -9,7 +9,11 @@ interface Props {
   initialTags?: string[];
 }
 
-const AddTagsButton: React.FC<Props> = ({ onConfirm, tagLimit = 5, initialTags = [] }) => {
+const AddTagsButton: React.FC<Props> = ({
+  onConfirm,
+  tagLimit = 5,
+  initialTags = [],
+}) => {
   const [isPopupOpen, setIsPopupOpen] = useState(false);
   const [currentTag, setCurrentTag] = useState("");
   const [tags, setTags] = useState<string[]>(initialTags);
@@ -19,7 +23,8 @@ const AddTagsButton: React.FC<Props> = ({ onConfirm, tagLimit = 5, initialTags =
     const trimmed = currentTag.trim();
     if (!trimmed) return;
     if (tags.includes(trimmed)) return setError("Tag already added.");
-    if (tags.length >= tagLimit) return setError(`Max ${tagLimit} tags allowed.`);
+    if (tags.length >= tagLimit)
+      return setError(`Max ${tagLimit} tags allowed.`);
 
     setTags([...tags, trimmed]);
     setCurrentTag("");
@@ -27,7 +32,7 @@ const AddTagsButton: React.FC<Props> = ({ onConfirm, tagLimit = 5, initialTags =
   };
 
   const handleRemoveTag = (tag: string) => {
-    setTags(tags.filter(t => t !== tag));
+    setTags(tags.filter((t) => t !== tag));
   };
 
   const handleConfirm = () => {
@@ -49,7 +54,9 @@ const AddTagsButton: React.FC<Props> = ({ onConfirm, tagLimit = 5, initialTags =
           aria-labelledby="tag-dialog-title"
         >
           <section className={styles.popup}>
-            <h3 id="tag-dialog-title">Describe your artwork (max {tagLimit})</h3>
+            <h3 id="tag-dialog-title">
+              Describe your artwork (max {tagLimit})
+            </h3>
 
             <div className={styles.inputRow}>
               <input

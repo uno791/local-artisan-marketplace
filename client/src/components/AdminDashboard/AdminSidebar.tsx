@@ -2,15 +2,21 @@ import React from "react";
 import { Link, useLocation } from "react-router-dom";
 import styles from "../SellerVerificationPageComp/SellerVerification.module.css";
 
+// admin sidebar navigation component
 const AdminSidebar: React.FC = () => {
   const location = useLocation();
+
+  // helper to check if link is currently active
   const isActive = (path: string) => location.pathname === path;
 
   return (
+    // sidebar container
     <aside className={styles.sidebar}>
+      {/* navigation links section */}
       <div className={styles.navGroup}>
         <h2>Admin Dashboard</h2>
 
+        {/* link to sales analytics page */}
         <Link
           to="/AdminDashboard"
           className={`${styles.navItem} ${
@@ -20,6 +26,7 @@ const AdminSidebar: React.FC = () => {
           Sales Analytics
         </Link>
 
+        {/* link to user reports page */}
         <Link
           to="/UserReports"
           className={`${styles.navItem} ${
@@ -29,6 +36,7 @@ const AdminSidebar: React.FC = () => {
           User Reports
         </Link>
 
+        {/* link to seller verification page */}
         <Link
           to="/SellerVerification"
           className={`${styles.navItem} ${
@@ -39,6 +47,7 @@ const AdminSidebar: React.FC = () => {
         </Link>
       </div>
 
+      {/* logout button section */}
       <div className={styles.logoutSection}>
         <Link to="/">
           <button

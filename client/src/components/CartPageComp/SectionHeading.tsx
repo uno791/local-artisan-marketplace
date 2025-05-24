@@ -1,7 +1,9 @@
 import styles from "./SectionHeading.module.css";
 
+// heading section for recommendations area
 function SectionHeading() {
   return (
+    // container for the section title
     <header className={styles.headingContainer}>
       <h1 className={styles.heading}>
         <em>

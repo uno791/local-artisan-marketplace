@@ -9,7 +9,9 @@ interface Props {
 const ProductNameInput: React.FC<Props> = ({ ProdName, setProdName }) => {
   return (
     <section className={styles.container}>
-      <label htmlFor="product-name"><strong>Enter Product Name:</strong></label>
+      <label htmlFor="product-name">
+        <strong>Enter Product Name:</strong>
+      </label>
       <input
         id="product-name"
         type="text"

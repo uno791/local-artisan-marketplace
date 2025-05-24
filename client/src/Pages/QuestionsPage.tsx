@@ -19,7 +19,7 @@ function QuestionsPage() {
   const { user, setUser } = useUser();
   const navigate = useNavigate();
 
-  // Fetch art form categories
+  // Fetch available art form categories
   useEffect(() => {
     const fetchTags = async () => {
       try {
@@ -51,7 +51,7 @@ function QuestionsPage() {
     }
 
     try {
-      //  Check if username is already taken
+      // Check username availability
       const checkRes = await axios.post(`${baseURL}/check-user`, {
         username: userName,
       });
@@ -61,7 +61,7 @@ function QuestionsPage() {
         return;
       }
 
-      //  Add user to DB with interests
+      // Add user with interests to database
       const interests = selectedArtForms.join(", ");
       const res = await axios.post(`${baseURL}/adduser`, {
         username: userName,
@@ -69,7 +69,7 @@ function QuestionsPage() {
         interests: interests,
       });
 
-      //  Update user context
+      // Update user context with new username
       const updatedUser = new User({
         id: user.id,
         name: user.name,
@@ -79,21 +79,18 @@ function QuestionsPage() {
         picture: user.picture,
         username: userName,
       });
-
       setUser(updatedUser);
 
-      // BO: Send preferences to scoring system
+      // Send preferences to scoring system (optional)
       try {
         await axios.post(`${baseURL}/apply-preferences`, {
           username: userName,
           selectedCategories: selectedArtForms,
         });
       } catch (err) {
-        console.error("BO: Failed to apply preferences to scoring table:", err);
+        console.error("Failed to apply preferences:", err);
       }
-      // BO: End
 
-      // on Success
       setSubmitted(true);
       setMessage(res.data.message);
       setError(null);

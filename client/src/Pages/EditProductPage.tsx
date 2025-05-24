@@ -16,9 +16,10 @@ import NavBar from "../components/SellerHomeComp/NavBar";
 import { baseURL } from "../config";
 
 const EditProductPage: React.FC = () => {
-  const { id } = useParams();
+  const { id } = useParams(); // get product id from route params
   const navigate = useNavigate();
 
+  // states for product fields
   const [ProdName, setProdName] = useState("");
   const [Details, setDetails] = useState("");
   const [Price, setPrice] = useState(0);
@@ -34,8 +35,10 @@ const EditProductPage: React.FC = () => {
   const [missingFields, setMissingFields] = useState<string[]>([]);
   const [noChanges, setNoChanges] = useState(false);
 
+  // store original data to detect changes
   const originalDataRef = useRef<any>(null);
 
+  // helper to convert delivery method number to label string
   const getDeliveryLabel = (value: number) => {
     if (value === 3) return "Delivery & Pickup";
     if (value === 1) return "Delivery Only";
@@ -43,12 +46,14 @@ const EditProductPage: React.FC = () => {
     return "None";
   };
 
+  // fetch product data on component mount or id change
   useEffect(() => {
     const fetchProduct = async () => {
       try {
         const res = await fetch(`${baseURL}/product/${id}`);
         const data = await res.json();
 
+        // set states with fetched data or defaults
         setProdName(data.product_name || "");
         setDetails(data.details || "");
         setPrice(Number(data.price) || 0);
@@ -60,6 +65,7 @@ const EditProductPage: React.FC = () => {
         setTags(data.tags || []);
         setProductImage(data.product_image || data.image_url || "");
 
+        // keep original data for change detection
         originalDataRef.current = {
           product_name: data.product_name || "",
           details: data.details || "",
@@ -80,9 +86,11 @@ const EditProductPage: React.FC = () => {
     fetchProduct();
   }, [id]);
 
+  // validate input and submit updated data
   const handleConfirm = async () => {
     const missing: string[] = [];
 
+    // check required fields and push to missing list if invalid
     if (!ProdName.trim()) missing.push("Product Name");
     if (!Details.trim()) missing.push("Product Details");
     if (!Price || isNaN(Price)) missing.push("Price");
@@ -112,6 +120,7 @@ const EditProductPage: React.FC = () => {
       product_image: ProductImage,
     };
 
+    // check if any changes were made compared to original data
     const original = originalDataRef.current;
     const isUnchanged =
       original.product_name === payload.product_name &&
@@ -130,6 +139,7 @@ const EditProductPage: React.FC = () => {
       return;
     }
 
+    // submit updated product data
     try {
       const res = await fetch(`${baseURL}/editproduct/${id}`, {
         method: "PUT",
@@ -203,16 +213,28 @@ const EditProductPage: React.FC = () => {
               <article className={styles.popup}>
                 <h2>Updated Product Info</h2>
                 <dl>
-                  <dt>Name:</dt><dd className={styles.value}>{ProdName}</dd>
-                  <dt>Details:</dt><dd className={styles.value}>{Details}</dd>
-                  <dt>Price:</dt><dd className={styles.value}>R{Price.toFixed(2)}</dd>
-                  <dt>Stock:</dt><dd className={styles.value}>{Stock}</dd>
-                  <dt>Width:</dt><dd className={styles.value}>{Width} cm</dd>
-                  <dt>Height:</dt><dd className={styles.value}>{Height} cm</dd>
-                  <dt>Weight:</dt><dd className={styles.value}>{Weight} kg</dd>
-                  <dt>Delivery Method:</dt><dd className={styles.value}>{getDeliveryLabel(DelMethod)}</dd>
-                  <dt>Major Category:</dt><dd className={styles.value}>{MajorCategory}</dd>
-                  <dt>Tags:</dt><dd className={styles.value}>{Tags.join(", ")}</dd>
+                  <dt>Name:</dt>
+                  <dd className={styles.value}>{ProdName}</dd>
+                  <dt>Details:</dt>
+                  <dd className={styles.value}>{Details}</dd>
+                  <dt>Price:</dt>
+                  <dd className={styles.value}>R{Price.toFixed(2)}</dd>
+                  <dt>Stock:</dt>
+                  <dd className={styles.value}>{Stock}</dd>
+                  <dt>Width:</dt>
+                  <dd className={styles.value}>{Width} cm</dd>
+                  <dt>Height:</dt>
+                  <dd className={styles.value}>{Height} cm</dd>
+                  <dt>Weight:</dt>
+                  <dd className={styles.value}>{Weight} kg</dd>
+                  <dt>Delivery Method:</dt>
+                  <dd className={styles.value}>
+                    {getDeliveryLabel(DelMethod)}
+                  </dd>
+                  <dt>Major Category:</dt>
+                  <dd className={styles.value}>{MajorCategory}</dd>
+                  <dt>Tags:</dt>
+                  <dd className={styles.value}>{Tags.join(", ")}</dd>
                 </dl>
                 <button onClick={() => navigate("/SellerHome")}>Close</button>
               </article>
@@ -224,7 +246,9 @@ const EditProductPage: React.FC = () => {
               <article className={styles.popup}>
                 <h2>Please Fill Out All Required Fields</h2>
                 <ul>
-                  {missingFields.map((field, i) => <li key={i}>{field}</li>)}
+                  {missingFields.map((field, i) => (
+                    <li key={i}>{field}</li>
+                  ))}
                 </ul>
                 <button onClick={() => setMissingFields([])}>Close</button>
               </article>

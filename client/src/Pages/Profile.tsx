@@ -15,36 +15,46 @@ import { baseURL } from "../config";
 
 function Profile() {
   const navigate = useNavigate();
-  const fileInputRef = useRef<HTMLInputElement>(null);
-  const { user } = useUser();
+  const fileInputRef = useRef<HTMLInputElement>(null); // ref for hidden file input to upload profile pic
+  const { user } = useUser(); // logged-in user info
 
+  // state for profile image, default placeholder if none
   const [image, setImage] = useState<string>(profileImg);
+  // user editable fields
   const [username, setUsername] = useState(user?.username || "");
   const [postalCode, setPostalCode] = useState("-");
   const [phone, setPhone] = useState("");
-  const [showModal, setShowModal] = useState(false);
-  const [sellerStatus, setSellerStatus] = useState<"none" | "pending" | "approved">("none");
+  const [showModal, setShowModal] = useState(false); // toggle edit modal
+  // seller verification status: none, pending approval, or approved
+  const [sellerStatus, setSellerStatus] = useState<
+    "none" | "pending" | "approved"
+  >("none");
 
+  // fetch user profile and seller info on component mount or username change
   useEffect(() => {
     async function fetchUserInfo() {
-      if (!user?.username) return;
+      if (!user?.username) return; // no username, skip fetch
 
       try {
+        // fetch user details from backend
         const res = await axios.get(`${baseURL}/getuser/${user.username}`);
         const data = res.data;
 
+        // update postal code and phone, default if missing
         setPostalCode(data.postal_code?.toString() || "-");
         setPhone(data.phone_no || "");
 
-        if (data.user_pfp) {
-          setImage(data.user_pfp);
-        } else {
-          setImage(profileImg);
-        }
+        // update profile picture or fallback to placeholder
+        setImage(data.user_pfp || profileImg);
 
-        const artisanRes = await axios.get(`${baseURL}/artisan/${user.username}`);
+        // fetch artisan status for seller verification state
+        const artisanRes = await axios.get(
+          `${baseURL}/artisan/${user.username}`
+        );
         if (artisanRes.data) {
-          setSellerStatus(artisanRes.data.verified === 1 ? "approved" : "pending");
+          setSellerStatus(
+            artisanRes.data.verified === 1 ? "approved" : "pending"
+          );
         } else {
           setSellerStatus("none");
         }
@@ -56,10 +66,12 @@ function Profile() {
     fetchUserInfo();
   }, [user?.username]);
 
+  // open the hidden file input dialog
   function openFilePicker() {
     fileInputRef.current?.click();
   }
 
+  // handle profile image file upload and send to backend
   function handleImageChange(event: React.ChangeEvent<HTMLInputElement>) {
     const file = event.target.files?.[0];
     if (file && user?.username) {
@@ -67,9 +79,10 @@ function Profile() {
 
       reader.onload = async () => {
         const base64 = reader.result as string;
-        setImage(base64);
+        setImage(base64); // update image preview
 
         try {
+          // upload new profile image
           await axios.put(`${baseURL}/api/user-profile-image`, {
             username: user.username,
             user_pfp: base64,
@@ -84,14 +97,17 @@ function Profile() {
     }
   }
 
+  // navigate to seller signup page
   function goToSellerSignup() {
     navigate("/seller-signup");
   }
 
+  // close edit profile modal
   function closeModal() {
     setShowModal(false);
   }
 
+  // clear storage and navigate to homepage on logout
   function handleLogout() {
     localStorage.clear();
     navigate("/");
@@ -100,6 +116,7 @@ function Profile() {
   return (
     <main className={styles.profile}>
       <article className={styles["profile-content"]}>
+        {/* Profile picture with file picker */}
         <ProfileImage
           image={image}
           openFilePicker={openFilePicker}
@@ -107,6 +124,7 @@ function Profile() {
           handleImageChange={handleImageChange}
         />
 
+        {/* User information with edit option */}
         <ProfileInfo
           username={username}
           postalCode={postalCode}
@@ -114,11 +132,13 @@ function Profile() {
           onEdit={() => setShowModal(true)}
         />
 
+        {/* Action buttons including seller signup */}
         <ActionButtons
           onBecomeSeller={goToSellerSignup}
           sellerStatus={sellerStatus}
         />
 
+        {/* Logout button */}
         <section className={styles.logoutSection}>
           <button className={styles.logoutButton} onClick={handleLogout}>
             Log Out
@@ -129,6 +149,7 @@ function Profile() {
         </section>
       </article>
 
+      {/* Modal to edit user information */}
       {showModal && (
         <EditInfo
           username={username}

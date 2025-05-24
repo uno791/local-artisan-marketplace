@@ -13,6 +13,7 @@ import {
 import { Bar } from "react-chartjs-2";
 import styles from "./InventoryStatusChart.module.css";
 
+// register chart.js components needed for bar chart
 ChartJS.register(
   CategoryScale,
   LinearScale,
@@ -23,10 +24,11 @@ ChartJS.register(
 );
 
 interface Props {
-  products: string[]; // e.g. ["Widget A","Widget B",…]
-  data: number[]; // e.g. [120, 80, …]
+  products: string[]; // product labels
+  data: number[]; // units in stock
 }
 
+// chart config options
 const options: ChartOptions<"bar"> = {
   responsive: true,
   maintainAspectRatio: false,
@@ -40,6 +42,7 @@ const options: ChartOptions<"bar"> = {
   },
 };
 
+// main chart component
 const InventoryStatusChart: React.FC<Props> = ({ products, data }) => {
   const chartData: ChartData<"bar", number[], string> = {
     labels: products,
@@ -47,7 +50,7 @@ const InventoryStatusChart: React.FC<Props> = ({ products, data }) => {
       {
         label: "Products",
         data,
-        backgroundColor: "rgba(42, 19, 144, 0.5)",
+        backgroundColor: "rgba(42, 19, 144, 0.5)", // semi-transparent purple
       },
     ],
   };
