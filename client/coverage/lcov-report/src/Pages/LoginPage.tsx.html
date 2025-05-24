@@ -235,18 +235,18 @@
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -277,14 +277,14 @@ export default function <span class="fstat-no" title="function not covered" >Log
   const [prankTarget, setPrankTarget] = <span class="cstat-no" title="statement not covered" >React.useState&lt;"/Home" | "/AdminDashboard"&gt;("/Home");</span>
 &nbsp;
   const [showPrankModal, setShowPrankModal] = <span class="cstat-no" title="statement not covered" >React.useState(false);</span>
-  const [noBtnStyle, setNoBtnStyle] = <span class="cstat-no" title="statement not covered" >React.useState({ top: "50%", left: "60%" });</span>
+  const [yesBtnStyle, setYesBtnStyle] = <span class="cstat-no" title="statement not covered" >React.useState({ top: "50%", left: "20%" });</span>
 &nbsp;
   const navigate = <span class="cstat-no" title="statement not covered" >useNavigate();</span>
 &nbsp;
-  const moveNoButton = <span class="cstat-no" title="statement not covered" ><span class="fstat-no" title="function not covered" >() =</span>&gt; {</span>
+  const moveYesButton = <span class="cstat-no" title="statement not covered" ><span class="fstat-no" title="function not covered" >() =</span>&gt; {</span>
     const top = <span class="cstat-no" title="statement not covered" >Math.floor(Math.random() * 70) + 5;</span>
     const left = <span class="cstat-no" title="statement not covered" >Math.floor(Math.random() * 70) + 5;</span>
-<span class="cstat-no" title="statement not covered" >    setNoBtnStyle({ top: `${top}%`, left: `${left}%` });</span>
+<span class="cstat-no" title="statement not covered" >    setYesBtnStyle({ top: `${top}%`, left: `${left}%` });</span>
   };
 &nbsp;
 <span class="cstat-no" title="statement not covered" >  return (</span>
@@ -306,14 +306,14 @@ export default function <span class="fstat-no" title="function not covered" >Log
         &lt;SignUpPrompt /&gt;
 &nbsp;
         {errorMessage &amp;&amp; (
-          &lt;div className={styles.popupError} style={{ zIndex: 1000 }}&gt;
+          &lt;section className={styles.popupError} style={{ zIndex: 1000 }} aria-live="assertive"&gt;
             &lt;p&gt;{errorMessage}&lt;/p&gt;
             &lt;button onClick={<span class="fstat-no" title="function not covered" >() =</span>&gt; <span class="cstat-no" title="statement not covered" >setErrorMessage(null)}</span>&gt;Close&lt;/button&gt;
-          &lt;/div&gt;
+          &lt;/section&gt;
         )}
 &nbsp;
         {successMessage &amp;&amp; (
-          &lt;div className={styles.popupSuccess} style={{ zIndex: 1000 }}&gt;
+          &lt;section className={styles.popupSuccess} style={{ zIndex: 1000 }} aria-live="polite"&gt;
             &lt;p&gt;{successMessage}&lt;/p&gt;
             &lt;button
               onClick={<span class="fstat-no" title="function not covered" >() =</span>&gt; {
@@ -323,23 +323,21 @@ export default function <span class="fstat-no" title="function not covered" >Log
             &gt;
               Close
             &lt;/button&gt;
-          &lt;/div&gt;
+          &lt;/section&gt;
         )}
       &lt;/section&gt;
 &nbsp;
-      {/* ✅ Prank Modal with test ID */}
       {showPrankModal &amp;&amp; (
-        &lt;div className={styles.prankOverlay} data-testid="robot-check"&gt;
-          &lt;div className={styles.prankBox}&gt;
+        &lt;section className={styles.prankOverlay} data-testid="robot-check"&gt;
+          &lt;article className={styles.prankBox}&gt;
             &lt;p&gt;Are you a robot?&lt;/p&gt;
 &nbsp;
             &lt;button
               className={styles.yesButton}
-              onClick={<span class="fstat-no" title="function not covered" >() =</span>&gt; <span class="cstat-no" title="statement not covered" >navigate(prankTarget)}</span>
+              onClick={moveYesButton}
               style={{
                 position: "absolute",
-                top: "50%",
-                left: "20%",
+                ...yesBtnStyle,
                 transition: "top 0.2s ease, left 0.2s ease",
               }}
             &gt;
@@ -348,21 +346,23 @@ export default function <span class="fstat-no" title="function not covered" >Log
 &nbsp;
             &lt;button
               className={styles.noButton}
-              onClick={moveNoButton}
+              onClick={<span class="fstat-no" title="function not covered" >() =</span>&gt; <span class="cstat-no" title="statement not covered" >navigate(prankTarget)}</span>
               style={{
                 position: "absolute",
-                ...noBtnStyle,
+                top: "50%",
+                left: "60%",
                 transition: "top 0.2s ease, left 0.2s ease",
               }}
             &gt;
               No
             &lt;/button&gt;
-          &lt;/div&gt;
-        &lt;/div&gt;
+          &lt;/article&gt;
+        &lt;/section&gt;
       )}
     &lt;/main&gt;
   );
 }
+&nbsp;
 &nbsp;</pre></td></tr></table></pre>
 
                 <div class='push'></div><!-- for sticky footer -->
@@ -370,7 +370,7 @@ export default function <span class="fstat-no" title="function not covered" >Log
             <div class='footer quiet pad2 space-top1 center small'>
                 Code coverage generated by
                 <a href="https://istanbul.js.org/" target="_blank" rel="noopener noreferrer">istanbul</a>
-                at 2025-05-18T16:56:42.664Z
+                at 2025-05-24T19:19:00.651Z
             </div>
         <script src="../../prettify.js"></script>
         <script>

@@ -1,7 +1,6 @@
 .product-image-container {
   width: 100%;
   max-width: 350px;    /* Standard size on desktop */
-  aspect-ratio: 1 / 1; /* Always a square */
   display: flex;
   justify-content: center;
   align-items: center;

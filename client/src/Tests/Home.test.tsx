@@ -211,7 +211,6 @@ test("clicking a product navigates to ProductPage and displays details", async (
           username: "click_seller",
           details: "Details here",
           category_name: "Art", // ✅ Correct field name for mainCategory
-          tags: ["Clay", "Handmade"], // ✅ Correct field name for minorTags
         },
       });
     }
@@ -223,7 +222,6 @@ test("clicking a product navigates to ProductPage and displays details", async (
           shop_name: "Click Shop",
           shop_address: "123 Main",
           shop_pfp: "",
-          bio: "A great artist",
         },
       });
     }
@@ -252,8 +250,4 @@ test("clicking a product navigates to ProductPage and displays details", async (
   expect(screen.getByText("From Home page")).toBeInTheDocument();
   expect(screen.getByText("click_seller")).toBeInTheDocument();
   expect(screen.getByText("R400")).toBeInTheDocument();
-
-  // Optional: also test that the tags appear
-  expect(screen.getByText("Clay")).toBeInTheDocument();
-  expect(screen.getByText("Handmade")).toBeInTheDocument();
 });

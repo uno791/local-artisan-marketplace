@@ -13,7 +13,7 @@ function BackButton() {
 
   return (
     <button className={styles["back-button"]} onClick={handleBack}>
-      <FaHome size={20} />
+      Home
     </button>
   );
 }

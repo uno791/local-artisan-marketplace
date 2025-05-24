@@ -20,9 +20,6 @@ function ArtistInfo({ Uname, shop_pfp, shop_name }: ArtisanProps) {
         />
       </Link>
       <h2 className={styles["artist-name"]}>{Uname}</h2>
-      <p className={styles["artist-bio"]}>
-        Passionate pen artist with a love for animals and line art storytelling.
-      </p>
       <Link to={`/shop/${Uname}`} className={styles["view-shop-link"]}>
         View Artist's Shop
       </Link>

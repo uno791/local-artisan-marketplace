@@ -3,11 +3,13 @@ import { useParams } from "react-router-dom";
 import { useEffect, useState } from "react";
 import axios from "axios";
 import styles from "../components/ProductPageComp/ProductPage.module.css";
+
 import BackButton from "../components/ProductPageComp/BackButton";
 import ProductImage from "../components/ProductPageComp/ProductImage";
 import ProductInfo from "../components/ProductPageComp/ProductInfo";
 import SidebarInfo from "../components/ProductPageComp/SideBarInfo";
 import ReportProduct from "../components/ProductPageComp/ReportProduct";
+
 import { baseURL } from "../config";
 import { useUser } from "../Users/UserContext";
 
@@ -47,9 +49,7 @@ function ProductPage() {
 
   // modal state for reporting
   const [showReportModal, setShowReportModal] = useState(false);
-
-  // logged-in user
-  const { user } = useUser();
+  const { user } = useUser(); // currently logged-in user
 
   // fetch product and artisan details on load
   useEffect(() => {
