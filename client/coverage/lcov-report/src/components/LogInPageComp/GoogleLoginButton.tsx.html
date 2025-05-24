@@ -164,22 +164,17 @@
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
@@ -189,6 +184,13 @@
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -196,8 +198,6 @@
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -232,19 +232,20 @@ import axios from "axios";
 import { baseURL } from "../../config";
 import { useUser } from "../../Users/UserContext";
 import { User } from "../../Users/User";
-//import { useNavigate } from "react-router-dom";
 &nbsp;
+// props interface
 interface GoogleLogInButtonProps {
   onError: (message: string) =&gt; void;
   onSuccessMessage: (message: string) =&gt; void;
 }
 &nbsp;
+// component definition
 export function <span class="fstat-no" title="function not covered" >GoogleLogInButton(</span>{
   onError,
   onSuccessMessage,
 }: GoogleLogInButtonProps) {
-  //const navigate = useNavigate();
   const { setUser } = <span class="cstat-no" title="statement not covered" >useUser();</span>
+&nbsp;
   const login = <span class="cstat-no" title="statement not covered" >useGoogleLogin({</span>
     onSuccess: <span class="fstat-no" title="function not covered" >async </span>(tokenResponse) =&gt; {
 <span class="cstat-no" title="statement not covered" >      try {</span>
@@ -259,10 +260,11 @@ export function <span class="fstat-no" title="function not covered" >GoogleLogIn
 &nbsp;
         const userData = <span class="cstat-no" title="statement not covered" >res.data;</span>
         const user_ID = <span class="cstat-no" title="statement not covered" >userData.sub;</span>
-        //const baseURL = import.meta.env.VITE_API_BASE_URL;
+&nbsp;
         const checkRes = <span class="cstat-no" title="statement not covered" >await axios.post(`${baseURL}/check-userid`, {</span>
           user_ID,
         });
+&nbsp;
 <span class="cstat-no" title="statement not covered" >        if (checkRes.data.exists &amp;&amp; checkRes.data.role === 0) {</span>
 <span class="cstat-no" title="statement not covered" >          onSuccessMessage("Successfully logged in!");</span>
 &nbsp;
@@ -277,8 +279,6 @@ export function <span class="fstat-no" title="function not covered" >GoogleLogIn
           });
 &nbsp;
 <span class="cstat-no" title="statement not covered" >          setUser(user);</span>
-          // navigate to home pls
-          //navigate("home");
         } else <span class="cstat-no" title="statement not covered" >if (checkRes.data.exists &amp;&amp; checkRes.data.role === 1) {</span>
 <span class="cstat-no" title="statement not covered" >          onSuccessMessage("Welcome back, Admin!");</span>
         } else {
@@ -291,7 +291,7 @@ export function <span class="fstat-no" title="function not covered" >GoogleLogIn
     },
     onError: <span class="fstat-no" title="function not covered" >(e</span>rror) =&gt; {
 <span class="cstat-no" title="statement not covered" >      console.error("Login Failed:", error);</span>
-<span class="cstat-no" title="statement not covered" >      onError("Google login failed. Please try again.");</span>
+<span class="cstat-no" title="statement not covered" >      onError("Google login failed. please try again");</span>
     },
   });
 &nbsp;
@@ -313,11 +313,7 @@ export function <span class="fstat-no" title="function not covered" >GoogleLogIn
             <div class='footer quiet pad2 space-top1 center small'>
                 Code coverage generated by
                 <a href="https://istanbul.js.org/" target="_blank" rel="noopener noreferrer">istanbul</a>
-<<<<<<< HEAD
-                at 2025-05-24T19:20:53.728Z
-=======
-                at 2025-05-24T19:19:00.651Z
->>>>>>> 2d9d54ef698ed3d3c6f5ae6d100998c0ac6b799f
+                at 2025-05-24T21:28:21.435Z
             </div>
         <script src="../../../prettify.js"></script>
         <script>
