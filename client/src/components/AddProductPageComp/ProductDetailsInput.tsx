@@ -1,11 +1,13 @@
 import React from "react";
 import styles from "../EditProductPageComp/ProductDetailsInput.module.css";
 
+// props interface
 interface Props {
   Details: string;
   setDetails: (details: string) => void;
 }
 
+// component definition
 const ProductDetailsInput: React.FC<Props> = ({ Details, setDetails }) => {
   return (
     <section className={styles.container}>

@@ -1,4 +1,5 @@
 import React from "react";
+import { Bar } from "react-chartjs-2";
 import {
   Chart as ChartJS,
   CategoryScale,
@@ -7,11 +8,7 @@ import {
   Title,
   Tooltip,
   Legend,
-  ChartOptions,
-  ChartData,
 } from "chart.js";
-import { Bar } from "react-chartjs-2";
-import styles from "./InventoryStatusChart.module.css";
 
 ChartJS.register(
   CategoryScale,
@@ -23,40 +20,35 @@ ChartJS.register(
 );
 
 interface Props {
-  products: string[]; // e.g. ["Widget A","Widget B",…]
-  data: number[]; // e.g. [120, 80, …]
+  products: string[];
+  data: number[];
 }
 
-const options: ChartOptions<"bar"> = {
-  responsive: true,
-  maintainAspectRatio: false,
-  plugins: {
-    legend: { position: "top" },
-    title: { display: false },
-  },
-  scales: {
-    x: { title: { display: true, text: "Product" } },
-    y: { title: { display: true, text: "Units in Stock" } },
-  },
-};
-
 const InventoryStatusChart: React.FC<Props> = ({ products, data }) => {
-  const chartData: ChartData<"bar", number[], string> = {
+  const chartData = {
     labels: products,
     datasets: [
       {
-        label: "Products",
+        label: "Stock",
         data,
-        backgroundColor: "rgba(42, 19, 144, 0.5)",
       },
     ],
   };
 
-  return (
-    <section className={styles.chartInner}>
-      <Bar options={options} data={chartData} />
-    </section>
-  );
+  const options = {
+    responsive: true,
+    plugins: {
+      legend: {
+        position: "top" as const,
+      },
+      title: {
+        display: true,
+        text: "Inventory Status",
+      },
+    },
+  };
+
+  return <Bar options={options} data={chartData} />;
 };
 
 export default InventoryStatusChart;

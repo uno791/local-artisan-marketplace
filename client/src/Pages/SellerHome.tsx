@@ -7,7 +7,8 @@ import { baseURL } from "../config";
 import axios from "axios";
 import { useUser } from "../Users/UserContext";
 import { Link } from "react-router-dom";
-//product per
+
+// product type definition
 interface Product {
   id: number;
   name: string;
@@ -15,7 +16,8 @@ interface Product {
   category: string;
   image?: string;
 }
-//artisan
+
+// artisan type definition
 interface Artisan {
   shop_name: string;
   bio: string;
@@ -24,14 +26,19 @@ interface Artisan {
   shop_banner: string;
 }
 
+// main seller home component
 function SellerHome() {
+  // get current user
   const { user } = useUser();
+
+  // define state variables
   const [username] = useState(user?.username || "");
   const [artisan, setArtisan] = useState<Artisan | null>(null);
   const [category, setCategory] = useState("All");
   const [gridProducts, setProducts] = useState<Product[]>([]);
   const [categories, setCategories] = useState<string[]>(["All"]);
 
+  // fetch artisan and product data
   useEffect(() => {
     if (!username) return;
 
@@ -41,9 +48,11 @@ function SellerHome() {
       })
       .then((res) => {
         const { artisan, products } = res.data;
+
         setArtisan(artisan);
         setProducts(products);
 
+        // extract unique categories from products
         const uniqueCategories: string[] = Array.from(
           new Set(products.map((p: Product) => p.category || "Uncategorized"))
         );
@@ -52,7 +61,8 @@ function SellerHome() {
       })
       .catch((err) => console.error("Error loading seller dashboard:", err));
   }, [username]);
-  //filter by category
+
+  // filter products by selected category
   const filteredProducts =
     category === "All"
       ? gridProducts
@@ -60,8 +70,11 @@ function SellerHome() {
 
   return (
     <>
+      {/* seller header */}
       {artisan && <Header artisan={artisan} />}
+
       <main className={styles.pageContent}>
+        {/* top bar with add button and filter */}
         <section className={styles.topBar}>
           <Link to={"/AddProductPage"}>
             <button className={styles.addProductBtn}>Add New Product</button>
@@ -72,6 +85,8 @@ function SellerHome() {
             categories={categories}
           />
         </section>
+
+        {/* product grid */}
         <section className={styles.grid}>
           {filteredProducts.map((product) => (
             <ProductCard key={product.id} product={product} />

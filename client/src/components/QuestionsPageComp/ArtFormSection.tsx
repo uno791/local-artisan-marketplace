@@ -2,12 +2,14 @@ import React from "react";
 import ArtFormButton from "./ArtFormButton";
 import styles from "./QuestionsPage.module.css";
 
+// props interface
 interface ArtFormSectionProps {
   selectedArtForms: string[];
   setSelectedArtForms: (forms: string[]) => void;
-  availableTags: string[]; // NEW: fetched from backend
+  availableTags: string[];
 }
 
+// component definition
 const ArtFormSection: React.FC<ArtFormSectionProps> = ({
   selectedArtForms,
   setSelectedArtForms,

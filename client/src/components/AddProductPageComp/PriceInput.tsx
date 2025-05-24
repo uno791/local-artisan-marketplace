@@ -1,14 +1,18 @@
 import React, { useState } from "react";
 import styles from "../EditProductPageComp/PriceInput.module.css";
 
+// props interface
 interface PriceInputProps {
   Price: string;
   setPrice: (val: string) => void;
 }
 
+// component definition
 const PriceInput: React.FC<PriceInputProps> = ({ Price, setPrice }) => {
+  // warning state
   const [showWarning, setShowWarning] = useState(false);
 
+  // input handler
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const val = e.target.value;
 

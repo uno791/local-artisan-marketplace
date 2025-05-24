@@ -6,16 +6,26 @@ import { GoogleLogInButton } from "../components/LogInPageComp/GoogleLoginButton
 import { SignUpPrompt } from "../components/LogInPageComp/SignUpPrompt";
 import { useNavigate } from "react-router-dom";
 
+// login page component
 export default function LoginPage() {
+  // state for displaying messages and prank modal
   const [errorMessage, setErrorMessage] = React.useState<string | null>(null);
-  const [successMessage, setSuccessMessage] = React.useState<string | null>(null);
-  const [prankTarget, setPrankTarget] = React.useState<"/Home" | "/AdminDashboard">("/Home");
+  const [successMessage, setSuccessMessage] = React.useState<string | null>(
+    null
+  );
+  const [prankTarget, setPrankTarget] = React.useState<
+    "/Home" | "/AdminDashboard"
+  >("/Home");
 
   const [showPrankModal, setShowPrankModal] = React.useState(false);
-  const [yesBtnStyle, setYesBtnStyle] = React.useState({ top: "50%", left: "20%" });
+  const [yesBtnStyle, setYesBtnStyle] = React.useState({
+    top: "50%",
+    left: "20%",
+  });
 
   const navigate = useNavigate();
 
+  // reposition "Yes" button to prank user
   const moveYesButton = () => {
     const top = Math.floor(Math.random() * 70) + 5;
     const left = Math.floor(Math.random() * 70) + 5;
@@ -25,12 +35,17 @@ export default function LoginPage() {
   return (
     <main className={styles.pageWrapper}>
       <section className={styles.loginContainer}>
+        {/* site branding */}
         <Logo />
+        {/* greeting text */}
         <WelcomeMessage />
+
+        {/* login button using google auth */}
         <GoogleLogInButton
           onError={(msg: string) => setErrorMessage(msg)}
           onSuccessMessage={(msg: string) => {
             setSuccessMessage(msg);
+            // set redirect destination based on user
             if (msg === "Welcome back, Admin!") {
               setPrankTarget("/AdminDashboard");
             } else {
@@ -38,17 +53,29 @@ export default function LoginPage() {
             }
           }}
         />
+
+        {/* bottom prompt to signup */}
         <SignUpPrompt />
 
+        {/* display error popup */}
         {errorMessage && (
-          <section className={styles.popupError} style={{ zIndex: 1000 }} aria-live="assertive">
+          <section
+            className={styles.popupError}
+            style={{ zIndex: 1000 }}
+            aria-live="assertive"
+          >
             <p>{errorMessage}</p>
             <button onClick={() => setErrorMessage(null)}>Close</button>
           </section>
         )}
 
+        {/* display success popup */}
         {successMessage && (
-          <section className={styles.popupSuccess} style={{ zIndex: 1000 }} aria-live="polite">
+          <section
+            className={styles.popupSuccess}
+            style={{ zIndex: 1000 }}
+            aria-live="polite"
+          >
             <p>{successMessage}</p>
             <button
               onClick={() => {
@@ -62,11 +89,13 @@ export default function LoginPage() {
         )}
       </section>
 
+      {/* robot prank modal */}
       {showPrankModal && (
         <section className={styles.prankOverlay} data-testid="robot-check">
           <article className={styles.prankBox}>
             <p>Are you a robot?</p>
 
+            {/* "Yes" button moves when hovered */}
             <button
               className={styles.yesButton}
               onClick={moveYesButton}
@@ -79,6 +108,7 @@ export default function LoginPage() {
               Yes
             </button>
 
+            {/* "No" button navigates to real page */}
             <button
               className={styles.noButton}
               onClick={() => navigate(prankTarget)}
@@ -97,4 +127,3 @@ export default function LoginPage() {
     </main>
   );
 }
-

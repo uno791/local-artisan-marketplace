@@ -11,7 +11,7 @@ type Product = {
 };
 
 type Props = {
-  products: Product[];
+  products: Product[]; // list of product objects to display
 };
 
 function ProductGrid({ products }: Props) {

@@ -1,6 +1,7 @@
 import styles from "./ProductCard.module.css";
 import { Link } from "react-router-dom";
 
+// product data type
 type Product = {
   id: number;
   name: string;
@@ -9,10 +10,12 @@ type Product = {
   image?: string;
 };
 
+// props for card
 type Props = {
   product: Product;
 };
 
+// renders a card with product info and link to edit page
 function ProductCard({ product }: Props) {
   return (
     <section className={styles.card}>
@@ -29,7 +32,7 @@ function ProductCard({ product }: Props) {
         <p>{product.price}</p>
         <p className={styles.category}>{product.category}</p>
 
-        {/* Route with specificc product ID for the edit page h*/}
+        {/* edit button linking to product form */}
         <Link to={`/EditProductPage/${product.id}`}>
           <button className={styles.button}>Edit Product</button>
         </Link>

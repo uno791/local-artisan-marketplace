@@ -7,6 +7,7 @@ import RecommendationScroller from "./RecommendationScroller";
 import { Product } from "../SearchPageComp1/ProductCard";
 import styles from "./YouMayAlsoLike.module.css";
 
+// component definition
 function YouMayAlsoLike() {
   const { user } = useUser();
   const [recommended, setRecommended] = useState<Product[]>([]);
@@ -32,7 +33,6 @@ function YouMayAlsoLike() {
           const prodRes = await axios.get(`${baseURL}/product/${id}`);
           const prod = prodRes.data;
 
-          // First minor (tags), then main
           prod.tags?.forEach((tag: string) => {
             if (!tagSet.has(tag)) {
               tagSet.add(tag);
@@ -73,18 +73,3 @@ function YouMayAlsoLike() {
 }
 
 export default YouMayAlsoLike;
-
-/*import styles from "./YouMayAlsoLike.module.css";
-import SectionHeading from "./SectionHeading";
-import RecommendationScroller from "./RecommendationScroller";
-
-function YouMayAlsoLike() {
-  return (
-    <section className={styles.wrapper}>
-      <SectionHeading />
-      <RecommendationScroller />
-    </section>
-  );
-}
-
-export default YouMayAlsoLike;*/

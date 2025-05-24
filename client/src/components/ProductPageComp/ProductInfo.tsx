@@ -5,6 +5,7 @@ import Bio from "./ProductInfoSubComp/Bio";
 import DeliveryOption from "./ProductInfoSubComp/DeliveryOption";
 import AddToCart from "./ProductInfoSubComp/AddToCart";
 
+// props interface
 interface ProductInfoProps {
   name: string;
   price: number;
@@ -24,6 +25,7 @@ interface ProductInfoProps {
   };
 }
 
+// component definition
 function ProductInfo({
   name,
   price,
@@ -38,7 +40,6 @@ function ProductInfo({
       <Bio description={description} />
       <DeliveryOption />
 
-      {/* ✅ Product Dimensions (merged into Product Details section) */}
       <div className={styles["product-details"]}>
         <h3>Product Details</h3>
         <ul>

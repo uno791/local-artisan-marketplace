@@ -1,5 +1,6 @@
 // src/pages/AddProductPage.tsx
 
+// import dependencies and components
 import React from "react";
 import styles from "../components/EditProductPageComp/EditProductPage.module.css";
 import AddTagsButton from "../components/AddProductPageComp/AddTagsButton";
@@ -16,7 +17,9 @@ import { useUser } from "../Users/UserContext";
 import { baseURL } from "../config";
 import { useNavigate } from "react-router-dom";
 
+// main component
 const AddProductPage: React.FC = () => {
+  // form state
   const [ProdName, setProdName] = React.useState("");
   const [Details, setDetails] = React.useState("");
   const [Price, setPrice] = React.useState(""); // updated to string
@@ -31,10 +34,12 @@ const AddProductPage: React.FC = () => {
   const [submitted, setSubmitted] = React.useState(false);
   const [missingFields, setMissingFields] = React.useState<string[]>([]);
 
+  // context and navigation
   const { user } = useUser();
   const navigate = useNavigate();
   const username = user?.username || "";
 
+  // label for delivery method
   const getDeliveryLabel = (value: number) => {
     if (value === 3) return "Delivery & Pickup";
     if (value === 1) return "Delivery Only";
@@ -42,24 +47,29 @@ const AddProductPage: React.FC = () => {
     return "None";
   };
 
+  // validate and submit form
   const handleConfirm = async () => {
-  const missing: string[] = [];
+    const missing: string[] = [];
 
-  if (!ProdName.trim()) missing.push("Product Name");
-  if (!Details.trim()) missing.push("Product Details");
-  if (!ProductImage.trim()) missing.push("Product Image"); // ✅ New line
-  if (!Price.trim() || isNaN(Number(Price))) missing.push("Price");
-  if (!Stock || isNaN(Stock)) missing.push("Stock");
-  if (!Width.trim()) missing.push("Width");
-  if (!Height.trim()) missing.push("Height");
-  if (!Weight.trim()) missing.push("Weight");
-  if (!MajorCategory.trim()) missing.push("Major Category");
-  if (DelMethod === 0) missing.push("Delivery Method");
+    // field checks
+    if (!ProdName.trim()) missing.push("Product Name");
+    if (!Details.trim()) missing.push("Product Details");
+    if (!ProductImage.trim()) missing.push("Product Image"); // ✅ New line
+    if (!Price.trim() || isNaN(Number(Price))) missing.push("Price");
+    if (!Stock || isNaN(Stock)) missing.push("Stock");
+    if (!Width.trim()) missing.push("Width");
+    if (!Height.trim()) missing.push("Height");
+    if (!Weight.trim()) missing.push("Weight");
+    if (!MajorCategory.trim()) missing.push("Major Category");
+    if (DelMethod === 0) missing.push("Delivery Method");
 
-  if (missing.length > 0) {
-    setMissingFields(missing);
-    return;
-  }
+    // show errors if any
+    if (missing.length > 0) {
+      setMissingFields(missing);
+      return;
+    }
+
+    // payload to send
     const payload = {
       username,
       product_name: ProdName,
@@ -76,6 +86,7 @@ const AddProductPage: React.FC = () => {
       delivery_method: DelMethod,
     };
 
+    // post to backend
     try {
       const response = await fetch(`${baseURL}/addproduct`, {
         method: "POST",
@@ -95,6 +106,7 @@ const AddProductPage: React.FC = () => {
     }
   };
 
+  // form layout and feedback messages
   return (
     <main className={styles.container}>
       <NavBar />
@@ -141,25 +153,53 @@ const AddProductPage: React.FC = () => {
             Confirm Addition of New Product
           </button>
 
+          {/* success popup */}
           {submitted && (
             <section className={styles.popupOverlay}>
               <article className={styles.popup}>
                 <h2>Submitted Product Info</h2>
-                <p><strong>Name:</strong> {ProdName}</p>
-                <p><strong>Details:</strong> {Details}</p>
-                <p><strong>Price:</strong> R{parseFloat(Price).toFixed(2)}</p>
-                <p><strong>Stock:</strong> {Stock}</p>
-                <p><strong>Width:</strong> {Width} cm</p>
-                <p><strong>Height:</strong> {Height} cm</p>
-                <p><strong>Weight:</strong> {Weight} kg</p>
-                <p><strong>Delivery Method:</strong> {getDeliveryLabel(DelMethod)}</p>
-                <p><strong>Major Category:</strong> {MajorCategory}</p>
-                <p><strong>Tags:</strong> {Tags.join(", ")}</p>
-                <button aria-label="close" onClick={() => navigate("/SellerHome")}>Close</button>
+                <p>
+                  <strong>Name:</strong> {ProdName}
+                </p>
+                <p>
+                  <strong>Details:</strong> {Details}
+                </p>
+                <p>
+                  <strong>Price:</strong> R{parseFloat(Price).toFixed(2)}
+                </p>
+                <p>
+                  <strong>Stock:</strong> {Stock}
+                </p>
+                <p>
+                  <strong>Width:</strong> {Width} cm
+                </p>
+                <p>
+                  <strong>Height:</strong> {Height} cm
+                </p>
+                <p>
+                  <strong>Weight:</strong> {Weight} kg
+                </p>
+                <p>
+                  <strong>Delivery Method:</strong>{" "}
+                  {getDeliveryLabel(DelMethod)}
+                </p>
+                <p>
+                  <strong>Major Category:</strong> {MajorCategory}
+                </p>
+                <p>
+                  <strong>Tags:</strong> {Tags.join(", ")}
+                </p>
+                <button
+                  aria-label="close"
+                  onClick={() => navigate("/SellerHome")}
+                >
+                  Close
+                </button>
               </article>
             </section>
           )}
 
+          {/* validation error popup */}
           {missingFields.length > 0 && (
             <section className={styles.popupOverlay}>
               <article className={styles.popup}>
@@ -169,7 +209,9 @@ const AddProductPage: React.FC = () => {
                     <li key={index}>{field}</li>
                   ))}
                 </ul>
-                <button aria-label="close" onClick={() => setMissingFields([])}>Close</button>
+                <button aria-label="close" onClick={() => setMissingFields([])}>
+                  Close
+                </button>
               </article>
             </section>
           )}

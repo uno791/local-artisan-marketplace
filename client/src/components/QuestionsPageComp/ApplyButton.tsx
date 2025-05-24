@@ -1,10 +1,12 @@
 import React from "react";
 import styles from "./QuestionsPage.module.css";
 
+// props interface
 interface ApplyButtonProps {
   onApply: () => void;
 }
 
+// component definition
 const ApplyButton: React.FC<ApplyButtonProps> = ({ onApply }) => {
   return (
     <div className={styles.applyContainer}>

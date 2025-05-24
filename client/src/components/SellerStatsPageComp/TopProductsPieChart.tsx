@@ -1,14 +1,6 @@
 import React from "react";
-import {
-  Chart as ChartJS,
-  ArcElement,
-  Tooltip,
-  Legend,
-  type ChartOptions,
-  type ChartData,
-} from "chart.js";
 import { Pie } from "react-chartjs-2";
-import styles from "./TopProductsPieChart.module.css";
+import { Chart as ChartJS, ArcElement, Tooltip, Legend } from "chart.js";
 
 ChartJS.register(ArcElement, Tooltip, Legend);
 
@@ -18,40 +10,37 @@ interface Props {
 }
 
 const TopProductsPieChart: React.FC<Props> = ({ products, data }) => {
-  const chartData: ChartData<"pie", number[], string> = {
+  const chartData = {
     labels: products,
     datasets: [
       {
         label: "Units Sold",
         data,
         backgroundColor: [
-          "rgba(75,192,192,0.6)",
-          "rgba(255,99,132,0.6)",
-          "rgba(255,205,86,0.6)",
-          "rgba(54,162,235,0.6)",
-          "rgba(153,102,255,0.6)",
+          "#f87171",
+          "#fbbf24",
+          "#34d399",
+          "#60a5fa",
+          "#a78bfa",
         ],
       },
     ],
   };
 
-  const options: ChartOptions<"pie"> = {
+  const options = {
     responsive: true,
-    maintainAspectRatio: false,
     plugins: {
-      legend: { position: "top" },
+      legend: {
+        position: "top" as const,
+      },
       title: {
         display: true,
-        text: "Top 5 Products by Units Sold",
+        text: "Top Selling Products",
       },
     },
   };
 
-  return (
-    <section className={styles.chartInner}>
-      <Pie data={chartData} options={options} />
-    </section>
-  );
+  return <Pie options={options} data={chartData} />;
 };
 
 export default TopProductsPieChart;

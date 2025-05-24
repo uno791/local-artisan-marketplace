@@ -3,6 +3,7 @@ import ReviewList from "./SideBarSubComp/CategoryList";
 import styles from "./SideBarInfo.module.css";
 import CategoryList from "./SideBarSubComp/CategoryList";
 
+// props interface
 interface Artisan {
   username: string;
   shop_pfp: string;
@@ -11,6 +12,7 @@ interface Artisan {
   minorTags: string[];
 }
 
+// component definition
 function SidebarInfo({
   username,
   shop_pfp,
@@ -27,18 +29,3 @@ function SidebarInfo({
 }
 
 export default SidebarInfo;
-
-/*import ArtistInfo from "./SideBarComp/ArtistInfo";
-import ReviewList from "./SideBarComp/ReviewList";
-import "./SidebarInfo.css";
-
-function SidebarInfo() {
-  return (
-    <aside className="sidebar-info">
-      <ArtistInfo />
-      <ReviewList />
-    </aside>
-  );
-}
-
-export default SidebarInfo;*/

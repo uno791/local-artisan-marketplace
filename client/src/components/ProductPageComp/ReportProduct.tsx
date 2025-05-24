@@ -3,11 +3,13 @@ import axios from "axios";
 import styles from "./ReportProduct.module.css";
 import { baseURL } from "../../config";
 
+// type definitions
 type Reason = {
   reason_id: number;
   reason: string;
 };
 
+// props interface
 type Props = {
   productId: number;
   sellerUsername: string;
@@ -15,6 +17,7 @@ type Props = {
   onClose: () => void;
 };
 
+// component definition
 function ReportProduct({
   productId,
   sellerUsername,
@@ -41,6 +44,7 @@ function ReportProduct({
       });
   }, []);
 
+  // handle form submission
   async function handleSubmit(e: FormEvent) {
     e.preventDefault();
 
@@ -61,7 +65,7 @@ function ReportProduct({
       onClose();
     } catch (err) {
       console.error("Failed to send report:", err);
-      alert("Failed to send report. Please try again.");
+      alert("Failed to send report. please try again.");
     }
   }
 
@@ -123,6 +127,3 @@ function ReportProduct({
 }
 
 export default ReportProduct;
-
-
-
