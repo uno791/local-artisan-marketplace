@@ -299,7 +299,7 @@
 .productCard {
   width: 100%;
   max-width: 270px;
-  height: 320px; /* fixed height to unify card sizes */
+  height: 360px; /* ✅ Increased from 320px to 360px */
   background-color: #f6ebd9;
   border-radius: 12px;
   box-shadow: 0 2px 8px rgb(0 0 0 / 0.1);
@@ -312,6 +312,7 @@
   align-items: center;
   box-sizing: border-box;
 }
+
 
 
 
@@ -350,32 +351,40 @@
   color: #7a6a47;
 }
 
+.faqSection {
+  width: 100%;
+  max-width: 800px;
+  margin: 0 auto 40px auto;
+  padding: 0 16px;
+  box-sizing: border-box;
+}
+
 .faqSection details {
   width: 100%;
   background-color: #f6ebd9;
-  margin-bottom: 16px;
   border-radius: 12px;
   padding: 12px 20px;
+  margin-bottom: 16px;
   box-shadow: 0 2px 8px rgb(0 0 0 / 0.1);
-  cursor: pointer;
+  box-sizing: border-box;
   overflow: hidden;
-  transition: background-color 0.3s ease;
+  word-break: break-word;
+  white-space: normal;
+
+  
+  max-width: 100%;
 }
 
-/* Hide default arrow */
 .faqSection summary {
-  color: #3e2c14;  /* dark brown */
+  color: #3e2c14;
   font-weight: 700;
   font-size: 20px;
-  outline: none;
   cursor: pointer;
   list-style: none;
   position: relative;
   padding-right: 25px;
 }
 
-
-/* Custom arrow */
 .faqSection summary::marker {
   content: "";
 }
@@ -391,28 +400,40 @@
   color: #3e2c14;
 }
 
-/* Rotate arrow when open */
 .faqSection details[open] summary::after {
   transform: translateY(-50%) rotate(90deg);
 }
 
-/* Animate content */
 .faqSection details p {
-  max-height: 0;
-  opacity: 0;
-  transition: max-height 0.4s ease, opacity 0.4s ease;
-  overflow: hidden;
-  margin-top: 8px;
-  font-size: 18px;
+  margin-top: 12px;
+  padding-right: 8px;
+  font-size: 16px;
+  line-height: 1.4;
   color: #5a4a1f;
+
+  
+  overflow-x: hidden;
+  overflow-y: auto;
+  max-height: 200px;
+
+  word-break: break-word;
+  white-space: normal;
+
+  /* Optional scroll behavior */
+  scrollbar-width: thin;
+  scrollbar-color: #ccc transparent;
 }
 
-/* Show content when open */
-.faqSection details[open] p {
-  max-height: 500px; /* enough height to show content */
-  opacity: 1;
-  margin-top: 8px;
+.faqSection details p::-webkit-scrollbar {
+  width: 6px;
 }
+.faqSection details p::-webkit-scrollbar-thumb {
+  background: #ccc;
+  border-radius: 6px;
+}
+
+
+
 
 
 

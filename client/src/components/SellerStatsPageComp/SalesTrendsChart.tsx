@@ -1,4 +1,5 @@
 import React from "react";
+import { Line } from "react-chartjs-2";
 import {
   Chart as ChartJS,
   CategoryScale,
@@ -8,11 +9,7 @@ import {
   Title,
   Tooltip,
   Legend,
-  ChartOptions,
-  ChartData,
 } from "chart.js";
-import { Line } from "react-chartjs-2";
-import styles from "./SalesTrendsChart.module.css";
 
 ChartJS.register(
   CategoryScale,
@@ -25,43 +22,38 @@ ChartJS.register(
 );
 
 interface Props {
-  months: string[]; // e.g. ["Jan","Feb",…]
-  data: number[]; // e.g. [1200, 800, …]
+  months: string[];
+  data: number[];
 }
 
-const options: ChartOptions<"line"> = {
-  responsive: true,
-  maintainAspectRatio: false,
-  plugins: {
-    legend: { position: "top" },
-    title: { display: false },
-  },
-  scales: {
-    x: { title: { display: true, text: "Month" } },
-    y: { title: { display: true, text: "Revenue (R)" } },
-  },
-};
-
 const SalesTrendsChart: React.FC<Props> = ({ months, data }) => {
-  const chartData: ChartData<"line", number[], string> = {
+  const chartData = {
     labels: months,
     datasets: [
       {
-        label: "Sales",
+        label: "Revenue",
         data,
-        borderColor: "rgba(75,192,192,1)",
-        backgroundColor: "rgba(75,192,192,0.4)",
-        tension: 0.3,
-        pointRadius: 4,
+        fill: false,
+        borderColor: "#3b82f6",
+        tension: 0.1,
       },
     ],
   };
 
-  return (
-    <section className={styles.chartInner}>
-      <Line options={options} data={chartData} />
-    </section>
-  );
+  const options = {
+    responsive: true,
+    plugins: {
+      legend: {
+        position: "top" as const,
+      },
+      title: {
+        display: true,
+        text: "Sales Trends",
+      },
+    },
+  };
+
+  return <Line options={options} data={chartData} />;
 };
 
 export default SalesTrendsChart;

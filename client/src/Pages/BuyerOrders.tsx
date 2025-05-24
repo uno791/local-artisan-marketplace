@@ -1,3 +1,4 @@
+// import dependencies and components
 import React, { useEffect, useState } from "react";
 import { OrderCard } from "../components/BuyerOrdersComp/OrderCard";
 import styles from "../components/BuyerOrdersComp/BuyerOrders.module.css";
@@ -5,6 +6,7 @@ import axios from "axios";
 import { baseURL } from "../config";
 import { useUser } from "../Users/UserContext";
 
+// type definition for an order item
 interface OrderItem {
   image_url: string;
   product_name: string;
@@ -14,11 +16,18 @@ interface OrderItem {
   created_at: string;
 }
 
+// main component for buyer order history
 function BuyerOrders() {
+  // get logged-in user from context
   const { user } = useUser();
+
+  // state for list of orders
   const [orders, setOrders] = useState<OrderItem[]>([]);
+
+  // state for error message
   const [error, setError] = useState<string | null>(null);
 
+  // fetch orders when username is available
   useEffect(() => {
     const fetchOrders = async () => {
       if (!user?.username) return;
@@ -35,12 +44,14 @@ function BuyerOrders() {
     fetchOrders();
   }, [user?.username]);
 
+  // filter current and delivered orders
   const currentOrders = orders.filter((o) => o.status !== "Delivered");
   const previousOrders = orders.filter((o) => o.status === "Delivered");
 
   return (
     <main className={styles.wrapper}>
       <section>
+        {/* section for current (non-delivered) orders */}
         <h2>Current Orders</h2>
         {currentOrders.length === 0 && <p>No current orders.</p>}
         {currentOrders.map((order, index) => (
@@ -57,6 +68,7 @@ function BuyerOrders() {
       </section>
 
       <section>
+        {/* section for delivered (past) orders */}
         <h2>Previous Orders</h2>
         {previousOrders.length === 0 && <p>No previous orders.</p>}
         {previousOrders.map((order, index) => (
@@ -72,6 +84,7 @@ function BuyerOrders() {
         ))}
       </section>
 
+      {/* show error if any */}
       {error && <p>{error}</p>}
     </main>
   );

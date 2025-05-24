@@ -4,6 +4,7 @@ import axios from "axios";
 import { baseURL } from "../../config";
 import { useUser } from "../../Users/UserContext";
 
+// cart item type
 interface CartItem {
   product_id: number;
   quantity: number;
@@ -15,14 +16,18 @@ interface CartItem {
   seller_username: string;
 }
 
+// props interface
 interface Props {
   onTotalChange: (total: number) => void;
 }
+
+// component definition
 function CartItemsList({ onTotalChange }: Props) {
   const { user } = useUser();
   const [cartItems, setCartItems] = useState<CartItem[]>([]);
   const [error, setError] = useState<string | null>(null);
 
+  // fetch cart data
   useEffect(() => {
     const fetchCart = async () => {
       if (!user?.username) return;
@@ -39,6 +44,7 @@ function CartItemsList({ onTotalChange }: Props) {
     fetchCart();
   }, [user?.username]);
 
+  // calculate total
   useEffect(() => {
     const total = cartItems.reduce(
       (sum, item) => sum + item.price * item.quantity,
@@ -49,6 +55,7 @@ function CartItemsList({ onTotalChange }: Props) {
 
   if (error) return <p>{error}</p>;
 
+  // remove item handler
   const handleRemove = async (product_id: number) => {
     if (!user?.username) return;
 
@@ -57,7 +64,6 @@ function CartItemsList({ onTotalChange }: Props) {
         data: { username: user.username, product_id },
       });
 
-      // Remove item from local state
       setCartItems((prev) =>
         prev.filter((item) => item.product_id !== product_id)
       );
@@ -67,6 +73,7 @@ function CartItemsList({ onTotalChange }: Props) {
     }
   };
 
+  // update quantity handler
   const handleQuantityChange = async (
     product_id: number,
     newQuantity: number
@@ -80,7 +87,6 @@ function CartItemsList({ onTotalChange }: Props) {
         quantity: newQuantity,
       });
 
-      // Update local state
       setCartItems((prev) =>
         prev.map((item) =>
           item.product_id === product_id
@@ -93,6 +99,7 @@ function CartItemsList({ onTotalChange }: Props) {
       setError("Failed to update item quantity.");
     }
   };
+
   return (
     <section className={styles.cartItemsArea} aria-label="Cart items">
       {cartItems.map((item) => (

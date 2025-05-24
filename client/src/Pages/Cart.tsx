@@ -7,23 +7,31 @@ import { baseURL } from "../config";
 import { useUser } from "../Users/UserContext";
 import { getYocoKey } from "../utils/getYocoKey";
 
+// main cart component
 function Cart() {
+  // store total price of items in cart
   const [total, setTotal] = useState<number>(0);
+
+  // get yoco public key and user from context
   const publicKey = getYocoKey();
   const { user } = useUser();
 
+  // payment handler using Yoco popup
   const handleProceedToPayment = () => {
     if (!publicKey || !user?.username) {
       console.error("Missing Yoco public key or user.");
       return;
     }
 
+    // add delivery cost
     const totalWithDelivery = total + 2;
 
+    // initialize Yoco SDK
     const yoco = new (window as any).YocoSDK({
       publicKey: publicKey,
     });
 
+    // open Yoco popup for payment
     yoco.showPopup({
       amountInCents: Math.round(totalWithDelivery * 100),
       currency: "ZAR",
@@ -36,11 +44,13 @@ function Cart() {
         }
 
         try {
+          // send payment token to backend
           const response = await axios.post(`${baseURL}/checkout`, {
             username: user.username,
             token: result.id,
           });
 
+          // redirect to orders page
           window.location.href = "/orders";
         } catch (err: any) {
           console.error("❌ Failed to complete checkout:", err);
@@ -56,14 +66,17 @@ function Cart() {
     <main className={styles.cartPage}>
       <section className={styles.cartPageContentRow}>
         <section className={styles.cartContentWrapper}>
+          {/* header title */}
           <header className={styles.cartHeader}>
             <h1>
               <strong>Cart Items</strong>
             </h1>
           </header>
 
+          {/* render cart items list */}
           <CartItemsList onTotalChange={setTotal} />
 
+          {/* summary box with price breakdown */}
           <section className={styles.cartSummary}>
             <p className={styles.totalText}>
               Total: <strong>R{total.toFixed(2)}</strong> <br />
@@ -79,6 +92,8 @@ function Cart() {
                 Grand Total: <strong>R{(total + 2).toFixed(2)}</strong>
               </span>
             </p>
+
+            {/* payment button */}
             <button
               className={styles.proceedButton}
               onClick={handleProceedToPayment}
@@ -91,6 +106,7 @@ function Cart() {
           </section>
         </section>
 
+        {/* you may also like section */}
         <aside className={styles.youMayAlsoLikeWrapper}>
           <YouMayAlsoLike />
         </aside>

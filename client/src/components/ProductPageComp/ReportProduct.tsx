@@ -26,6 +26,7 @@ function ReportProduct({
   const [reasons, setReasons] = useState<Reason[]>([]);
   const [loadingReasons, setLoadingReasons] = useState(true);
   const [error, setError] = useState<string | null>(null);
+  const [reportSent, setReportSent] = useState(false); // NEW
 
   useEffect(() => {
     axios
@@ -45,7 +46,7 @@ function ReportProduct({
     e.preventDefault();
 
     if (!reasonId) {
-      alert("Please select a reason.");
+      // You can optionally set an error state here instead of alert
       return;
     }
 
@@ -57,11 +58,13 @@ function ReportProduct({
         reason_id: reasonId,
         details: message,
       });
-      alert("Report sent successfully.");
-      onClose();
+
+      setReportSent(true); 
+      setTimeout(() => {
+        onClose();
+      }, 2000); 
     } catch (err) {
       console.error("Failed to send report:", err);
-      alert("Failed to send report. Please try again.");
     }
   }
 
@@ -115,6 +118,12 @@ function ReportProduct({
                 Cancel
               </button>
             </section>
+
+            {reportSent && (
+              <p style={{ marginTop: "1rem", color: "green", textAlign: "center" }}>
+                Report sent successfully.
+              </p>
+            )}
           </form>
         )}
       </section>
@@ -123,6 +132,3 @@ function ReportProduct({
 }
 
 export default ReportProduct;
-
-
-

@@ -2,10 +2,11 @@ import React from "react";
 import styles from "./SearchBar.module.css";
 
 interface Props {
-  value: string;
-  onChange: (val: string) => void;
+  value: string; // current input value
+  onChange: (val: string) => void; // callback for when input changes
 }
 
+// renders a styled input field with search placeholder
 const ReportSearchBar: React.FC<Props> = ({ value, onChange }) => {
   return (
     <section className={styles.searchContainer}>
@@ -16,7 +17,6 @@ const ReportSearchBar: React.FC<Props> = ({ value, onChange }) => {
         value={value}
         onChange={(e) => onChange(e.target.value)}
       />
-      
     </section>
   );
 };

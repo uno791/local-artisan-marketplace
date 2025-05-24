@@ -4,6 +4,8 @@
   padding: 16px;
   box-shadow: 0 0 6px rgba(0, 0, 0, 0.1);
   text-align: center; /* <-- center text elements */
+  box-sizing: border-box;
+  flex-wrap: wrap;
 }
 
 .artist-name {
@@ -37,4 +39,17 @@
   border-radius: 8px;
   object-fit: cover;
   cursor: pointer;
+}
+
+
+/* Responsive Flex Utility */
+
+@media (max-width: 375px) {
+  .flex-responsive {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    align-items: center;
+    justify-content: center;
+  }
 }

@@ -5,19 +5,20 @@ import axios from "axios";
 import { baseURL } from "../../config";
 import { useUser } from "../../Users/UserContext";
 import { User } from "../../Users/User";
-//import { useNavigate } from "react-router-dom";
 
+// props interface
 interface GoogleLogInButtonProps {
   onError: (message: string) => void;
   onSuccessMessage: (message: string) => void;
 }
 
+// component definition
 export function GoogleLogInButton({
   onError,
   onSuccessMessage,
 }: GoogleLogInButtonProps) {
-  //const navigate = useNavigate();
   const { setUser } = useUser();
+
   const login = useGoogleLogin({
     onSuccess: async (tokenResponse) => {
       try {
@@ -32,10 +33,11 @@ export function GoogleLogInButton({
 
         const userData = res.data;
         const user_ID = userData.sub;
-        //const baseURL = import.meta.env.VITE_API_BASE_URL;
+
         const checkRes = await axios.post(`${baseURL}/check-userid`, {
           user_ID,
         });
+
         if (checkRes.data.exists && checkRes.data.role === 0) {
           onSuccessMessage("Successfully logged in!");
 
@@ -50,8 +52,6 @@ export function GoogleLogInButton({
           });
 
           setUser(user);
-          // navigate to home pls
-          //navigate("home");
         } else if (checkRes.data.exists && checkRes.data.role === 1) {
           onSuccessMessage("Welcome back, Admin!");
         } else {
@@ -64,7 +64,7 @@ export function GoogleLogInButton({
     },
     onError: (error) => {
       console.error("Login Failed:", error);
-      onError("Google login failed. Please try again.");
+      onError("Google login failed. please try again");
     },
   });
 

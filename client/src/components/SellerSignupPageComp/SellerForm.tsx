@@ -19,6 +19,7 @@ function SellerForm() {
     null
   );
   const [email, setEmail] = useState("");
+  const [showSuccess, setShowSuccess] = useState(false); // NEW
 
   const [errors, setErrors] = useState<{
     shopName?: string;
@@ -78,8 +79,11 @@ function SellerForm() {
         shop_banner: shop_banner_base64,
       });
 
-      alert("Seller account created!");
-      navigate("/profile");
+      setShowSuccess(true); 
+      setTimeout(() => {
+        setShowSuccess(false);
+        navigate("/profile");
+      }, 2000);
     } catch (err) {
       console.error("Error creating seller:", err);
       alert("Failed to create seller account.");
@@ -99,80 +103,88 @@ function SellerForm() {
   }
 
   return (
-    <form className={styles["signup-form"]} onSubmit={handleSubmit}>
-      <h1>Create Your Seller Account</h1>
-
-      <label>Shop Name</label>
-      <input
-        type="text"
-        placeholder="Enter your shop name"
-        value={shopName}
-        onChange={(e) => setShopName(e.target.value)}
-        className={errors.shopName ? styles["input-error"] : ""}
-      />
-      {errors.shopName && (
-        <p className={styles["error-text"]}>{errors.shopName}</p>
+    <>
+      {showSuccess && (
+        <section className={styles["success-popup"]}>
+          Seller account request sent successfully!
+        </section>
       )}
 
-      <label>Shop Logo</label>
-      <input
-        type="file"
-        accept="image/*"
-        onChange={(e) => setShopLogoFile(e.target.files?.[0] || null)}
-      />
+      <form className={styles["signup-form"]} onSubmit={handleSubmit}>
+        <h1>Create Your Seller Account</h1>
 
-      <label>Shopfront Banner Image</label>
-      <input type="file" accept="image/*" onChange={handleBannerChange} />
-      {shopBannerPreview && (
-        <img
-          src={shopBannerPreview}
-          alt="Shop Banner Preview"
-          className={styles["banner-preview"]}
+        <label>Shop Name</label>
+        <input
+          type="text"
+          placeholder="Enter your shop name"
+          value={shopName}
+          onChange={(e) => setShopName(e.target.value)}
+          className={errors.shopName ? styles["input-error"] : ""}
         />
-      )}
+        {errors.shopName && (
+          <p className={styles["error-text"]}>{errors.shopName}</p>
+        )}
 
-      <label>Shop Description</label>
-      <textarea
-        placeholder="Describe your shop"
-        rows={4}
-        value={shopDescription}
-        onChange={(e) => setShopDescription(e.target.value)}
-        className={errors.shopDescription ? styles["input-error"] : ""}
-      ></textarea>
-      {errors.shopDescription && (
-        <p className={styles["error-text"]}>{errors.shopDescription}</p>
-      )}
+        <label>Shop Logo</label>
+        <input
+          type="file"
+          accept="image/*"
+          onChange={(e) => setShopLogoFile(e.target.files?.[0] || null)}
+        />
 
-      <label>Email Address</label>
-      <input
-        type="email"
-        placeholder="Enter your email"
-        value={email}
-        onChange={(e) => setEmail(e.target.value)}
-        className={errors.email ? styles["input-error"] : ""}
-      />
-      {errors.email && <p className={styles["error-text"]}>{errors.email}</p>}
+        <label>Shopfront Banner Image</label>
+        <input type="file" accept="image/*" onChange={handleBannerChange} />
+        {shopBannerPreview && (
+          <img
+            src={shopBannerPreview}
+            alt="Shop Banner Preview"
+            className={styles["banner-preview"]}
+          />
+        )}
 
-      <label>Shop Location</label>
-      <input
-        type="text"
-        placeholder="Enter your shop location"
-        value={shopAddress}
-        onChange={(e) => setShopAddress(e.target.value)}
-        className={errors.shopAddress ? styles["input-error"] : ""}
-      />
-      {errors.shopAddress && (
-        <p className={styles["error-text"]}>{errors.shopAddress}</p>
-      )}
+        <label>Shop Description</label>
+        <textarea
+          placeholder="Describe your shop"
+          rows={4}
+          value={shopDescription}
+          onChange={(e) => setShopDescription(e.target.value)}
+          className={errors.shopDescription ? styles["input-error"] : ""}
+        ></textarea>
+        {errors.shopDescription && (
+          <p className={styles["error-text"]}>{errors.shopDescription}</p>
+        )}
 
-      <p className={styles["instruction-text"]}>
-        Please email us a scanned version of your South African ID or passport.
-        Place your username and shop name in the subject of the email for it to
-        be reviewed.
-      </p>
-      <button type="submit">Create Seller Account</button>
-      <Link to="/Profile" className={styles["verification-link"]}></Link>
-    </form>
+        <label>Email Address</label>
+        <input
+          type="email"
+          placeholder="Enter your email"
+          value={email}
+          onChange={(e) => setEmail(e.target.value)}
+          className={errors.email ? styles["input-error"] : ""}
+        />
+        {errors.email && <p className={styles["error-text"]}>{errors.email}</p>}
+
+        <label>Shop Location</label>
+        <input
+          type="text"
+          placeholder="Enter your shop location"
+          value={shopAddress}
+          onChange={(e) => setShopAddress(e.target.value)}
+          className={errors.shopAddress ? styles["input-error"] : ""}
+        />
+        {errors.shopAddress && (
+          <p className={styles["error-text"]}>{errors.shopAddress}</p>
+        )}
+
+        <p className={styles["instruction-text"]}>
+          Please email us a scanned version of your South African ID or passport.
+          Place your username and shop name in the subject of the email for it to
+          be reviewed.
+        </p>
+        <button type="submit">Create Seller Account</button>
+        <Link to="/Profile" className={styles["verification-link"]}></Link>
+      </form>
+    </>
   );
 }
 

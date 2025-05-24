@@ -2,8 +2,12 @@ import React from "react";
 import { Link, useLocation } from "react-router-dom";
 import styles from "../SellerVerificationPageComp/SellerVerification.module.css";
 
+// component definition
 const AdminSidebar: React.FC = () => {
+  // get current route
   const location = useLocation();
+
+  // check if route is active
   const isActive = (path: string) => location.pathname === path;
 
   return (

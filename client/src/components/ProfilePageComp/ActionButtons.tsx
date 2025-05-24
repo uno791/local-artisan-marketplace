@@ -1,18 +1,22 @@
 import { useNavigate } from "react-router-dom";
 import styles from "./Profile.module.css";
 
+// props interface
 type Props = {
   onBecomeSeller: () => void;
   sellerStatus: "none" | "pending" | "approved";
 };
 
+// component definition
 function ActionButtons({ onBecomeSeller, sellerStatus }: Props) {
   const navigate = useNavigate();
 
+  // view orders handler
   function goToOrders() {
     navigate("/orders");
   }
 
+  // go to dashboard handler
   function goToDashboard() {
     navigate("/SellerHome");
   }

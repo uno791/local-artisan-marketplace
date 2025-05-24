@@ -1,3 +1,4 @@
+// import dependencies and components
 import React, { useState, useEffect } from "react";
 import styles from "../components/QuestionsPageComp/QuestionsPage.module.css";
 import UserNameHeader from "../components/QuestionsPageComp/UserNameHeader";
@@ -9,17 +10,19 @@ import axios from "axios";
 import { baseURL } from "../config";
 import { useNavigate } from "react-router-dom";
 
+// main questions page component
 function QuestionsPage() {
+  // state variables
   const [userName, setUserName] = useState<string>("");
   const [selectedArtForms, setSelectedArtForms] = useState<string[]>([]);
   const [availableTags, setAvailableTags] = useState<string[]>([]);
   const [submitted, setSubmitted] = useState(false);
   const [error, setError] = useState<string | null>(null);
   const [message, setMessage] = useState("");
-  const { user, setUser } = useUser();
+  const { user, setUser } = useUser(); // get and update user context
   const navigate = useNavigate();
 
-  // Fetch art form categories
+  // fetch list of art form categories on load
   useEffect(() => {
     const fetchTags = async () => {
       try {
@@ -32,9 +35,11 @@ function QuestionsPage() {
     fetchTags();
   }, []);
 
+  // handle apply button click
   const handleApplyClick = async () => {
     setError(null);
 
+    // validations
     if (!userName.trim()) {
       setError("Please enter a username.");
       return;
@@ -51,7 +56,7 @@ function QuestionsPage() {
     }
 
     try {
-      //  Check if username is already taken
+      // check if username is already taken
       const checkRes = await axios.post(`${baseURL}/check-user`, {
         username: userName,
       });
@@ -61,7 +66,7 @@ function QuestionsPage() {
         return;
       }
 
-      //  Add user to DB with interests
+      // submit user to database with selected interests
       const interests = selectedArtForms.join(", ");
       const res = await axios.post(`${baseURL}/adduser`, {
         username: userName,
@@ -69,7 +74,7 @@ function QuestionsPage() {
         interests: interests,
       });
 
-      //  Update user context
+      // update user context with new username
       const updatedUser = new User({
         id: user.id,
         name: user.name,
@@ -82,7 +87,7 @@ function QuestionsPage() {
 
       setUser(updatedUser);
 
-      // BO: Send preferences to scoring system
+      // send interests to recommendation scoring system
       try {
         await axios.post(`${baseURL}/apply-preferences`, {
           username: userName,
@@ -91,9 +96,8 @@ function QuestionsPage() {
       } catch (err) {
         console.error("BO: Failed to apply preferences to scoring table:", err);
       }
-      // BO: End
 
-      // on Success
+      // success flow
       setSubmitted(true);
       setMessage(res.data.message);
       setError(null);
@@ -106,8 +110,10 @@ function QuestionsPage() {
 
   return (
     <main className={styles.container}>
+      {/* input for username */}
       <UserNameHeader userName={userName} setUserName={setUserName} />
 
+      {/* interest selection section */}
       <section className={styles.artInterestSection}>
         <h1 className={styles.mainQuestion}>What kind of art interests you?</h1>
         <h2 className={styles.sectionTitle}>Art Forms</h2>
@@ -118,10 +124,13 @@ function QuestionsPage() {
         />
       </section>
 
+      {/* apply button */}
       <ApplyButton onApply={handleApplyClick} />
 
+      {/* display any error message */}
       {error && <p className={styles.error}>{error}</p>}
 
+      {/* success message popup */}
       {submitted && (
         <div className={styles.popup}>
           <h2>Submitted Info</h2>

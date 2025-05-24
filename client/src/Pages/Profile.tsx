@@ -1,3 +1,4 @@
+// import necessary hooks and modules
 import { useState, useRef, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
@@ -13,18 +14,23 @@ import styles from "../components/ProfilePageComp/Profile.module.css";
 import { useUser } from "../Users/UserContext";
 import { baseURL } from "../config";
 
+// main profile component
 function Profile() {
   const navigate = useNavigate();
   const fileInputRef = useRef<HTMLInputElement>(null);
   const { user } = useUser();
 
+  // state variables
   const [image, setImage] = useState<string>(profileImg);
   const [username, setUsername] = useState(user?.username || "");
   const [postalCode, setPostalCode] = useState("-");
   const [phone, setPhone] = useState("");
   const [showModal, setShowModal] = useState(false);
-  const [sellerStatus, setSellerStatus] = useState<"none" | "pending" | "approved">("none");
+  const [sellerStatus, setSellerStatus] = useState<
+    "none" | "pending" | "approved"
+  >("none");
 
+  // fetch user and artisan info on mount
   useEffect(() => {
     async function fetchUserInfo() {
       if (!user?.username) return;
@@ -42,9 +48,13 @@ function Profile() {
           setImage(profileImg);
         }
 
-        const artisanRes = await axios.get(`${baseURL}/artisan/${user.username}`);
+        const artisanRes = await axios.get(
+          `${baseURL}/artisan/${user.username}`
+        );
         if (artisanRes.data) {
-          setSellerStatus(artisanRes.data.verified === 1 ? "approved" : "pending");
+          setSellerStatus(
+            artisanRes.data.verified === 1 ? "approved" : "pending"
+          );
         } else {
           setSellerStatus("none");
         }
@@ -56,10 +66,12 @@ function Profile() {
     fetchUserInfo();
   }, [user?.username]);
 
+  // open file picker to select new profile image
   function openFilePicker() {
     fileInputRef.current?.click();
   }
 
+  // handle image file selection and upload
   function handleImageChange(event: React.ChangeEvent<HTMLInputElement>) {
     const file = event.target.files?.[0];
     if (file && user?.username) {
@@ -84,14 +96,17 @@ function Profile() {
     }
   }
 
+  // navigate to seller signup page
   function goToSellerSignup() {
     navigate("/seller-signup");
   }
 
+  // close the modal for editing info
   function closeModal() {
     setShowModal(false);
   }
 
+  // handle logout and redirect to landing
   function handleLogout() {
     localStorage.clear();
     navigate("/");
@@ -100,6 +115,7 @@ function Profile() {
   return (
     <main className={styles.profile}>
       <article className={styles["profile-content"]}>
+        {/* profile image section */}
         <ProfileImage
           image={image}
           openFilePicker={openFilePicker}
@@ -107,6 +123,7 @@ function Profile() {
           handleImageChange={handleImageChange}
         />
 
+        {/* profile details section */}
         <ProfileInfo
           username={username}
           postalCode={postalCode}
@@ -114,11 +131,13 @@ function Profile() {
           onEdit={() => setShowModal(true)}
         />
 
+        {/* action buttons for becoming a seller */}
         <ActionButtons
           onBecomeSeller={goToSellerSignup}
           sellerStatus={sellerStatus}
         />
 
+        {/* logout button */}
         <section className={styles.logoutSection}>
           <button className={styles.logoutButton} onClick={handleLogout}>
             Log Out
@@ -129,6 +148,7 @@ function Profile() {
         </section>
       </article>
 
+      {/* edit info modal */}
       {showModal && (
         <EditInfo
           username={username}

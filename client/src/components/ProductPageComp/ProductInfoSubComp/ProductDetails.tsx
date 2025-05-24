@@ -1,11 +1,13 @@
 import styles from "./ProductDetails.module.css";
 
+// props interface
 interface DetailsProps {
   weight: number;
   height: number;
   width: number;
 }
 
+// component definition
 function ProductDetails({ weight, height, width }: DetailsProps) {
   return (
     <section className={styles["product-details"]}>

@@ -8,6 +8,8 @@ import axios from "axios";
 import { useUser } from "../Users/UserContext";
 import { Link } from "react-router-dom";
 
+// product type definition
+
 interface Product {
   id: number;
   name: string;
@@ -16,6 +18,7 @@ interface Product {
   image?: string;
 }
 
+// artisan type definition
 interface Artisan {
   shop_name: string;
   bio: string;
@@ -24,8 +27,12 @@ interface Artisan {
   shop_banner: string;
 }
 
+// main seller home component
 function SellerHome() {
+  // get current user
   const { user } = useUser();
+
+  // define state variables
   const [username] = useState(user?.username || "");
   const [artisan, setArtisan] = useState<Artisan | null>(null);
   const [category, setCategory] = useState("All");
@@ -34,29 +41,29 @@ function SellerHome() {
   const [errorPopup, setErrorPopup] = useState("");
 
 
+  // fetch artisan and product data
   useEffect(() => {
-  if (!username) return;
+    if (!username) return;
 
-  axios
-    .get(`${baseURL}/seller-dashboard`, { params: { username } })
-    .then((res) => {
-      const { artisan, products } = res.data;
-      setArtisan(artisan);
-      setProducts(products);
+    axios
+      .get(`${baseURL}/seller-dashboard`, { params: { username } })
+      .then((res) => {
+        const { artisan, products } = res.data;
+        setArtisan(artisan);
+        setProducts(products);
 
-      const uniqueCategories: string[] = Array.from(
-        new Set(
-          Array.isArray(products)
-            ? products.map((p: Product) => p.category || "Uncategorized")
-            : []
-        )
-      );
+        const uniqueCategories: string[] = Array.from(
+          new Set(
+            Array.isArray(products)
+              ? products.map((p: Product) => p.category || "Uncategorized")
+              : []
+          )
+        );
 
-      setCategories(["All", ...uniqueCategories.filter(Boolean)]);
-    })
-    .catch((err) => console.error("Error loading seller dashboard:", err));
-}, [username]);
-
+        setCategories(["All", ...uniqueCategories.filter(Boolean)]);
+      })
+      .catch((err) => console.error("Error loading seller dashboard:", err));
+  }, [username]);
 
   const handleDelete = async (id: number) => {
   try {
@@ -76,8 +83,11 @@ function SellerHome() {
 
   return (
     <>
+      {/* seller header */}
       {artisan && <Header artisan={artisan} />}
+
       <main className={styles.pageContent}>
+        {/* top bar with add button and filter */}
         <section className={styles.topBar}>
           <Link to={"/AddProductPage"}>
             <button className={styles.addProductBtn}>Add New Product</button>
@@ -88,9 +98,15 @@ function SellerHome() {
             categories={categories}
           />
         </section>
+
+        {/* product grid */}
         <section className={styles.grid}>
           {filteredProducts.map((product) => (
-            <ProductCard key={product.id} product={product} onDelete={handleDelete} />
+            <ProductCard
+              key={product.id}
+              product={product}
+              onDelete={handleDelete}
+            />
           ))}
         </section>
         {errorPopup && (

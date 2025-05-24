@@ -4,8 +4,10 @@ import axios from "axios";
 import { useUser } from "../../Users/UserContext";
 import { baseURL } from "../../config";
 
+// allowed order statuses
 type OrderStatus = "Payment Received" | "Shipped" | "Delivered";
 
+// shape of an order object
 interface Order {
   order_id: number;
   product_id: number;
@@ -16,6 +18,7 @@ interface Order {
   date: string;
 }
 
+// main component to show current and previous orders
 const SellerOrders: React.FC = () => {
   const { user } = useUser();
   const [orders, setOrders] = useState<Order[]>([]);
@@ -25,12 +28,14 @@ const SellerOrders: React.FC = () => {
     newStatus: OrderStatus;
   } | null>(null);
 
+  // fetch orders on component mount or when username changes
   useEffect(() => {
     if (!user?.username) return;
 
     axios
       .get(`${baseURL}/seller-orders/${user.username}`)
       .then((res) => {
+        // format order data for display
         const formattedOrders = res.data.map((order: any) => ({
           order_id: order.order_id,
           product_id: order.product_id,
@@ -45,6 +50,7 @@ const SellerOrders: React.FC = () => {
       .catch((err) => console.error("❌ Failed to load orders:", err));
   }, [user?.username]);
 
+  // temporarily store status change before confirmation
   const handleStatusChange = (
     order_id: number,
     product_id: number,
@@ -53,6 +59,7 @@ const SellerOrders: React.FC = () => {
     setPendingStatus({ orderId: order_id, productId: product_id, newStatus });
   };
 
+  // confirm and submit new order status
   const confirmStatusChange = async () => {
     if (!pendingStatus) return;
 
@@ -79,9 +86,11 @@ const SellerOrders: React.FC = () => {
     }
   };
 
+  // filter into current and previous orders
   const currentOrders = orders.filter((o) => o.status !== "Delivered");
   const previousOrders = orders.filter((o) => o.status === "Delivered");
 
+  // card ui for displaying order
   const renderOrderCard = (order: Order) => (
     <div
       key={`${order.order_id}-${order.product_id}`}
@@ -110,6 +119,7 @@ const SellerOrders: React.FC = () => {
       </div>
       <div>Date: {order.date}</div>
 
+      {/* color dot for order status */}
       <div
         className={`${styles.statusDot} ${
           styles[order.status.toLowerCase().replace(/\s/g, "") + "Dot"]
@@ -134,6 +144,7 @@ const SellerOrders: React.FC = () => {
         previousOrders.map(renderOrderCard)
       )}
 
+      {/* confirm dialog for status change */}
       {pendingStatus && (
         <aside className={styles.modalBackdrop}>
           <section

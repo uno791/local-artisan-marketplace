@@ -1,19 +1,24 @@
 import React, { useState, useEffect } from "react";
 import styles from "../EditProductPageComp/StockInput.module.css";
 
+// props interface
 interface Props {
   stock: number;
   setStock: (stock: number) => void;
 }
 
+// component definition
 const StockInput: React.FC<Props> = ({ stock, setStock }) => {
+  // local state
   const [inputValue, setInputValue] = useState<string>("");
 
+  // sync input value with prop
   useEffect(() => {
     if (stock === 0 && inputValue === "") return;
     setInputValue(stock.toString());
   }, [stock]);
 
+  // handle input changes
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const val = e.target.value;
     if (/^\d*$/.test(val)) {
@@ -24,9 +29,17 @@ const StockInput: React.FC<Props> = ({ stock, setStock }) => {
 
   return (
     <section className={styles.container}>
-      <label htmlFor="stock-input"><strong>Stock Count</strong></label>
+      <label htmlFor="stock-input">
+        <strong>Stock Count</strong>
+      </label>
       <section className={styles.controlGroup}>
-        <button type="button" className={styles.button} onClick={() => setStock(Math.max(0, stock - 1))}>-</button>
+        <button
+          type="button"
+          className={styles.button}
+          onClick={() => setStock(Math.max(0, stock - 1))}
+        >
+          -
+        </button>
         <input
           id="stock-input"
           type="text"
@@ -37,7 +50,13 @@ const StockInput: React.FC<Props> = ({ stock, setStock }) => {
           onChange={handleChange}
           className={styles.input}
         />
-        <button type="button" className={styles.button} onClick={() => setStock(stock + 1)}>+</button>
+        <button
+          type="button"
+          className={styles.button}
+          onClick={() => setStock(stock + 1)}
+        >
+          +
+        </button>
       </section>
       <p className={styles.counter}>{inputValue.length}/7</p>
     </section>

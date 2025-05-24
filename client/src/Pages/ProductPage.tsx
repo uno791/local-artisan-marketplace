@@ -1,3 +1,4 @@
+// import necessary modules and components
 import { useParams } from "react-router-dom";
 import { useEffect, useState } from "react";
 import axios from "axios";
@@ -12,6 +13,7 @@ import ReportProduct from "../components/ProductPageComp/ReportProduct";
 import { baseURL } from "../config";
 import { useUser } from "../Users/UserContext";
 
+// product type definition
 interface Product {
   product_id: number;
   product_name: string;
@@ -28,6 +30,7 @@ interface Product {
   tags: string[];
 }
 
+// artisan/shop type definition
 interface Artisan {
   shop_pfp: string;
   shop_name: string;
@@ -35,13 +38,20 @@ interface Artisan {
   bio: string;
 }
 
+// main product page component
 function ProductPage() {
+  // get product id from url
   const { id } = useParams<{ id: string }>();
+
+  // state for product and artisan data
   const [product, setProduct] = useState<Product | null>(null);
   const [artisan, setArtisan] = useState<Artisan | null>(null);
+
+  // modal state for reporting
   const [showReportModal, setShowReportModal] = useState(false);
   const { user } = useUser(); // currently logged-in user
 
+  // fetch product and artisan details on load
   useEffect(() => {
     if (!id) return;
 
@@ -59,13 +69,14 @@ function ProductPage() {
       });
   }, [id]);
 
+  // show loading text while product is loading
   if (!product) {
     return <p>Loading product...</p>;
   }
 
   return (
     <main className={styles["product-page"]}>
-      {/* Report Button Top Left */}
+      {/* report product button */}
       <section className={styles["report-button-container"]}>
         <button
           onClick={() => setShowReportModal(true)}
@@ -75,13 +86,17 @@ function ProductPage() {
         </button>
       </section>
 
+      {/* back navigation */}
       <BackButton />
 
+      {/* main product layout */}
       <section className={styles["product-main"]}>
+        {/* product image */}
         <section className={styles["product-left"]}>
           <ProductImage image_url={product.image_url} />
         </section>
 
+        {/* product info center column */}
         <section className={styles["product-middle"]}>
           <ProductInfo
             name={product.product_name}
@@ -92,6 +107,7 @@ function ProductPage() {
           />
         </section>
 
+        {/* seller and tags sidebar */}
         <aside className={styles["product-right"]}>
           <SidebarInfo
             username={product.username}
@@ -103,6 +119,7 @@ function ProductPage() {
         </aside>
       </section>
 
+      {/* report modal */}
       {showReportModal && user?.username && (
         <ReportProduct
           productId={product.product_id}

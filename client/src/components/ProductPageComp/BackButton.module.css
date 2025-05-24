@@ -5,17 +5,46 @@
   border: none;
   border-radius: 9999px;
   cursor: pointer;
-  margin-top: 23px;
   transition: background-color 0.3s ease, transform 0.2s ease;
   display: flex;
   align-items: center;
   justify-content: center;
-  margin-left: 110px;
+  font-size: 1rem;
+  margin: 0; /* remove margin-left/right */
+  margin-left: 100px;
+  margin-top: 20px;
 }
+
+@media (max-width: 600px) {
+  .back-button {
+    font-size: 14px;
+    padding: 6px 12px;
+  }
+}
+
 
 .back-button:hover {
   background-color: #3e2b18;
   transform: scale(1.1);
 }
 
-  
+@media (max-width: 600px) {
+  .back-button {
+    margin-left: 5px;   /* Reduce margin for small screens */
+    font-size: 14px;     /* Optional: slightly smaller text */
+    padding: 6px 12px;   /* Optional: smaller padding */
+  }
+}
+
+/* Responsive Flex Utility */
+
+@media (max-width: 375px) {
+  .flex-responsive {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    align-items: center;
+    justify-content: center;
+    margin-right: 1px;
+  }
+}

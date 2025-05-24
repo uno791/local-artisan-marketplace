@@ -1,9 +1,11 @@
 import styles from "./Bio.module.css";
 
+// props interface
 interface BioProps {
   description: string;
 }
 
+// component definition
 function Bio({ description }: BioProps) {
   return (
     <section className={styles["bio-container"]}>

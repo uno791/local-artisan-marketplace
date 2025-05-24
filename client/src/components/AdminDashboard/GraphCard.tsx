@@ -1,4 +1,3 @@
-// src/components/AdminDashboard/GraphCard.tsx
 import React, { forwardRef } from "react";
 import {
   Chart as ChartJS,
@@ -8,6 +7,7 @@ import {
 } from "chart.js";
 import { Line } from "react-chartjs-2";
 
+// chart registration
 if (typeof ChartJS.register === "function") {
   ChartJS.register(...registerables);
 } else {
@@ -15,6 +15,7 @@ if (typeof ChartJS.register === "function") {
   ChartJS.register = (..._args: any[]) => {};
 }
 
+// chart options
 const options: ChartOptions<"line"> = {
   responsive: true,
   plugins: {
@@ -27,10 +28,12 @@ const options: ChartOptions<"line"> = {
   },
 };
 
+// props interface
 interface GraphCardProps {
   data: ChartData<"line", number[], string>;
 }
 
+// component definition
 const GraphCard = forwardRef<HTMLDivElement, GraphCardProps>(
   ({ data }, ref) => (
     <div ref={ref} style={{ background: "#fff", borderRadius: 8, padding: 20 }}>

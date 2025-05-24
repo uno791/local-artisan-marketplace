@@ -1,12 +1,14 @@
 import { Link } from "react-router-dom";
 import styles from "./ArtistInfo.module.css";
 
+// props interface
 interface ArtisanProps {
   Uname: string;
   shop_pfp: string;
   shop_name: string;
 }
 
+// component definition
 function ArtistInfo({ Uname, shop_pfp, shop_name }: ArtisanProps) {
   return (
     <section className={styles["artist-card"]}>

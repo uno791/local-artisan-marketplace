@@ -1,20 +1,23 @@
-// src/components/AddProductPageComp/ImageAdder.tsx
-
 import React, { useRef } from "react";
 import styles from "../EditProductPageComp/ImageEditor.module.css";
 
+// props interface
 interface ImageAdderProps {
   setImage: (img: string) => void;
   currentImage: string;
 }
 
+// component definition
 const ImageAdder: React.FC<ImageAdderProps> = ({ setImage, currentImage }) => {
+  // file input reference
   const fileInputRef = useRef<HTMLInputElement>(null);
 
+  // open file dialog
   const openFilePicker = () => {
     fileInputRef.current?.click();
   };
 
+  // handle image input
   const handleImageChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     const file = event.target.files?.[0];
     if (!file) return;

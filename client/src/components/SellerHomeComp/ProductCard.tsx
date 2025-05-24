@@ -2,6 +2,7 @@ import styles from "./ProductCard.module.css";
 import { Link } from "react-router-dom";
 import { useState } from "react";
 
+// product data type
 type Product = {
   id: number;
   name: string;
@@ -10,6 +11,7 @@ type Product = {
   image?: string;
 };
 
+// props for card
 type Props = {
   product: Product;
   onDelete: (id: number) => void;
@@ -33,6 +35,7 @@ function ProductCard({ product, onDelete }: Props) {
         <p>{product.price}</p>
         <p className={styles.category}>{product.category}</p>
 
+        {/* edit button linking to product form */}
         <Link to={`/EditProductPage/${product.id}`}>
           <button className={styles.button}>Edit Product</button>
         </Link>
@@ -51,7 +54,9 @@ function ProductCard({ product, onDelete }: Props) {
         <section className={styles.popupOverlay}>
           <article className={styles.popup}>
             <h3>Are you sure you want to delete this product?</h3>
-            <p><strong>{product.name}</strong></p>
+            <p>
+              <strong>{product.name}</strong>
+            </p>
             <div className={styles.popupButtons}>
               <button
                 className={`${styles.button} ${styles.deleteButton}`}

@@ -1,5 +1,6 @@
 import styles from "./DeliveryOption.module.css";
 
+// component definition
 function DeliveryOption() {
   return (
     <section className={styles["delivery-container"]}>

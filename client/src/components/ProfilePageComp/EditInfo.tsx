@@ -19,6 +19,7 @@ function EditInfo(props: Props) {
   const [renderKey, setRenderKey] = useState(0);
   const [loading, setLoading] = useState(false);
   const [errors, setErrors] = useState<{ postalCode?: string; phone?: string }>({});
+  const [infoSaved, setInfoSaved] = useState(false); // NEW
 
   useEffect(() => {
     const timeout = setTimeout(() => {
@@ -53,11 +54,14 @@ function EditInfo(props: Props) {
         postal_code: props.postalCode,
         phone_no: props.phone,
       });
-      alert("✅ Info updated successfully!");
-      props.onClose();
+
+      setInfoSaved(true); // NEW
+      setTimeout(() => {
+        props.onClose();
+      }, 2000);
     } catch (error) {
-      alert("❌ Failed to update user info.");
       console.error(error);
+      // No alert
     } finally {
       setLoading(false);
     }
@@ -75,7 +79,7 @@ function EditInfo(props: Props) {
           <input
             value={props.username}
             onChange={(e) => props.setUsername(e.target.value)}
-            disabled // i turned off
+            disabled
           />
 
           <label>Postal Code</label>
@@ -118,6 +122,12 @@ function EditInfo(props: Props) {
               Cancel
             </button>
           </section>
+
+          {infoSaved && (
+            <p style={{ marginTop: "1rem", color: "green", textAlign: "center" }}>
+              Info updated successfully.
+            </p>
+          )}
         </form>
       </section>
     </section>
@@ -125,4 +135,3 @@ function EditInfo(props: Props) {
 }
 
 export default EditInfo;
-

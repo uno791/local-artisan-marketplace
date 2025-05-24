@@ -2,6 +2,7 @@ import React from "react";
 import styles from "./SignUpPrompt.module.css";
 import { Link } from "react-router-dom";
 
+// component definition
 export function SignUpPrompt() {
   return (
     <p className={styles.signupText}>

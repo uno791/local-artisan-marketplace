@@ -1,11 +1,13 @@
 import React from "react";
 import styles from "./QuestionsPage.module.css";
 
+// props interface
 interface UserNameHeaderProps {
   userName: string;
   setUserName: (name: string) => void;
 }
 
+// component definition
 const UserNameHeader: React.FC<UserNameHeaderProps> = ({
   userName,
   setUserName,

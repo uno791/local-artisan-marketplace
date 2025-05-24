@@ -4,6 +4,7 @@ import NavBar from "./NavBar";
 import { baseURL } from "../../config";
 import { useUser } from "../../Users/UserContext";
 
+// artisan data shape
 interface Artisan {
   shop_name: string;
   bio: string;
@@ -12,11 +13,13 @@ interface Artisan {
   shop_banner: string;
 }
 
+// header component for artisan shop page
 function Header({ artisan }: { artisan: Artisan }) {
   const { user } = useUser();
   const bannerInputRef = useRef<HTMLInputElement>(null);
   const pfpInputRef = useRef<HTMLInputElement>(null);
 
+  // handles image file change for profile or banner
   const handleFileChange = async (
     event: React.ChangeEvent<HTMLInputElement>,
     field: "shop_pfp" | "shop_banner"
@@ -67,6 +70,7 @@ function Header({ artisan }: { artisan: Artisan }) {
         <NavBar />
       </nav>
 
+      {/* profile picture edit button */}
       <button
         className={styles.pfpEditBtn}
         onClick={() => pfpInputRef.current?.click()}
@@ -81,6 +85,7 @@ function Header({ artisan }: { artisan: Artisan }) {
         style={{ display: "none" }}
       />
 
+      {/* shop banner edit button */}
       <button
         className={styles.bannerEditBtn}
         onClick={() => bannerInputRef.current?.click()}
@@ -95,6 +100,7 @@ function Header({ artisan }: { artisan: Artisan }) {
         style={{ display: "none" }}
       />
 
+      {/* artisan profile and shop info */}
       <figure className={styles.logoContainer}>
         <figcaption className={styles.detailsCard}>
           <img
