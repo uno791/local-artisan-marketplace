@@ -15,4 +15,9 @@
     font-size: 1rem;
     resize: vertical;
   }
-  
+  .counter {
+  font-size: 0.85rem;
+  color: #666;
+  margin-top: 4px;
+  text-align: right;
+}

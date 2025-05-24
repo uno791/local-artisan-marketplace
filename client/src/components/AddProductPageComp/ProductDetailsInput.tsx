@@ -9,9 +9,7 @@ interface Props {
 
 const ProductDetailsInput: React.FC<Props> = ({ Details, setDetails }) => {
   return (
-    // container for description input
-    <div className={styles.container}>
-      {/* label for textarea */}
+    <section className={styles.container}>
       <label htmlFor="product-description">
         <strong>Enter Product Description:</strong>
       </label>
@@ -20,11 +18,14 @@ const ProductDetailsInput: React.FC<Props> = ({ Details, setDetails }) => {
       <textarea
         id="product-description"
         rows={6}
+        maxLength={1000}
         className={styles.textarea}
         value={Details}
         onChange={(e) => setDetails(e.target.value)}
+        placeholder="Enter a detailed product description"
       />
-    </div>
+      <p className={styles.counter}>{Details.length}/1000</p>
+    </section>
   );
 };
 

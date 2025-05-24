@@ -8,18 +8,21 @@ interface Props {
 
 const ProductNameInput: React.FC<Props> = ({ ProdName, setProdName }) => {
   return (
-    <div className={styles.container}>
-      <label>
+    <section className={styles.container}>
+      <label htmlFor="product-name">
         <strong>Enter Product Name:</strong>
       </label>
       <input
+        id="product-name"
         type="text"
         className={styles.input}
         value={ProdName}
+        maxLength={100}
         placeholder="Enter Product Name"
         onChange={(e) => setProdName(e.target.value)}
       />
-    </div>
+      <p className={styles.counter}>{ProdName.length}/100</p>
+    </section>
   );
 };
 

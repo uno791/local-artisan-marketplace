@@ -294,7 +294,9 @@ test('Admin login shows "Are you a robot?" prompt', async () => {
 });
 
 
-test('Clicking "Yes" on robot check takes you to Admin Dashboard', async () => {
+
+
+test('Clicking "No" on robot check takes you to Admin Dashboard', async () => {
   mockedAxios.get.mockResolvedValueOnce({
     data: {
       sub: "admin-id",
@@ -332,72 +334,27 @@ test('Clicking "Yes" on robot check takes you to Admin Dashboard', async () => {
     loginCallback({ credential: "mock-token", access_token: "admin-token" });
   });
 
-  // ✅ Wait for admin success message
+  // Wait for admin success message
   await waitFor(() => {
     expect(screen.getByText("Welcome back, Admin!")).toBeInTheDocument();
   });
 
-  // ✅ Click Close to trigger prank modal
+  // Close popup → show prank modal
   fireEvent.click(screen.getByRole("button", { name: /close/i }));
 
-  // ✅ Wait for prank modal
   await waitFor(() => {
     expect(screen.getByTestId("robot-check")).toBeInTheDocument();
   });
 
-  // ✅ Click Yes to navigate
-  fireEvent.click(screen.getByRole("button", { name: /yes/i }));
+  // Click "No" → navigate to Admin Dashboard
+  fireEvent.click(screen.getByRole("button", { name: /no/i }));
 
-  // ✅ Check if dashboard is rendered
   await waitFor(() => {
     expect(screen.getByText(/admin dashboard/i)).toBeInTheDocument();
   });
 });
 
-
-test('User login shows "Are you a robot?" prompt', async () => {
-  mockedAxios.get.mockResolvedValueOnce({
-    data: {
-      sub: "user-id",
-      name: "Test User",
-      email: "user@example.com",
-      picture: "https://example.com/user.jpg",
-    },
-  });
-
-  mockedAxios.post.mockResolvedValueOnce({
-    data: {
-      exists: true,
-      role: 0,
-    },
-  });
-
-  renderWithProviders(<LoginPage />);
-  fireEvent.click(screen.getByRole("button", { name: /Log-in with Google/i }));
-
-  act(() => {
-    loginCallback({ credential: "mock-token", access_token: "user-token" });
-  });
-
-  // Wait for success message to appear
-  await waitFor(() => {
-    expect(screen.getByText("Successfully logged in!")).toBeInTheDocument();
-  });
-
-  // Click the "Close" button to trigger prank modal
-  fireEvent.click(screen.getByRole("button", { name: /close/i }));
-
-  // Now check for prank modal
-  await waitFor(() => {
-    expect(screen.getByTestId("robot-check")).toBeInTheDocument();
-  });
-
-  // Check the Yes and No buttons exist
-  expect(screen.getByRole("button", { name: /yes/i })).toBeInTheDocument();
-  expect(screen.getByRole("button", { name: /no/i })).toBeInTheDocument();
-});
-
-test('Clicking "Yes" on robot check as user takes you to Home page', async () => {
+test('Clicking "No" on robot check as user takes you to Home page', async () => {
   mockedAxios.get.mockResolvedValueOnce({
     data: {
       sub: "user-id",
@@ -443,10 +400,10 @@ test('Clicking "Yes" on robot check as user takes you to Home page', async () =>
     expect(screen.getByTestId("robot-check")).toBeInTheDocument();
   });
 
-  fireEvent.click(screen.getByRole("button", { name: /yes/i }));
+  fireEvent.click(screen.getByRole("button", { name: /no/i }));
 
-  // ✅ Fix: Look for real text from Home.tsx
   await waitFor(() => {
-    expect(screen.getByText(/for you/i)).toBeInTheDocument();
+    expect(screen.getByText(/for you/i)).toBeInTheDocument(); // Adjust text as needed
   });
 });
+

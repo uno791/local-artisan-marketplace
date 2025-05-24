@@ -27,3 +27,9 @@ input[type="radio"] {
   margin-bottom: 0.5rem;
   color: #050000;
 }
+.counter {
+  font-size: 0.85rem;
+  color: #666;
+  margin-top: 4px;
+  text-align: right;
+}

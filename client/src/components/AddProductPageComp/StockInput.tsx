@@ -1,12 +1,12 @@
 import React, { useState, useEffect } from "react";
 import styles from "../EditProductPageComp/StockInput.module.css";
 
-interface props {
+interface Props {
   stock: number;
   setStock: (stock: number) => void;
 }
 
-const StockInput: React.FC<props> = ({ stock, setStock }) => {
+const StockInput: React.FC<Props> = ({ stock, setStock }) => {
   const [inputValue, setInputValue] = useState<string>("");
 
   useEffect(() => {
@@ -28,30 +28,20 @@ const StockInput: React.FC<props> = ({ stock, setStock }) => {
         <strong>Stock Count</strong>
       </label>
       <section className={styles.controlGroup}>
-        <button
-          type="button"
-          className={styles.button}
-          onClick={() => setStock(Math.max(0, stock - 1))}
-        >
-          -
-        </button>
+        <button type="button" className={styles.button} onClick={() => setStock(Math.max(0, stock - 1))}>-</button>
         <input
           id="stock-input"
           type="text"
           inputMode="numeric"
           pattern="[0-9]*"
+          maxLength={7}
           value={inputValue}
           onChange={handleChange}
           className={styles.input}
         />
-        <button
-          type="button"
-          className={styles.button}
-          onClick={() => setStock(stock + 1)}
-        >
-          +
-        </button>
+        <button type="button" className={styles.button} onClick={() => setStock(stock + 1)}>+</button>
       </section>
+      <p className={styles.counter}>{inputValue.length}/7</p>
     </section>
   );
 };

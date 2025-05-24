@@ -19,7 +19,7 @@ import { useNavigate } from "react-router-dom";
 const AddProductPage: React.FC = () => {
   const [ProdName, setProdName] = React.useState("");
   const [Details, setDetails] = React.useState("");
-  const [Price, setPrice] = React.useState(0);
+  const [Price, setPrice] = React.useState(""); // updated to string
   const [Stock, setStock] = React.useState(1);
   const [Width, setWidth] = React.useState("");
   const [Height, setHeight] = React.useState("");
@@ -47,7 +47,8 @@ const AddProductPage: React.FC = () => {
 
     if (!ProdName.trim()) missing.push("Product Name");
     if (!Details.trim()) missing.push("Product Details");
-    if (!Price || isNaN(Price)) missing.push("Price");
+    if (!ProductImage.trim()) missing.push("Product Image"); // ✅ New line
+    if (!Price.trim() || isNaN(Number(Price))) missing.push("Price");
     if (!Stock || isNaN(Stock)) missing.push("Stock");
     if (!Width.trim()) missing.push("Width");
     if (!Height.trim()) missing.push("Height");
@@ -59,17 +60,16 @@ const AddProductPage: React.FC = () => {
       setMissingFields(missing);
       return;
     }
-
     const payload = {
       username,
       product_name: ProdName,
       description: Details,
-      price: Price,
+      price: parseFloat(Price), // safely parsed
       stock_quantity: Stock,
       image_url: ProductImage,
-      width: parseInt(Width),
-      height: parseInt(Height),
-      weight: parseInt(Weight),
+      width: parseFloat(Width),
+      height: parseFloat(Height),
+      weight: parseFloat(Weight),
       details: Details,
       tags: Tags,
       typeOfArt: MajorCategory,
@@ -152,7 +152,7 @@ const AddProductPage: React.FC = () => {
                   <strong>Details:</strong> {Details}
                 </p>
                 <p>
-                  <strong>Price:</strong> R{Price.toFixed(2)}
+                  <strong>Price:</strong> R{parseFloat(Price).toFixed(2)}
                 </p>
                 <p>
                   <strong>Stock:</strong> {Stock}

@@ -51,3 +51,9 @@
   font-size: 0.875rem;
   margin-top: 0.25rem;
 }
+.counter {
+  font-size: 0.85rem;
+  color: #666;
+  margin-top: 4px;
+  text-align: right;
+}
