@@ -18,10 +18,7 @@ const SizeAndDimensions: React.FC<Props> = ({
   Weight,
   setWeight,
 }) => {
-  const handleDecimalInput = (
-    value: string,
-    setter: (val: string) => void
-  ) => {
+  const handleDecimalInput = (value: string, setter: (val: string) => void) => {
     if (/^\d*\.?\d{0,2}$/.test(value)) {
       setter(value);
     }
@@ -32,7 +29,9 @@ const SizeAndDimensions: React.FC<Props> = ({
       <strong>Enter size and dimensions:</strong>
       <section className={styles.group}>
         <div className={styles.fieldGroup}>
-          <label htmlFor="width" className={styles.label}>Width (cm):</label>
+          <label htmlFor="width" className={styles.label}>
+            Width (cm):
+          </label>
           <input
             id="width"
             name="width"
@@ -46,7 +45,9 @@ const SizeAndDimensions: React.FC<Props> = ({
         </div>
 
         <div className={styles.fieldGroup}>
-          <label htmlFor="height" className={styles.label}>Height (cm):</label>
+          <label htmlFor="height" className={styles.label}>
+            Height (cm):
+          </label>
           <input
             id="height"
             name="height"
@@ -60,7 +61,9 @@ const SizeAndDimensions: React.FC<Props> = ({
         </div>
 
         <div className={styles.fieldGroup}>
-          <label htmlFor="weight" className={styles.label}>Weight (kg):</label>
+          <label htmlFor="weight" className={styles.label}>
+            Weight (kg):
+          </label>
           <input
             id="weight"
             name="weight"

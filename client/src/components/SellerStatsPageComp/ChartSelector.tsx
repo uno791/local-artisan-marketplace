@@ -1,4 +1,5 @@
 // src/components/SellerStatsPageComp/ChartSelector.tsx
+
 import React, { useEffect, useRef, useState } from "react";
 import html2canvas from "html2canvas";
 import jsPDF from "jspdf";
@@ -16,16 +17,23 @@ const ChartSelector: React.FC = () => {
   const { user } = useUser();
   const username = user?.username || "";
 
+  // state to track selected chart type
   const [chartKey, setChartKey] = useState<ChartKey>("salesTrends");
+
+  // data for charts
   const [months, setMonths] = useState<string[]>([]);
   const [salesData, setSalesData] = useState<number[]>([]);
   const [products, setProducts] = useState<string[]>([]);
   const [stockData, setStockData] = useState<number[]>([]);
   const [unitsSold, setUnitsSold] = useState<number[]>([]);
+
+  // reference to the chart container for pdf export
   const chartRef = useRef<HTMLDivElement>(null);
 
+  // fetch chart data when chartKey changes
   useEffect(() => {
     if (!username) return;
+
     let endpoint: string;
     switch (chartKey) {
       case "salesTrends":
@@ -73,7 +81,7 @@ const ChartSelector: React.FC = () => {
       .catch(console.error);
   }, [username, chartKey]);
 
-  // PDF export
+  // export chart to pdf using html2canvas
   const exportPDF = async () => {
     if (!chartRef.current) return;
     const canvas = await html2canvas(chartRef.current, { scale: 2 });
@@ -85,9 +93,10 @@ const ChartSelector: React.FC = () => {
     pdf.save(`${chartKey}.pdf`);
   };
 
-  // CSV export
+  // export chart data to csv
   const exportCSV = () => {
     let rows: string[][];
+
     if (chartKey === "salesTrends") {
       rows = [
         ["Month", ...months],
@@ -99,7 +108,6 @@ const ChartSelector: React.FC = () => {
         ...products.map((p, i) => [p, stockData[i].toString()]),
       ];
     } else {
-      // topProducts
       rows = [
         ["Product", ...products],
         ["Units Sold", ...unitsSold.map(String)],
@@ -119,6 +127,7 @@ const ChartSelector: React.FC = () => {
   return (
     <section className={styles.selectorContainer}>
       <header className={styles.controls}>
+        {/* chart selection dropdown */}
         <select
           className={styles.select}
           value={chartKey}
@@ -128,6 +137,8 @@ const ChartSelector: React.FC = () => {
           <option value="inventoryStatus">Inventory Status</option>
           <option value="topProducts">Top Products</option>
         </select>
+
+        {/* export buttons */}
         <button onClick={exportPDF} className={styles.button}>
           Export as PDF
         </button>
@@ -136,6 +147,7 @@ const ChartSelector: React.FC = () => {
         </button>
       </header>
 
+      {/* chart display area */}
       <main ref={chartRef} className={styles.chartWrapper}>
         {chartKey === "salesTrends" && (
           <SalesTrendsChart months={months} data={salesData} />

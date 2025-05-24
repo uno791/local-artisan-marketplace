@@ -1,6 +1,7 @@
 import React from "react";
 import styles from "./StatsCard.module.css";
 
+// props include a label and a value to display
 interface StatsCardProps {
   label: string;
   value: string;
@@ -8,10 +9,11 @@ interface StatsCardProps {
 
 const StatsCard: React.FC<StatsCardProps> = ({ label, value }) => {
   return (
-    <div className={styles.card}>
+    // card showing a stat label and value
+    <article className={styles.card}>
       <p className={styles.label}>{label}</p>
       <h3 className={styles.value}>{value}</h3>
-    </div>
+    </article>
   );
 };
 

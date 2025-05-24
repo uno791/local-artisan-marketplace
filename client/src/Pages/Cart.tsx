@@ -8,13 +8,15 @@ import { useUser } from "../Users/UserContext";
 import { getYocoKey } from "../utils/getYocoKey";
 
 function Cart() {
+  // state for total price
   const [total, setTotal] = useState<number>(0);
   const publicKey = getYocoKey();
   const { user } = useUser();
 
+  // handle checkout via yoco payment popup
   const handleProceedToPayment = () => {
     if (!publicKey || !user?.username) {
-      console.error("Missing Yoco public key or user.");
+      console.error("missing yoco public key or user.");
       return;
     }
 
@@ -31,7 +33,7 @@ function Cart() {
       description: "Cart Checkout (incl. R2 delivery)",
       callback: async function (result: any) {
         if (result.error) {
-          console.error("Payment failed:", result.error.message);
+          console.error("payment failed:", result.error.message);
           return;
         }
 
@@ -41,11 +43,12 @@ function Cart() {
             token: result.id,
           });
 
+          // redirect to orders page on success
           window.location.href = "/orders";
         } catch (err: any) {
-          console.error("❌ Failed to complete checkout:", err);
+          console.error("❌ failed to complete checkout:", err);
           alert(
-            "Checkout failed: " + (err?.response?.data?.error || err.message)
+            "checkout failed: " + (err?.response?.data?.error || err.message)
           );
         }
       },
@@ -62,8 +65,10 @@ function Cart() {
             </h1>
           </header>
 
+          {/* list of cart items */}
           <CartItemsList onTotalChange={setTotal} />
 
+          {/* cart price summary and pay button */}
           <section className={styles.cartSummary}>
             <p className={styles.totalText}>
               Total: <strong>R{total.toFixed(2)}</strong> <br />
@@ -91,6 +96,7 @@ function Cart() {
           </section>
         </section>
 
+        {/* sidebar with recommended products */}
         <aside className={styles.youMayAlsoLikeWrapper}>
           <YouMayAlsoLike />
         </aside>

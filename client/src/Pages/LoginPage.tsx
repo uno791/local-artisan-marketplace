@@ -8,11 +8,18 @@ import { useNavigate } from "react-router-dom";
 
 export default function LoginPage() {
   const [errorMessage, setErrorMessage] = React.useState<string | null>(null);
-  const [successMessage, setSuccessMessage] = React.useState<string | null>(null);
-  const [prankTarget, setPrankTarget] = React.useState<"/Home" | "/AdminDashboard">("/Home");
+  const [successMessage, setSuccessMessage] = React.useState<string | null>(
+    null
+  );
+  const [prankTarget, setPrankTarget] = React.useState<
+    "/Home" | "/AdminDashboard"
+  >("/Home");
 
   const [showPrankModal, setShowPrankModal] = React.useState(false);
-  const [noBtnStyle, setNoBtnStyle] = React.useState({ top: "50%", left: "60%" });
+  const [noBtnStyle, setNoBtnStyle] = React.useState({
+    top: "50%",
+    left: "60%",
+  });
 
   const navigate = useNavigate();
 

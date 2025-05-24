@@ -35,9 +35,7 @@ const PriceInput: React.FC<PriceInputProps> = ({ Price, setPrice }) => {
           aria-label="Price (Rands)"
         />
       </div>
-      {showWarning && (
-        <p className={styles.warning}>Max R10,000,000,000</p>
-      )}
+      {showWarning && <p className={styles.warning}>Max R10,000,000,000</p>}
     </section>
   );
 };

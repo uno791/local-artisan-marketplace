@@ -6,10 +6,15 @@ interface props {
   setDelMethod: (method: boolean) => void;
 }
 
-const DeliveryOptionSelector: React.FC<props> = ({ DelMethod, setDelMethod }) => {
+const DeliveryOptionSelector: React.FC<props> = ({
+  DelMethod,
+  setDelMethod,
+}) => {
   return (
     <section className={styles.container}>
-      <h3 className={styles.heading}><strong>Delivery Method</strong></h3>
+      <h3 className={styles.heading}>
+        <strong>Delivery Method</strong>
+      </h3>
 
       <label className={styles.option}>
         <input

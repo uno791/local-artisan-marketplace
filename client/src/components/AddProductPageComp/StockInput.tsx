@@ -24,7 +24,9 @@ const StockInput: React.FC<props> = ({ stock, setStock }) => {
 
   return (
     <section className={styles.container}>
-      <label htmlFor="stock-input"><strong>Stock Count</strong></label>
+      <label htmlFor="stock-input">
+        <strong>Stock Count</strong>
+      </label>
       <section className={styles.controlGroup}>
         <button
           type="button"

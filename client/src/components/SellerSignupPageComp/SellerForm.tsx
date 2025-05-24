@@ -10,6 +10,7 @@ function SellerForm() {
   const { user } = useUser();
   const navigate = useNavigate();
 
+  // Form state variables for seller info and images
   const [shopName, setShopName] = useState("");
   const [shopDescription, setShopDescription] = useState("");
   const [shopAddress, setShopAddress] = useState("");
@@ -20,6 +21,7 @@ function SellerForm() {
   );
   const [email, setEmail] = useState("");
 
+  // Error messages for validation
   const [errors, setErrors] = useState<{
     shopName?: string;
     shopDescription?: string;
@@ -27,9 +29,12 @@ function SellerForm() {
     email?: string;
   }>({});
 
+  // Validate email format with regex
   function validateEmail(value: string) {
     return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(value);
   }
+
+  // Convert image file to base64 string
   function fileToBase64(file: File): Promise<string> {
     return new Promise((resolve, reject) => {
       const reader = new FileReader();
@@ -39,15 +44,18 @@ function SellerForm() {
     });
   }
 
+  // Handle form submission
   async function handleSubmit(e: React.FormEvent) {
     e.preventDefault();
+
+    // Ensure user is logged in
     if (!user?.username) {
       alert("User not logged in.");
       return;
     }
 
+    // Validate required fields
     const newErrors: typeof errors = {};
-
     if (!shopName.trim()) newErrors.shopName = "Shop name is required.";
     if (!shopDescription.trim())
       newErrors.shopDescription = "Description is required.";
@@ -56,12 +64,14 @@ function SellerForm() {
     if (!email.trim() || !validateEmail(email))
       newErrors.email = "Enter a valid email address.";
 
+    // If errors found, set error state and abort
     if (Object.keys(newErrors).length > 0) {
       setErrors(newErrors);
       return;
     }
 
     try {
+      // Convert uploaded images to base64
       const shop_pfp_base64 = shopLogoFile
         ? await fileToBase64(shopLogoFile)
         : "";
@@ -69,6 +79,7 @@ function SellerForm() {
         ? await fileToBase64(shopBannerFile)
         : "";
 
+      // Send seller info to backend
       await axios.post(`${baseURL}/createartisan`, {
         username: user.username,
         shop_name: shopName,
@@ -86,6 +97,7 @@ function SellerForm() {
     }
   }
 
+  // Handle change of banner image, set preview URL
   function handleBannerChange(e: React.ChangeEvent<HTMLInputElement>) {
     const file = e.target.files?.[0] || null;
     setShopBannerFile(file);

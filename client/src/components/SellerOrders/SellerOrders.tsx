@@ -4,6 +4,7 @@ import axios from "axios";
 import { useUser } from "../../Users/UserContext";
 import { baseURL } from "../../config";
 
+// status values allowed
 type OrderStatus = "Payment Received" | "Shipped" | "Delivered";
 
 interface Order {
@@ -25,6 +26,7 @@ const SellerOrders: React.FC = () => {
     newStatus: OrderStatus;
   } | null>(null);
 
+  // load orders when component mounts
   useEffect(() => {
     if (!user?.username) return;
 
@@ -42,9 +44,10 @@ const SellerOrders: React.FC = () => {
         }));
         setOrders(formattedOrders);
       })
-      .catch((err) => console.error("❌ Failed to load orders:", err));
+      .catch((err) => console.error("❌ failed to load orders:", err));
   }, [user?.username]);
 
+  // triggered when user picks a new status
   const handleStatusChange = (
     order_id: number,
     product_id: number,
@@ -53,6 +56,7 @@ const SellerOrders: React.FC = () => {
     setPendingStatus({ orderId: order_id, productId: product_id, newStatus });
   };
 
+  // confirms the status update and sends it to server
   const confirmStatusChange = async () => {
     if (!pendingStatus) return;
 
@@ -72,16 +76,18 @@ const SellerOrders: React.FC = () => {
         )
       );
     } catch (err) {
-      console.error("❌ Failed to update status:", err);
-      alert("Failed to update order status.");
+      console.error("❌ failed to update status:", err);
+      alert("failed to update order status.");
     } finally {
       setPendingStatus(null);
     }
   };
 
+  // split current and past orders
   const currentOrders = orders.filter((o) => o.status !== "Delivered");
   const previousOrders = orders.filter((o) => o.status === "Delivered");
 
+  // render a single order card
   const renderOrderCard = (order: Order) => (
     <div
       key={`${order.order_id}-${order.product_id}`}
@@ -90,9 +96,9 @@ const SellerOrders: React.FC = () => {
       <div>
         {order.name} - {order.price}
       </div>
-      <div>Qty: {order.quantity}</div>
+      <div>qty: {order.quantity}</div>
       <div className={styles.statusWrapper}>
-        <span>Status:</span>
+        <span>status:</span>
         <select
           value={order.status}
           onChange={(e) =>
@@ -103,12 +109,12 @@ const SellerOrders: React.FC = () => {
             )
           }
         >
-          <option value="Payment Received">Payment Received</option>
-          <option value="Shipped">Shipped</option>
-          <option value="Delivered">Delivered</option>
+          <option value="Payment Received">payment received</option>
+          <option value="Shipped">shipped</option>
+          <option value="Delivered">delivered</option>
         </select>
       </div>
-      <div>Date: {order.date}</div>
+      <div>date: {order.date}</div>
 
       <div
         className={`${styles.statusDot} ${
@@ -120,16 +126,16 @@ const SellerOrders: React.FC = () => {
 
   return (
     <main className={styles.container}>
-      <h2>Current Orders</h2>
+      <h2>current orders</h2>
       {currentOrders.length === 0 ? (
-        <p>No current orders.</p>
+        <p>no current orders.</p>
       ) : (
         currentOrders.map(renderOrderCard)
       )}
 
-      <h2>Previous Orders</h2>
+      <h2>previous orders</h2>
       {previousOrders.length === 0 ? (
-        <p>No previous orders.</p>
+        <p>no previous orders.</p>
       ) : (
         previousOrders.map(renderOrderCard)
       )}
@@ -143,12 +149,12 @@ const SellerOrders: React.FC = () => {
             aria-labelledby="status-change-confirmation"
           >
             <p id="status-change-confirmation">
-              Are you sure you want to change status to{" "}
+              are you sure you want to change status to{" "}
               <strong>{pendingStatus.newStatus}</strong>?
             </p>
             <footer className={styles.modalActions}>
-              <button onClick={confirmStatusChange}>Confirm</button>
-              <button onClick={() => setPendingStatus(null)}>Cancel</button>
+              <button onClick={confirmStatusChange}>confirm</button>
+              <button onClick={() => setPendingStatus(null)}>cancel</button>
             </footer>
           </section>
         </aside>

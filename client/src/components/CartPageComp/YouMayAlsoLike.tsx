@@ -11,6 +11,7 @@ function YouMayAlsoLike() {
   const { user } = useUser();
   const [recommended, setRecommended] = useState<Product[]>([]);
 
+  // fetch recommendations based on tags and category of items in user's cart
   useEffect(() => {
     if (!user?.username) return;
 
@@ -25,6 +26,7 @@ function YouMayAlsoLike() {
           return;
         }
 
+        // build tag list and priority order from cart items
         const tagSet = new Set<string>();
         const tagPriority: string[] = [];
 
@@ -32,7 +34,7 @@ function YouMayAlsoLike() {
           const prodRes = await axios.get(`${baseURL}/product/${id}`);
           const prod = prodRes.data;
 
-          // First minor (tags), then main
+          // collect tags from product
           prod.tags?.forEach((tag: string) => {
             if (!tagSet.has(tag)) {
               tagSet.add(tag);
@@ -40,12 +42,14 @@ function YouMayAlsoLike() {
             }
           });
 
+          // include category if it's not already added
           if (prod.category_name && !tagSet.has(prod.category_name)) {
             tagSet.add(prod.category_name);
             tagPriority.push(prod.category_name);
           }
         }
 
+        // request recommendations from backend using tags
         const recRes = await axios.post(`${baseURL}/recommend-by-tags`, {
           tags: tagPriority,
           excludeProductIds: cartIds,
@@ -62,6 +66,7 @@ function YouMayAlsoLike() {
     fetchRecommendations();
   }, [user?.username]);
 
+  // don't render section if no recommendations
   if (recommended.length === 0) return null;
 
   return (
@@ -73,18 +78,3 @@ function YouMayAlsoLike() {
 }
 
 export default YouMayAlsoLike;
-
-/*import styles from "./YouMayAlsoLike.module.css";
-import SectionHeading from "./SectionHeading";
-import RecommendationScroller from "./RecommendationScroller";
-
-function YouMayAlsoLike() {
-  return (
-    <section className={styles.wrapper}>
-      <SectionHeading />
-      <RecommendationScroller />
-    </section>
-  );
-}
-
-export default YouMayAlsoLike;*/

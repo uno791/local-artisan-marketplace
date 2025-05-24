@@ -7,8 +7,10 @@ import { baseURL } from "../config";
 import AdminSidebar from "../components/AdminDashboard/AdminSidebar";
 
 const SellerVerification: React.FC = () => {
+  // State to hold list of sellers pending verification
   const [sellers, setSellers] = useState<Seller[]>([]);
 
+  // Fetch pending artisans from backend API
   const fetchPendingSellers = async () => {
     try {
       const res = await axios.get(`${baseURL}/penartisans`);
@@ -18,6 +20,7 @@ const SellerVerification: React.FC = () => {
     }
   };
 
+  // Delete artisan by username
   const deleteArtisan = async (username: string) => {
     try {
       const res = await axios.delete(`${baseURL}/deleteartisan/${username}`);
@@ -27,6 +30,7 @@ const SellerVerification: React.FC = () => {
     }
   };
 
+  // Verify artisan by username
   const verifyArtisan = async (username: string) => {
     try {
       const res = await axios.put(`${baseURL}/verifyartisan/${username}`);
@@ -36,13 +40,18 @@ const SellerVerification: React.FC = () => {
     }
   };
 
+  // Load pending sellers on mount
   useEffect(() => {
     fetchPendingSellers();
   }, []);
 
+  // Update local seller status and trigger backend action accordingly
   const updateSellerStatus = (username: string, status: number) => {
+    // Status mapping: 1 -> Start Review, 2 -> Approve, 3 -> Reject
     if (status - 1 === 1) verifyArtisan(username);
     if (status - 1 === 2) deleteArtisan(username);
+
+    // Update state optimistically to reflect status change
     setSellers((prev) =>
       prev.map((s) =>
         s.username === username ? { ...s, verified: status } : s
@@ -56,6 +65,7 @@ const SellerVerification: React.FC = () => {
       <section className={styles.container}>
         <h1 data-testid="seller-verification-title">Seller Verification</h1>
         <section className={styles.cards}>
+          {/* Filter sellers to those with verification status <= 3 */}
           {sellers
             .filter((s) => s.verified <= 3)
             .map((seller) => (

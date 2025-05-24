@@ -16,13 +16,16 @@ type Props = {
 
 function ProductGrid({ products }: Props) {
   return (
+    // grid container for product cards
     <section className={styles.grid}>
       {products.map((product) => (
+        // each product is wrapped in a link to its detail page
         <Link
           key={product.id}
           to={`/Product/${product.id}`}
           style={{ textDecoration: "none", color: "inherit" }}
         >
+          {/* render product card */}
           <ProductCard
             title={product.title}
             artist={product.artist}

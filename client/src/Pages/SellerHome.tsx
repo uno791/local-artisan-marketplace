@@ -7,7 +7,8 @@ import { baseURL } from "../config";
 import axios from "axios";
 import { useUser } from "../Users/UserContext";
 import { Link } from "react-router-dom";
-//product per
+
+// Product interface for seller's products
 interface Product {
   id: number;
   name: string;
@@ -15,7 +16,8 @@ interface Product {
   category: string;
   image?: string;
 }
-//artisan
+
+// Artisan interface for seller shop info
 interface Artisan {
   shop_name: string;
   bio: string;
@@ -35,6 +37,7 @@ function SellerHome() {
   useEffect(() => {
     if (!username) return;
 
+    // Fetch artisan info and products for seller dashboard
     axios
       .get(`${baseURL}/seller-dashboard`, {
         params: { username },
@@ -44,6 +47,7 @@ function SellerHome() {
         setArtisan(artisan);
         setProducts(products);
 
+        // Extract unique categories from products
         const uniqueCategories: string[] = Array.from(
           new Set(products.map((p: Product) => p.category || "Uncategorized"))
         );
@@ -52,7 +56,8 @@ function SellerHome() {
       })
       .catch((err) => console.error("Error loading seller dashboard:", err));
   }, [username]);
-  //filter by category
+
+  // Filter products by selected category
   const filteredProducts =
     category === "All"
       ? gridProducts
@@ -60,18 +65,25 @@ function SellerHome() {
 
   return (
     <>
+      {/* Render artisan header if artisan data exists */}
       {artisan && <Header artisan={artisan} />}
+
       <main className={styles.pageContent}>
         <section className={styles.topBar}>
+          {/* Button to navigate to add new product page */}
           <Link to={"/AddProductPage"}>
             <button className={styles.addProductBtn}>Add New Product</button>
           </Link>
+
+          {/* Category filter bar */}
           <FilterBar
             selectedCategory={category}
             onSelectCategory={setCategory}
             categories={categories}
           />
         </section>
+
+        {/* Grid of filtered products */}
         <section className={styles.grid}>
           {filteredProducts.map((product) => (
             <ProductCard key={product.id} product={product} />

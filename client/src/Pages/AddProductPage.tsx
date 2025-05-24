@@ -145,17 +145,43 @@ const AddProductPage: React.FC = () => {
             <section className={styles.popupOverlay}>
               <article className={styles.popup}>
                 <h2>Submitted Product Info</h2>
-                <p><strong>Name:</strong> {ProdName}</p>
-                <p><strong>Details:</strong> {Details}</p>
-                <p><strong>Price:</strong> R{Price.toFixed(2)}</p>
-                <p><strong>Stock:</strong> {Stock}</p>
-                <p><strong>Width:</strong> {Width} cm</p>
-                <p><strong>Height:</strong> {Height} cm</p>
-                <p><strong>Weight:</strong> {Weight} kg</p>
-                <p><strong>Delivery Method:</strong> {getDeliveryLabel(DelMethod)}</p>
-                <p><strong>Major Category:</strong> {MajorCategory}</p>
-                <p><strong>Tags:</strong> {Tags.join(", ")}</p>
-                <button aria-label="close" onClick={() => navigate("/SellerHome")}>Close</button>
+                <p>
+                  <strong>Name:</strong> {ProdName}
+                </p>
+                <p>
+                  <strong>Details:</strong> {Details}
+                </p>
+                <p>
+                  <strong>Price:</strong> R{Price.toFixed(2)}
+                </p>
+                <p>
+                  <strong>Stock:</strong> {Stock}
+                </p>
+                <p>
+                  <strong>Width:</strong> {Width} cm
+                </p>
+                <p>
+                  <strong>Height:</strong> {Height} cm
+                </p>
+                <p>
+                  <strong>Weight:</strong> {Weight} kg
+                </p>
+                <p>
+                  <strong>Delivery Method:</strong>{" "}
+                  {getDeliveryLabel(DelMethod)}
+                </p>
+                <p>
+                  <strong>Major Category:</strong> {MajorCategory}
+                </p>
+                <p>
+                  <strong>Tags:</strong> {Tags.join(", ")}
+                </p>
+                <button
+                  aria-label="close"
+                  onClick={() => navigate("/SellerHome")}
+                >
+                  Close
+                </button>
               </article>
             </section>
           )}
@@ -169,7 +195,9 @@ const AddProductPage: React.FC = () => {
                     <li key={index}>{field}</li>
                   ))}
                 </ul>
-                <button aria-label="close" onClick={() => setMissingFields([])}>Close</button>
+                <button aria-label="close" onClick={() => setMissingFields([])}>
+                  Close
+                </button>
               </article>
             </section>
           )}

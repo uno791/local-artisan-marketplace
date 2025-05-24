@@ -11,21 +11,26 @@ const StatsPage: React.FC = () => {
   const { user } = useUser();
   const username = user?.username || "";
 
+  // State to store monthly and total revenue
   const [monthlyRevenue, setMonthlyRevenue] = useState(0);
   const [totalRevenue, setTotalRevenue] = useState(0);
+
+  // Fetch sales trend data when username changes
   useEffect(() => {
     if (!username) return;
+
     axios
       .get(`${baseURL}/seller-sales-trends`, { params: { username } })
       .then((res) => {
-        const data: number[] = res.data.data; // [Jan…Dec]
-        const idx = new Date().getMonth(); // 0=Jan…11=Dec
+        const data: number[] = res.data.data; // Monthly sales [Jan ... Dec]
+        const idx = new Date().getMonth(); // Current month index (0-based)
         setMonthlyRevenue(data[idx] || 0);
         setTotalRevenue(data.reduce((a, b) => a + b, 0));
       })
       .catch(console.error);
   }, [username]);
 
+  // Format currency in South African Rand
   const fmt = (n: number) => "R" + n.toLocaleString();
 
   return (
@@ -43,6 +48,7 @@ const StatsPage: React.FC = () => {
         </section>
       </header>
 
+      {/* Chart selector component to display sales trends visually */}
       <ChartSelector />
     </main>
   );

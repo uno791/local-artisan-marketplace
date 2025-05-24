@@ -20,17 +20,24 @@ interface Report {
 }
 
 const UserReports: React.FC = () => {
+  // State for search input
   const [search, setSearch] = useState("");
+  // State to hold all fetched reports
   const [reports, setReports] = useState<Report[]>([]);
+  // Loading indicator state
   const [loading, setLoading] = useState(true);
+  // Error message state
   const [error, setError] = useState("");
 
+  // React Router location to reload on route change
   const location = useLocation();
 
   useEffect(() => {
     const fetchReports = async () => {
       try {
+        // Fetch user reports from backend
         const res = await axios.get(`${baseURL}/user-reports`);
+        // Format data to match expected shape
         const formattedReports = res.data.map((r: any) => ({
           status: r.status ?? 0,
           date: r.created_at?.split("T")[0] ?? "",
@@ -41,7 +48,6 @@ const UserReports: React.FC = () => {
           details: r.details ?? "",
           evidenceUrl: r.evidence_url ?? "",
           productId: r.product_id || r.productId,
-
         }));
         setReports(formattedReports);
       } catch (err) {
@@ -55,10 +61,10 @@ const UserReports: React.FC = () => {
     fetchReports();
   }, [location.key]);
 
+  // Filter reports by search term and exclude status 3 (complete)
   const filteredReports = reports.filter(
     (r) =>
-      r.product.toLowerCase().includes(search.toLowerCase()) &&
-      r.status !== 3 // Exclude complete
+      r.product.toLowerCase().includes(search.toLowerCase()) && r.status !== 3
   );
 
   return (
@@ -70,6 +76,7 @@ const UserReports: React.FC = () => {
         </header>
 
         <section style={{ marginBottom: "1rem" }}>
+          {/* Search bar to filter reports */}
           <ReportSearchBar value={search} onChange={setSearch} />
         </section>
 
@@ -79,6 +86,7 @@ const UserReports: React.FC = () => {
           {!loading && filteredReports.length === 0 && <p>No reports found.</p>}
 
           <section className={styles.cards}>
+            {/* Render UserReportCard for each filtered report */}
             {filteredReports.map((report, i) => (
               <UserReportCard key={i} {...report} />
             ))}

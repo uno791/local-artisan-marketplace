@@ -14,6 +14,7 @@ import {
 import { Line } from "react-chartjs-2";
 import styles from "./SalesTrendsChart.module.css";
 
+// register required chart.js modules
 ChartJS.register(
   CategoryScale,
   LinearScale,
@@ -25,10 +26,11 @@ ChartJS.register(
 );
 
 interface Props {
-  months: string[]; // e.g. ["Jan","Feb",…]
-  data: number[]; // e.g. [1200, 800, …]
+  months: string[]; // x-axis labels like ["jan", "feb", ...]
+  data: number[]; // sales values for each month
 }
 
+// chart config
 const options: ChartOptions<"line"> = {
   responsive: true,
   maintainAspectRatio: false,
@@ -37,17 +39,18 @@ const options: ChartOptions<"line"> = {
     title: { display: false },
   },
   scales: {
-    x: { title: { display: true, text: "Month" } },
-    y: { title: { display: true, text: "Revenue (R)" } },
+    x: { title: { display: true, text: "month" } },
+    y: { title: { display: true, text: "revenue (r)" } },
   },
 };
 
+// line chart component
 const SalesTrendsChart: React.FC<Props> = ({ months, data }) => {
   const chartData: ChartData<"line", number[], string> = {
     labels: months,
     datasets: [
       {
-        label: "Sales",
+        label: "sales",
         data,
         borderColor: "rgba(75,192,192,1)",
         backgroundColor: "rgba(75,192,192,0.4)",
