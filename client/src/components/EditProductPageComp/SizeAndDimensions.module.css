@@ -40,3 +40,9 @@
   -webkit-appearance: none;
   margin: 0;
 }
+.counter {
+  font-size: 0.85rem;
+  color: #666;
+  margin-top: 4px;
+  text-align: right;
+}

@@ -19,7 +19,7 @@ import { useNavigate } from "react-router-dom";
 const AddProductPage: React.FC = () => {
   const [ProdName, setProdName] = React.useState("");
   const [Details, setDetails] = React.useState("");
-  const [Price, setPrice] = React.useState(0);
+  const [Price, setPrice] = React.useState(""); // updated to string
   const [Stock, setStock] = React.useState(1);
   const [Width, setWidth] = React.useState("");
   const [Height, setHeight] = React.useState("");
@@ -43,33 +43,33 @@ const AddProductPage: React.FC = () => {
   };
 
   const handleConfirm = async () => {
-    const missing: string[] = [];
+  const missing: string[] = [];
 
-    if (!ProdName.trim()) missing.push("Product Name");
-    if (!Details.trim()) missing.push("Product Details");
-    if (!Price || isNaN(Price)) missing.push("Price");
-    if (!Stock || isNaN(Stock)) missing.push("Stock");
-    if (!Width.trim()) missing.push("Width");
-    if (!Height.trim()) missing.push("Height");
-    if (!Weight.trim()) missing.push("Weight");
-    if (!MajorCategory.trim()) missing.push("Major Category");
-    if (DelMethod === 0) missing.push("Delivery Method");
+  if (!ProdName.trim()) missing.push("Product Name");
+  if (!Details.trim()) missing.push("Product Details");
+  if (!ProductImage.trim()) missing.push("Product Image"); // ✅ New line
+  if (!Price.trim() || isNaN(Number(Price))) missing.push("Price");
+  if (!Stock || isNaN(Stock)) missing.push("Stock");
+  if (!Width.trim()) missing.push("Width");
+  if (!Height.trim()) missing.push("Height");
+  if (!Weight.trim()) missing.push("Weight");
+  if (!MajorCategory.trim()) missing.push("Major Category");
+  if (DelMethod === 0) missing.push("Delivery Method");
 
-    if (missing.length > 0) {
-      setMissingFields(missing);
-      return;
-    }
-
+  if (missing.length > 0) {
+    setMissingFields(missing);
+    return;
+  }
     const payload = {
       username,
       product_name: ProdName,
       description: Details,
-      price: Price,
+      price: parseFloat(Price), // safely parsed
       stock_quantity: Stock,
       image_url: ProductImage,
-      width: parseInt(Width),
-      height: parseInt(Height),
-      weight: parseInt(Weight),
+      width: parseFloat(Width),
+      height: parseFloat(Height),
+      weight: parseFloat(Weight),
       details: Details,
       tags: Tags,
       typeOfArt: MajorCategory,
@@ -147,7 +147,7 @@ const AddProductPage: React.FC = () => {
                 <h2>Submitted Product Info</h2>
                 <p><strong>Name:</strong> {ProdName}</p>
                 <p><strong>Details:</strong> {Details}</p>
-                <p><strong>Price:</strong> R{Price.toFixed(2)}</p>
+                <p><strong>Price:</strong> R{parseFloat(Price).toFixed(2)}</p>
                 <p><strong>Stock:</strong> {Stock}</p>
                 <p><strong>Width:</strong> {Width} cm</p>
                 <p><strong>Height:</strong> {Height} cm</p>

@@ -12,14 +12,14 @@ export default function LoginPage() {
   const [prankTarget, setPrankTarget] = React.useState<"/Home" | "/AdminDashboard">("/Home");
 
   const [showPrankModal, setShowPrankModal] = React.useState(false);
-  const [noBtnStyle, setNoBtnStyle] = React.useState({ top: "50%", left: "60%" });
+  const [yesBtnStyle, setYesBtnStyle] = React.useState({ top: "50%", left: "20%" });
 
   const navigate = useNavigate();
 
-  const moveNoButton = () => {
+  const moveYesButton = () => {
     const top = Math.floor(Math.random() * 70) + 5;
     const left = Math.floor(Math.random() * 70) + 5;
-    setNoBtnStyle({ top: `${top}%`, left: `${left}%` });
+    setYesBtnStyle({ top: `${top}%`, left: `${left}%` });
   };
 
   return (
@@ -41,14 +41,14 @@ export default function LoginPage() {
         <SignUpPrompt />
 
         {errorMessage && (
-          <div className={styles.popupError} style={{ zIndex: 1000 }}>
+          <section className={styles.popupError} style={{ zIndex: 1000 }} aria-live="assertive">
             <p>{errorMessage}</p>
             <button onClick={() => setErrorMessage(null)}>Close</button>
-          </div>
+          </section>
         )}
 
         {successMessage && (
-          <div className={styles.popupSuccess} style={{ zIndex: 1000 }}>
+          <section className={styles.popupSuccess} style={{ zIndex: 1000 }} aria-live="polite">
             <p>{successMessage}</p>
             <button
               onClick={() => {
@@ -58,23 +58,21 @@ export default function LoginPage() {
             >
               Close
             </button>
-          </div>
+          </section>
         )}
       </section>
 
-      {/* ✅ Prank Modal with test ID */}
       {showPrankModal && (
-        <div className={styles.prankOverlay} data-testid="robot-check">
-          <div className={styles.prankBox}>
+        <section className={styles.prankOverlay} data-testid="robot-check">
+          <article className={styles.prankBox}>
             <p>Are you a robot?</p>
 
             <button
               className={styles.yesButton}
-              onClick={() => navigate(prankTarget)}
+              onClick={moveYesButton}
               style={{
                 position: "absolute",
-                top: "50%",
-                left: "20%",
+                ...yesBtnStyle,
                 transition: "top 0.2s ease, left 0.2s ease",
               }}
             >
@@ -83,18 +81,20 @@ export default function LoginPage() {
 
             <button
               className={styles.noButton}
-              onClick={moveNoButton}
+              onClick={() => navigate(prankTarget)}
               style={{
                 position: "absolute",
-                ...noBtnStyle,
+                top: "50%",
+                left: "60%",
                 transition: "top 0.2s ease, left 0.2s ease",
               }}
             >
               No
             </button>
-          </div>
-        </div>
+          </article>
+        </section>
       )}
     </main>
   );
 }
+

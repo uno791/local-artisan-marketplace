@@ -2,19 +2,30 @@ import React, { useState } from "react";
 import styles from "../EditProductPageComp/PriceInput.module.css";
 
 interface PriceInputProps {
-  Price: number;
-  setPrice: (val: number) => void;
+  Price: string;
+  setPrice: (val: string) => void;
 }
 
 const PriceInput: React.FC<PriceInputProps> = ({ Price, setPrice }) => {
   const [showWarning, setShowWarning] = useState(false);
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const val = parseFloat(e.target.value);
-    if (val > 10000000000) {
+    const val = e.target.value;
+
+    if (val === "") {
+      setShowWarning(false);
+      setPrice("");
+      return;
+    }
+
+    const isValidFormat = /^\d*\.?\d{0,2}$/.test(val);
+    if (!isValidFormat) return;
+
+    if (parseFloat(val) > 10000000000) {
       setShowWarning(true);
       return;
     }
+
     setShowWarning(false);
     setPrice(val);
   };
@@ -24,21 +35,23 @@ const PriceInput: React.FC<PriceInputProps> = ({ Price, setPrice }) => {
       <label htmlFor="price-input" className={styles.label}>
         <strong>Price (Rands):</strong>
       </label>
-      <div className={styles.inputRow}>
+      <section className={styles.inputRow}>
         <input
           id="price-input"
           className={styles.input}
           type="text"
           inputMode="decimal"
+          pattern="^\d*\.?\d{0,2}$"
+          maxLength={15}
           value={Price}
           onChange={handleChange}
-          aria-label="Price (Rands)"
+          aria-label="Price in Rands"
         />
-      </div>
-      {showWarning && (
-        <p className={styles.warning}>Max R10,000,000,000</p>
-      )}
+      </section>
+      <p className={styles.counter}>{Price.length}/15</p>
+      {showWarning && <p className={styles.warning}>Max R10,000,000,000</p>}
     </section>
   );
 };
+
 export default PriceInput;
