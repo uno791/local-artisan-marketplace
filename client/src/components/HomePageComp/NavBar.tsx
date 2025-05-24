@@ -1,7 +1,6 @@
 import { useState, useEffect } from "react";
 import styles from "./NavBar.module.css";
 import { NavLink } from "react-router-dom";
-import logo from "../../assets/localish-logo.png";
 import {
   FaHome,
   FaSearch,
@@ -32,7 +31,10 @@ function NavBar() {
     <header className={styles.navbar}>
       <nav className={styles.navbarInner}>
         <a href="/Home" className={styles.navbarLogo}>
-          <img src={logo} alt="Localish logo" />
+          <img
+            src="https://cdn.builder.io/api/v1/image/assets/TEMP/3ce563473ae3143012b658856f2516018aeee3a0"
+            alt="Localish logo"
+          />
         </a>
 
         <button
@@ -77,8 +79,8 @@ function NavBar() {
                 }
                 onClick={() => setMenuOpen(false)}
               >
-                <article className={styles.linkIcon}>{item.icon}</article>
-                <p className={styles.linkTitle}>{item.name}</p>
+                <span className={styles.linkIcon}>{item.icon}</span>
+                <span className={styles.linkTitle}>{item.name}</span>
               </NavLink>
             </li>
           ))}

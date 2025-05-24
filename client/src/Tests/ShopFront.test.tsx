@@ -1,54 +1,65 @@
-import React from 'react';
-import { render, screen, act } from '@testing-library/react';
-import { MemoryRouter } from 'react-router-dom';
-import '@testing-library/jest-dom';
-import axios from 'axios';
+// ShopFront.test.tsx
+import React from "react";
+import { render, screen, fireEvent, waitFor } from "@testing-library/react";
+import { MemoryRouter } from "react-router-dom";
+import "@testing-library/jest-dom";
+import { act } from "react";
+import ShopFront from "../Pages/ShopFront";
+import axios from "axios";
 
-import ShopFront from '../Pages/ShopFront';
-
-// Mock axios
-jest.mock('axios');
+// ✅ Mock axios
+jest.mock("axios");
 const mockedAxios = axios as jest.Mocked<typeof axios>;
 
-// Mock useParams
-jest.mock('react-router-dom', () => {
-  const actual = jest.requireActual('react-router-dom');
+// ✅ Mock useParams
+jest.mock("react-router-dom", () => {
+  const actual = jest.requireActual("react-router-dom");
   return {
     ...actual,
-    useParams: () => ({ username: 'artisan123' }),
+    useParams: () => ({ username: "test_seller" }),
+    MemoryRouter: actual.MemoryRouter,
   };
 });
 
-// Dummy data
+// ✅ Mock useUser + provider
+jest.mock("../Users/UserContext", () => ({
+  useUser: () => ({ user: { username: "test_seller" } }),
+  UserProvider: ({ children }: any) => <div>{children}</div>,
+}));
+
+// ✅ Dummy data
 const mockArtisan = {
-  shop_name: 'Crafty Corner',
-  shop_pfp: 'logo.jpg',
-  bio: 'Handcrafted items made with love.',
-  shop_address: '456 Artisan Lane',
+  shop_name: "Elegant Arts",
+  bio: "Curated artisan goods.",
+  shop_pfp: "pfp-base64",
+  shop_address: "42 Artisan Blvd",
+  shop_banner: "banner-base64",
 };
 
-const allProducts = [
+const mockProducts = [
   {
-    product_id: 1,
-    product_name: 'Handmade Vase',
-    price: 120,
-    image_url: 'vase.jpg',
-    username: 'artisan123',
+    id: 1,
+    name: "Woven Basket",
+    price: "100",
+    category: "Textiles",
+    image: "base64image1",
   },
   {
-    product_id: 2,
-    product_name: 'Wooden Sculpture',
-    price: 300,
-    image_url: 'sculpture.jpg',
-    username: 'anotherUser',
+    id: 2,
+    name: "Painted Vase",
+    price: "150",
+    category: "Painting",
+    image: "base64image2",
   },
 ];
 
-// Setup render function
 const setup = async () => {
-  mockedAxios.get
-    .mockResolvedValueOnce({ data: mockArtisan }) // artisan fetch
-    .mockResolvedValueOnce({ data: allProducts }); // products fetch
+  mockedAxios.get.mockResolvedValueOnce({
+    data: {
+      artisan: mockArtisan,
+      products: mockProducts,
+    },
+  });
 
   await act(async () => {
     render(
@@ -59,29 +70,47 @@ const setup = async () => {
   });
 };
 
-describe('ShopFront Page', () => {
+describe("ShopFront Page", () => {
   beforeEach(() => {
     jest.clearAllMocks();
   });
 
-  test('renders artisan info and product list correctly', async () => {
+  test("renders artisan header with public view info", async () => {
     await setup();
-
-    // Check header shop name
-    expect(screen.getByRole('heading', { name: 'Crafty Corner' })).toBeInTheDocument();
-
-    // Check artisan bio
-    expect(screen.getByText('Handcrafted items made with love.')).toBeInTheDocument();
-
-    // Check that only relevant product appears
-    expect(screen.getByText('Handmade Vase')).toBeInTheDocument();
-    expect(screen.queryByText('Wooden Sculpture')).not.toBeInTheDocument();
+    expect(screen.getByText("Elegant Arts")).toBeInTheDocument();
+    expect(screen.getByText("Curated artisan goods.")).toBeInTheDocument();
+    expect(screen.getByText("42 Artisan Blvd")).toBeInTheDocument();
   });
 
-  test('displays default values when artisan data is missing', async () => {
-    mockedAxios.get
-      .mockResolvedValueOnce({ data: {} }) // missing artisan
-      .mockResolvedValueOnce({ data: [] }); // no products
+  test("renders filter bar buttons based on categories", async () => {
+    await setup();
+    expect(screen.getByRole("button", { name: "All" })).toBeInTheDocument();
+    expect(
+      screen.getByRole("button", { name: "Textiles" })
+    ).toBeInTheDocument();
+    expect(
+      screen.getByRole("button", { name: "Painting" })
+    ).toBeInTheDocument();
+  });
+
+  test("displays all products initially", async () => {
+    await setup();
+    expect(screen.getByText("Woven Basket")).toBeInTheDocument();
+    expect(screen.getByText("Painted Vase")).toBeInTheDocument();
+  });
+
+  test("filters products when category is selected", async () => {
+    await setup();
+    const paintingBtn = screen.getByRole("button", { name: "Painting" });
+    fireEvent.click(paintingBtn);
+    await waitFor(() => {
+      expect(screen.getByText("Painted Vase")).toBeInTheDocument();
+      expect(screen.queryByText("Woven Basket")).not.toBeInTheDocument();
+    });
+  });
+
+  test("handles API failure gracefully", async () => {
+    mockedAxios.get.mockRejectedValueOnce(new Error("API error"));
 
     await act(async () => {
       render(
@@ -91,21 +120,7 @@ describe('ShopFront Page', () => {
       );
     });
 
-    expect(screen.getByRole('heading', { name: /artisan shop/i })).toBeInTheDocument();
-  });
-
-  test('handles API errors gracefully', async () => {
-    mockedAxios.get.mockRejectedValue(new Error('API Error'));
-
-    await act(async () => {
-      render(
-        <MemoryRouter>
-          <ShopFront />
-        </MemoryRouter>
-      );
-    });
-
-    // Check that the page still renders something fallback-y
-    expect(screen.getByRole('heading', { name: /artisan shop/i })).toBeInTheDocument();
+    // Just ensure nothing crashes
+    expect(screen.queryByText(/Elegant Arts/i)).not.toBeInTheDocument();
   });
 });

@@ -1,7 +1,6 @@
 import styles from "./NavBar.module.css";
 import { NavLink } from "react-router-dom";
 import { FaHome, FaChartBar, FaBoxOpen, FaSignOutAlt } from "react-icons/fa";
-
 // nav items configuration
 const navItems = [
   { name: "Home", path: "/SellerHome", icon: <FaHome /> },
