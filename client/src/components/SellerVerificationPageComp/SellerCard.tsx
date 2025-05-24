@@ -46,9 +46,6 @@ const SellerCard: React.FC<SellerCardProps> = ({
         <p>
           <strong>Address:</strong> {shop_address}
         </p>
-        <p>
-          <strong>Date:</strong> {create_date}
-        </p>
 
         {/* current verification status */}
         <p data-testid="seller-status">

@@ -2,9 +2,12 @@
   padding-top: 100px;
   padding-left: 2vw;
   padding-right: 2vw;
+  padding: 2vh 2vw;
   width: 100vw;
+  overflow-x: hidden;
   min-height: 100vh;
   box-sizing: border-box;
+  background-color: #F6EBD9;
 }
 
 
