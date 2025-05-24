@@ -5,24 +5,35 @@ import axios from "axios";
 import { baseURL } from "../../config";
 import ProductCard, { Product } from "./ProductCard";
 
-// image grid for rendering search results
-export default function ImageGrid() {
+interface Props {
+  setLoading: (value: boolean) => void;
+}
+
+export default function ImageGrid({ setLoading }: Props) {
   const { query, sort } = useSearch();
   const [products, setProducts] = useState<Product[]>([]);
 
-  // fetch products when query or sort changes
   useEffect(() => {
-    const base = query ? "/products/search" : "/allproducts";
-    const params = new URLSearchParams();
-    if (query) params.set("query", query);
-    params.set("sort", sort);
-    const url = `${baseURL}${base}?${params.toString()}`;
+    const fetchProducts = async () => {
+      setLoading(true);
+      try {
+        const base = query ? "/products/search" : "/allproducts";
+        const params = new URLSearchParams();
+        if (query) params.set("query", query);
+        params.set("sort", sort);
+        const url = `${baseURL}${base}?${params.toString()}`;
 
-    axios
-      .get<Product[]>(url)
-      .then((res) => setProducts(res.data))
-      .catch((err) => console.error("Error fetching products:", err));
-  }, [query, sort]);
+        const res = await axios.get<Product[]>(url);
+        setProducts(res.data);
+      } catch (err) {
+        console.error("❌ Error fetching products:", err);
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    fetchProducts();
+  }, [query, sort, setLoading]);
 
   return (
     <section className={styles.imageGrid} aria-label="Product results">
