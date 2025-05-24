@@ -211,7 +211,6 @@ test("clicking a product navigates to ProductPage and displays details", async (
           username: "click_seller",
           details: "Details here",
           category_name: "Art", // ✅ Correct field name for mainCategory
-          tags: ["Clay", "Handmade"], // ✅ Correct field name for minorTags
         },
       });
     }

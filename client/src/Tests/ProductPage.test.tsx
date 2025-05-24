@@ -109,7 +109,6 @@ test("displays product details correctly", async () => {
           username: "seller123",
           details: "Handmade from local materials",
           category_name: "Paintings",
-          tags: ["Abstract", "Canvas"],
           width: 30,
           height: 40,
           weight: 500,
@@ -169,7 +168,6 @@ test("successfully adds product to cart", async () => {
           username: "seller123",
           details: "Handmade from local materials",
           category_name: "Paintings",
-          tags: ["Abstract", "Canvas"],
         },
       });
     }
@@ -232,7 +230,6 @@ test("shows error if product is out of stock", async () => {
           username: "seller123",
           details: "Handmade from local materials",
           category_name: "Paintings",
-          tags: ["Abstract", "Canvas"],
         },
       });
     }
@@ -284,7 +281,6 @@ test("shows success message when cart quantity is incremented", async () => {
           username: "seller123",
           details: "Handmade from local materials",
           category_name: "Paintings",
-          tags: ["Abstract", "Canvas"],
         },
       });
     }
@@ -347,7 +343,6 @@ test("shows error message when cart quantity cannot be incremented", async () =>
           username: "seller123",
           details: "Handmade from local materials",
           category_name: "Paintings",
-          tags: ["Abstract", "Canvas"],
         },
       });
     }
