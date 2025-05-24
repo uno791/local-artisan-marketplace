@@ -1,7 +1,6 @@
 import React from "react";
 import styles from "./FilterBar.module.css";
 
-// props include current selection, setter, and list of categories
 type Props = {
   selectedCategory: string;
   onSelectCategory: (category: string) => void;
@@ -10,7 +9,6 @@ type Props = {
 
 function FilterBar({ selectedCategory, onSelectCategory, categories }: Props) {
   return (
-    // nav used to group category filter buttons
     <nav className={styles.filterBar}>
       {categories.map((cat) => (
         <button

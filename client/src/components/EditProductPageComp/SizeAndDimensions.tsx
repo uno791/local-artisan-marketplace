@@ -1,7 +1,6 @@
 import React from "react";
 import styles from "./SizeAndDimensions.module.css";
 
-// props for width height weight values and their update functions
 interface Props {
   Width: number;
   Height: number;
@@ -19,30 +18,21 @@ const SizeAndDimensions: React.FC<Props> = ({
   setHeight,
   setWeight,
 }) => {
-  // only allow valid decimal input with up to 2 decimals
-  const handleDecimalInput = (value: string, setter: (val: number) => void) => {
+  const handleDecimalInput = (
+    value: string,
+    setter: (val: number) => void
+  ) => {
     if (/^\d*\.?\d{0,2}$/.test(value)) {
       setter(Number(value));
     }
   };
 
   return (
-    // grouped form section for dimensions
-    <fieldset className={styles.container}>
-      <legend>
-        <strong>Enter size and dimensions:</strong>
-      </legend>
-
-      {/* list of input fields */}
-      <ul
-        className={styles.group}
-        style={{ listStyle: "none", padding: 0, margin: 0 }}
-      >
-        {/* width input */}
-        <li className={styles.fieldGroup}>
-          <label htmlFor="width" className={styles.label}>
-            Width (cm):
-          </label>
+    <section className={styles.container}>
+      <strong>Enter size and dimensions:</strong>
+      <div className={styles.group}>
+        <div className={styles.fieldGroup}>
+          <label htmlFor="width" className={styles.label}>Width (cm):</label>
           <input
             id="width"
             type="text"
@@ -51,13 +41,10 @@ const SizeAndDimensions: React.FC<Props> = ({
             value={Width}
             onChange={(e) => handleDecimalInput(e.target.value, setWidth)}
           />
-        </li>
+        </div>
 
-        {/* height input */}
-        <li className={styles.fieldGroup}>
-          <label htmlFor="height" className={styles.label}>
-            Height (cm):
-          </label>
+        <div className={styles.fieldGroup}>
+          <label htmlFor="height" className={styles.label}>Height (cm):</label>
           <input
             id="height"
             type="text"
@@ -66,13 +53,10 @@ const SizeAndDimensions: React.FC<Props> = ({
             value={Height}
             onChange={(e) => handleDecimalInput(e.target.value, setHeight)}
           />
-        </li>
+        </div>
 
-        {/* weight input */}
-        <li className={styles.fieldGroup}>
-          <label htmlFor="weight" className={styles.label}>
-            Weight (kg):
-          </label>
+        <div className={styles.fieldGroup}>
+          <label htmlFor="weight" className={styles.label}>Weight (kg):</label>
           <input
             id="weight"
             type="text"
@@ -81,9 +65,9 @@ const SizeAndDimensions: React.FC<Props> = ({
             value={Weight}
             onChange={(e) => handleDecimalInput(e.target.value, setWeight)}
           />
-        </li>
-      </ul>
-    </fieldset>
+        </div>
+      </div>
+    </section>
   );
 };
 

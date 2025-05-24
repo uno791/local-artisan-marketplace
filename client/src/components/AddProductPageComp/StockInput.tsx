@@ -24,9 +24,7 @@ const StockInput: React.FC<Props> = ({ stock, setStock }) => {
 
   return (
     <section className={styles.container}>
-      <label htmlFor="stock-input">
-        <strong>Stock Count</strong>
-      </label>
+      <label htmlFor="stock-input"><strong>Stock Count</strong></label>
       <section className={styles.controlGroup}>
         <button type="button" className={styles.button} onClick={() => setStock(Math.max(0, stock - 1))}>-</button>
         <input

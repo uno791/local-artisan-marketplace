@@ -1,7 +1,6 @@
 import React from "react";
 import styles from "./TypeOfArtSelector.module.css";
 
-// props for selected art type and function to update it
 interface Props {
   TypeOfArt: string;
   setTypeOfArt: (type: string) => void;
@@ -9,23 +8,17 @@ interface Props {
 
 const TypeOfArtSelector: React.FC<Props> = ({ TypeOfArt, setTypeOfArt }) => {
   return (
-    // container for type of art dropdown
     <section className={styles.container}>
-      {/* label for select input */}
       <label htmlFor="typeOfArt">
-        <strong>Type of Art:</strong>
-      </label>
-
-      {/* dropdown with art category options */}
+  <strong>Type of Art:</strong>
+</label>
       <select
         id="typeOfArt"
         className={styles.select}
         value={TypeOfArt}
         onChange={(e) => setTypeOfArt(e.target.value)}
       >
-        <option value="" disabled hidden>
-          None Selected
-        </option>
+        <option value="" disabled hidden>None Selected</option>
         <option value="Jewellery">Jewellery</option>
         <option value="Home Decor">Home Decor</option>
         <option value="Art">Art</option>

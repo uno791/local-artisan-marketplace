@@ -11,7 +11,6 @@ import {
   FaTimes,
 } from "react-icons/fa";
 
-// navigation links with icons
 const navItems = [
   { name: "Home", path: "/Home", icon: <FaHome /> },
   { name: "Search", path: "/SearchPage", icon: <FaSearch /> },
@@ -22,21 +21,18 @@ const navItems = [
 function NavBar() {
   const [menuOpen, setMenuOpen] = useState(false);
 
-  // lock scroll when mobile menu is open
+  // Optional: prevent background scroll
   useEffect(() => {
     document.body.style.overflow = menuOpen ? "hidden" : "";
   }, [menuOpen]);
 
   return (
-    // navbar container
     <header className={styles.navbar}>
       <nav className={styles.navbarInner}>
-        {/* logo link to home */}
         <a href="/Home" className={styles.navbarLogo}>
           <img src={logo} alt="Localish logo" />
         </a>
 
-        {/* menu open button for small screens */}
         <button
           className={`${styles.menuToggle} ${
             menuOpen ? styles.hideToggle : ""
@@ -46,7 +42,6 @@ function NavBar() {
           <FaBars />
         </button>
 
-        {/* backdrop that closes menu when clicked */}
         {menuOpen && (
           <section
             className={styles.backdrop}
@@ -54,11 +49,11 @@ function NavBar() {
           ></section>
         )}
 
-        {/* list of navigation links */}
         <ul
-          className={`${styles.navbarLinks} ${menuOpen ? styles.showMenu : ""}`}
+          className={`${styles.navbarLinks} ${
+            menuOpen ? styles.showMenu : ""
+          }`}
         >
-          {/* close button shown only in mobile menu */}
           {menuOpen && (
             <li className={styles.closeButtonWrapper}>
               <button
@@ -71,7 +66,6 @@ function NavBar() {
             </li>
           )}
 
-          {/* render all nav links with icons */}
           {navItems.map((item) => (
             <li key={item.name}>
               <NavLink

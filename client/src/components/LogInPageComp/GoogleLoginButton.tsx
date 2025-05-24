@@ -5,7 +5,7 @@ import axios from "axios";
 import { baseURL } from "../../config";
 import { useUser } from "../../Users/UserContext";
 import { User } from "../../Users/User";
-// import { useNavigate } from "react-router-dom"
+//import { useNavigate } from "react-router-dom";
 
 interface GoogleLogInButtonProps {
   onError: (message: string) => void;
@@ -16,15 +16,11 @@ export function GoogleLogInButton({
   onError,
   onSuccessMessage,
 }: GoogleLogInButtonProps) {
-  // access user context to store logged in user
+  //const navigate = useNavigate();
   const { setUser } = useUser();
-
-  // handle login with google oauth
   const login = useGoogleLogin({
-    // when login is successful
     onSuccess: async (tokenResponse) => {
       try {
-        // fetch user profile from google
         const res = await axios.get(
           "https://www.googleapis.com/oauth2/v3/userinfo",
           {
@@ -36,13 +32,10 @@ export function GoogleLogInButton({
 
         const userData = res.data;
         const user_ID = userData.sub;
-
-        // check if user exists in system
+        //const baseURL = import.meta.env.VITE_API_BASE_URL;
         const checkRes = await axios.post(`${baseURL}/check-userid`, {
           user_ID,
         });
-
-        // if user exists and is a normal user
         if (checkRes.data.exists && checkRes.data.role === 0) {
           onSuccessMessage("Successfully logged in!");
 
@@ -57,14 +50,10 @@ export function GoogleLogInButton({
           });
 
           setUser(user);
-          // optional: redirect to home
-          // navigate("home")
-
-          // if user is an admin
+          // navigate to home pls
+          //navigate("home");
         } else if (checkRes.data.exists && checkRes.data.role === 1) {
           onSuccessMessage("Welcome back, Admin!");
-
-          // user not found in system
         } else {
           onError("You are not registered in our system.");
         }
@@ -73,8 +62,6 @@ export function GoogleLogInButton({
         onError("Something went wrong fetching your info.");
       }
     },
-
-    // if google login fails
     onError: (error) => {
       console.error("Login Failed:", error);
       onError("Google login failed. Please try again.");
@@ -82,7 +69,6 @@ export function GoogleLogInButton({
   });
 
   return (
-    // login button component
     <button onClick={() => login()} className={styles.googleButton}>
       <img
         src="https://cdn.builder.io/api/v1/image/assets/TEMP/6c2c435e2bfdac1c7aa377094a31133bc82338d0"

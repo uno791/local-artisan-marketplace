@@ -1,9 +1,8 @@
 import ArtistInfo from "./SideBarSubComp/ArtistInfo";
-import ReviewList from "./SideBarSubComp/CategoryList"; // likely incorrect import (see comment below)
+import ReviewList from "./SideBarSubComp/CategoryList";
 import styles from "./SideBarInfo.module.css";
 import CategoryList from "./SideBarSubComp/CategoryList";
 
-// props for displaying artisan and category info
 interface Artisan {
   username: string;
   shop_pfp: string;
@@ -20,15 +19,26 @@ function SidebarInfo({
   minorTags,
 }: Artisan) {
   return (
-    // sidebar section containing artist and category info
     <aside className={styles["sidebar-info"]}>
-      {/* display artist card */}
       <ArtistInfo Uname={username} shop_pfp={shop_pfp} shop_name={shop_name} />
-
-      {/* display product categories */}
       <CategoryList mainCategory={mainCategory} minorTags={minorTags} />
     </aside>
   );
 }
 
 export default SidebarInfo;
+
+/*import ArtistInfo from "./SideBarComp/ArtistInfo";
+import ReviewList from "./SideBarComp/ReviewList";
+import "./SidebarInfo.css";
+
+function SidebarInfo() {
+  return (
+    <aside className="sidebar-info">
+      <ArtistInfo />
+      <ReviewList />
+    </aside>
+  );
+}
+
+export default SidebarInfo;*/

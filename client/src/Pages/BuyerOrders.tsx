@@ -16,11 +16,9 @@ interface OrderItem {
 
 function BuyerOrders() {
   const { user } = useUser();
-  // state for orders and error message
   const [orders, setOrders] = useState<OrderItem[]>([]);
   const [error, setError] = useState<string | null>(null);
 
-  // fetch orders when username changes
   useEffect(() => {
     const fetchOrders = async () => {
       if (!user?.username) return;
@@ -29,24 +27,22 @@ function BuyerOrders() {
         const res = await axios.get(`${baseURL}/orders/${user.username}`);
         setOrders(res.data);
       } catch (err) {
-        console.error("❌ failed to fetch orders:", err);
-        setError("failed to load orders.");
+        console.error("❌ Failed to fetch orders:", err);
+        setError("Failed to load orders.");
       }
     };
 
     fetchOrders();
   }, [user?.username]);
 
-  // separate current and previous orders by status
   const currentOrders = orders.filter((o) => o.status !== "Delivered");
   const previousOrders = orders.filter((o) => o.status === "Delivered");
 
   return (
     <main className={styles.wrapper}>
-      {/* current orders section */}
       <section>
-        <h2>current orders</h2>
-        {currentOrders.length === 0 && <p>no current orders.</p>}
+        <h2>Current Orders</h2>
+        {currentOrders.length === 0 && <p>No current orders.</p>}
         {currentOrders.map((order, index) => (
           <OrderCard
             key={index}
@@ -60,10 +56,9 @@ function BuyerOrders() {
         ))}
       </section>
 
-      {/* previous orders section */}
       <section>
-        <h2>previous orders</h2>
-        {previousOrders.length === 0 && <p>no previous orders.</p>}
+        <h2>Previous Orders</h2>
+        {previousOrders.length === 0 && <p>No previous orders.</p>}
         {previousOrders.map((order, index) => (
           <OrderCard
             key={index}
@@ -77,7 +72,6 @@ function BuyerOrders() {
         ))}
       </section>
 
-      {/* error display */}
       {error && <p>{error}</p>}
     </main>
   );
