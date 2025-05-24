@@ -1,6 +1,3 @@
-// src/pages/AddProductPage.tsx
-
-// import dependencies and components
 import React from "react";
 import styles from "../components/EditProductPageComp/EditProductPage.module.css";
 import AddTagsButton from "../components/AddProductPageComp/AddTagsButton";
@@ -22,7 +19,7 @@ const AddProductPage: React.FC = () => {
   // form state
   const [ProdName, setProdName] = React.useState("");
   const [Details, setDetails] = React.useState("");
-  const [Price, setPrice] = React.useState(""); // updated to string
+  const [Price, setPrice] = React.useState("");
   const [Stock, setStock] = React.useState(1);
   const [Width, setWidth] = React.useState("");
   const [Height, setHeight] = React.useState("");
@@ -33,6 +30,7 @@ const AddProductPage: React.FC = () => {
   const [ProductImage, setProductImage] = React.useState("");
   const [submitted, setSubmitted] = React.useState(false);
   const [missingFields, setMissingFields] = React.useState<string[]>([]);
+  const [errorMessage, setErrorMessage] = React.useState("");
 
   // context and navigation
   const { user } = useUser();
@@ -74,7 +72,7 @@ const AddProductPage: React.FC = () => {
       username,
       product_name: ProdName,
       description: Details,
-      price: parseFloat(Price), // safely parsed
+      price: parseFloat(Price),
       stock_quantity: Stock,
       image_url: ProductImage,
       width: parseFloat(Width),
@@ -98,11 +96,11 @@ const AddProductPage: React.FC = () => {
       if (response.ok) {
         setSubmitted(true);
       } else {
-        alert("Failed to add product: " + (data.error || "Unknown error"));
+        setErrorMessage(data.error || "Unknown error");
       }
     } catch (err) {
       console.error("❌ Submit error:", err);
-      alert("Could not connect to backend.");
+      setErrorMessage("Could not connect to backend.");
     }
   };
 
@@ -110,10 +108,6 @@ const AddProductPage: React.FC = () => {
   return (
     <main className={styles.container}>
       <NavBar />
-      <header>
-        <h1 className={styles.pageTitle}>Add Product</h1>
-      </header>
-
       <section className={styles.formContainer}>
         <section className={styles.leftColumn}>
           <ProductNameInput ProdName={ProdName} setProdName={setProdName} />
@@ -136,7 +130,6 @@ const AddProductPage: React.FC = () => {
             DelMethod={DelMethod}
             setDelMethod={setDelMethod}
           />
-
           <section className={styles.row}>
             <TypeOfArtSelector
               TypeOfArt={MajorCategory}
@@ -212,6 +205,26 @@ const AddProductPage: React.FC = () => {
                 <button aria-label="close" onClick={() => setMissingFields([])}>
                   Close
                 </button>
+              </article>
+            </section>
+          )}
+
+          {errorMessage && (
+            <section className={styles.popupOverlay}>
+              <article className={styles.popup}>
+                <h2>Error</h2>
+                <p>{errorMessage}</p>
+                <button onClick={() => setErrorMessage("")}>Close</button>
+              </article>
+            </section>
+          )}
+
+          {errorMessage && (
+            <section className={styles.popupOverlay}>
+              <article className={styles.popup}>
+                <h2>Error</h2>
+                <p>{errorMessage}</p>
+                <button onClick={() => setErrorMessage("")}>Close</button>
               </article>
             </section>
           )}

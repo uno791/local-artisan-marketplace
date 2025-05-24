@@ -1,5 +1,5 @@
-import React, { useState } from 'react';
-import styles from './PriceInput.module.css';
+import React, { useState } from "react";
+import styles from "./PriceInput.module.css";
 
 interface PriceInputProps {
   Price: number;
@@ -7,36 +7,49 @@ interface PriceInputProps {
 }
 
 const PriceInput: React.FC<PriceInputProps> = ({ Price, setPrice }) => {
+  const [inputVal, setInputVal] = useState(Price.toString());
   const [showWarning, setShowWarning] = useState(false);
+  const maxLength = 15;
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const val = parseFloat(e.target.value);
-    if (val > 10000000000) {
-      setShowWarning(true);
-      return;
+    const val = e.target.value;
+
+    if (/^\d*\.?\d{0,2}$/.test(val)) {
+      const parsed = parseFloat(val);
+      if (!isNaN(parsed) && parsed > 10000000000) {
+        setShowWarning(true);
+        return;
+      }
+
+      setShowWarning(false);
+      setInputVal(val);
+      setPrice(val === "" ? 0 : parsed);
     }
-    setShowWarning(false);
-    setPrice(val);
   };
 
   return (
     <section className={styles.container}>
-      <label htmlFor="price-input" className={styles.label}>
+      <label htmlFor="price-input">
         <strong>Price (Rands):</strong>
       </label>
-      <div className={styles.inputRow}>
-        <input
-          id="price-input"
-          className={styles.input}
-          type="text"
-          inputMode="decimal"
-          value={Price}
-          onChange={handleChange}
-          aria-label="Price (Rands)"
-        />
-      </div>
+      <input
+        id="price-input"
+        name="price"
+        type="text"
+        inputMode="decimal"
+        value={inputVal}
+        onChange={handleChange}
+        maxLength={maxLength}
+        aria-describedby="priceLimit priceCounter"
+        className={styles.input}
+      />
+      <p id="priceCounter" className={styles.counter} aria-live="polite">
+        {inputVal.length}/{maxLength}
+      </p>
       {showWarning && (
-        <p className={styles.warning}>Max R10,000,000,000</p>
+        <p id="priceLimit" className={styles.warning}>
+          Max R10,000,000,000
+        </p>
       )}
     </section>
   );

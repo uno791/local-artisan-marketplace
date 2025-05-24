@@ -22,14 +22,15 @@ const SizeAndDimensions: React.FC<Props> = ({
 }) => {
   // validate decimal input
   const handleDecimalInput = (value: string, setter: (val: string) => void) => {
-    if (/^\d*\.?\d{0,2}$/.test(value)) {
+    // Accepts "0", "0.", "0.0", "12", "12.34" but not "abc"
+    if (/^(\d+)?(\.\d{0,2})?$/.test(value)) {
       setter(value);
     }
   };
 
   return (
     <section className={styles.container}>
-      <strong>Enter size and dimensions:</strong>
+      <strong>Enter size and dimensions (optional for digital art):</strong>
       <section className={styles.group}>
         <section className={styles.fieldGroup}>
           <label htmlFor="width" className={styles.label}>
@@ -41,7 +42,7 @@ const SizeAndDimensions: React.FC<Props> = ({
             type="text"
             inputMode="decimal"
             maxLength={10}
-            pattern="^\d*\.?\d{0,2}$"
+            pattern="^\\d*\\.?\\d{0,2}$"
             className={styles.input}
             value={Width}
             onChange={(e) => handleDecimalInput(e.target.value, setWidth)}
@@ -59,7 +60,7 @@ const SizeAndDimensions: React.FC<Props> = ({
             type="text"
             inputMode="decimal"
             maxLength={10}
-            pattern="^\d*\.?\d{0,2}$"
+            pattern="^\\d*\\.?\\d{0,2}$"
             className={styles.input}
             value={Height}
             onChange={(e) => handleDecimalInput(e.target.value, setHeight)}
@@ -77,7 +78,7 @@ const SizeAndDimensions: React.FC<Props> = ({
             type="text"
             inputMode="decimal"
             maxLength={10}
-            pattern="^\d*\.?\d{0,2}$"
+            pattern="^\\d*\\.?\\d{0,2}$"
             className={styles.input}
             value={Weight}
             onChange={(e) => handleDecimalInput(e.target.value, setWeight)}

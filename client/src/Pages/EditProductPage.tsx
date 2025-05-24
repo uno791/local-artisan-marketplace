@@ -1,6 +1,3 @@
-// src/pages/EditProductPage.tsx
-
-// import necessary libraries and components
 import React, { useEffect, useRef, useState } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 import styles from "../components/EditProductPageComp/EditProductPage.module.css";
@@ -37,6 +34,7 @@ const EditProductPage: React.FC = () => {
   const [submitted, setSubmitted] = useState(false);
   const [missingFields, setMissingFields] = useState<string[]>([]);
   const [noChanges, setNoChanges] = useState(false);
+  const [errorMessage, setErrorMessage] = useState("");
 
   // reference to store original product data
   const originalDataRef = useRef<any>(null);
@@ -83,6 +81,7 @@ const EditProductPage: React.FC = () => {
         };
       } catch (err) {
         console.error("❌ Failed to load product:", err);
+        setErrorMessage("Failed to load product details.");
       }
     };
 
@@ -98,9 +97,12 @@ const EditProductPage: React.FC = () => {
     if (!Details.trim()) missing.push("Product Details");
     if (!Price || isNaN(Price)) missing.push("Price");
     if (!Stock || isNaN(Stock)) missing.push("Stock");
-    if (!Width) missing.push("Width");
-    if (!Height) missing.push("Height");
-    if (!Weight) missing.push("Weight");
+    if (Width === null || Width === undefined || isNaN(Width))
+      missing.push("Width");
+    if (Height === null || Height === undefined || isNaN(Height))
+      missing.push("Height");
+    if (Weight === null || Weight === undefined || isNaN(Weight))
+      missing.push("Weight");
     if (!MajorCategory.trim()) missing.push("Major Category");
     if (DelMethod === 0) missing.push("Delivery Method");
 
@@ -155,11 +157,11 @@ const EditProductPage: React.FC = () => {
         setSubmitted(true);
       } else {
         const data = await res.json();
-        alert("Update failed: " + (data.error || "Unknown error"));
+        setErrorMessage(data.error || "Unknown error");
       }
     } catch (err) {
       console.error("❌ Update error:", err);
-      alert("Could not connect to backend.");
+      setErrorMessage("Could not connect to backend.");
     }
   };
 
@@ -167,10 +169,6 @@ const EditProductPage: React.FC = () => {
   return (
     <main className={styles.container}>
       <NavBar />
-      <header>
-        <h1 className={styles.pageTitle}>Edit Product</h1>
-      </header>
-
       <section className={styles.formContainer}>
         <section className={styles.leftColumn}>
           <ProductNameInput ProdName={ProdName} setProdName={setProdName} />
@@ -269,6 +267,16 @@ const EditProductPage: React.FC = () => {
                 <h2>No Changes Made</h2>
                 <p>You haven't made any changes to the product.</p>
                 <button onClick={() => setNoChanges(false)}>Close</button>
+              </article>
+            </section>
+          )}
+
+          {errorMessage && (
+            <section className={styles.popupOverlay}>
+              <article className={styles.popup}>
+                <h2>Error</h2>
+                <p>{errorMessage}</p>
+                <button onClick={() => setErrorMessage("")}>Close</button>
               </article>
             </section>
           )}

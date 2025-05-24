@@ -9,6 +9,7 @@ import { useUser } from "../Users/UserContext";
 import { Link } from "react-router-dom";
 
 // product type definition
+
 interface Product {
   id: number;
   name: string;
@@ -43,26 +44,35 @@ function SellerHome() {
     if (!username) return;
 
     axios
-      .get(`${baseURL}/seller-dashboard`, {
-        params: { username },
-      })
+      .get(`${baseURL}/seller-dashboard`, { params: { username } })
       .then((res) => {
         const { artisan, products } = res.data;
-
         setArtisan(artisan);
         setProducts(products);
 
-        // extract unique categories from products
         const uniqueCategories: string[] = Array.from(
-          new Set(products.map((p: Product) => p.category || "Uncategorized"))
+          new Set(
+            Array.isArray(products)
+              ? products.map((p: Product) => p.category || "Uncategorized")
+              : []
+          )
         );
 
-        setCategories(["All", ...uniqueCategories]);
+        setCategories(["All", ...uniqueCategories.filter(Boolean)]);
       })
       .catch((err) => console.error("Error loading seller dashboard:", err));
   }, [username]);
 
-  // filter products by selected category
+  const handleDelete = async (id: number) => {
+    try {
+      await axios.delete(`${baseURL}/delete-product/${id}`);
+      setProducts((prev) => prev.filter((p) => p.id !== id));
+    } catch (err) {
+      console.error("Failed to delete product:", err);
+      alert("Error deleting product");
+    }
+  };
+
   const filteredProducts =
     category === "All"
       ? gridProducts
@@ -89,7 +99,11 @@ function SellerHome() {
         {/* product grid */}
         <section className={styles.grid}>
           {filteredProducts.map((product) => (
-            <ProductCard key={product.id} product={product} />
+            <ProductCard
+              key={product.id}
+              product={product}
+              onDelete={handleDelete}
+            />
           ))}
         </section>
       </main>

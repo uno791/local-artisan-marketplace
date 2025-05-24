@@ -1,5 +1,6 @@
 import styles from "./ProductCard.module.css";
 import { Link } from "react-router-dom";
+import { useState } from "react";
 
 // product data type
 type Product = {
@@ -13,10 +14,12 @@ type Product = {
 // props for card
 type Props = {
   product: Product;
+  onDelete: (id: number) => void;
 };
 
-// renders a card with product info and link to edit page
-function ProductCard({ product }: Props) {
+function ProductCard({ product, onDelete }: Props) {
+  const [showConfirm, setShowConfirm] = useState(false);
+
   return (
     <section className={styles.card}>
       <section className={styles.imageBox}>
@@ -36,7 +39,41 @@ function ProductCard({ product }: Props) {
         <Link to={`/EditProductPage/${product.id}`}>
           <button className={styles.button}>Edit Product</button>
         </Link>
+
+        <div style={{ marginTop: "0.5rem" }}>
+          <button
+            className={`${styles.button} ${styles.deleteButton}`}
+            onClick={() => setShowConfirm(true)}
+          >
+            Delete Product
+          </button>
+        </div>
       </section>
+
+      {showConfirm && (
+        <section className={styles.popupOverlay}>
+          <article className={styles.popup}>
+            <h3>Are you sure you want to delete this product?</h3>
+            <p>
+              <strong>{product.name}</strong>
+            </p>
+            <div className={styles.popupButtons}>
+              <button
+                className={`${styles.button} ${styles.deleteButton}`}
+                onClick={() => onDelete(product.id)}
+              >
+                Yes, Delete
+              </button>
+              <button
+                className={styles.button}
+                onClick={() => setShowConfirm(false)}
+              >
+                Cancel
+              </button>
+            </div>
+          </article>
+        </section>
+      )}
     </section>
   );
 }
