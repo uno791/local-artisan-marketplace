@@ -222,7 +222,6 @@ test("clicking a product navigates to ProductPage and displays details", async (
           shop_name: "Click Shop",
           shop_address: "123 Main",
           shop_pfp: "",
-          bio: "A great artist",
         },
       });
     }
