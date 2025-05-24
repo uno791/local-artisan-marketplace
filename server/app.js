@@ -1657,6 +1657,7 @@ app.post("/checkout", async (req, res) => {
     const orderId = orderResult.recordset[0].order_id;
 
     for (const item of cartItems) {
+      // Insert order item
       await pool
         .request()
         .input("order_id", orderId)
@@ -1664,6 +1665,16 @@ app.post("/checkout", async (req, res) => {
         .input("quantity", item.quantity).query(`
           INSERT INTO dbo.order_items (order_id, product_id, quantity)
           VALUES (@order_id, @product_id, @quantity)
+        `);
+
+      // ✅ Reduce stock
+      await pool
+        .request()
+        .input("product_id", item.product_id)
+        .input("quantity", item.quantity).query(`
+          UPDATE dbo.products
+          SET stock_quantity = stock_quantity - @quantity
+          WHERE product_id = @product_id AND stock_quantity >= @quantity
         `);
     }
 
@@ -1687,6 +1698,7 @@ app.post("/checkout", async (req, res) => {
     res.status(500).json({ error: "Checkout failed", details: err.message });
   }
 });
+
 app.get("/orders/:username", async (req, res) => {
   const { username } = req.params;
 
