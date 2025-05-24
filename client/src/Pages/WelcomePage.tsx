@@ -60,14 +60,7 @@ function WelcomePage() {
       <section className={styles.aboutSection}>
         <h2 className={styles.aboutHeading}>About Us</h2>
         <p className={styles.aboutText}>
-          Localish connects you with talented local artisans and makers who
-          create beautiful, handcrafted goods with heart. We’re all about
-          celebrating creativity close to home—whether that’s your neighborhood
-          or just around the corner. Our mission is to support small creative
-          communities and bring their unique, handmade products to people who
-          truly appreciate them. At Localish, everything we do is rooted in
-          local pride, thoughtful design, and the joy of discovering something
-          real.
+Localish connects you with talented local artists and creators of all kinds — from painters and photographers to digital illustrators and designers. We're here to celebrate creativity rooted in your community, whether that's right next door or across town. Our mission is to support small creative scenes and showcase the unique work they produce, bringing it to people who truly value originality. At Localish, everything we do is grounded in local pride, artistic expression, and the thrill of discovering something authentic.
         </p>
       </section>
 
@@ -104,54 +97,57 @@ function WelcomePage() {
         </ul>
       </section>
 
-      {/* FAQ section */}
-      <section className={styles.faqSection}>
-        <h2>Frequently Asked Questions</h2>
-        <details>
-          <summary>How do I sign up?</summary>
-          <p>
-            Click the "Sign Up" button above and fill out the registration form.
-            You’ll receive a confirmation email to activate your account.
-          </p>
-        </details>
-        <details>
-          <summary>Can I sell my art here?</summary>
-          <p>
-            Yes! Once signed up, you can create listings for your products by
-            navigating to your seller dashboard and following the steps to add
-            new items.
-          </p>
-        </details>
-        <details>
-          <summary>What payment methods are accepted?</summary>
-          <p>
-            We accept major credit cards, PayPal, and other secure payment
-            options to make transactions safe and easy.
-          </p>
-        </details>
-        <details>
-          <summary>How do I update or delete a product listing?</summary>
-          <p>
-            After logging in, visit your seller dashboard where you can manage
-            your product listings including editing details or removing items.
-          </p>
-        </details>
-        <details>
-          <summary>Is there a fee to sell my products?</summary>
-          <p>
-            We charge a small commission on each sale to help maintain and
-            improve the platform. There are no upfront fees to list your items.
-          </p>
-        </details>
-        <details>
-          <summary>How long does shipping usually take?</summary>
-          <p>
-            Shipping times vary by seller and location but typically range
-            between 3-10 business days. Sellers usually provide estimated
-            delivery times on their product pages.
-          </p>
-        </details>
-      </section>
+     {/* FAQ section */}
+<section className={styles.faqSection}>
+  <h2>Frequently Asked Questions</h2>
+
+  <details>
+    <summary>How do I sign up?</summary>
+    <p>
+      You just need to sign up with your Google account or email, then select your interests to get started.
+    </p>
+  </details>
+
+  <details>
+    <summary>Can I sell my art here?</summary>
+    <p>
+      Yes! Once signed up, you can create listings for your products by
+      navigating to your seller dashboard and following the steps to add
+      new items.
+    </p>
+  </details>
+
+  <details>
+    <summary>What payment methods are accepted?</summary>
+    <p>
+      All payments are processed securely through Yoco.
+    </p>
+  </details>
+
+  <details>
+    <summary>Is there a fee to sell my products?</summary>
+    <p>
+      No, there are no fees to sell your products on the platform.
+    </p>
+  </details>
+
+  <details>
+    <summary>How long does shipping usually take?</summary>
+    <p>
+      Shipping times vary by seller and location but typically range
+      between 3–10 business days. Sellers usually provide estimated
+      delivery times on their product pages.
+    </p>
+  </details>
+
+  <details>
+    <summary>Can I buy art even if I'm not a seller?</summary>
+    <p>
+      Absolutely! You don’t need to be a seller to purchase artwork. Just browse, add items to your cart, and check out when you're ready.
+    </p>
+  </details>
+</section>
+
 
       {/* modal for unauthenticated users */}
       <dialog ref={dialogRef} className={styles.modalDialog}>
