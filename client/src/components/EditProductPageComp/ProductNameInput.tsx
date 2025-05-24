@@ -7,6 +7,8 @@ interface Props {
 }
 
 const ProductNameInput: React.FC<Props> = ({ ProdName, setProdName }) => {
+  const maxLength = 100;
+
   return (
     <section className={styles.container}>
       <label htmlFor="productName">
@@ -14,11 +16,16 @@ const ProductNameInput: React.FC<Props> = ({ ProdName, setProdName }) => {
       </label>
       <input
         id="productName"
+        name="productName"
         type="text"
+        maxLength={maxLength}
         value={ProdName}
         onChange={(e) => setProdName(e.target.value)}
         className={styles.input}
       />
+      <p className={styles.counter} aria-live="polite">
+        {ProdName.length}/{maxLength}
+      </p>
     </section>
   );
 };

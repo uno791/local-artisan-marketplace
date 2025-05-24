@@ -636,13 +636,14 @@ app.get("/homepage-recommendations", async (req, res) => {
 // GET all main categories
 app.get("/main-categories", async (req, res) => {
   try {
-    const pool = await connectDB();
+    const pool = await connectDB(); // get connection
     const result = await pool
       .request()
       .query(
         "SELECT category_name FROM dbo.main_categories ORDER BY category_name"
       );
-    await pool.close();
+
+
     // return as a simple array of strings
     res.json(result.recordset.map((r) => r.category_name));
   } catch (err) {
@@ -650,6 +651,7 @@ app.get("/main-categories", async (req, res) => {
     res.status(500).json({ error: "DB query failed", details: err.message });
   }
 });
+
 
 // GET all minor categories
 app.get("/minor-categories", async (req, res) => {
@@ -671,9 +673,11 @@ app.get("/minor-categories", async (req, res) => {
 //Get /specific product - fetch specific product by ID
 app.get("/product/:id", async (req, res) => {
   const productId = req.params.id;
+  let pool;
 
   try {
-    const pool = await connectDB();
+    // 0. Connect to DB
+    pool = await connectDB();
 
     // 1. Fetch main product + main category
     const productResult = await pool.request().input("id", productId).query(`
@@ -685,13 +689,12 @@ app.get("/product/:id", async (req, res) => {
       `);
 
     if (productResult.recordset.length === 0) {
-      await pool.close();
       return res.status(404).json({ message: "Product not found" });
     }
 
     const product = productResult.recordset[0];
 
-    // 2. Fetch minor categories (tags)
+    // 2. Fetch minor categories (tags) — separate request to avoid shared connection issues
     const tagsResult = await pool.request().input("id", productId).query(`
         SELECT mc.minor_category_name
         FROM dbo.link_minor_categories lmc
@@ -700,8 +703,6 @@ app.get("/product/:id", async (req, res) => {
       `);
 
     const tags = tagsResult.recordset.map((r) => r.minor_category_name);
-
-    await pool.close();
 
     // 3. Return everything
     res.json({
@@ -712,8 +713,13 @@ app.get("/product/:id", async (req, res) => {
   } catch (err) {
     console.error("❌ Failed to fetch product:", err);
     res.status(500).json({ error: "DB query failed", details: err.message });
+  } finally {
+    
+    if (pool) await pool.close();// ✅ Always close pool connection to prevent leaks
   }
 });
+
+
 
 // Backend route: Add to app.js
 
@@ -1801,6 +1807,11 @@ app.delete("/delete-product/:id", async (req, res) => {
 
     console.log("🧹 Deleting product and dependencies:", id);
 
+    // 🔥 STEP 0: Delete from cart_items FIRST to avoid FK conflict
+    await pool.request().input("id", id).query(`
+      DELETE FROM dbo.cart_items WHERE product_id = @id
+    `);
+
     // 1. Delete from order_items
     await pool.request().input("id", id).query(`
       DELETE FROM dbo.order_items WHERE product_id = @id
@@ -1826,7 +1837,7 @@ app.delete("/delete-product/:id", async (req, res) => {
       DELETE FROM dbo.user_reports WHERE product_id = @id
     `);
 
-    // 6. Finally delete product
+    // 6. Finally delete from products
     await pool.request().input("id", id).query(`
       DELETE FROM dbo.products WHERE product_id = @id
     `);
@@ -1838,6 +1849,7 @@ app.delete("/delete-product/:id", async (req, res) => {
     res.status(500).json({ error: "Delete failed", details: err.message });
   }
 });
+
 
 app.get("/seller-orders/:username", async (req, res) => {
   const { username } = req.params;

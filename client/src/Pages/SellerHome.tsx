@@ -7,7 +7,7 @@ import { baseURL } from "../config";
 import axios from "axios";
 import { useUser } from "../Users/UserContext";
 import { Link } from "react-router-dom";
-//product per
+
 interface Product {
   id: number;
   name: string;
@@ -15,7 +15,7 @@ interface Product {
   category: string;
   image?: string;
 }
-//artisan
+
 interface Artisan {
   shop_name: string;
   bio: string;
@@ -33,26 +33,39 @@ function SellerHome() {
   const [categories, setCategories] = useState<string[]>(["All"]);
 
   useEffect(() => {
-    if (!username) return;
+  if (!username) return;
 
-    axios
-      .get(`${baseURL}/seller-dashboard`, {
-        params: { username },
-      })
-      .then((res) => {
-        const { artisan, products } = res.data;
-        setArtisan(artisan);
-        setProducts(products);
+  axios
+    .get(`${baseURL}/seller-dashboard`, { params: { username } })
+    .then((res) => {
+      const { artisan, products } = res.data;
+      setArtisan(artisan);
+      setProducts(products);
 
-        const uniqueCategories: string[] = Array.from(
-          new Set(products.map((p: Product) => p.category || "Uncategorized"))
-        );
+      const uniqueCategories: string[] = Array.from(
+        new Set(
+          Array.isArray(products)
+            ? products.map((p: Product) => p.category || "Uncategorized")
+            : []
+        )
+      );
 
-        setCategories(["All", ...uniqueCategories]);
-      })
-      .catch((err) => console.error("Error loading seller dashboard:", err));
-  }, [username]);
-  //filter by category
+      setCategories(["All", ...uniqueCategories.filter(Boolean)]);
+    })
+    .catch((err) => console.error("Error loading seller dashboard:", err));
+}, [username]);
+
+
+  const handleDelete = async (id: number) => {
+    try {
+      await axios.delete(`${baseURL}/delete-product/${id}`);
+      setProducts((prev) => prev.filter((p) => p.id !== id));
+    } catch (err) {
+      console.error("Failed to delete product:", err);
+      alert("Error deleting product");
+    }
+  };
+
   const filteredProducts =
     category === "All"
       ? gridProducts
@@ -74,7 +87,7 @@ function SellerHome() {
         </section>
         <section className={styles.grid}>
           {filteredProducts.map((product) => (
-            <ProductCard key={product.id} product={product} />
+            <ProductCard key={product.id} product={product} onDelete={handleDelete} />
           ))}
         </section>
       </main>

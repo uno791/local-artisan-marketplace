@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import styles from "./SizeAndDimensions.module.css";
 
 interface Props {
@@ -18,55 +18,79 @@ const SizeAndDimensions: React.FC<Props> = ({
   setHeight,
   setWeight,
 }) => {
+  const maxLength = 10;
+
+  const [widthText, setWidthText] = useState(Width.toString());
+  const [heightText, setHeightText] = useState(Height.toString());
+  const [weightText, setWeightText] = useState(Weight.toString());
+
   const handleDecimalInput = (
     value: string,
-    setter: (val: number) => void
+    setter: (val: number) => void,
+    textSetter: (val: string) => void
   ) => {
     if (/^\d*\.?\d{0,2}$/.test(value)) {
-      setter(Number(value));
+      textSetter(value);
+      setter(value === "" ? 0 : parseFloat(value));
     }
   };
 
   return (
     <section className={styles.container}>
-      <strong>Enter size and dimensions:</strong>
-      <div className={styles.group}>
-        <div className={styles.fieldGroup}>
-          <label htmlFor="width" className={styles.label}>Width (cm):</label>
+      <h2 className={styles.title}>Enter size and dimensions</h2>
+
+      <section className={styles.group}>
+        <section className={styles.fieldGroup}>
+          <label htmlFor="width">Width (cm):</label>
           <input
             id="width"
+            name="width"
             type="text"
+            maxLength={maxLength}
             inputMode="decimal"
             className={styles.input}
-            value={Width}
-            onChange={(e) => handleDecimalInput(e.target.value, setWidth)}
+            value={widthText}
+            onChange={(e) => handleDecimalInput(e.target.value, setWidth, setWidthText)}
           />
-        </div>
+          <p className={styles.counter} aria-live="polite">
+            {widthText.length}/{maxLength}
+          </p>
+        </section>
 
-        <div className={styles.fieldGroup}>
-          <label htmlFor="height" className={styles.label}>Height (cm):</label>
+        <section className={styles.fieldGroup}>
+          <label htmlFor="height">Height (cm):</label>
           <input
             id="height"
+            name="height"
             type="text"
+            maxLength={maxLength}
             inputMode="decimal"
             className={styles.input}
-            value={Height}
-            onChange={(e) => handleDecimalInput(e.target.value, setHeight)}
+            value={heightText}
+            onChange={(e) => handleDecimalInput(e.target.value, setHeight, setHeightText)}
           />
-        </div>
+          <p className={styles.counter} aria-live="polite">
+            {heightText.length}/{maxLength}
+          </p>
+        </section>
 
-        <div className={styles.fieldGroup}>
-          <label htmlFor="weight" className={styles.label}>Weight (kg):</label>
+        <section className={styles.fieldGroup}>
+          <label htmlFor="weight">Weight (kg):</label>
           <input
             id="weight"
+            name="weight"
             type="text"
+            maxLength={maxLength}
             inputMode="decimal"
             className={styles.input}
-            value={Weight}
-            onChange={(e) => handleDecimalInput(e.target.value, setWeight)}
+            value={weightText}
+            onChange={(e) => handleDecimalInput(e.target.value, setWeight, setWeightText)}
           />
-        </div>
-      </div>
+          <p className={styles.counter} aria-live="polite">
+            {weightText.length}/{maxLength}
+          </p>
+        </section>
+      </section>
     </section>
   );
 };
