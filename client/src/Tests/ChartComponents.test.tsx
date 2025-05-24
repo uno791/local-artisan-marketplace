@@ -1,4 +1,3 @@
-// ✅ MUST BE FIRST - prevent Chart.register error
 jest.mock("chart.js", () => ({
   Chart: {
     register: jest.fn(),
