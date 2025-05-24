@@ -2,11 +2,13 @@ import { useParams } from "react-router-dom";
 import { useEffect, useState } from "react";
 import axios from "axios";
 import styles from "../components/ProductPageComp/ProductPage.module.css";
+
 import BackButton from "../components/ProductPageComp/BackButton";
 import ProductImage from "../components/ProductPageComp/ProductImage";
 import ProductInfo from "../components/ProductPageComp/ProductInfo";
 import SidebarInfo from "../components/ProductPageComp/SideBarInfo";
 import ReportProduct from "../components/ProductPageComp/ReportProduct";
+
 import { baseURL } from "../config";
 import { useUser } from "../Users/UserContext";
 
@@ -38,10 +40,11 @@ function ProductPage() {
   const [product, setProduct] = useState<Product | null>(null);
   const [artisan, setArtisan] = useState<Artisan | null>(null);
   const [showReportModal, setShowReportModal] = useState(false);
-  const { user } = useUser(); // get the currently logged-in user
+  const { user } = useUser(); // currently logged-in user
 
   useEffect(() => {
     if (!id) return;
+
     axios
       .get(`${baseURL}/product/${id}`)
       .then((res) => {
@@ -62,6 +65,7 @@ function ProductPage() {
 
   return (
     <main className={styles["product-page"]}>
+      {/* Report Button Top Left */}
       <section className={styles["report-button-container"]}>
         <button
           onClick={() => setShowReportModal(true)}
@@ -112,34 +116,3 @@ function ProductPage() {
 }
 
 export default ProductPage;
-
-
-/*import "./ProductPage.css";
-import BackButton from "../components/BackButton";
-import ProductImage from "../components/ProductImage";
-import ProductInfo from "../components/ProductInfo";
-import SidebarInfo from "../components/SideBarInfo";
-
-function ProductPage() {
-  return (
-    <main className="product-page">
-      <BackButton />
-
-      <section className="product-main">
-        <section className="product-left">
-          <ProductImage />
-        </section>
-
-        <section className="product-middle">
-          <ProductInfo />
-        </section>
-
-        <aside className="product-right">
-          <SidebarInfo />
-        </aside>
-      </section>
-    </main>
-  );
-}
-
-export default ProductPage;*/
