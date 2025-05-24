@@ -106,7 +106,10 @@
 <a name='L41'></a><a href='#L41'>41</a>
 <a name='L42'></a><a href='#L42'>42</a>
 <a name='L43'></a><a href='#L43'>43</a>
-<a name='L44'></a><a href='#L44'>44</a></td><td class="line-coverage quiet"><span class="cline-any cline-neutral">&nbsp;</span>
+<a name='L44'></a><a href='#L44'>44</a>
+<a name='L45'></a><a href='#L45'>45</a>
+<a name='L46'></a><a href='#L46'>46</a>
+<a name='L47'></a><a href='#L47'>47</a></td><td class="line-coverage quiet"><span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -123,34 +126,36 @@
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span></td><td class="text"><pre class="prettyprint lang-js">// src/components/AdminDashboard/GraphCard.tsx
-import React, { forwardRef } from "react";
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span></td><td class="text"><pre class="prettyprint lang-js">import React, { forwardRef } from "react";
 import {
   Chart as ChartJS,
   registerables,
@@ -159,6 +164,7 @@ import {
 } from "chart.js";
 import { Line } from "react-chartjs-2";
 &nbsp;
+// chart registration
 <span class="cstat-no" title="statement not covered" >if (typeof ChartJS.register === "function") {</span>
 <span class="cstat-no" title="statement not covered" >  ChartJS.register(...registerables);</span>
 } else {
@@ -166,6 +172,7 @@ import { Line } from "react-chartjs-2";
 <span class="cstat-no" title="statement not covered" >  ChartJS.register = <span class="fstat-no" title="function not covered" >(.</span>.._args: any[]) =&gt; {};</span>
 }
 &nbsp;
+// chart options
 const options: ChartOptions&lt;"line"&gt; = <span class="cstat-no" title="statement not covered" >{</span>
   responsive: true,
   plugins: {
@@ -178,10 +185,12 @@ const options: ChartOptions&lt;"line"&gt; = <span class="cstat-no" title="statem
   },
 };
 &nbsp;
+// props interface
 interface GraphCardProps {
   data: ChartData&lt;"line", number[], string&gt;;
 }
 &nbsp;
+// component definition
 const GraphCard = <span class="cstat-no" title="statement not covered" >forwardRef&lt;HTMLDivElement, GraphCardProps&gt;(</span>
 <span class="fstat-no" title="function not covered" >  ({</span> data }, ref) =&gt; (
 <span class="cstat-no" title="statement not covered" >    &lt;div ref={ref} style={{ background: "#fff", borderRadius: 8, padding: 20 }}&gt;</span>
@@ -199,11 +208,7 @@ export default GraphCard;
             <div class='footer quiet pad2 space-top1 center small'>
                 Code coverage generated by
                 <a href="https://istanbul.js.org/" target="_blank" rel="noopener noreferrer">istanbul</a>
-<<<<<<< HEAD
-                at 2025-05-24T19:20:53.728Z
-=======
-                at 2025-05-24T19:19:00.651Z
->>>>>>> 2d9d54ef698ed3d3c6f5ae6d100998c0ac6b799f
+                at 2025-05-24T21:32:32.459Z
             </div>
         <script src="../../../prettify.js"></script>
         <script>

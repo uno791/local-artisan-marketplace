@@ -28,15 +28,17 @@ const renderWithProviders = () =>
 describe("QuestionsPage Component", () => {
  beforeEach(() => {
   mockedAxios.get.mockResolvedValue({ data: mockTags });
-  mockedAxios.post.mockResolvedValue({ data: { message: "Success" } });
+  mockedAxios.post
+    .mockResolvedValueOnce({ data: { exists: false } }) // /check-user
+    .mockResolvedValueOnce({ data: { message: "Success" } }) // /adduser
+    .mockResolvedValueOnce({ data: { message: "Preferences Applied" } }); // /apply-preferences
 
-  jest
-    .spyOn(UserContext, "useUser")
-    .mockReturnValue({
-      user: mockUser,
-      setUser: jest.fn(),
-    } as unknown as ReturnType<typeof UserContext.useUser>);
+  jest.spyOn(UserContext, "useUser").mockReturnValue({
+    user: mockUser,
+    setUser: jest.fn(),
+  } as unknown as ReturnType<typeof UserContext.useUser>);
 });
+
 
   test("renders username input", async () => {
     renderWithProviders();
@@ -45,7 +47,8 @@ describe("QuestionsPage Component", () => {
 
   test("allows typing username", async () => {
     renderWithProviders();
-    const input = await screen.findByPlaceholderText(/enter username/i);
+    const input = await screen.findByLabelText(/enter username/i);
+
     fireEvent.change(input, { target: { value: "testuser" } });
     expect(input).toHaveValue("testuser");
   });
@@ -75,7 +78,8 @@ describe("QuestionsPage Component", () => {
 
   test("shows error when no art forms selected", async () => {
     renderWithProviders();
-    const input = await screen.findByPlaceholderText(/enter username/i);
+    const input = await screen.findByLabelText(/enter username/i);
+
     fireEvent.change(input, { target: { value: "testuser" } });
 
     const button = await screen.findByText(/apply/i);
@@ -86,7 +90,9 @@ describe("QuestionsPage Component", () => {
 
   test("submits successfully with valid input", async () => {
     renderWithProviders();
-    const input = await screen.findByPlaceholderText(/enter username/i);
+    const input = await screen.findByLabelText(/enter username/i);
+
+
     fireEvent.change(input, { target: { value: "testuser" } });
 
     const tagButton = await screen.findByRole("button", { name: /sculpture/i });
