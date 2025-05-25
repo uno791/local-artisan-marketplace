@@ -13,13 +13,10 @@ import DeliveryOptionSelector from "../components/EditProductPageComp/DeliveryOp
 import NavBar from "../components/SellerHomeComp/NavBar";
 import { baseURL } from "../config";
 
-// main component
 const EditProductPage: React.FC = () => {
-  // get product id from url
   const { id } = useParams();
   const navigate = useNavigate();
 
-  // define state variables for product fields
   const [ProdName, setProdName] = useState("");
   const [Details, setDetails] = useState("");
   const [Price, setPrice] = useState(0);
@@ -36,10 +33,8 @@ const EditProductPage: React.FC = () => {
   const [noChanges, setNoChanges] = useState(false);
   const [errorMessage, setErrorMessage] = useState("");
 
-  // reference to store original product data
   const originalDataRef = useRef<any>(null);
 
-  // helper function to get readable label for delivery method
   const getDeliveryLabel = (value: number) => {
     if (value === 3) return "Delivery & Pickup";
     if (value === 1) return "Delivery Only";
@@ -47,14 +42,17 @@ const EditProductPage: React.FC = () => {
     return "None";
   };
 
-  // fetch product details on mount
   useEffect(() => {
     const fetchProduct = async () => {
       try {
         const res = await fetch(`${baseURL}/product/${id}`);
         const data = await res.json();
 
-        // populate state with fetched product data
+        console.log("Fetched product data:", data); // ✅ Debug
+
+        const deliveryVal = parseInt(data.delivery_method, 10);
+        const safeDeliveryVal = Number.isNaN(deliveryVal) ? 1 : deliveryVal;
+
         setProdName(data.product_name || "");
         setDetails(data.details || "");
         setPrice(Number(data.price) || 0);
@@ -62,11 +60,11 @@ const EditProductPage: React.FC = () => {
         setWidth(Number(data.width) || 0);
         setHeight(Number(data.height) || 0);
         setWeight(Number(data.weight) || 0);
+        setDelMethod(safeDeliveryVal);
         setMajorCategory(data.category_name || "");
         setTags(data.tags || []);
         setProductImage(data.product_image || data.image_url || "");
 
-        // store original values for comparison
         originalDataRef.current = {
           product_name: data.product_name || "",
           details: data.details || "",
@@ -75,6 +73,7 @@ const EditProductPage: React.FC = () => {
           width: Number(data.width) || 0,
           height: Number(data.height) || 0,
           weight: Number(data.weight) || 0,
+          delivery_method: safeDeliveryVal,
           typeOfArt: data.category_name || "",
           tags: data.tags || [],
           product_image: data.product_image || data.image_url || "",
@@ -88,21 +87,16 @@ const EditProductPage: React.FC = () => {
     fetchProduct();
   }, [id]);
 
-  // handle submit/edit confirmation
   const handleConfirm = async () => {
     const missing: string[] = [];
 
-    // validate required fields
     if (!ProdName.trim()) missing.push("Product Name");
     if (!Details.trim()) missing.push("Product Details");
     if (!Price || isNaN(Price)) missing.push("Price");
     if (!Stock || isNaN(Stock)) missing.push("Stock");
-    if (Width === null || Width === undefined || isNaN(Width))
-      missing.push("Width");
-    if (Height === null || Height === undefined || isNaN(Height))
-      missing.push("Height");
-    if (Weight === null || Weight === undefined || isNaN(Weight))
-      missing.push("Weight");
+    if (Width === null || Width === undefined || isNaN(Width)) missing.push("Width");
+    if (Height === null || Height === undefined || isNaN(Height)) missing.push("Height");
+    if (Weight === null || Weight === undefined || isNaN(Weight)) missing.push("Weight");
     if (!MajorCategory.trim()) missing.push("Major Category");
     if (DelMethod === 0) missing.push("Delivery Method");
 
@@ -111,7 +105,6 @@ const EditProductPage: React.FC = () => {
       return;
     }
 
-    // construct payload
     const payload = {
       product_name: ProdName,
       description: Details,
@@ -121,12 +114,12 @@ const EditProductPage: React.FC = () => {
       height: Height,
       weight: Weight,
       details: Details,
+      delivery_method: DelMethod,
       tags: Tags,
       typeOfArt: MajorCategory,
       product_image: ProductImage,
     };
 
-    // compare with original data
     const original = originalDataRef.current;
     const isUnchanged =
       original.product_name === payload.product_name &&
@@ -136,6 +129,7 @@ const EditProductPage: React.FC = () => {
       original.width === payload.width &&
       original.height === payload.height &&
       original.weight === payload.weight &&
+      original.delivery_method === payload.delivery_method &&
       original.typeOfArt === payload.typeOfArt &&
       JSON.stringify(original.tags) === JSON.stringify(payload.tags) &&
       original.product_image === payload.product_image;
@@ -145,7 +139,6 @@ const EditProductPage: React.FC = () => {
       return;
     }
 
-    // send update to server
     try {
       const res = await fetch(`${baseURL}/editproduct/${id}`, {
         method: "PUT",
@@ -165,7 +158,6 @@ const EditProductPage: React.FC = () => {
     }
   };
 
-  // return JSX with product editing form
   return (
     <main className={styles.container}>
       <NavBar />
@@ -211,7 +203,6 @@ const EditProductPage: React.FC = () => {
             Confirm Edits
           </button>
 
-          {/* popup: success confirmation */}
           {submitted && (
             <section className={styles.popupOverlay}>
               <article className={styles.popup}>
@@ -245,7 +236,6 @@ const EditProductPage: React.FC = () => {
             </section>
           )}
 
-          {/* popup: validation error */}
           {missingFields.length > 0 && (
             <section className={styles.popupOverlay}>
               <article className={styles.popup}>
@@ -260,7 +250,6 @@ const EditProductPage: React.FC = () => {
             </section>
           )}
 
-          {/* popup: no changes made */}
           {noChanges && (
             <section className={styles.popupOverlay}>
               <article className={styles.popup}>

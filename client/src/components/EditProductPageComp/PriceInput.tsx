@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import styles from "./PriceInput.module.css";
 
 interface PriceInputProps {
@@ -10,6 +10,10 @@ const PriceInput: React.FC<PriceInputProps> = ({ Price, setPrice }) => {
   const [inputVal, setInputVal] = useState(Price.toString());
   const [showWarning, setShowWarning] = useState(false);
   const maxLength = 15;
+
+  useEffect(() => {
+    setInputVal(Price.toString());
+  }, [Price]);
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const val = e.target.value;
