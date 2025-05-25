@@ -1,4 +1,3 @@
-// src/contexts/ProfileContext.tsx
 import React, {
   createContext,
   useState,
@@ -31,7 +30,6 @@ const ProfileContext = createContext<ProfileContextValue | undefined>(
 
 export function ProfileProvider({ children }: { children: ReactNode }) {
   const { user } = useUser();
-  const cacheKey = `profileData:${user?.username}`;
 
   const [profile, setProfile] = useState<ProfileData>({
     postalCode: "-",
@@ -43,6 +41,8 @@ export function ProfileProvider({ children }: { children: ReactNode }) {
   // fetch and cache helper
   async function fetchProfile() {
     if (!user?.username) return;
+    const key = `profileData:${user.username}`;
+
     try {
       const res = await axios.get(`${baseURL}/getuser/${user.username}`);
       const art = await axios.get(`${baseURL}/artisan/${user.username}`);
@@ -55,19 +55,27 @@ export function ProfileProvider({ children }: { children: ReactNode }) {
       };
 
       setProfile(newProfile);
-      localStorage.setItem(cacheKey, JSON.stringify(newProfile));
+      localStorage.setItem(key, JSON.stringify(newProfile));
     } catch (err) {
       console.error("❌ Failed to fetch profile:", err);
     }
   }
 
-  // on mount or user change: load cache → fetch fresh once
+  // on mount or user change: load cache → fetch fresh
   useEffect(() => {
     if (!user?.username) return;
-    const cached = localStorage.getItem(cacheKey);
+
+    const key = `profileData:${user.username}`;
+    const cached = localStorage.getItem(key);
+
     if (cached) {
-      setProfile(JSON.parse(cached));
+      try {
+        setProfile(JSON.parse(cached));
+      } catch (err) {
+        console.warn("❗ Invalid cached profile data:", err);
+      }
     }
+
     fetchProfile();
   }, [user?.username]);
 
