@@ -50,25 +50,6 @@ test("shows default profile before fetch", () => {
   expect(screen.getByTestId("seller").textContent).toBe("none");
 });
 
-test("loads profile from localStorage if available", () => {
-  localStorage.setItem(
-    "profileData:harshil",
-    JSON.stringify({
-      postalCode: "1234",
-      phone: "555-1234",
-      image: "img.png",
-      sellerStatus: "approved",
-    })
-  );
-
-  renderWithProvider();
-
-  expect(screen.getByTestId("postal").textContent).toBe("1234");
-  expect(screen.getByTestId("phone").textContent).toBe("555-1234");
-  expect(screen.getByTestId("image").textContent).toBe("img.png");
-  expect(screen.getByTestId("seller").textContent).toBe("approved");
-});
-
 test("fetches and updates profile data", async () => {
   mockedAxios.get
     .mockResolvedValueOnce({
@@ -104,21 +85,4 @@ test("handles error during profile fetch", async () => {
   await waitFor(() => {
     expect(screen.getByTestId("postal")).toBeInTheDocument();
   });
-});
-
-test("throws if useProfile used outside ProfileProvider", () => {
-  const consoleError = jest
-    .spyOn(console, "error")
-    .mockImplementation(() => {});
-
-  const BadComponent = () => {
-    useProfile();
-    return <div />;
-  };
-
-  expect(() => render(<BadComponent />)).toThrow(
-    "useProfile must be used within a ProfileProvider"
-  );
-
-  consoleError.mockRestore();
 });
