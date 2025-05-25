@@ -32,9 +32,12 @@ function SellerHome() {
   const [gridProducts, setProducts] = useState<Product[]>([]);
   const [categories, setCategories] = useState<string[]>(["All"]);
   const [errorPopup, setErrorPopup] = useState("");
+  const [loading, setLoading] = useState(true); // ✅ FIXED loading state
 
   useEffect(() => {
     if (!username) return;
+
+    setLoading(true); // ✅ Show spinner while fetching
 
     axios
       .get(`${baseURL}/seller-dashboard`, { params: { username } })
@@ -42,6 +45,7 @@ function SellerHome() {
         const { artisan, products } = res.data;
         setArtisan(artisan);
         setProducts(products);
+
         const uniqueCategories: string[] = Array.from(
           new Set(
             Array.isArray(products)
@@ -51,10 +55,9 @@ function SellerHome() {
         );
         setCategories(["All", ...uniqueCategories.filter(Boolean)]);
       })
-      .catch((err) => console.error("Error loading seller dashboard:", err));
+      .catch((err) => console.error("Error loading seller dashboard:", err))
+      .finally(() => setLoading(false)); // ✅ Always hide spinner
   }, [username]);
-
-  const loading = gridProducts.length === 0;
 
   const handleDelete = async (id: number) => {
     try {
@@ -113,13 +116,21 @@ function SellerHome() {
           />
         </section>
         <section className={styles.grid}>
-          {filteredProducts.map((product) => (
-            <ProductCard
-              key={product.id}
-              product={product}
-              onDelete={handleDelete}
-            />
-          ))}
+          {filteredProducts.length > 0 ? (
+            filteredProducts.map((product) => (
+              <ProductCard
+                key={product.id}
+                product={product}
+                onDelete={handleDelete}
+              />
+            ))
+          ) : (
+            <p
+              style={{ textAlign: "center", width: "100%", marginTop: "2rem" }}
+            >
+              You haven't added any products yet.
+            </p>
+          )}
         </section>
         {errorPopup && (
           <section className={styles.popupOverlay}>
