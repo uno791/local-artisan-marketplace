@@ -20,7 +20,7 @@ Welcome to **Localish**, a community-driven-online marketplace.
 | Artifact                  | Link                                                                                                                                   |
 |---------------------------|----------------------------------------------------------------------------------------------------------------------------------------|
 | Project Documentation (PDF) | [Download Project Documentation](client/src/assets/DOC.pdf)                                                                            |
-| Demo Video             | [Watch Project Walkthrough](https://youtu.be/your-demo-video-id)                                                                       |
+| Demo Video             | [Watch Project Walkthrough](https://www.youtube.com/watch?v=dQw4w9WgXcQ&ab_channel=Ri)                                                                       |
 | Live Application       | [https://calm-meadow-0fbb07c03.6.azurestaticapps.net](https://calm-meadow-0fbb07c03.6.azurestaticapps.net/)                           |
 | GitHub Repository      | [GitHub – uno791/local-artisan-marketplace](https://github.com/uno791/local-artisan-marketplace)                                       |
 | Scrum Artifacts | [View Scrum Usage Proof](https://docs.google.com/document/d/1eT510AOd3YfFSMUHpNMAOoPj18lE-Y4twHv2UM0f9wA/edit?usp=sharing)                                    |
