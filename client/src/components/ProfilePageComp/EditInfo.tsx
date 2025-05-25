@@ -6,13 +6,15 @@ import styles from "./Profile.module.css";
 import axios from "axios";
 import { baseURL } from "../../config";
 
-type Props = {
+interface Props {
   username: string;
   postalCode: string;
-  phone: string | undefined;
+  phone: string;
+  setPostalCode: (code: string) => void;
+  setPhone: (phone: string) => void;
   onClose: () => void;
   refreshProfile: () => Promise<void>;
-};
+}
 
 export default function EditInfo({
   username,

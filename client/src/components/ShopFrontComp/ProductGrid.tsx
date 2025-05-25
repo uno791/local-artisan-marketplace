@@ -11,25 +11,25 @@ type Product = {
 };
 
 type Props = {
-  products: Product[]; // list of product objects to display
+  products: Product[];
 };
 
 function ProductGrid({ products }: Props) {
   return (
     <section className={styles.grid}>
       {products.map((product) => (
-        <Link
+        <ProductCard
           key={product.id}
-          to={`/Product/${product.id}`}
-          style={{ textDecoration: "none", color: "inherit" }}
-        >
-          <ProductCard
-            title={product.title}
-            artist={product.artist}
-            price={product.price}
-            image={product.image}
-          />
-        </Link>
+          product={{
+            id: product.id,
+            name: product.title,
+            category: product.artist,
+            price: product.price,
+            image: product.image,
+          }}
+          onDelete={() => {}}
+          editable={false}
+        />
       ))}
     </section>
   );
