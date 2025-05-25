@@ -15,7 +15,10 @@ export interface Product {
 }
 
 // individual product card
-const ProductCard: React.FC<{ product: Product }> = ({ product }) => {
+const ProductCard: React.FC<{ product: Product; shopName?: string }> = ({
+  product,
+  shopName,
+}) => {
   const { user } = useUser();
 
   // track click for analytics
@@ -48,7 +51,9 @@ const ProductCard: React.FC<{ product: Product }> = ({ product }) => {
       />
       <div className={styles.info}>
         <h4 className={styles.title}>{product.product_name}</h4>
-        <p className={styles.artist}>By {product.username}</p>
+        <p className={styles.artist}>
+          By {<p className={styles.artist}>By {shopName}</p>}
+        </p>
         <p className={styles.price}>R{product.price}</p>
       </div>
     </Link>

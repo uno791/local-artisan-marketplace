@@ -11,10 +11,12 @@ interface Props {
 
 export default function ImageGrid({ setLoading }: Props) {
   const { query, sort } = useSearch();
-  const [products, setProducts] = useState<Product[]>([]);
+  const [productsWithShops, setProductsWithShops] = useState<
+    Array<Product & { shopName: string }>
+  >([]);
 
   useEffect(() => {
-    const fetchProducts = async () => {
+    const fetchEverything = async () => {
       setLoading(true);
       try {
         const base = query ? "/products/search" : "/allproducts";
@@ -23,22 +25,46 @@ export default function ImageGrid({ setLoading }: Props) {
         params.set("sort", sort);
         const url = `${baseURL}${base}?${params.toString()}`;
 
+        // 1. Fetch products
         const res = await axios.get<Product[]>(url);
-        setProducts(res.data);
+        const products = res.data;
+
+        // 2. Fetch shop names
+        const usernames = [...new Set(products.map((p) => p.username))];
+        const shopMap: Record<string, string> = {};
+
+        await Promise.all(
+          usernames.map(async (uname) => {
+            try {
+              const art = await axios.get(`${baseURL}/artisan/${uname}`);
+              shopMap[uname] = art.data.shop_name || uname;
+            } catch {
+              shopMap[uname] = uname;
+            }
+          })
+        );
+
+        // 3. Combine product + shop name BEFORE rendering
+        const combined = products.map((p) => ({
+          ...p,
+          shopName: shopMap[p.username],
+        }));
+
+        setProductsWithShops(combined);
       } catch (err) {
-        console.error("❌ Error fetching products:", err);
+        console.error("❌ Error fetching search results:", err);
       } finally {
         setLoading(false);
       }
     };
 
-    fetchProducts();
+    fetchEverything();
   }, [query, sort, setLoading]);
 
   return (
     <section className={styles.imageGrid} aria-label="Product results">
-      {products.map((p) => (
-        <ProductCard key={p.product_id} product={p} />
+      {productsWithShops.map((p) => (
+        <ProductCard key={p.product_id} product={p} shopName={p.shopName} />
       ))}
     </section>
   );
