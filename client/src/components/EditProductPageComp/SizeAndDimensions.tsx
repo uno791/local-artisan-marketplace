@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import styles from "./SizeAndDimensions.module.css";
 
 interface Props {
@@ -23,6 +23,18 @@ const SizeAndDimensions: React.FC<Props> = ({
   const [widthText, setWidthText] = useState(Width.toString());
   const [heightText, setHeightText] = useState(Height.toString());
   const [weightText, setWeightText] = useState(Weight.toString());
+
+  useEffect(() => {
+    setWidthText(Width.toString());
+  }, [Width]);
+
+  useEffect(() => {
+    setHeightText(Height.toString());
+  }, [Height]);
+
+  useEffect(() => {
+    setWeightText(Weight.toString());
+  }, [Weight]);
 
   const handleDecimalInput = (
     value: string,
@@ -50,7 +62,9 @@ const SizeAndDimensions: React.FC<Props> = ({
             inputMode="decimal"
             className={styles.input}
             value={widthText}
-            onChange={(e) => handleDecimalInput(e.target.value, setWidth, setWidthText)}
+            onChange={(e) =>
+              handleDecimalInput(e.target.value, setWidth, setWidthText)
+            }
           />
           <p className={styles.counter} aria-live="polite">
             {widthText.length}/{maxLength}
@@ -67,7 +81,9 @@ const SizeAndDimensions: React.FC<Props> = ({
             inputMode="decimal"
             className={styles.input}
             value={heightText}
-            onChange={(e) => handleDecimalInput(e.target.value, setHeight, setHeightText)}
+            onChange={(e) =>
+              handleDecimalInput(e.target.value, setHeight, setHeightText)
+            }
           />
           <p className={styles.counter} aria-live="polite">
             {heightText.length}/{maxLength}
@@ -84,7 +100,9 @@ const SizeAndDimensions: React.FC<Props> = ({
             inputMode="decimal"
             className={styles.input}
             value={weightText}
-            onChange={(e) => handleDecimalInput(e.target.value, setWeight, setWeightText)}
+            onChange={(e) =>
+              handleDecimalInput(e.target.value, setWeight, setWeightText)
+            }
           />
           <p className={styles.counter} aria-live="polite">
             {weightText.length}/{maxLength}

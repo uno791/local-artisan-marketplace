@@ -674,17 +674,28 @@ app.get("/product/:id", async (req, res) => {
   let pool;
 
   try {
-    // 0. Connect to DB
-    pool = await connectDB();
+    pool = await connectDB(); // ✅ Reuse one connection
 
-    // 1. Fetch main product + main category
+    // Step 1: Get main product details + main category
     const productResult = await pool.request().input("id", productId).query(`
-        SELECT p.*, mc.category_name
-        FROM dbo.products p
-        LEFT JOIN dbo.link_main_categories lmc ON p.product_id = lmc.product_id
-        LEFT JOIN dbo.main_categories mc ON lmc.category_id = mc.category_id
-        WHERE p.product_id = @id
-      `);
+      SELECT 
+        p.product_id,
+        p.product_name,
+        p.description,
+        p.price,
+        p.stock_quantity,
+        p.image_url,
+        p.width,
+        p.height,
+        p.weight,
+        p.details,
+        p.delivery_method,
+        mc.category_name
+      FROM dbo.products p
+      LEFT JOIN dbo.link_main_categories lmc ON p.product_id = lmc.product_id
+      LEFT JOIN dbo.main_categories mc ON lmc.category_id = mc.category_id
+      WHERE p.product_id = @id
+    `);
 
     if (productResult.recordset.length === 0) {
       return res.status(404).json({ message: "Product not found" });
@@ -692,29 +703,36 @@ app.get("/product/:id", async (req, res) => {
 
     const product = productResult.recordset[0];
 
-    // 2. Fetch minor categories (tags) — separate request to avoid shared connection issues
+    // Step 2: Fetch tags (minor categories)
     const tagsResult = await pool.request().input("id", productId).query(`
-        SELECT mc.minor_category_name
-        FROM dbo.link_minor_categories lmc
-        JOIN dbo.minor_categories mc ON lmc.minor_category_id = mc.minor_category_id
-        WHERE lmc.product_id = @id
-      `);
+      SELECT mc.minor_category_name
+      FROM dbo.link_minor_categories lmc
+      JOIN dbo.minor_categories mc ON lmc.minor_category_id = mc.minor_category_id
+      WHERE lmc.product_id = @id
+    `);
 
     const tags = tagsResult.recordset.map((r) => r.minor_category_name);
 
-    // 3. Return everything
+    // Step 3: Validate delivery_method
+    const validDeliveryMethod = [1, 2, 3].includes(Number(product.delivery_method))
+      ? Number(product.delivery_method)
+      : 1;
+
+    // ✅ Return everything
     res.json({
       ...product,
       tags,
       product_image: product.image_url,
+      delivery_method: validDeliveryMethod,
     });
   } catch (err) {
     console.error("❌ Failed to fetch product:", err);
     res.status(500).json({ error: "DB query failed", details: err.message });
   } finally {
-    if (pool) await pool.close();
+    if (pool) await pool.close(); // ✅ Always close connection
   }
 });
+
 
 // Backend route: Add to app.js
 
@@ -1372,6 +1390,7 @@ app.post("/addproduct", async (req, res) => {
     details,
     tags,
     typeOfArt,
+    delivery_method,
   } = req.body;
 
   try {
@@ -1389,17 +1408,19 @@ app.post("/addproduct", async (req, res) => {
       .input("width", width)
       .input("height", height)
       .input("weight", weight)
-      .input("details", details).query(`
+      .input("details", details)
+      .input("delivery_method", delivery_method).query(`
         INSERT INTO dbo.products (
           username, product_name, description, price, stock_quantity,
-          image_url, width, height, weight, details, created_at
+          image_url, width, height, weight, details, delivery_method, created_at
         )
         OUTPUT INSERTED.product_id
         VALUES (
           @username, @product_name, @description, @price, @stock_quantity,
-          @image_url, @width, @height, @weight, @details, GETDATE()
+          @image_url, @width, @height, @weight, @details, @delivery_method, GETDATE()
         )
       `);
+
 
     const productId = insertProductResult.recordset[0].product_id;
 
@@ -1481,37 +1502,41 @@ app.put("/editproduct/:id", async (req, res) => {
     typeOfArt,
     tags,
     product_image,
+    delivery_method,
   } = req.body;
 
   try {
     const pool = await connectDB();
 
     // Step 1: Update product including image
-    await pool
-      .request()
-      .input("id", id)
-      .input("product_name", product_name)
-      .input("description", description)
-      .input("price", price)
-      .input("stock_quantity", stock_quantity)
-      .input("width", width)
-      .input("height", height)
-      .input("weight", weight)
-      .input("details", details)
-      .input("product_image", product_image).query(`
-        UPDATE dbo.products
-        SET 
-          product_name = @product_name,
-          description = @description,
-          price = @price,
-          stock_quantity = @stock_quantity,
-          width = @width,
-          height = @height,
-          weight = @weight,
-          details = @details,
-          image_url = @product_image -- ✅ Store base64
-        WHERE product_id = @id
-      `);
+   await pool
+  .request()
+  .input("id", id)
+  .input("product_name", product_name)
+  .input("description", description)
+  .input("price", price)
+  .input("stock_quantity", stock_quantity)
+  .input("width", width)
+  .input("height", height)
+  .input("weight", weight)
+  .input("details", details)
+  .input("delivery_method", delivery_method)
+  .input("product_image", product_image).query(`
+    UPDATE dbo.products
+    SET 
+      product_name = @product_name,
+      description = @description,
+      price = @price,
+      stock_quantity = @stock_quantity,
+      width = @width,
+      height = @height,
+      weight = @weight,
+      details = @details,
+      delivery_method = @delivery_method,
+      image_url = @product_image
+    WHERE product_id = @id
+  `);
+
 
     // Step 2: Update main category
     const categoryResult = await pool
