@@ -1,87 +1,90 @@
-// src/contexts/ProfileContext.tsx
-import React, {
-  createContext,
-  useState,
-  useEffect,
-  useContext,
-  ReactNode,
-} from "react";
+// src/Users/ProfileContext.tsx
+import React, { createContext, useContext, useState, useEffect } from "react";
 import axios from "axios";
-import profileImg from "../assets/profile.png";
-import { useUser } from "../Users/UserContext";
 import { baseURL } from "../config";
+import { useUser } from "./UserContext";
 
-type SellerStatus = "none" | "pending" | "approved";
-
-export interface ProfileData {
+export type Profile = {
   postalCode: string;
   phone: string;
-  image: string;
-  sellerStatus: SellerStatus;
-}
+  image: string | null;
+  sellerStatus: "none" | "pending" | "approved";
+};
 
-interface ProfileContextValue {
-  profile: ProfileData;
+type ProfileContextType = {
+  profile: Profile;
   refreshProfile: () => Promise<void>;
-}
+};
 
-const ProfileContext = createContext<ProfileContextValue | undefined>(
-  undefined
-);
+const defaultProfile: Profile = {
+  postalCode: "-",
+  phone: "",
+  image: null,
+  sellerStatus: "none",
+};
 
-export function ProfileProvider({ children }: { children: ReactNode }) {
+const ProfileContext = createContext<ProfileContextType>({
+  profile: defaultProfile,
+  refreshProfile: async () => {},
+});
+
+export const ProfileProvider: React.FC<{ children: React.ReactNode }> = ({
+  children,
+}) => {
   const { user } = useUser();
-  const cacheKey = `profileData:${user?.username}`;
+  const [profile, setProfile] = useState<Profile>(defaultProfile);
 
-  const [profile, setProfile] = useState<ProfileData>({
-    postalCode: "-",
-    phone: "",
-    image: profileImg,
-    sellerStatus: "none",
-  });
-
-  // fetch and cache helper
-  async function fetchProfile() {
-    if (!user?.username) return;
+  // Determine whether this user is a seller, and if so whether they're approved
+  const determineSellerStatus = async (
+    username: string
+  ): Promise<"none" | "pending" | "approved"> => {
     try {
-      const res = await axios.get(`${baseURL}/getuser/${user.username}`);
-      const art = await axios.get(`${baseURL}/artisan/${user.username}`);
+      const res = await axios.get(`${baseURL}/artisan/${username}`);
+      return res.data.verified === 1 ? "approved" : "pending";
+    } catch {
+      return "none";
+    }
+  };
 
-      const newProfile: ProfileData = {
+  const refreshProfile = async (): Promise<void> => {
+    if (!user?.username) return;
+    const cacheKey = `profileData:${user.username}`;
+
+    try {
+      // always fetch fresh data
+      const res = await axios.get(`${baseURL}/getuser/${user.username}`);
+      const fresh: Profile = {
         postalCode: res.data.postal_code?.toString() || "-",
         phone: res.data.phone_no || "",
-        image: res.data.user_pfp || profileImg,
-        sellerStatus: art.data?.verified === 1 ? "approved" : "pending",
+        image: res.data.user_pfp || null,
+        sellerStatus: await determineSellerStatus(user.username),
       };
 
-      setProfile(newProfile);
-      localStorage.setItem(cacheKey, JSON.stringify(newProfile));
-    } catch (err) {
-      console.error("❌ Failed to fetch profile:", err);
-    }
-  }
+      // update state
+      setProfile(fresh);
 
-  // on mount or user change: load cache → fetch fresh once
-  useEffect(() => {
-    if (!user?.username) return;
-    const cached = localStorage.getItem(cacheKey);
-    if (cached) {
-      setProfile(JSON.parse(cached));
+      // re‐cache for possible future use
+      localStorage.setItem(
+        cacheKey,
+        JSON.stringify({ data: fresh, savedAt: Date.now() })
+      );
+    } catch (err) {
+      console.error("❌ Failed to load profile:", err);
     }
-    fetchProfile();
+  };
+
+  // On mount (or whenever user changes), fetch the profile
+  useEffect(() => {
+    if (user?.username) {
+      refreshProfile();
+    }
   }, [user?.username]);
 
   return (
-    <ProfileContext.Provider value={{ profile, refreshProfile: fetchProfile }}>
+    <ProfileContext.Provider value={{ profile, refreshProfile }}>
       {children}
     </ProfileContext.Provider>
   );
-}
+};
 
-export function useProfile() {
-  const ctx = useContext(ProfileContext);
-  if (!ctx) {
-    throw new Error("useProfile must be used within a ProfileProvider");
-  }
-  return ctx;
-}
+export const useProfile = (): ProfileContextType => useContext(ProfileContext);
