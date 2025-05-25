@@ -1,10 +1,8 @@
-// Home.tsx
 import styles from "../components/HomePageComp/Home.module.css";
 import { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import axios from "axios";
 import { baseURL } from "../config";
-import { Logo } from "../components/HomePageComp/Localish-ProductImage";
 import { useUser } from "../Users/UserContext";
 
 interface Product {
@@ -16,6 +14,22 @@ interface Product {
   image_url: string;
 }
 
+// Retry helper
+async function retryRequest<T>(
+  fn: () => Promise<T>,
+  retries = 3,
+  delay = 1000
+): Promise<T> {
+  try {
+    return await fn();
+  } catch (err: any) {
+    if (retries === 0) throw err;
+    console.warn(`🔁 Retrying... attempts left: ${retries}`);
+    await new Promise((res) => setTimeout(res, delay));
+    return retryRequest(fn, retries - 1, delay * 2);
+  }
+}
+
 function Home() {
   const [gridProducts, setProducts] = useState<Product[]>([]);
   const [loading, setLoading] = useState(true);
@@ -25,23 +39,27 @@ function Home() {
     if (!user?.username) return;
 
     setLoading(true);
-    axios
-      .get(`${baseURL}/homepage-recommendations`, {
+
+    // Fetch recommended products with retry
+    retryRequest(() =>
+      axios.get(`${baseURL}/homepage-recommendations`, {
         params: { username: user.username },
       })
+    )
       .then((res) => setProducts(res.data))
       .catch((err) => console.error("❌ Error loading recommendations:", err))
       .finally(() => setLoading(false));
 
     const cacheKey = `profileData:${user.username}`;
     if (!localStorage.getItem(cacheKey)) {
-      axios
-        .get(`${baseURL}/getuser/${user.username}`)
+      retryRequest(() => axios.get(`${baseURL}/getuser/${user.username}`))
         .then(async (res) => {
           const data = res.data;
           let sellerStatus: "none" | "pending" | "approved" = "none";
           try {
-            const art = await axios.get(`${baseURL}/artisan/${user.username}`);
+            const art = await retryRequest(() =>
+              axios.get(`${baseURL}/artisan/${user.username}`)
+            );
             sellerStatus = art.data?.verified === 1 ? "approved" : "pending";
           } catch {
             sellerStatus = "none";

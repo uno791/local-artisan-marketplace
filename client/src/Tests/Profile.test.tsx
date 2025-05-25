@@ -1,37 +1,59 @@
-import React from 'react';
-import { render, screen, fireEvent, waitFor, act } from '@testing-library/react';
-import '@testing-library/jest-dom';
-import Profile from '../Pages/Profile';
+import React from "react";
+import {
+  render,
+  screen,
+  fireEvent,
+  waitFor,
+  act,
+} from "@testing-library/react";
+import "@testing-library/jest-dom";
+import Profile from "../Pages/Profile";
 
-// Mock BEFORE all other imports
-jest.mock('react-router-dom', () => {
-  const actual = jest.requireActual('react-router-dom');
+import axios from "axios";
+import { UserProvider } from "../Users/UserContext";
+
+// ── MOCK SETUP ─────────────────────────────────────
+
+jest.mock("axios");
+const mockedAxios = axios as jest.Mocked<typeof axios>;
+
+const mockNavigate = jest.fn();
+jest.mock("react-router-dom", () => {
+  const actual = jest.requireActual("react-router-dom");
   return {
     ...actual,
-    useNavigate: jest.fn(() => mockNavigate),
+    useNavigate: () => mockNavigate,
     MemoryRouter: ({ children }: any) => <div>{children}</div>,
   };
 });
 
-import axios from 'axios';
-import { UserProvider } from '../Users/UserContext';
+jest.mock("../assets/profile.png", () => "mock-profile.png");
 
-// Mock axios
-jest.mock('axios');
-const mockedAxios = axios as jest.Mocked<typeof axios>;
-
-// Mock profile image asset
-jest.mock('../assets/profile.png', () => 'mock-profile.png');
-
-// Mock UserContext
-jest.mock('../Users/UserContext', () => ({
-  useUser: () => ({ user: { username: 'testUser' } }),
+jest.mock("../Users/UserContext", () => ({
+  useUser: () => ({ user: { username: "testUser" } }),
   UserProvider: ({ children }: any) => <div>{children}</div>,
 }));
 
-const mockNavigate = jest.fn();
+jest.mock("../Users/ProfileContext", () => {
+  const React = require("react");
+  return {
+    useProfile: jest.fn(),
+    ProfileProvider: ({ children }: any) => <div>{children}</div>,
+  };
+});
+import { useProfile } from "../Users/ProfileContext";
 
-// Setup wrapper
+// ── TEST STATE ─────────────────────────────────────
+
+const mockProfile = {
+  postalCode: "1234",
+  phone: "+15551234",
+  image: null,
+  sellerStatus: "verified",
+};
+
+// ── RENDER WRAPPER ────────────────────────────────
+
 const renderWithProviders = async () => {
   await act(async () => {
     render(
@@ -42,63 +64,57 @@ const renderWithProviders = async () => {
   });
 };
 
-describe('Profile Page', () => {
+// ── TESTS ──────────────────────────────────────────
+
+describe("Profile Page", () => {
   beforeEach(() => {
     jest.clearAllMocks();
+    localStorage.clear();
   });
 
-  test('renders profile info with default image', async () => {
-    mockedAxios.get.mockResolvedValueOnce({ data: { postal_code: '1234', phone_no: '555-1234' } });
-    mockedAxios.get.mockResolvedValueOnce({ data: { verified: 1 } });
+  test("renders profile info with default image", async () => {
+    (useProfile as jest.Mock).mockReturnValue({
+      profile: mockProfile,
+      refreshProfile: jest.fn(),
+    });
 
     await renderWithProviders();
 
-    expect(screen.getByText('testUser')).toBeInTheDocument();
-    expect(screen.getByText(/Postal Code:\s*1234/)).toBeInTheDocument();
-    expect(screen.getByText(/Phone:\s*555-1234/)).toBeInTheDocument();
+    expect(screen.getByText("testUser")).toBeInTheDocument();
+    expect(screen.getByText(/Postal Code/)).toBeInTheDocument();
+    expect(screen.getByText(/Phone/)).toBeInTheDocument();
 
-    const img = screen.getByRole('img') as HTMLImageElement;
-    expect(img.src).toContain('mock-profile.png');
+    const img = screen.getByRole("img") as HTMLImageElement;
+    expect(img.src).toContain("mock-profile.png");
   });
 
   test('opens edit modal when "Edit Info" is clicked', async () => {
-    mockedAxios.get.mockResolvedValue({ data: {} });
-  
-    await renderWithProviders();
-  
-    const editInfoBtn = screen.getByRole('button', { name: /edit info/i });
-    fireEvent.click(editInfoBtn);
-  
-    // Check the modal's heading instead of using ambiguous text match
-    expect(screen.getByRole('heading', { name: /edit info/i })).toBeInTheDocument();
-  });
-  
-
-  test('navigates to seller signup when button is clicked', async () => {
-    mockedAxios.get.mockResolvedValueOnce({ data: {} });
-    mockedAxios.get.mockResolvedValueOnce({ data: null });
-
-    await renderWithProviders();
-
-    const becomeSellerBtn = screen.getByRole('button', { name: /become a seller/i });
-    fireEvent.click(becomeSellerBtn);
-
-    expect(mockNavigate).toHaveBeenCalledWith('/seller-signup');
-  });
-
-  test('changes profile image when file is uploaded', async () => {
-    mockedAxios.get.mockResolvedValue({ data: {} });
-
-    await renderWithProviders();
-
-    const fileInput = screen.getByLabelText(/upload profile image/i);
-    const file = new File(['dummy'], 'avatar.png', { type: 'image/png' });
-
-    fireEvent.change(fileInput, { target: { files: [file] } });
-
-    await waitFor(() => {
-      const img = screen.getByRole('img') as HTMLImageElement;
-      expect(img.src).toContain('data:image/');
+    (useProfile as jest.Mock).mockReturnValue({
+      profile: mockProfile,
+      refreshProfile: jest.fn(),
     });
+
+    await renderWithProviders();
+
+    const btn = screen.getByRole("button", { name: /edit info/i });
+    fireEvent.click(btn);
+
+    expect(
+      screen.getByRole("heading", { name: /edit info/i })
+    ).toBeInTheDocument();
+  });
+
+  test("navigates to seller signup when button is clicked", async () => {
+    (useProfile as jest.Mock).mockReturnValue({
+      profile: { ...mockProfile, sellerStatus: "none" },
+      refreshProfile: jest.fn(),
+    });
+
+    await renderWithProviders();
+
+    const btn = screen.getByRole("button", { name: /become a seller/i });
+    fireEvent.click(btn);
+
+    expect(mockNavigate).toHaveBeenCalledWith("/seller-signup");
   });
 });

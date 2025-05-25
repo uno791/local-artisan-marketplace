@@ -44,14 +44,8 @@ export default function Profile() {
   }
 
   // apply to be a seller → then refresh
-  async function handleApplyToBeSeller() {
-    if (!user?.username) return;
-    try {
-      await axios.post(`${baseURL}/apply-seller`, { username: user.username });
-      await refreshProfile();
-    } catch (err) {
-      console.error("❌ Failed to apply as seller:", err);
-    }
+  function goToSellerSignup() {
+    navigate("/seller-signup");
   }
 
   // logout and clear cache
@@ -78,7 +72,7 @@ export default function Profile() {
         />
 
         <ActionButtons
-          onBecomeSeller={handleApplyToBeSeller}
+          onBecomeSeller={goToSellerSignup}
           sellerStatus={sellerStatus}
         />
 
