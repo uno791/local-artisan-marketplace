@@ -199,13 +199,31 @@ describe("EditProductPage Functional Tests", () => {
   });
 
   test("delivery method toggles update correctly", async () => {
-    await renderWithProviders();
-    const [deliveryCheckbox, pickupCheckbox] = screen.getAllByRole("checkbox");
-    fireEvent.click(deliveryCheckbox);
-    expect(deliveryCheckbox).not.toBeChecked();
-    fireEvent.click(pickupCheckbox);
-    expect(pickupCheckbox).toBeChecked();
-  });
+  await renderWithProviders();
+
+  const deliveryCheckbox = screen.getByLabelText("Delivery") as HTMLInputElement;
+  const pickupCheckbox = screen.getByLabelText("Pickup") as HTMLInputElement;
+
+  // Initially only Delivery should be selected (DelMethod = 1)
+  expect(deliveryCheckbox).toBeChecked();
+  expect(pickupCheckbox).not.toBeChecked();
+
+  // Add Pickup (DelMethod becomes 3)
+  fireEvent.click(pickupCheckbox);
+  expect(deliveryCheckbox).toBeChecked();
+  expect(pickupCheckbox).toBeChecked();
+
+  // Remove Delivery (DelMethod becomes 2)
+  fireEvent.click(deliveryCheckbox);
+  expect(deliveryCheckbox).not.toBeChecked();
+  expect(pickupCheckbox).toBeChecked();
+
+  // Remove Pickup — should fallback to Delivery (not allowed to be 0)
+  fireEvent.click(pickupCheckbox);
+  expect(deliveryCheckbox).toBeChecked(); // fallback
+  expect(pickupCheckbox).not.toBeChecked();
+});
+
 
   test('shows "No Changes Made" popup when no edits are done', async () => {
     await renderWithProviders();
