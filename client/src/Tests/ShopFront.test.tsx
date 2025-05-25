@@ -169,3 +169,61 @@ describe("ShopFront Page", () => {
     expect(productImg).toBeTruthy();
   });
 });
+test("navigates to product page on card click", async () => {
+  await setup();
+  const productLink = screen.getByRole("link", { name: /Woven Basket/i });
+  expect(productLink).toHaveAttribute("href", "/Product/1");
+});
+
+test("clicking 'All' shows all products again after filtering", async () => {
+  await setup();
+  fireEvent.click(screen.getByRole("button", { name: "Painting" }));
+  await waitFor(() => {
+    expect(screen.queryByText("Woven Basket")).not.toBeInTheDocument();
+  });
+  fireEvent.click(screen.getByRole("button", { name: "All" }));
+  await waitFor(() => {
+    expect(screen.getByText("Woven Basket")).toBeInTheDocument();
+    expect(screen.getByText("Painted Vase")).toBeInTheDocument();
+  });
+});
+
+test("renders placeholder when product image is missing", async () => {
+  const noImageProducts = [
+    {
+      id: 5,
+      name: "Mystery Craft",
+      price: "99",
+      category: "Unknown",
+    },
+  ];
+  await setup(noImageProducts as any);
+  const placeholder = screen.getByText("387 × 320");
+  expect(placeholder).toBeInTheDocument();
+});
+
+test("renders correct number of product cards", async () => {
+  await setup();
+  const cards = screen.getAllByRole("link");
+  expect(cards.length).toBeGreaterThanOrEqual(mockProducts.length);
+});
+
+test("filters correctly with duplicate category names", async () => {
+  const duplicatedCategoryProducts = [
+    ...mockProducts,
+    {
+      id: 3,
+      name: "Silk Scarf",
+      price: "90",
+      category: "Painting", // same as "Painted Vase"
+      image: "base64image3",
+    },
+  ];
+  await setup(duplicatedCategoryProducts);
+  fireEvent.click(screen.getByRole("button", { name: "Painting" }));
+  await waitFor(() => {
+    expect(screen.getByText("Painted Vase")).toBeInTheDocument();
+    expect(screen.getByText("Silk Scarf")).toBeInTheDocument();
+    expect(screen.queryByText("Woven Basket")).not.toBeInTheDocument();
+  });
+});
