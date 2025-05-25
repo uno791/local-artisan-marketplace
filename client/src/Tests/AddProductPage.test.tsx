@@ -37,19 +37,9 @@ jest.mock("../components/AddProductPageComp/TypeOfArtSelector", () => ({
   ),
 }));
 
-// ✅ Mock AddTagsButton to add a tag element into DOM
-jest.mock("../components/AddProductPageComp/AddTagsButton", () => ({
-  __esModule: true,
-  default: ({ onConfirm }: any) => (
-    <div>
-      <button onClick={() => onConfirm(["abstract"])}>Add Tags</button>
-      {/* Simulate rendering of added tags */}
-      <div>abstract</div>
-    </div>
-  ),
-}));
+// ✅ Real AddTagsButton test (no mock)
+import AddTagsButton from "../components/AddProductPageComp/AddTagsButton";
 
-// ✅ Mock fetch
 beforeEach(() => {
   global.fetch = jest.fn(() =>
     Promise.resolve({
@@ -118,10 +108,16 @@ describe("AddProductPage Functional Tests", () => {
     expect(stockInput).toHaveValue("0");
   });
 
-  test("adding tags works through mock", () => {
-    renderWithProviders();
+  test("adding tags using real AddTagsButton works", async () => {
+    render(<AddTagsButton onConfirm={jest.fn()} />);
     fireEvent.click(screen.getByText(/Add Tags/i));
-    expect(screen.queryByText("abstract")).toBeInTheDocument();
+    fireEvent.change(screen.getByPlaceholderText(/Enter a tag/i), {
+      target: { value: "abstract" },
+    });
+    fireEvent.click(screen.getByText(/^Add$/i));
+    expect(screen.getByText("abstract")).toBeInTheDocument();
+    fireEvent.click(screen.getByLabelText("remove-abstract"));
+    expect(screen.queryByText("abstract")).not.toBeInTheDocument();
   });
 
   test("shows validation error popup on missing fields", () => {
@@ -148,7 +144,6 @@ describe("AddProductPage Functional Tests", () => {
     await screen.findByRole("heading", {
       name: /submitted product info/i,
     });
-
     fireEvent.click(screen.getByRole("button", { name: /close/i }));
     await waitFor(() => {
       expect(
