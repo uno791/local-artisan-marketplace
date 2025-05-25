@@ -347,12 +347,21 @@ test("renders correct subtotal based on price and quantity", async () => {
 
 test("initiates Yoco payment and sends token to backend", async () => {
   mockedAxios.get.mockResolvedValueOnce({
-    data: [],
+    data: [
+      {
+        product_id: 1,
+        product_name: "Yoco Test Product",
+        quantity: 1,
+        price: 100,
+        image_url: "https://via.placeholder.com/64",
+        seller_username: "seller",
+        added_at: "2023-01-01",
+        stock_quantity: 10,
+      },
+    ],
   });
 
-  // Mock window.YocoSDK and the showPopup method
   const mockShowPopup = jest.fn();
-
   (window as any).YocoSDK = jest.fn().mockImplementation(() => ({
     showPopup: mockShowPopup,
   }));
@@ -365,21 +374,21 @@ test("initiates Yoco payment and sends token to backend", async () => {
     </UserProvider>
   );
 
-  // Click the payment button
-  const proceedButton = await screen.findByRole("button", {
-    name: /pay/i,
-  });
+  // Wait for the cart item to appear
+  await screen.findByText("Yoco Test Product");
 
-  fireEvent.click(proceedButton);
+  // Use waitFor to wait until button becomes enabled
+  const payButton = await screen.findByRole("button", { name: /pay/i });
+  await waitFor(() => expect(payButton).not.toBeDisabled());
 
+  // Click and trigger payment
+  fireEvent.click(payButton);
   expect(mockShowPopup).toHaveBeenCalled();
 
-  // Extract and call the callback manually to simulate successful token
   const popupArgs = mockShowPopup.mock.calls[0][0];
   expect(popupArgs.amountInCents).toBeDefined();
   expect(typeof popupArgs.callback).toBe("function");
 
-  // Mock successful token callback
   mockedAxios.post.mockResolvedValueOnce({ data: { success: true } });
 
   await act(async () => {
@@ -394,6 +403,9 @@ test("initiates Yoco payment and sends token to backend", async () => {
     })
   );
 });
+
+
+
 
 test("renders 'You May Also Like' section with recommendations when available", async () => {
   mockedAxios.get.mockImplementation((url) => {

@@ -80,8 +80,8 @@ function Cart() {
           <section className={styles.cartSummary}>
             <p className={styles.totalText}>
               Total: <strong>R{total.toFixed(2)}</strong> <br />
-              Delivery: <strong>R2.00</strong> <br />
-              <span
+              Service Fee: <strong>R2.00</strong> <br />
+              <section
                 style={{
                   borderTop: "1px solid #ccc",
                   display: "block",
@@ -90,13 +90,14 @@ function Cart() {
                 }}
               >
                 Grand Total: <strong>R{(total + 2).toFixed(2)}</strong>
-              </span>
+              </section>
             </p>
 
             {/* payment button */}
             <button
               className={styles.proceedButton}
               onClick={handleProceedToPayment}
+              disabled={total === 0}
             >
               Pay
               <svg className={styles.svgIcon} viewBox="0 0 576 512">
