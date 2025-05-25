@@ -21,13 +21,8 @@ export default {
     "^@/(.*)$": "<rootDir>/src/$1",
     "^react-phone-number-input/style.css$": "<rootDir>/_mocks_/styleMock.js",
   },
-  
-
   setupFilesAfterEnv: ["<rootDir>/jest.setup.ts"],
-
-  // Code coverage settings
   collectCoverage: true,
   collectCoverageFrom: ["src/**/*.{js,jsx,ts,tsx}", "!src/**/*.d.ts"],
   coverageReporters: ["json", "lcov", "text", "clover"],
 };
-
