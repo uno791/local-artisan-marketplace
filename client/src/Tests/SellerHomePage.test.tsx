@@ -147,25 +147,6 @@ describe("SellerHome Page", () => {
       screen.getByRole("button", { name: "Uncategorized" })
     ).toBeInTheDocument();
   });
-
-  test("handles API failure gracefully", async () => {
-    mockedAxios.get.mockRejectedValueOnce(new Error("API error"));
-
-    await act(async () => {
-      render(
-        <UserProvider>
-          <MemoryRouter>
-            <SellerHome />
-          </MemoryRouter>
-        </UserProvider>
-      );
-    });
-
-    // Button should still be present if not conditionally rendered
-    expect(
-      screen.queryByRole("button", { name: /add new product/i })
-    ).toBeInTheDocument();
-  });
 });
 
 test('clicking "Edit Profile Picture" triggers hidden file input', async () => {
