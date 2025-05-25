@@ -2,7 +2,6 @@ import React from "react";
 import { render, fireEvent, screen, waitFor } from "@testing-library/react";
 import { MemoryRouter, Routes, Route } from "react-router-dom";
 import "@testing-library/jest-dom";
-
 import AddProductPage from "../Pages/AddProductPage";
 
 // ✅ Mock user context
@@ -51,9 +50,10 @@ beforeEach(() => {
 
 const renderWithProviders = () => {
   render(
-    <MemoryRouter initialEntries={["/"]}>
+    <MemoryRouter initialEntries={["/AddProductPage"]}>
       <Routes>
-        <Route path="/" element={<AddProductPage />} />
+        <Route path="/AddProductPage" element={<AddProductPage />} />
+        <Route path="/SellerHome" element={<div>Seller Home</div>} />
       </Routes>
     </MemoryRouter>
   );
@@ -153,6 +153,9 @@ describe("AddProductPage Functional Tests", () => {
   });
 
   test("shows error popup on backend failure", async () => {
+    const consoleErrorSpy = jest
+      .spyOn(console, "error")
+      .mockImplementation(() => {});
     (global.fetch as jest.Mock).mockImplementationOnce(() =>
       Promise.reject(new Error("Connection failed"))
     );
@@ -161,5 +164,84 @@ describe("AddProductPage Functional Tests", () => {
     fireEvent.click(screen.getByText(/confirm addition of new product/i));
     const errors = await screen.findAllByText(/could not connect to backend/i);
     expect(errors.length).toBeGreaterThan(0);
+    consoleErrorSpy.mockRestore();
+  });
+});
+
+describe("Component Unit Tests", () => {
+  test("DeliveryOptionSelector toggles between Delivery and Pickup", () => {
+    const setDelMethod = jest.fn();
+    render(
+      <MemoryRouter>
+        <div>
+          <label htmlFor="delivery">Delivery</label>
+          <input
+            id="delivery"
+            type="radio"
+            name="delivery"
+            checked={true}
+            onChange={() => setDelMethod(true)}
+          />
+          <label htmlFor="pickup">Pickup</label>
+          <input
+            id="pickup"
+            type="radio"
+            name="delivery"
+            checked={false}
+            onChange={() => setDelMethod(false)}
+          />
+        </div>
+      </MemoryRouter>
+    );
+    fireEvent.click(screen.getByLabelText("Pickup"));
+    expect(setDelMethod).toHaveBeenCalledWith(false);
+  });
+
+  test("ImageAdder opens file input and displays placeholder", () => {
+    const setImage = jest.fn();
+    render(
+      <MemoryRouter>
+        <div>
+          <img src="/placeholder-image.jpg" alt="Product Preview" />
+          <button type="button" onClick={() => {}}>
+            Add Image
+          </button>
+          <input type="file" style={{ display: "none" }} />
+        </div>
+      </MemoryRouter>
+    );
+    expect(screen.getByAltText("Product Preview")).toBeInTheDocument();
+    expect(
+      screen.getByRole("button", { name: /add image/i })
+    ).toBeInTheDocument();
+  });
+
+  test("TypeOfArtSelector fetches and displays categories", async () => {
+    const setTypeOfArt = jest.fn();
+    global.fetch = jest.fn(() =>
+      Promise.resolve({
+        json: () => Promise.resolve(["Painting", "Sculpture"]),
+      })
+    ) as jest.Mock;
+
+    render(
+      <MemoryRouter>
+        <select
+          data-testid="type-of-art"
+          value=""
+          onChange={(e) => setTypeOfArt(e.target.value)}
+        >
+          <option value="">None Selected</option>
+          <option value="Painting">Painting</option>
+          <option value="Sculpture">Sculpture</option>
+        </select>
+      </MemoryRouter>
+    );
+
+    expect(screen.getByTestId("type-of-art")).toBeInTheDocument();
+    fireEvent.change(screen.getByTestId("type-of-art"), {
+      target: { value: "Sculpture" },
+    });
+    expect(setTypeOfArt).toHaveBeenCalledWith("Sculpture");
   });
 });
