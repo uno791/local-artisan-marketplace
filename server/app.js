@@ -678,24 +678,26 @@ app.get("/product/:id", async (req, res) => {
 
     // Step 1: Get main product details + main category
     const productResult = await pool.request().input("id", productId).query(`
-      SELECT 
-        p.product_id,
-        p.product_name,
-        p.description,
-        p.price,
-        p.stock_quantity,
-        p.image_url,
-        p.width,
-        p.height,
-        p.weight,
-        p.details,
-        p.delivery_method,
-        mc.category_name
-      FROM dbo.products p
-      LEFT JOIN dbo.link_main_categories lmc ON p.product_id = lmc.product_id
-      LEFT JOIN dbo.main_categories mc ON lmc.category_id = mc.category_id
-      WHERE p.product_id = @id
-    `);
+    SELECT 
+      p.product_id,
+      p.product_name,
+      p.description,
+      p.price,
+      p.stock_quantity,
+      p.image_url,
+      p.width,
+      p.height,
+      p.weight,
+      p.details,
+      p.delivery_method,
+      p.username, -- ✅ ADD THIS LINE
+      mc.category_name
+    FROM dbo.products p
+    LEFT JOIN dbo.link_main_categories lmc ON p.product_id = lmc.product_id
+    LEFT JOIN dbo.main_categories mc ON lmc.category_id = mc.category_id
+    WHERE p.product_id = @id
+  `);
+
 
     if (productResult.recordset.length === 0) {
       return res.status(404).json({ message: "Product not found" });
