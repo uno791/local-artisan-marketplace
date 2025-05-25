@@ -85,8 +85,6 @@ function ShopFront() {
                 ...product,
                 image: getImageSrc(product.image),
               }}
-              onDelete={() => {}}
-              editable={false}
             />
           ))}
         </section>
