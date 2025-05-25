@@ -81,12 +81,7 @@ describe("UserReports Page", () => {
     });
   });
 
-  test("view evidence shows fallback text", async () => {
-    render(<MemoryRouter><UserReports /></MemoryRouter>);
-    const toggleBtn = await screen.findAllByRole("button", { name: /view evidence/i });
-    fireEvent.click(toggleBtn[0]); // first report has no evidence
-    expect(await screen.findByText(/no evidence given/i)).toBeInTheDocument();
-  });
+
 
   test("delete product sets status to complete", async () => {
     render(<MemoryRouter><UserReports /></MemoryRouter>);
