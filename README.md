@@ -40,6 +40,16 @@ cd server
 npm install
 node app.js
 ```
+## Contributors
+
+| Name                 | Student Number |
+|----------------------|----------------|
+| Harshil Vallabh      | 2656158        |
+| Sunay Master         | 2677874        |
+| Matthew Purkiss      | 2697424        |
+| Yabsira Gebremichael | 2661262        |
+| Kamal Lalloo         | 2652159        |
+
 
 
 
