@@ -19,7 +19,7 @@ function ArtistInfo({ Uname, shop_pfp, shop_name }: ArtisanProps) {
           className={styles["artist-logo"]}
         />
       </Link>
-      <h2 className={styles["artist-name"]}>{Uname}</h2>
+      <h2 className={styles["artist-name"]}>{shop_name}</h2>
       <Link to={`/shop/${Uname}`} className={styles["view-shop-link"]}>
         View Artist's Shop
       </Link>
