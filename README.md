@@ -1,3 +1,7 @@
+<p align="center">
+  <img src="client/src/assets/localish-logo.png" alt="Localish Logo" width="200"/>
+</p>
+
 # Localish: The Local Artisan Marketplace
 
 [![codecov](https://codecov.io/gh/uno791/local-artisan-marketplace/branch/main/graph/badge.svg)](https://codecov.io/gh/uno791/local-artisan-marketplace)
@@ -5,6 +9,15 @@
 Welcome to **Localish**, a community-driven-online marketplace.
 
 ---
+
+## Submission Links
+
+| Artifact                             | Link                                                                                     |
+|--------------------------------------|------------------------------------------------------------------------------------------|
+| Live Application                 | [https://calm-meadow-0fbb07c03.6.azurestaticapps.net](https://calm-meadow-0fbb07c03.6.azurestaticapps.net/) |
+| Demo Video                        | [Watch Project Walkthrough](https://youtu.be/your-demo-video-id)                         |
+| GitHub Repository                 | [GitHub – uno791/local-artisan-marketplace](https://github.com/uno791/local-artisan-marketplace) |
+| Project Documentation (PDF)                 | [Download Project Documentation](client/src/assets/DOC.pdf)                                           |
 
 ## Local Setup
 ### Client
@@ -21,20 +34,5 @@ npm install
 node app.js
 ```
 
-## Tech Stack
-
-**Frontend**: React, TypeScript, Vite  
-**Backend**: Node.js, Express  
-**Database**: Azure SQL  
-**Authentication**: Microsoft Entra ID (Azure AD)  
-**CI/CD**: GitHub Actions  
-**Hosting**: Azure App Service (API), Azure Static Web Apps (Frontend)  
-**Testing**: Jest 
-
-## Live Demo
-
-Frontend: [https://calm-meadow-0fbb07c03.6.azurestaticapps.net](https://calm-meadow-0fbb07c03.6.azurestaticapps.net/)
-
-Backend API: [https://artisan-api-server1-fzd8fbfwgkc2cqe2.southafricanorth-01.azurewebsites.net](https://artisan-api-server1-fzd8fbfwgkc2cqe2.southafricanorth-01.azurewebsites.net)
 
 
