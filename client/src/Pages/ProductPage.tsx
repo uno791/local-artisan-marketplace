@@ -114,7 +114,7 @@ function ProductPage() {
 
         <aside className={styles["product-right"]}>
           <SidebarInfo
-            username={product.username}
+            username={artisan?.shop_name || ""}
             shop_pfp={artisan?.shop_pfp || ""}
             shop_name={artisan?.shop_name || ""}
             mainCategory={product.category_name}

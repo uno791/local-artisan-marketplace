@@ -32,6 +32,7 @@ async function retryRequest<T>(
 
 function Home() {
   const [gridProducts, setProducts] = useState<Product[]>([]);
+  const [shopNames, setShopNames] = useState<Record<string, string>>({}); // ✅ NEW: map username → shop name
   const [loading, setLoading] = useState(true);
   const { user } = useUser();
 
@@ -40,16 +41,36 @@ function Home() {
 
     setLoading(true);
 
-    // Fetch recommended products with retry
     retryRequest(() =>
       axios.get(`${baseURL}/homepage-recommendations`, {
         params: { username: user.username },
       })
     )
-      .then((res) => setProducts(res.data))
+      .then(async (res) => {
+        const products: Product[] = res.data;
+        setProducts(products);
+
+        const shopMap: Record<string, string> = {};
+        await Promise.all(
+          [...new Set(products.map((p) => p.username))].map(async (uname) => {
+            const username = String(uname); // ✅ FIX: Cast to string to avoid TS error
+            try {
+              const res = await retryRequest(() =>
+                axios.get(`${baseURL}/artisan/${username}`)
+              );
+              shopMap[username] = res.data.shop_name || username;
+            } catch {
+              shopMap[username] = username;
+            }
+          })
+        );
+
+        setShopNames(shopMap);
+      })
       .catch((err) => console.error("❌ Error loading recommendations:", err))
       .finally(() => setLoading(false));
 
+    // Preload profile cache
     const cacheKey = `profileData:${user.username}`;
     if (!localStorage.getItem(cacheKey)) {
       retryRequest(() => axios.get(`${baseURL}/getuser/${user.username}`))
@@ -125,7 +146,10 @@ function Home() {
                       <img src={p.image_url} alt={p.product_name} />
                       <figcaption>
                         <p className={styles.title}>{p.product_name}</p>
-                        <p className={styles.artist}>{p.username}</p>
+                        {/* ✅ CHANGED: show shop name if available */}
+                        <p className={styles.artist}>
+                          {shopNames[p.username] || p.username}
+                        </p>
                         <p className={styles.price}>{`R${p.price}`}</p>
                       </figcaption>
                     </figure>
