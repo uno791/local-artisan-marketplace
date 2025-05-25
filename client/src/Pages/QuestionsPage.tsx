@@ -140,7 +140,9 @@ function QuestionsPage() {
           <p>
             <strong>Selected Art Forms:</strong> {selectedArtForms.join(", ")}
           </p>
-          <button onClick={() => navigate("/Home")}>Proceed to Homepage</button>
+          <button onClick={() => navigate("/SearchPage")}>
+            Proceed to Homepage
+          </button>
         </div>
       )}
     </main>

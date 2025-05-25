@@ -8,12 +8,13 @@ import {
   FaUser,
   FaBars,
   FaTimes,
+  FaHeart,
 } from "react-icons/fa";
 
 // navigation items
 const navItems = [
-  { name: "Home", path: "/Home", icon: <FaHome /> },
-  { name: "Search", path: "/SearchPage", icon: <FaSearch /> },
+  { name: "For You", path: "/Home", icon: <FaHeart /> },
+  { name: "Home", path: "/SearchPage", icon: <FaHome /> },
   { name: "Cart", path: "/Cart", icon: <FaShoppingCart /> },
   { name: "Profile", path: "/Profile", icon: <FaUser /> },
 ];
