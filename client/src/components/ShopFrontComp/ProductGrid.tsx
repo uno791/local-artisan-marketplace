@@ -1,4 +1,3 @@
-import { Link } from "react-router-dom";
 import ProductCard from "./ProductCard";
 import styles from "./ShopFront.module.css";
 
@@ -27,8 +26,6 @@ function ProductGrid({ products }: Props) {
             price: product.price,
             image: product.image,
           }}
-          onDelete={() => {}}
-          editable={false}
         />
       ))}
     </section>
