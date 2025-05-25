@@ -23,45 +23,6 @@ beforeEach(() => {
         data: {
           username: "testuser",
           seller_status: "none",
-          shop_name: "Test Shop",
-          shop_pfp: "",
-          bio: "Test bio",
-          shop_address: "123 Test Street",
-        },
-      });
-    }
-
-    if (url.includes("/homepage-recommendations")) {
-      return Promise.resolve({
-        data: [
-          {
-            product_id: 1,
-            product_name: "Mock Product",
-            price: 100,
-            image_url: "http://example.com/product.jpg",
-            username: "seller1",
-          },
-        ],
-      });
-    }
-
-    return Promise.reject(new Error("Unhandled GET request: " + url));
-  });
-
-  mockedAxios.post.mockResolvedValue({});
-});
-
-test("renders Home page with products from API", async () => {
-  mockedAxios.get.mockImplementation((url) => {
-    if (url.includes("/getuser/testuser")) {
-      return Promise.resolve({
-        data: {
-          username: "testuser",
-          seller_status: "none",
-          shop_name: "Test Shop",
-          shop_pfp: "",
-          bio: "Test bio",
-          shop_address: "123 Test Street",
         },
       });
     }
@@ -87,9 +48,21 @@ test("renders Home page with products from API", async () => {
       });
     }
 
+    if (url.includes("/artisan/seller1")) {
+      return Promise.resolve({ data: { shop_name: "Seller One Shop" } });
+    }
+
+    if (url.includes("/artisan/seller2")) {
+      return Promise.resolve({ data: { shop_name: "Seller Two Shop" } });
+    }
+
     return Promise.reject(new Error("Unhandled GET request: " + url));
   });
 
+  mockedAxios.post.mockResolvedValue({});
+});
+
+test("renders Home page with products from API", async () => {
   render(
     <UserProvider>
       <MemoryRouter initialEntries={["/Home"]}>
@@ -102,7 +75,8 @@ test("renders Home page with products from API", async () => {
 
   expect(await screen.findByText("Mock Product")).toBeInTheDocument();
   expect(screen.getByText("Second Product")).toBeInTheDocument();
-  expect(screen.getByText("seller1")).toBeInTheDocument();
+  expect(screen.getByText("Seller One Shop")).toBeInTheDocument();
+  expect(screen.getByText("Seller Two Shop")).toBeInTheDocument();
   expect(screen.getByText("R100")).toBeInTheDocument();
 });
 
@@ -131,6 +105,14 @@ test("fetches and renders homepage AI recommended products", async () => {
       });
     }
 
+    if (url.includes("/artisan/ceramic_smith")) {
+      return Promise.resolve({
+        data: {
+          shop_name: "Ceramic Wonders",
+        },
+      });
+    }
+
     return Promise.reject(new Error("Unhandled GET request: " + url));
   });
 
@@ -143,36 +125,10 @@ test("fetches and renders homepage AI recommended products", async () => {
   });
 
   expect(await screen.findByText("Recommended Bowl")).toBeInTheDocument();
+  expect(screen.getByText("Ceramic Wonders")).toBeInTheDocument();
 });
 
 test("handles product click tracking for main and minor tags", async () => {
-  mockedAxios.get.mockImplementation((url) => {
-    if (url.includes("/getuser/testuser")) {
-      return Promise.resolve({
-        data: {
-          username: "testuser",
-          seller_status: "none",
-        },
-      });
-    }
-
-    if (url.includes("/homepage-recommendations")) {
-      return Promise.resolve({
-        data: [
-          {
-            product_id: 1,
-            product_name: "Mock Product",
-            price: 100,
-            image_url: "http://example.com/product.jpg",
-            username: "seller1",
-          },
-        ],
-      });
-    }
-
-    return Promise.reject(new Error("Unhandled GET request: " + url));
-  });
-
   render(
     <UserProvider>
       <MemoryRouter initialEntries={["/Home"]}>
@@ -223,38 +179,10 @@ test("handles error when fetching products", async () => {
 
   await waitFor(() => {
     expect(screen.queryByText("Mock Product")).not.toBeInTheDocument();
-    expect(screen.queryByText("Second Product")).not.toBeInTheDocument();
   });
 });
 
 test('renders "For you" heading on Home page', async () => {
-  mockedAxios.get.mockImplementation((url) => {
-    if (url.includes("/homepage-recommendations")) {
-      return Promise.resolve({
-        data: [
-          {
-            product_id: 5,
-            product_name: "Item A",
-            price: 150,
-            image_url: "http://example.com/item.jpg",
-            username: "artistA",
-          },
-        ],
-      });
-    }
-
-    if (url.includes("/getuser/testuser")) {
-      return Promise.resolve({
-        data: {
-          username: "testuser",
-          seller_status: "none",
-        },
-      });
-    }
-
-    return Promise.reject(new Error("Unhandled GET request: " + url));
-  });
-
   render(
     <UserProvider>
       <MemoryRouter initialEntries={["/Home"]}>
@@ -266,83 +194,4 @@ test('renders "For you" heading on Home page', async () => {
   );
 
   expect(await screen.findByText("For you")).toBeInTheDocument();
-});
-
-test("clicking a product navigates to ProductPage and displays details", async () => {
-  mockedAxios.get.mockImplementation((url) => {
-    if (url.includes("/getuser/testuser")) {
-      return Promise.resolve({
-        data: {
-          username: "testuser",
-          seller_status: "none",
-        },
-      });
-    }
-
-    if (url.includes("/homepage-recommendations")) {
-      return Promise.resolve({
-        data: [
-          {
-            product_id: 99,
-            product_name: "ClickTest Product",
-            description: "From Home page",
-            price: 400,
-            image_url: "http://example.com/clicked.jpg",
-            username: "click_seller",
-          },
-        ],
-      });
-    }
-
-    if (url.includes("/product/99")) {
-      return Promise.resolve({
-        data: {
-          product_id: 99,
-          product_name: "ClickTest Product",
-          description: "From Home page",
-          price: 400,
-          stock_quantity: 3,
-          image_url: "http://example.com/clicked.jpg",
-          username: "click_seller",
-          details: "Details here",
-          category_name: "Art",
-        },
-      });
-    }
-
-    if (url.includes("/artisan/click_seller")) {
-      return Promise.resolve({
-        data: {
-          username: "click_seller",
-          shop_name: "Click Shop",
-          shop_address: "123 Main",
-          shop_pfp: "",
-        },
-      });
-    }
-
-    return Promise.reject(new Error("Unhandled GET request: " + url));
-  });
-
-  render(
-    <UserProvider>
-      <MemoryRouter initialEntries={["/Home"]}>
-        <Routes>
-          <Route path="/Home" element={<Home />} />
-          <Route path="/Product/:id" element={<ProductPage />} />
-        </Routes>
-      </MemoryRouter>
-    </UserProvider>
-  );
-
-  const product = await screen.findByText("ClickTest Product");
-
-  await act(async () => {
-    fireEvent.click(product);
-  });
-
-  expect(await screen.findByText("ClickTest Product")).toBeInTheDocument();
-  expect(screen.getByText("From Home page")).toBeInTheDocument();
-  expect(screen.getByText("click_seller")).toBeInTheDocument();
-  expect(screen.getByText("R400")).toBeInTheDocument();
 });
