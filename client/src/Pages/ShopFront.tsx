@@ -58,12 +58,35 @@ function ShopFront() {
       })
       .catch((err) => console.error("Error loading seller dashboard:", err));
   }, [username]);
-
+  const loading = products.length === 0;
   const filteredProducts =
     category === "All"
       ? products
       : products.filter((p) => p.category === category);
-
+  if (loading) {
+    return (
+      <div
+        style={{
+          display: "flex",
+          height: "100vh",
+          justifyContent: "center",
+          alignItems: "center",
+        }}
+      >
+        <div className={styles.hourglassBackground}>
+          <div className={styles.hourglassContainer}>
+            <div className={styles.hourglassCurves}></div>
+            <div className={styles.hourglassCapTop}></div>
+            <div className={styles.hourglassGlassTop}></div>
+            <div className={styles.hourglassSand}></div>
+            <div className={styles.hourglassSandStream}></div>
+            <div className={styles.hourglassCapBottom}></div>
+            <div className={styles.hourglassGlass}></div>
+          </div>
+        </div>
+      </div>
+    );
+  }
   return (
     <>
       {artisan && <Header artisan={artisan} isPublicView={true} />}
