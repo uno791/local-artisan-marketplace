@@ -1300,32 +1300,32 @@ app.get("/seller-top-products", async (req, res) => {
   }
 });
 
-// PUT /api/users/:username
-app.put("/api/users/:username", async (req, res) => {
-  const { username } = req.params;
-  const { postal_code, phone_no, interests } = req.body;
+// // PUT /api/users/:username
+// app.put("/api/users/:username", async (req, res) => {
+//   const { username } = req.params;
+//   const { postal_code, phone_no, interests } = req.body;
 
-  try {
-    const pool = await connectDB();
-    await pool
-      .request()
-      .input("postal_code", postal_code ?? 0)
-      .input("phone_no", phone_no ?? null)
-      .input("interests", interests ?? "")
-      .input("username", username).query(`
-        UPDATE dbo.users
-        SET postal_code = @postal_code,
-            phone_no = @phone_no,
-            interests = @interests
-        WHERE username = @username
-      `);
-    await pool.close();
-    res.json({ message: "User info updated successfully" });
-  } catch (err) {
-    console.error("Error updating user info:", err);
-    res.status(500).json({ error: "Failed to update user info" });
-  }
-});
+//   try {
+//     const pool = await connectDB();
+//     await pool
+//       .request()
+//       .input("postal_code", postal_code ?? 0)
+//       .input("phone_no", phone_no ?? null)
+//       .input("interests", interests ?? "")
+//       .input("username", username).query(`
+//         UPDATE dbo.users
+//         SET postal_code = @postal_code,
+//             phone_no = @phone_no,
+//             interests = @interests
+//         WHERE username = @username
+//       `);
+//     await pool.close();
+//     res.json({ message: "User info updated successfully" });
+//   } catch (err) {
+//     console.error("Error updating user info:", err);
+//     res.status(500).json({ error: "Failed to update user info" });
+//   }
+// });
 //update users with out interests
 //update users with out interests
 app.put("/api/users/:username", async (req, res) => {
@@ -1338,11 +1338,11 @@ app.put("/api/users/:username", async (req, res) => {
       .request()
       .input("postal_code", postal_code ?? 0)
       .input("phone_no", phone_no ?? null)
-      .input("username", username).query(`
+      .input("username", username)
+      .query(`
         UPDATE dbo.users
         SET postal_code = @postal_code,
-            phone_no = @phone_no,
-            interests = @interests
+            phone_no = @phone_no
         WHERE username = @username
       `);
     await pool.close();
@@ -1352,6 +1352,7 @@ app.put("/api/users/:username", async (req, res) => {
     res.status(500).json({ error: "Failed to update user info" });
   }
 });
+
 // POST /api/artisans
 app.post("/createartisan", async (req, res) => {
   const { username, shop_name, bio, shop_address, shop_pfp, shop_banner } =
